@@ -29,8 +29,11 @@ export const useAuth = () => {
           });
           
           const user = await response.json();
+          // Save user to localStorage for persistence
+          localStorage.setItem('circl_user', JSON.stringify(firebaseUser));
           setAuthState({ user, loading: false, error: null });
         } catch (error) {
+          console.error('Auth error:', error);
           setAuthState({ 
             user: null, 
             loading: false, 
@@ -48,8 +51,11 @@ export const useAuth = () => {
   const signInWithGoogle = async (): Promise<void> => {
     try {
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
-      await auth.signInWithPopup(googleProvider);
+      const result = await auth.signInWithPopup(googleProvider);
+      console.log('Google sign in result:', result);
+      // The onAuthStateChanged will handle the rest
     } catch (error) {
+      console.error('Google sign in error:', error);
       setAuthState(prev => ({ 
         ...prev, 
         loading: false,

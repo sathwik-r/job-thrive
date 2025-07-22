@@ -22,9 +22,9 @@ export const auth = {
         resolve({
           user: {
             uid: "mock-user-id-" + Date.now(),
-            email: process.env.NODE_ENV === 'development' ? "user@example.com" : "",
-            displayName: process.env.NODE_ENV === 'development' ? "John Doe" : "",
-            photoURL: process.env.NODE_ENV === 'development' ? "https://via.placeholder.com/100" : undefined,
+            email: "user@example.com",
+            displayName: "John Doe",
+            photoURL: "https://via.placeholder.com/100",
           }
         });
       }, 1000);
@@ -32,14 +32,23 @@ export const auth = {
   },
   
   signOut: async (): Promise<void> => {
+    localStorage.removeItem('circl_user');
     return Promise.resolve();
   },
   
   onAuthStateChanged: (callback: (user: User | null) => void) => {
-    // Mock auth state
-    setTimeout(() => {
-      callback(null);
-    }, 100);
+    // Check if user is already logged in
+    const savedUser = localStorage.getItem('circl_user');
+    if (savedUser) {
+      try {
+        const user = JSON.parse(savedUser);
+        setTimeout(() => callback(user), 100);
+      } catch {
+        setTimeout(() => callback(null), 100);
+      }
+    } else {
+      setTimeout(() => callback(null), 100);
+    }
     
     return () => {}; // unsubscribe function
   }
