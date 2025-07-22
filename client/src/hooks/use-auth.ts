@@ -17,6 +17,18 @@ export const useAuth = () => {
   });
 
   useEffect(() => {
+    // Check for mock user first (for testing)
+    const mockUser = localStorage.getItem('circl_mock_user');
+    if (mockUser) {
+      try {
+        const user = JSON.parse(mockUser);
+        setAuthState({ user, loading: false, error: null });
+        return;
+      } catch (error) {
+        localStorage.removeItem('circl_mock_user');
+      }
+    }
+
     const unsubscribe = auth.onAuthStateChanged(async (firebaseUser: FirebaseUser | null) => {
       if (firebaseUser) {
         try {
@@ -67,6 +79,8 @@ export const useAuth = () => {
   const signOut = async (): Promise<void> => {
     try {
       await auth.signOut();
+      localStorage.removeItem('circl_mock_user');
+      localStorage.removeItem('circl_user');
       setAuthState({ user: null, loading: false, error: null });
     } catch (error) {
       console.error('Sign out error:', error);
