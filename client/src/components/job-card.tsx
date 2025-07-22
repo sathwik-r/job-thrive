@@ -15,12 +15,20 @@ export default function JobCard({ job }: JobCardProps) {
     setLocation(`/referral-request/${job.id}`);
   };
 
-  const formatTimeAgo = (date: Date) => {
+  const formatTimeAgo = (date: Date | string) => {
+    const createdDate = date instanceof Date ? date : new Date(date);
     const now = new Date();
-    const diffInDays = Math.floor((now.getTime() - date.getTime()) / (1000 * 60 * 60 * 24));
+    
+    // Check if date is valid
+    if (isNaN(createdDate.getTime())) {
+      return 'Recently';
+    }
+    
+    const diffInDays = Math.floor((now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
     
     if (diffInDays === 0) return 'Today';
     if (diffInDays === 1) return '1 day ago';
+    if (diffInDays < 0) return 'Recently';
     return `${diffInDays} days ago`;
   };
 

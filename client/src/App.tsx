@@ -7,6 +7,8 @@ import LoginPage from "@/pages/login";
 import DashboardPage from "@/pages/dashboard";
 import JobSearchPage from "@/pages/job-search";
 import ReferralRequestPage from "@/pages/referral-request";
+import ProfilePage from "@/pages/profile";
+import AnalyticsPage from "@/pages/analytics";
 import { useAuth } from "@/hooks/use-auth";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
@@ -47,6 +49,8 @@ function Router() {
       <Route path="/login" component={LoginPage} />
       <Route path="/dashboard" component={DashboardPage} />
       <Route path="/job-search" component={JobSearchPage} />
+      <Route path="/profile" component={ProfilePage} />
+      <Route path="/analytics" component={AnalyticsPage} />
       <Route path="/referral-request/:jobId">
         {(params) => <ReferralRequestPage jobId={params.jobId} />}
       </Route>

@@ -110,7 +110,10 @@ export default function DashboardPage() {
                 3
               </span>
             </Button>
-            <div className="w-8 h-8 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] rounded-full flex items-center justify-center cursor-pointer">
+            <div 
+              className="w-8 h-8 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200"
+              onClick={() => setLocation('/profile')}
+            >
               <span className="text-white text-sm font-semibold">
                 {getInitials(user.name)}
               </span>

@@ -45,43 +45,79 @@ export class MemStorage implements IStorage {
   }
 
   private initializeSampleData() {
-    // Sample jobs
+    // Sample jobs with detailed descriptions
     const sampleJobs: Job[] = [
       {
         id: this.currentJobId++,
         title: "Senior React Developer",
         company: "Airbnb",
         location: "San Francisco, CA",
-        description: "We're looking for a Senior React Developer to join our growing team and help build the next generation of our platform. You'll work with cutting-edge technologies and collaborate with talented engineers.",
+        description: "Join Airbnb's Host Platform team to build tools that empower millions of hosts worldwide. You'll work on React applications that handle complex booking flows, payment processing, and real-time messaging. Our tech stack includes React, TypeScript, GraphQL, and Node.js. We're looking for someone with 5+ years of React experience who can mentor junior developers and drive technical decisions. You'll collaborate with product managers, designers, and backend engineers to deliver features that impact our global community.",
         salary: "$120k - $180k",
         referralFee: "150.00",
         remote: true,
         active: true,
-        createdAt: new Date(),
+        createdAt: new Date(Date.now() - 2 * 24 * 60 * 60 * 1000), // 2 days ago
       },
       {
         id: this.currentJobId++,
         title: "Product Designer",
         company: "Stripe",
         location: "New York, NY",
-        description: "Design and ship beautiful, functional interfaces that millions of people use every day. You'll be part of a world-class design team.",
+        description: "Design the future of online payments at Stripe. You'll work on our Dashboard, Connect platform, and mobile SDKs used by millions of businesses worldwide. We're seeking a designer with expertise in complex B2B interfaces, data visualization, and user research. You'll collaborate with engineers, PMs, and other designers to solve challenging problems like multi-party marketplace flows and global compliance requirements. Strong skills in Figma, prototyping, and user testing are essential.",
         salary: "$100k - $140k",
         referralFee: "200.00",
         remote: false,
         active: true,
-        createdAt: new Date(),
+        createdAt: new Date(Date.now() - 1 * 24 * 60 * 60 * 1000), // 1 day ago
       },
       {
         id: this.currentJobId++,
         title: "DevOps Engineer",
         company: "Spotify",
         location: "Stockholm, Sweden",
-        description: "Help us scale our infrastructure to serve hundreds of millions of users worldwide. Work with Kubernetes, AWS, and modern DevOps tools.",
+        description: "Scale Spotify's music streaming platform that serves 400+ million users globally. You'll work with Kubernetes, Google Cloud Platform, and our custom deployment tools. We're looking for someone experienced in container orchestration, monitoring systems (Prometheus, Grafana), and infrastructure as code (Terraform). You'll help teams deploy safely at scale, improve our CI/CD pipelines, and ensure 99.9% uptime for music streaming. Experience with microservices architecture and distributed systems is highly valued.",
         salary: "$90k - $130k",
         referralFee: "180.00",
         remote: true,
         active: true,
-        createdAt: new Date(),
+        createdAt: new Date(Date.now() - 3 * 24 * 60 * 60 * 1000), // 3 days ago
+      },
+      {
+        id: this.currentJobId++,
+        title: "Machine Learning Engineer",
+        company: "OpenAI",
+        location: "San Francisco, CA",
+        description: "Help build the next generation of AI systems that will transform how humans interact with technology. You'll work on large language models, training infrastructure, and deployment pipelines for models like GPT and DALL-E. We need someone with deep expertise in PyTorch, distributed training, and model optimization. You'll collaborate with researchers to bring cutting-edge AI from papers to production, handling challenges like model alignment, safety, and scalability. PhD in ML/AI or equivalent industry experience required.",
+        salary: "$200k - $300k",
+        referralFee: "500.00",
+        remote: true,
+        active: true,
+        createdAt: new Date(), // Today
+      },
+      {
+        id: this.currentJobId++,
+        title: "Full Stack Engineer",
+        company: "Notion",
+        location: "San Francisco, CA",
+        description: "Build the collaborative workspace that millions of teams rely on daily. You'll work across our entire stack: React/TypeScript frontend, Node.js backend, and PostgreSQL database. We're looking for someone who can ship features end-to-end, from database schema design to pixel-perfect UI components. You'll work on real-time collaboration, block-based editing, and performance optimization for large documents. Experience with operational transforms, WebSockets, and database optimization is a plus.",
+        salary: "$130k - $200k",
+        referralFee: "175.00",
+        remote: true,
+        active: true,
+        createdAt: new Date(Date.now() - 4 * 24 * 60 * 60 * 1000), // 4 days ago
+      },
+      {
+        id: this.currentJobId++,
+        title: "iOS Engineer",
+        company: "Instagram",
+        location: "Menlo Park, CA",
+        description: "Shape how billions of people share and connect through visual storytelling. You'll work on Instagram's main iOS app, building features for Stories, Reels, and the main feed. We're seeking an iOS engineer with expertise in Swift, UIKit, and performance optimization for media-heavy applications. You'll collaborate with product teams to experiment with new formats, work on camera and video processing, and ensure smooth scrolling for infinite feeds. Experience with Core Animation, AVFoundation, and large-scale iOS apps is essential.",
+        salary: "$140k - $220k",
+        referralFee: "250.00",
+        remote: false,
+        active: true,
+        createdAt: new Date(Date.now() - 5 * 24 * 60 * 60 * 1000), // 5 days ago
       }
     ];
 
