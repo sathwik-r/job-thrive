@@ -43,6 +43,12 @@ export default function DashboardPage() {
     setActiveNav(nav);
     if (nav === 'search') {
       setLocation('/job-search');
+    } else if (nav === 'dashboard') {
+      setLocation('/dashboard');
+    } else if (nav === 'analytics') {
+      setLocation('/analytics');
+    } else if (nav === 'profile') {
+      setLocation('/profile');
     }
   };
 
@@ -351,7 +357,10 @@ export default function DashboardPage() {
           <Button
             variant="ghost"
             size="sm"
-            className="flex flex-col items-center space-y-1 text-gray-400"
+            onClick={() => handleNavClick('analytics')}
+            className={`flex flex-col items-center space-y-1 ${
+              activeNav === 'analytics' ? 'text-[var(--purple-primary)]' : 'text-gray-400'
+            }`}
           >
             <BarChart3 className="w-5 h-5" />
             <span className="text-xs font-medium">Analytics</span>
@@ -360,8 +369,10 @@ export default function DashboardPage() {
           <Button
             variant="ghost"
             size="sm"
-            onClick={signOut}
-            className="flex flex-col items-center space-y-1 text-gray-400"
+            onClick={() => handleNavClick('profile')}
+            className={`flex flex-col items-center space-y-1 ${
+              activeNav === 'profile' ? 'text-[var(--purple-primary)]' : 'text-gray-400'
+            }`}
           >
             <User className="w-5 h-5" />
             <span className="text-xs font-medium">Profile</span>
