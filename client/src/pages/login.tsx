@@ -17,6 +17,7 @@ export default function LoginPage() {
     await signInWithGoogle();
   };
 
+  // Always show onboarding first for new users
   if (showOnboarding) {
     return <OnboardingPage onComplete={handleGetStarted} />;
   }

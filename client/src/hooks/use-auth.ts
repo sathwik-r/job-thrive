@@ -17,6 +17,9 @@ export const useAuth = () => {
   });
 
   useEffect(() => {
+    // Clear all storage on app start for fresh experience
+    localStorage.clear();
+    
     // Check for mock user first (for testing)
     const mockUser = localStorage.getItem('circl_mock_user');
     if (mockUser) {
@@ -63,9 +66,38 @@ export const useAuth = () => {
   const signInWithGoogle = async (): Promise<void> => {
     try {
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
-      const result = await auth.signInWithPopup(googleProvider);
-      console.log('Google sign in result:', result);
-      // The onAuthStateChanged will handle the rest
+      
+      // Simulate authentication delay
+      await new Promise(resolve => setTimeout(resolve, 1500));
+      
+      // Create mock user that hasn't completed onboarding
+      const mockUser = {
+        id: 1,
+        email: "john.doe@gmail.com",
+        name: "John Doe",
+        googleId: "mock-google-id-1",
+        photoUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+        company: null,
+        role: "both" as const,
+        totalEarnings: "0.00",
+        totalSpent: "0.00",
+        successfulReferrals: 0,
+        active: true,
+        onboardingCompleted: false, // Key: starts with incomplete onboarding
+        position: null,
+        department: null,
+        workExperience: null,
+        education: null,
+        targetDomain: null,
+        targetRole: null,
+        experience: null,
+        skills: null,
+        createdAt: new Date(),
+      };
+      
+      // Store mock user
+      localStorage.setItem('circl_mock_user', JSON.stringify(mockUser));
+      setAuthState({ user: mockUser, loading: false, error: null });
     } catch (error) {
       console.error('Google sign in error:', error);
       setAuthState(prev => ({ 
