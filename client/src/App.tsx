@@ -9,6 +9,8 @@ import JobSearchPage from "@/pages/job-search";
 import ReferralRequestPage from "@/pages/referral-request";
 import ProfilePage from "@/pages/profile";
 import AnalyticsPage from "@/pages/analytics";
+import PostLoginOnboarding from "@/pages/post-login-onboarding";
+import ProfileSettingsPage from "@/pages/profile-settings";
 import { useAuth } from "@/hooks/use-auth";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
@@ -22,7 +24,12 @@ function Router() {
       if (!user && location !== "/login") {
         setLocation("/login");
       } else if (user && location === "/login") {
-        setLocation("/dashboard");
+        // Check if onboarding is completed
+        if (!user.onboardingCompleted) {
+          setLocation("/onboarding");
+        } else {
+          setLocation("/dashboard");
+        }
       }
     }
   }, [user, loading, location, setLocation]);
@@ -47,15 +54,57 @@ function Router() {
   return (
     <Switch>
       <Route path="/login" component={LoginPage} />
-      <Route path="/dashboard" component={DashboardPage} />
-      <Route path="/job-search" component={JobSearchPage} />
-      <Route path="/profile" component={ProfilePage} />
-      <Route path="/analytics" component={AnalyticsPage} />
+      <Route path="/onboarding">
+        {() => user ? <PostLoginOnboarding onComplete={() => setLocation('/dashboard')} /> : <LoginPage />}
+      </Route>
+      <Route path="/dashboard">
+        {() => {
+          if (!user) return <LoginPage />;
+          if (!user.onboardingCompleted) return <PostLoginOnboarding onComplete={() => setLocation('/dashboard')} />;
+          return <DashboardPage />;
+        }}
+      </Route>
+      <Route path="/job-search">
+        {() => {
+          if (!user) return <LoginPage />;
+          if (!user.onboardingCompleted) return <PostLoginOnboarding onComplete={() => setLocation('/dashboard')} />;
+          return <JobSearchPage />;
+        }}
+      </Route>
+      <Route path="/profile">
+        {() => {
+          if (!user) return <LoginPage />;
+          if (!user.onboardingCompleted) return <PostLoginOnboarding onComplete={() => setLocation('/dashboard')} />;
+          return <ProfilePage />;
+        }}
+      </Route>
+      <Route path="/profile-settings">
+        {() => {
+          if (!user) return <LoginPage />;
+          if (!user.onboardingCompleted) return <PostLoginOnboarding onComplete={() => setLocation('/dashboard')} />;
+          return <ProfileSettingsPage />;
+        }}
+      </Route>
+      <Route path="/analytics">
+        {() => {
+          if (!user) return <LoginPage />;
+          if (!user.onboardingCompleted) return <PostLoginOnboarding onComplete={() => setLocation('/dashboard')} />;
+          return <AnalyticsPage />;
+        }}
+      </Route>
       <Route path="/referral-request/:jobId">
-        {(params) => <ReferralRequestPage jobId={params.jobId} />}
+        {(params) => {
+          if (!user) return <LoginPage />;
+          if (!user.onboardingCompleted) return <PostLoginOnboarding onComplete={() => setLocation('/dashboard')} />;
+          return <ReferralRequestPage jobId={params.jobId} />;
+        }}
       </Route>
       <Route path="/">
-        {() => user ? <DashboardPage /> : <LoginPage />}
+        {() => {
+          if (!user) return <LoginPage />;
+          if (!user.onboardingCompleted) return <PostLoginOnboarding onComplete={() => setLocation('/dashboard')} />;
+          return <DashboardPage />;
+        }}
       </Route>
       <Route component={() => <div>404 Not Found</div>} />
     </Switch>

@@ -148,12 +148,9 @@ export default function ProfilePage() {
             <Button
               variant="outline"
               className="w-full justify-start"
-              onClick={() => {
-                // In a real app, this would open settings
-                alert('Settings coming soon!');
-              }}
+              onClick={() => setLocation('/profile-settings')}
             >
-              ⚙️ Settings
+              ⚙️ Profile Settings
             </Button>
             
             <Button

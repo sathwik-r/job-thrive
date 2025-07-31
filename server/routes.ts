@@ -89,6 +89,31 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Profile update route for current user
+  app.put('/api/user/profile', async (req, res) => {
+    try {
+      const userId = 1; // Mock user ID for testing
+      const profileData = req.body;
+      
+      // Mark onboarding as completed and update profile
+      const updates = {
+        ...profileData,
+        onboardingCompleted: true
+      };
+      
+      const updatedUser = await storage.updateUser(userId, updates);
+      
+      if (!updatedUser) {
+        return res.status(404).json({ message: "User not found" });
+      }
+      
+      res.json(updatedUser);
+    } catch (error) {
+      console.error("Error updating profile:", error);
+      res.status(500).json({ message: "Failed to update profile" });
+    }
+  });
+
   // Job routes
   app.get("/api/jobs", async (req, res) => {
     try {

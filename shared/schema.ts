@@ -14,6 +14,18 @@ export const users = pgTable("users", {
   totalSpent: decimal("total_spent", { precision: 10, scale: 2 }).default("0.00").notNull(),
   successfulReferrals: integer("successful_referrals").default(0).notNull(),
   active: boolean("active").default(true).notNull(),
+  // Onboarding/Profile fields
+  onboardingCompleted: boolean("onboarding_completed").default(false).notNull(),
+  // Referrer specific fields
+  position: text("position"),
+  department: text("department"),
+  workExperience: text("work_experience"),
+  // Seeker specific fields
+  education: text("education"),
+  targetDomain: text("target_domain"),
+  targetRole: text("target_role"),
+  experience: text("experience"),
+  skills: text("skills").array(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 

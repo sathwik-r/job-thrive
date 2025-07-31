@@ -42,6 +42,7 @@ export class MemStorage implements IStorage {
     
     // Initialize with sample data
     this.initializeSampleData();
+    this.initializeSampleUser();
   }
 
   private initializeSampleData() {
@@ -124,6 +125,35 @@ export class MemStorage implements IStorage {
     sampleJobs.forEach(job => this.jobs.set(job.id, job));
   }
 
+  private initializeSampleUser() {
+    // Create a sample user that hasn't completed onboarding to test the flow
+    const sampleUser: User = {
+      id: this.currentUserId++,
+      email: "john.doe@gmail.com",
+      name: "John Doe",
+      googleId: "mock-google-id-1",
+      photoUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
+      company: null,
+      role: "both",
+      totalEarnings: "0.00",
+      totalSpent: "0.00",
+      successfulReferrals: 0,
+      active: true,
+      onboardingCompleted: false, // Set to false to test onboarding flow
+      position: null,
+      department: null,
+      workExperience: null,
+      education: null,
+      targetDomain: null,
+      targetRole: null,
+      experience: null,
+      skills: null,
+      createdAt: new Date(),
+    };
+    
+    this.users.set(sampleUser.id, sampleUser);
+  }
+
   async getUser(id: number): Promise<User | undefined> {
     return this.users.get(id);
   }
@@ -150,6 +180,16 @@ export class MemStorage implements IStorage {
       totalSpent: insertUser.totalSpent || "0.00",
       successfulReferrals: insertUser.successfulReferrals || 0,
       active: insertUser.active !== undefined ? insertUser.active : true,
+      // Onboarding/Profile fields
+      onboardingCompleted: insertUser.onboardingCompleted || false,
+      position: insertUser.position || null,
+      department: insertUser.department || null,
+      workExperience: insertUser.workExperience || null,
+      education: insertUser.education || null,
+      targetDomain: insertUser.targetDomain || null,
+      targetRole: insertUser.targetRole || null,
+      experience: insertUser.experience || null,
+      skills: insertUser.skills || null,
       createdAt: new Date(),
     };
     this.users.set(id, user);
