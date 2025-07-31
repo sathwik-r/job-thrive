@@ -17,9 +17,6 @@ export const useAuth = () => {
   });
 
   useEffect(() => {
-    // Clear all storage on app start for fresh experience
-    localStorage.clear();
-    
     // Check for mock user first (for testing)
     const mockUser = localStorage.getItem('circl_mock_user');
     if (mockUser) {
@@ -111,12 +108,17 @@ export const useAuth = () => {
   const signOut = async (): Promise<void> => {
     try {
       await auth.signOut();
-      localStorage.removeItem('circl_mock_user');
-      localStorage.removeItem('circl_user');
+      localStorage.clear(); // Clear all data for fresh start
       setAuthState({ user: null, loading: false, error: null });
     } catch (error) {
       console.error('Sign out error:', error);
     }
+  };
+
+  // Helper function to clear storage for testing
+  const clearStorage = () => {
+    localStorage.clear();
+    setAuthState({ user: null, loading: false, error: null });
   };
 
   return {
@@ -125,5 +127,6 @@ export const useAuth = () => {
     error: authState.error,
     signInWithGoogle,
     signOut,
+    clearStorage,
   };
 };

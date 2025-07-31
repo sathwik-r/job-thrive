@@ -6,7 +6,7 @@ import { AlertCircle } from 'lucide-react';
 import OnboardingPage from './onboarding';
 
 export default function LoginPage() {
-  const { signInWithGoogle, loading, error } = useAuth();
+  const { signInWithGoogle, loading, error, clearStorage } = useAuth();
   const [showOnboarding, setShowOnboarding] = useState(true);
 
   const handleGetStarted = () => {
@@ -87,30 +87,11 @@ export default function LoginPage() {
             
             {/* Demo Login Button for Testing */}
             <Button
-              onClick={() => {
-                // Create mock user for testing
-                const mockUser = {
-                  id: 1,
-                  email: "test@example.com",
-                  name: "Test User",
-                  googleId: "test-user-123",
-                  photoUrl: "https://via.placeholder.com/100",
-                  company: "TechCorp",
-                  role: "both" as const,
-                  totalEarnings: "1250.00",
-                  totalSpent: "450.00",
-                  successfulReferrals: 5,
-                  active: true,
-                  createdAt: new Date(),
-                };
-                
-                // Store mock user data
-                localStorage.setItem('circl_mock_user', JSON.stringify(mockUser));
-                window.location.reload();
-              }}
+              onClick={handleGoogleSignIn}
+              disabled={loading}
               className="w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-4 px-6 rounded-2xl text-base border border-white/30 backdrop-blur-lg transition-all duration-300 transform hover:scale-105"
             >
-              🚀 Demo Login (Testing)
+              {loading ? 'Signing in...' : '🚀 Demo Login (Testing)'}
             </Button>
           </div>
 
@@ -119,6 +100,13 @@ export default function LoginPage() {
             <p className="text-white/50 text-sm">
               By continuing, you agree to our Terms of Service and Privacy Policy
             </p>
+            {/* Debug: Clear storage button for testing */}
+            <button 
+              onClick={clearStorage}
+              className="text-white/30 hover:text-white/50 text-xs mt-4 underline"
+            >
+              Clear Storage (Dev Only)
+            </button>
           </div>
         </div>
       </div>
