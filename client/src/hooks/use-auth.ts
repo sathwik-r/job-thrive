@@ -17,22 +17,11 @@ export const useAuth = () => {
   });
 
   useEffect(() => {
-    // Simplified mock authentication for demo
-    const mockUser = localStorage.getItem('circl_mock_user');
-    if (mockUser) {
-      try {
-        const user = JSON.parse(mockUser);
-        console.log('Loading mock user:', user);
-        setAuthState({ user, loading: false, error: null });
-        return;
-      } catch (error) {
-        console.error('Error loading mock user:', error);
-        localStorage.removeItem('circl_mock_user');
-      }
-    }
+    // Clear all storage for fresh demo experience
+    localStorage.clear();
     
-    // Set loading to false if no user found
-    setAuthState(prev => ({ ...prev, loading: false }));
+    // Set loading to false with no user to show pitch screen
+    setAuthState({ user: null, loading: false, error: null });
   }, []);
 
   const signInWithGoogle = async (): Promise<void> => {
