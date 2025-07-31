@@ -99,6 +99,7 @@ export const useAuth = () => {
   const clearStorage = () => {
     localStorage.clear();
     setAuthState({ user: null, loading: false, error: null });
+    window.location.reload();
   };
 
   return {
