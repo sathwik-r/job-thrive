@@ -42,6 +42,18 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
 
   const updateProfileMutation = useMutation({
     mutationFn: async (profileData: OnboardingData) => {
+      // For mock users, update localStorage directly
+      if (user && localStorage.getItem('circl_mock_user')) {
+        const updatedUser = {
+          ...user,
+          ...profileData,
+          onboardingCompleted: true
+        };
+        localStorage.setItem('circl_mock_user', JSON.stringify(updatedUser));
+        return Promise.resolve({ user: updatedUser });
+      }
+      
+      // For real users, call the API
       return apiRequest('/api/user/profile', 'PUT', profileData);
     },
     onSuccess: () => {
@@ -49,9 +61,14 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
         title: "Profile Updated",
         description: "Your profile has been set up successfully!",
       });
-      onComplete();
+      
+      // Force page reload to update auth state
+      setTimeout(() => {
+        window.location.reload();
+      }, 1000);
     },
     onError: (error: any) => {
+      console.error('Profile update error:', error);
       toast({
         title: "Error",
         description: error.message || "Failed to update profile",
