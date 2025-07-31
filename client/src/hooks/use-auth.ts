@@ -17,55 +17,31 @@ export const useAuth = () => {
   });
 
   useEffect(() => {
-    // Check for mock user first (for testing)
+    // Simplified mock authentication for demo
     const mockUser = localStorage.getItem('circl_mock_user');
     if (mockUser) {
       try {
         const user = JSON.parse(mockUser);
+        console.log('Loading mock user:', user);
         setAuthState({ user, loading: false, error: null });
         return;
       } catch (error) {
+        console.error('Error loading mock user:', error);
         localStorage.removeItem('circl_mock_user');
       }
     }
-
-    const unsubscribe = auth.onAuthStateChanged(async (firebaseUser: FirebaseUser | null) => {
-      if (firebaseUser) {
-        try {
-          // Send user data to backend to create/update user
-          const response = await apiRequest('POST', '/api/auth/google', {
-            email: firebaseUser.email,
-            name: firebaseUser.displayName || '',
-            googleId: firebaseUser.uid,
-            photoUrl: firebaseUser.photoURL,
-          });
-          
-          const user = await response.json();
-          // Save user to localStorage for persistence
-          localStorage.setItem('circl_user', JSON.stringify(firebaseUser));
-          setAuthState({ user, loading: false, error: null });
-        } catch (error) {
-          console.error('Auth error:', error);
-          setAuthState({ 
-            user: null, 
-            loading: false, 
-            error: error instanceof Error ? error.message : 'Authentication failed' 
-          });
-        }
-      } else {
-        setAuthState({ user: null, loading: false, error: null });
-      }
-    });
-
-    return unsubscribe;
+    
+    // Set loading to false if no user found
+    setAuthState(prev => ({ ...prev, loading: false }));
   }, []);
 
   const signInWithGoogle = async (): Promise<void> => {
     try {
+      console.log('Starting sign in...');
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
       
       // Simulate authentication delay
-      await new Promise(resolve => setTimeout(resolve, 1500));
+      await new Promise(resolve => setTimeout(resolve, 2000));
       
       // Create mock user that hasn't completed onboarding
       const mockUser = {
@@ -92,9 +68,13 @@ export const useAuth = () => {
         createdAt: new Date(),
       };
       
+      console.log('Created mock user:', mockUser);
+      
       // Store mock user
       localStorage.setItem('circl_mock_user', JSON.stringify(mockUser));
       setAuthState({ user: mockUser, loading: false, error: null });
+      
+      console.log('Sign in completed successfully');
     } catch (error) {
       console.error('Google sign in error:', error);
       setAuthState(prev => ({ 
@@ -107,9 +87,9 @@ export const useAuth = () => {
 
   const signOut = async (): Promise<void> => {
     try {
-      await auth.signOut();
       localStorage.clear(); // Clear all data for fresh start
       setAuthState({ user: null, loading: false, error: null });
+      console.log('Signed out successfully');
     } catch (error) {
       console.error('Sign out error:', error);
     }
