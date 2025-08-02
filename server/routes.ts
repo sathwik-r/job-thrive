@@ -9,10 +9,10 @@ import { insertUserSchema, insertReferralSchema } from "@shared/schema";
 import { z } from "zod";
 
 const {
-  GOOGLE_CLIENT_ID,
-  GOOGLE_CLIENT_SECRET,
-  GOOGLE_REDIRECT_URI,
-  FRONTEND_REDIRECT_URI
+  GOOGLE_CLIENT_ID = '',
+  GOOGLE_CLIENT_SECRET = '',
+  GOOGLE_REDIRECT_URI = '',
+  FRONTEND_REDIRECT_URI = ''
 } = process.env;
 
 const authUserSchema = z.object({
