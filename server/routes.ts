@@ -1,8 +1,19 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
+import axios from "axios";
+import cors from "cors";
+import dotenv from "dotenv";
+dotenv.config();
 import { insertUserSchema, insertReferralSchema } from "@shared/schema";
 import { z } from "zod";
+
+const {
+  GOOGLE_CLIENT_ID,
+  GOOGLE_CLIENT_SECRET,
+  GOOGLE_REDIRECT_URI,
+  FRONTEND_REDIRECT_URI
+} = process.env;
 
 const authUserSchema = z.object({
   email: z.string().email(),
@@ -292,6 +303,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Mock authentication routes for demo purposes
+  // Real Google OAuth would be implemented here in production
   // Mock authentication routes for demo purposes
   // Real Google OAuth would be implemented here in production
   
