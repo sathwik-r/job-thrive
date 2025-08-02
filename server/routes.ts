@@ -2,17 +2,16 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import axios from "axios";
-import cors from "cors";
 import dotenv from "dotenv";
 dotenv.config();
 import { insertUserSchema, insertReferralSchema } from "@shared/schema";
 import { z } from "zod";
 
 const {
-  GOOGLE_CLIENT_ID = '',
-  GOOGLE_CLIENT_SECRET = '',
-  GOOGLE_REDIRECT_URI = '',
-  FRONTEND_REDIRECT_URI = ''
+  GOOGLE_CLIENT_ID = "",
+  GOOGLE_CLIENT_SECRET = "",
+  GOOGLE_REDIRECT_URI = "",
+  FRONTEND_REDIRECT_URI = "",
 } = process.env;
 
 const authUserSchema = z.object({
@@ -30,7 +29,16 @@ const createReferralRequestSchema = z.object({
 });
 
 const updateReferralSchema = z.object({
-  status: z.enum(["pending", "assigned", "in_review", "completed", "expired", "cancelled"]).optional(),
+  status: z
+    .enum([
+      "pending",
+      "assigned",
+      "in_review",
+      "completed",
+      "expired",
+      "cancelled",
+    ])
+    .optional(),
   referrerId: z.number().optional(),
   proofUrl: z.string().optional(),
   paymentId: z.string().optional(),
@@ -44,9 +52,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/auth/google", async (req, res) => {
     try {
       const userData = authUserSchema.parse(req.body);
-      
+
       let user = await storage.getUserByGoogleId(userData.googleId);
-      
+
       if (!user) {
         user = await storage.createUser({
           email: userData.email,
@@ -61,7 +69,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           active: true,
         });
       }
-      
+
       res.json(user);
     } catch (error) {
       res.status(400).json({ message: "Invalid user data" });
@@ -72,11 +80,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = parseInt(req.params.id);
       const user = await storage.getUser(userId);
-      
+
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-      
+
       res.json(user);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
@@ -87,13 +95,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = parseInt(req.params.id);
       const updates = req.body;
-      
+
       const user = await storage.updateUser(userId, updates);
-      
+
       if (!user) {
         return res.status(404).json({ message: "User not found" });
       }
-      
+
       res.json(user);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
@@ -101,23 +109,23 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Profile update route for current user
-  app.put('/api/user/profile', async (req, res) => {
+  app.put("/api/user/profile", async (req, res) => {
     try {
       const userId = 1; // Mock user ID for testing
       const profileData = req.body;
-      
+
       // Mark onboarding as completed and update profile
       const updates = {
         ...profileData,
-        onboardingCompleted: true
+        onboardingCompleted: true,
       };
-      
+
       const updatedUser = await storage.updateUser(userId, updates);
-      
+
       if (!updatedUser) {
         return res.status(404).json({ message: "User not found" });
       }
-      
+
       res.json(updatedUser);
     } catch (error) {
       console.error("Error updating profile:", error);
@@ -129,14 +137,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.get("/api/jobs", async (req, res) => {
     try {
       const query = req.query.search as string;
-      
+
       let jobs;
       if (query) {
         jobs = await storage.searchJobs(query);
       } else {
         jobs = await storage.getAllJobs();
       }
-      
+
       res.json(jobs);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
@@ -147,11 +155,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const jobId = parseInt(req.params.id);
       const job = await storage.getJob(jobId);
-      
+
       if (!job) {
         return res.status(404).json({ message: "Job not found" });
       }
-      
+
       res.json(job);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
@@ -162,12 +170,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/referrals", async (req, res) => {
     try {
       const referralData = createReferralRequestSchema.parse(req.body);
-      const userId = parseInt(req.headers['x-user-id'] as string);
-      
+      const userId = parseInt(req.headers["x-user-id"] as string);
+
       if (!userId) {
         return res.status(401).json({ message: "User ID required" });
       }
-      
+
       // Create referral request
       const referral = await storage.createReferral({
         jobId: referralData.jobId,
@@ -182,15 +190,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
         assignedAt: null,
         completedAt: null,
       });
-      
+
       // Auto-assign referrer
       const job = await storage.getJob(referralData.jobId);
       if (job) {
         const eligibleReferrers = await storage.getUsersByCompany(job.company);
-        const availableReferrer = eligibleReferrers.find(user => 
-          user.id !== userId && user.active
+        const availableReferrer = eligibleReferrers.find(
+          (user) => user.id !== userId && user.active,
         );
-        
+
         if (availableReferrer) {
           await storage.updateReferral(referral.id, {
             referrerId: availableReferrer.id,
@@ -199,7 +207,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           });
         }
       }
-      
+
       res.json(referral);
     } catch (error) {
       res.status(400).json({ message: "Invalid referral data" });
@@ -210,15 +218,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = parseInt(req.params.userId);
       const referrals = await storage.getReferralsBySeeker(userId);
-      
+
       // Populate job data
       const referralsWithJobs = await Promise.all(
         referrals.map(async (referral) => {
           const job = await storage.getJob(referral.jobId);
           return { ...referral, job };
-        })
+        }),
       );
-      
+
       res.json(referralsWithJobs);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
@@ -229,16 +237,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const userId = parseInt(req.params.userId);
       const referrals = await storage.getReferralsByReferrer(userId);
-      
+
       // Populate job and seeker data
       const referralsWithData = await Promise.all(
         referrals.map(async (referral) => {
           const job = await storage.getJob(referral.jobId);
           const seeker = await storage.getUser(referral.seekerId);
           return { ...referral, job, seeker };
-        })
+        }),
       );
-      
+
       res.json(referralsWithData);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
@@ -249,24 +257,26 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const referralId = parseInt(req.params.id);
       const updates = updateReferralSchema.parse(req.body);
-      
+
       const referral = await storage.updateReferral(referralId, updates);
-      
+
       if (!referral) {
         return res.status(404).json({ message: "Referral not found" });
       }
-      
+
       // Update user earnings if completed
       if (updates.status === "completed" && referral.referrerId) {
         const referrer = await storage.getUser(referral.referrerId);
         if (referrer) {
           await storage.updateUser(referrer.id, {
-            totalEarnings: (parseFloat(referrer.totalEarnings) + parseFloat(referral.amount)).toString(),
+            totalEarnings: (
+              parseFloat(referrer.totalEarnings) + parseFloat(referral.amount)
+            ).toString(),
             successfulReferrals: referrer.successfulReferrals + 1,
           });
         }
       }
-      
+
       res.json(referral);
     } catch (error) {
       res.status(400).json({ message: "Invalid update data" });
@@ -277,29 +287,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
   app.post("/api/payment/verify", async (req, res) => {
     try {
       const { paymentId, orderId, referralId } = req.body;
-      
+
       // Update referral with payment info
       const referral = await storage.updateReferral(referralId, {
         paymentId,
         orderId,
         status: "assigned", // Move to assigned after payment
       });
-      
+
       if (!referral) {
         return res.status(404).json({ message: "Referral not found" });
       }
-      
+
       // Update seeker's total spent
       const seeker = await storage.getUser(referral.seekerId);
       if (seeker) {
         await storage.updateUser(seeker.id, {
-          totalSpent: (parseFloat(seeker.totalSpent) + parseFloat(referral.amount)).toString(),
+          totalSpent: (
+            parseFloat(seeker.totalSpent) + parseFloat(referral.amount)
+          ).toString(),
         });
       }
-      
+
       res.json({ success: true });
     } catch (error) {
       res.status(400).json({ message: "Payment verification failed" });
+    }
+  });
+  // Step 2: Handle Google callback
+  app.get("/auth/google/callback", async (req, res) => {
+    console.log('entered google callback', req);
+    const code = req.query.code;
+
+    try {
+      // Step 3: Exchange code for tokens
+      const tokenRes = await axios.post(
+        `https://oauth2.googleapis.com/token`,
+        null,
+        {
+          params: {
+            code,
+            client_id: GOOGLE_CLIENT_ID,
+            client_secret: GOOGLE_CLIENT_SECRET,
+            redirect_uri: GOOGLE_REDIRECT_URI,
+            grant_type: "authorization_code",
+          },
+        },
+      );
+
+      const { access_token } = tokenRes.data;
+
+      // Step 4: Get user info
+      const userRes = await axios.get(
+        "https://www.googleapis.com/oauth2/v2/userinfo",
+        {
+          headers: { Authorization: `Bearer ${access_token}` },
+        },
+      );
+
+      const user = userRes.data;
+
+      console.log('user data', user);
+    } catch (err) {
+      console.error("OAuth Error:", err);
+      res.status(500).send("Authentication failed");
     }
   });
 
@@ -307,7 +358,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Real Google OAuth would be implemented here in production
   // Mock authentication routes for demo purposes
   // Real Google OAuth would be implemented here in production
-  
+
   const httpServer = createServer(app);
   return httpServer;
 }

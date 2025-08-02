@@ -28,7 +28,17 @@ export const useAuth = () => {
     try {
       console.log('Starting sign in...');
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
-      
+      const params = new URLSearchParams({
+        client_id: '314721889104-074oaf5k4i3s2lcn3ljjekvoqnjurebt.apps.googleusercontent.com',
+        redirect_uri: window.location.origin + '/post-login',
+        response_type: 'code',
+        scope: 'openid email profile',
+        access_type: 'offline',
+        prompt: 'consent'
+      });
+
+      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
+      window.location.href = authUrl;
       // Simulate authentication delay
       await new Promise(resolve => setTimeout(resolve, 2000));
       
