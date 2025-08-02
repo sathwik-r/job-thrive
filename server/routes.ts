@@ -292,6 +292,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Mock authentication routes for demo purposes
+  // Real Google OAuth would be implemented here in production
+  
   const httpServer = createServer(app);
   return httpServer;
 }
