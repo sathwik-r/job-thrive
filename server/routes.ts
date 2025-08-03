@@ -315,10 +315,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
   // Step 2: Handle Google callback
-  app.get("/auth/google/callback", async (req, res) => {
-    console.log('entered google callback', req);
-    const code = req.query.code;
-
+  app.post("/auth/google/callback", async (req, res) => {
+    const { code } = req.body;
+    console.log("code121213", code, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
     try {
       // Step 3: Exchange code for tokens
       const tokenRes = await axios.post(
@@ -327,9 +326,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
         {
           params: {
             code,
-            client_id: GOOGLE_CLIENT_ID,
-            client_secret: GOOGLE_CLIENT_SECRET,
-            redirect_uri: GOOGLE_REDIRECT_URI,
+            client_secret: "VyAxxKf4bi9rWL9YWeHi2P3r",
+            client_id:
+              "314721889104-074oaf5k4i3s2lcn3ljjekvoqnjurebt.apps.googleusercontent.com",
+            redirect_uri:
+              "https://b83b9baa-8b01-4c15-b520-e201b31ba1ab-00-28k0hxkw9obih.janeway.replit.dev/post-login",
             grant_type: "authorization_code",
           },
         },
@@ -345,9 +346,29 @@ export async function registerRoutes(app: Express): Promise<Server> {
         },
       );
 
-      const user = userRes.data;
+      const userData = userRes.data;
 
-      console.log('user data', user);
+      console.log("user data", userData);
+      let user = await storage.getUserByGoogleId(userData.id);
+
+      if (!user) {
+        console.log('creating new user as user DNE in DB')
+        user = await storage.createUser({
+          email: userData.email,
+          name: userData.name,
+          googleId: userData.id,
+          photoUrl: userData.picture,
+          company: userData.company,
+          role: "both",
+          totalEarnings: "0.00",
+          totalSpent: "0.00",
+          successfulReferrals: 0,
+          active: true,
+        });
+      }
+      console.log('user in DB is ', user)
+
+      res.json(user);
     } catch (err) {
       console.error("OAuth Error:", err);
       res.status(500).send("Authentication failed");

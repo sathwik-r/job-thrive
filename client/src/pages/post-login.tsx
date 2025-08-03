@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
+import axios from 'axios';
 
 const PostLoginPage: React.FC = () => {
   const [, setLocation] = useLocation();
@@ -19,21 +20,22 @@ const PostLoginPage: React.FC = () => {
 
         console.log('Processing Google OAuth callback with code:', code);
         
-        // Make GET request to the callback endpoint (matching server route)
-        const response = await fetch(`/auth/google/callback?code=${code}`, {
-          method: 'GET',
-          credentials: 'include' // Include cookies for session
+      
+        await fetch('/auth/google/callback', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ code })  // this is the code from the URL
         });
 
-        if (response.redirected) {
-          // If server redirects, follow it
-          window.location.href = response.url;
-          return;
-        }
+        // if (response.redirected) {
+        //   // If server redirects, follow it
+        //   window.location.href = response.url;
+        //   return;
+        // }
 
-        if (!response.ok) {
-          throw new Error(`Authentication failed: ${response.status}`);
-        }
+        // if (!response.ok) {
+        //   throw new Error(`Authentication failed: ${response.status}`);
+        // }
 
         // If successful, redirect to dashboard or onboarding
         setLocation('/dashboard');
