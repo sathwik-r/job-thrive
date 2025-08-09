@@ -6,15 +6,19 @@ import { AlertCircle } from 'lucide-react';
 import OnboardingPage from './onboarding';
 
 export default function LoginPage() {
-  const { signInWithGoogle, loading, error, clearStorage } = useAuth();
+  const { signInWithGoogle, loading, error, signOut } = useAuth();
   const [showOnboarding, setShowOnboarding] = useState(true);
 
   const handleGetStarted = () => {
     setShowOnboarding(false);
   };
 
-  const handleGoogleSignIn = async () => {
-    await signInWithGoogle();
+  const handleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (err) {
+      // Error is already handled by the auth hook
+    }
   };
 
   // Always show onboarding first for new users
@@ -62,7 +66,7 @@ export default function LoginPage() {
             
             {/* Main Login Button */}
             <Button
-              onClick={handleGoogleSignIn}
+              onClick={handleSignIn}
               disabled={loading}
               className="w-full bg-white hover:bg-gray-50 text-[var(--dark-gray)] font-semibold py-6 px-6 rounded-2xl text-lg flex items-center justify-center space-x-4 transition-all duration-300 transform hover:scale-105 hover:shadow-xl border-0 mb-4"
             >
@@ -87,7 +91,7 @@ export default function LoginPage() {
             
             {/* Demo Login Button for Testing */}
             <Button
-              onClick={handleGoogleSignIn}
+              onClick={handleSignIn}
               disabled={loading}
               className="w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-4 px-6 rounded-2xl text-base border border-white/30 backdrop-blur-lg transition-all duration-300 transform hover:scale-105"
             >
@@ -102,7 +106,7 @@ export default function LoginPage() {
             </p>
             {/* Debug: Clear storage button for testing */}
             <button 
-              onClick={clearStorage}
+              onClick={signOut}
               className="text-white/30 hover:text-white/50 text-xs mt-4 underline"
             >
               Clear Storage (Dev Only)

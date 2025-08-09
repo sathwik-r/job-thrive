@@ -31,8 +31,6 @@ function Router() {
         } else {
           setLocation("/dashboard");
         }
-      } else if (location == "post-login") {
-        setLocation("/post-login");
       }
     }
   }, [user, loading, location, setLocation]);

@@ -1,55 +1,77 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
-import axios from 'axios';
+import { useAuth } from '@/hooks/use-auth';
+import { apiRequest } from '@/lib/queryClient';
+import type { User } from '@shared/schema';
 
 const PostLoginPage: React.FC = () => {
   const [, setLocation] = useLocation();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
+  const { setAuthData } = useAuth();
+
 
   useEffect(() => {
-    const handleGoogleCallback = async () => {
+    // Prevent multiple executions of the callback
+    if (window.location.search.includes('processed=true')) {
+      setLoading(false);
+      return;
+    }
+
+    const handleCognitoCallback = async () => {
       try {
-        const params = new URLSearchParams(window.location.search);
-        const code = params.get('code');
-        
-        if (!code) {
-          setError('No authorization code received');
+        // Extract the authorization code from URL
+        const urlParams = new URLSearchParams(window.location.search);
+        const code = urlParams.get('code');
+        const state = urlParams.get('state');
+        const error = urlParams.get('error');
+
+        if (error) {
+          setError('Authentication failed. Please try again.');
+          setLoading(false);
           return;
         }
 
-        console.log('Processing Google OAuth callback with code:', code);
-        
-      
-        await fetch('/auth/google/callback', {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({ code })  // this is the code from the URL
+        if (!code) {
+          setError('No authorization code received from Cognito.');
+          setLoading(false);
+          return;
+        }
+
+        // Mark URL as processed to prevent re-execution
+        const newUrl = new URL(window.location.href);
+        newUrl.searchParams.set('processed', 'true');
+        window.history.replaceState({}, document.title, newUrl.toString());
+
+        // Send code to backend for secure token exchange
+        const response = await apiRequest('POST', '/api/auth/cognito-callback', {
+          code,
+          redirectUri: window.location.origin + '/post-login'
         });
+        
+        const authData = await response.json();
 
-        // if (response.redirected) {
-        //   // If server redirects, follow it
-        //   window.location.href = response.url;
-        //   return;
-        // }
-
-        // if (!response.ok) {
-        //   throw new Error(`Authentication failed: ${response.status}`);
-        // }
-
-        // If successful, redirect to dashboard or onboarding
-        setLocation('/dashboard');
+        // Store user and auth data
+        setAuthData(authData);
+        
+        // Clear URL parameters
+        window.history.replaceState({}, document.title, window.location.pathname);
+        
+        // Simple redirect based on onboarding status
+        if (!authData.user.onboardingCompleted) {
+          setLocation('/onboarding');
+        } else {
+          setLocation('/dashboard');
+        }
         
       } catch (error) {
-        console.error('OAuth callback error:', error);
         setError('Authentication failed. Please try again.');
-      } finally {
         setLoading(false);
       }
     };
 
-    handleGoogleCallback();
-  }, [setLocation]);
+    handleCognitoCallback();
+  }, []); // Empty dependency array to run only once
 
   if (loading) {
     return (
@@ -79,25 +101,20 @@ const PostLoginPage: React.FC = () => {
               </svg>
             </div>
           </div>
-          <p className="text-lg opacity-90 mb-4">{error}</p>
-          <button 
+          <h2 className="text-xl font-semibold mb-2">Authentication Failed</h2>
+          <p className="text-lg opacity-90 mb-6">{error}</p>
+          <button
             onClick={() => setLocation('/login')}
-            className="px-6 py-2 bg-white/20 rounded-xl backdrop-blur-lg hover:bg-white/30 transition-colors"
+            className="bg-white text-purple-600 px-6 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition-colors"
           >
-            Back to Login
+            Try Again
           </button>
         </div>
       </div>
     );
   }
 
-  return (
-    <div className="min-h-screen flex items-center justify-center gradient-bg">
-      <div className="text-center text-white">
-        <p className="text-lg opacity-90">Redirecting...</p>
-      </div>  
-    </div>
-  );
+  return null; // This should never render as we redirect on success
 };
 
 export default PostLoginPage;

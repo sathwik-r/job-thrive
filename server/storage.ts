@@ -297,9 +297,11 @@ export class MemStorage implements IStorage {
   }
 
   async getPendingReferrals(): Promise<Referral[]> {
-    return Array.from(this.referrals.values())
-      .filter(referral => referral.status === "pending");
+    return Array.from(this.referrals.values()).filter(
+      (referral) => referral.status === "pending"
+    );
   }
 }
 
-export const storage = new MemStorage();
+// Legacy memory storage - replaced with database storage (DbStorage)
+// export const storage = new MemStorage();

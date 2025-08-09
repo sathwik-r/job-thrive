@@ -2,9 +2,37 @@ import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
-    const text = (await res.text()) || res.statusText;
+    const text = await res.text();
     throw new Error(`${res.status}: ${text}`);
   }
+}
+
+// Helper function to get auth token from localStorage
+function getAuthToken(): string | null {
+  try {
+    const authData = localStorage.getItem('circl_auth');
+    if (authData) {
+      const { token } = JSON.parse(authData);
+      return token;
+    }
+    return null;
+  } catch {
+    return null;
+  }
+}
+
+// Helper function to get auth headers
+function getAuthHeaders(): Record<string, string> {
+  const token = getAuthToken();
+  const headers: Record<string, string> = {
+    "Content-Type": "application/json"
+  };
+  
+  if (token) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+  
+  return headers;
 }
 
 export async function apiRequest(
@@ -12,9 +40,17 @@ export async function apiRequest(
   url: string,
   data?: unknown | undefined,
 ): Promise<Response> {
+  const headers = data ? getAuthHeaders() : {};
+  
+  // Add auth header even for requests without data
+  const token = getAuthToken();
+  if (token && !data) {
+    headers.Authorization = `Bearer ${token}`;
+  }
+
   const res = await fetch(url, {
     method,
-    headers: data ? { "Content-Type": "application/json" } : {},
+    headers,
     body: data ? JSON.stringify(data) : undefined,
     credentials: "include",
   });
@@ -29,8 +65,16 @@ export const getQueryFn: <T>(options: {
 }) => QueryFunction<T> =
   ({ on401: unauthorizedBehavior }) =>
   async ({ queryKey }) => {
+    const token = getAuthToken();
+    const headers: Record<string, string> = {};
+    
+    if (token) {
+      headers.Authorization = `Bearer ${token}`;
+    }
+
     const res = await fetch(queryKey.join("/") as string, {
       credentials: "include",
+      headers,
     });
 
     if (unauthorizedBehavior === "returnNull" && res.status === 401) {

@@ -1,18 +1,13 @@
-import type { Express } from "express";
+import { Express } from "express";
 import { createServer, type Server } from "http";
-import { storage } from "./storage";
+import { storage } from "./db-storage";
 import axios from "axios";
 import dotenv from "dotenv";
 dotenv.config();
 import { insertUserSchema, insertReferralSchema } from "@shared/schema";
 import { z } from "zod";
+import { authenticateToken, optionalAuth, requireRole } from "./auth-middleware";
 
-const {
-  GOOGLE_CLIENT_ID = "",
-  GOOGLE_CLIENT_SECRET = "",
-  GOOGLE_REDIRECT_URI = "",
-  FRONTEND_REDIRECT_URI = "",
-} = process.env;
 
 const authUserSchema = z.object({
   email: z.string().email(),
@@ -22,33 +17,121 @@ const authUserSchema = z.object({
   company: z.string().optional(),
 });
 
+const cognitoCallbackSchema = z.object({
+  code: z.string(),
+  redirectUri: z.string(),
+});
+
 const createReferralRequestSchema = z.object({
   jobId: z.number(),
   amount: z.string(),
   resumeUrl: z.string().optional(),
 });
 
-const updateReferralSchema = z.object({
-  status: z
-    .enum([
-      "pending",
-      "assigned",
-      "in_review",
-      "completed",
-      "expired",
-      "cancelled",
-    ])
-    .optional(),
+const updateReferralSchema = insertReferralSchema.partial().extend({
+  id: z.number(),
+  seekerId: z.number().optional(),
   referrerId: z.number().optional(),
+  status: z.enum(["pending", "assigned", "in_review", "completed", "expired", "cancelled"]).optional(),
   proofUrl: z.string().optional(),
-  paymentId: z.string().optional(),
-  orderId: z.string().optional(),
+  proofDescription: z.string().optional(),
+  notes: z.string().optional(),
   assignedAt: z.date().optional(),
   completedAt: z.date().optional(),
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
-  // Auth routes
+  // Cognito callback route
+  app.post("/api/auth/cognito-callback", async (req, res) => {
+    try {
+      const { code, redirectUri } = cognitoCallbackSchema.parse(req.body);
+      
+      // Use client secret from environment (secure on backend)
+      const clientId = '6cmhee7smndjjsl8k1drkjq6tv';
+      const clientSecret = process.env.COGNITO_CLIENT_SECRET || 'sm8905e569brs2l26a7kpj9upf57ku7mo756l5ndl7icsorpsl7';
+      
+      // Exchange authorization code for tokens with client secret
+      const tokenResponse = await axios.post(
+        'https://us-east-16jz6iuh4j.auth.us-east-1.amazoncognito.com/oauth2/token',
+        new URLSearchParams({
+          grant_type: 'authorization_code',
+          client_id: clientId,
+          code: code,
+          redirect_uri: redirectUri,
+        }),
+        {
+          headers: {
+            'Content-Type': 'application/x-www-form-urlencoded',
+            'Authorization': `Basic ${Buffer.from(`${clientId}:${clientSecret}`).toString('base64')}`,
+          },
+        }
+      );
+
+      const { access_token, id_token } = tokenResponse.data;
+
+      // Get user info from Cognito
+      const userInfoResponse = await axios.get(
+        'https://us-east-16jz6iuh4j.auth.us-east-1.amazoncognito.com/oauth2/userInfo',
+        {
+          headers: {
+            'Authorization': `Bearer ${access_token}`
+          }
+        }
+      );
+
+      const cognitoUserInfo = userInfoResponse.data;
+      
+      // Decode ID token to get user ID
+      const idTokenPayload = JSON.parse(Buffer.from(id_token.split('.')[1], 'base64').toString());
+      
+      // Check if user exists in database by email (primary identifier)
+      let user;
+      try {
+        user = await storage.getUserByEmail(cognitoUserInfo.email);
+        if (user) {
+          // Update existing user with latest info from Cognito
+          user = await storage.updateUser(user.id, {
+            googleId: idTokenPayload.sub,
+            photoUrl: cognitoUserInfo.picture || user.photoUrl,
+            name: cognitoUserInfo.name || user.name,
+          });
+        }
+      } catch (error) {
+        // User not found by email, will create new user
+      }
+
+      if (!user) {
+        // Create new user
+        user = await storage.createUser({
+          email: cognitoUserInfo.email,
+          name: cognitoUserInfo.name || `${cognitoUserInfo.given_name || ''} ${cognitoUserInfo.family_name || ''}`.trim(),
+          googleId: idTokenPayload.sub,
+          photoUrl: cognitoUserInfo.picture,
+          company: null,
+          role: "both",
+          totalEarnings: "0.00",
+          totalSpent: "0.00",
+          successfulReferrals: 0,
+          active: true,
+          onboardingCompleted: false,
+        });
+      }
+
+      // Return user data along with the JWT token
+      res.json({
+        user,
+        token: id_token, // This is the JWT from Cognito
+        tokenType: 'Bearer'
+      });
+    } catch (error: any) {
+      if (axios.isAxiosError(error)) {
+        console.error('Cognito callback error:', error.response?.data);
+      }
+      res.status(401).json({ message: "Authentication failed" });
+    }
+  });
+
+  // Legacy Google OAuth route (can be removed if not needed)
   app.post("/api/auth/google", async (req, res) => {
     try {
       const userData = authUserSchema.parse(req.body);
@@ -76,7 +159,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/user/:id", async (req, res) => {
+  // User routes - protected
+  app.get("/api/user/:id", authenticateToken, async (req, res) => {
     try {
       const userId = parseInt(req.params.id);
       const user = await storage.getUser(userId);
@@ -91,10 +175,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/user/:id", async (req, res) => {
+  app.put("/api/user/:id", authenticateToken, async (req, res) => {
     try {
       const userId = parseInt(req.params.id);
       const updates = req.body;
+
+      // Users can only update their own data
+      if (req.user!.id !== userId) {
+        return res.status(403).json({ message: "Access denied" });
+      }
 
       const user = await storage.updateUser(userId, updates);
 
@@ -109,17 +198,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
   });
 
   // Profile update route for current user
-  app.put("/api/user/profile", async (req, res) => {
+  app.post("/api/user/profile", authenticateToken, async (req, res) => {
     try {
-      const userId = 1; // Mock user ID for testing
       const profileData = req.body;
+      const userId = req.user!.id; // Get from authenticated user
 
       // Mark onboarding as completed and update profile
       const updates = {
         ...profileData,
         onboardingCompleted: true,
       };
-
+      
+      // Remove userId from updates if it exists (shouldn't be updated)
+      delete updates.userId;
+      
+      
       const updatedUser = await storage.updateUser(userId, updates);
 
       if (!updatedUser) {
@@ -127,14 +220,13 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       res.json(updatedUser);
-    } catch (error) {
-      console.error("Error updating profile:", error);
+    } catch (error: any) {
       res.status(500).json({ message: "Failed to update profile" });
     }
   });
 
-  // Job routes
-  app.get("/api/jobs", async (req, res) => {
+  // Job routes - some public, some protected
+  app.get("/api/jobs", optionalAuth, async (req, res) => {
     try {
       const query = req.query.search as string;
 
@@ -151,7 +243,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/jobs/:id", async (req, res) => {
+  app.get("/api/jobs/:id", optionalAuth, async (req, res) => {
     try {
       const jobId = parseInt(req.params.id);
       const job = await storage.getJob(jobId);
@@ -166,15 +258,11 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Referral routes
-  app.post("/api/referrals", async (req, res) => {
+  // Referral routes - protected
+  app.post("/api/referrals", authenticateToken, async (req, res) => {
     try {
       const referralData = createReferralRequestSchema.parse(req.body);
-      const userId = parseInt(req.headers["x-user-id"] as string);
-
-      if (!userId) {
-        return res.status(401).json({ message: "User ID required" });
-      }
+      const userId = req.user!.id; // Get from authenticated user
 
       // Create referral request
       const referral = await storage.createReferral({
@@ -214,9 +302,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/referrals/seeker/:userId", async (req, res) => {
+  app.get("/api/referrals/seeker/:userId", authenticateToken, async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
+      
+      // Users can only access their own referrals
+      if (req.user!.id !== userId) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
       const referrals = await storage.getReferralsBySeeker(userId);
 
       // Populate job data
@@ -233,9 +327,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.get("/api/referrals/referrer/:userId", async (req, res) => {
+  app.get("/api/referrals/referrer/:userId", authenticateToken, async (req, res) => {
     try {
       const userId = parseInt(req.params.userId);
+      
+      // Users can only access their own referrals
+      if (req.user!.id !== userId) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+      
       const referrals = await storage.getReferralsByReferrer(userId);
 
       // Populate job and seeker data
@@ -253,10 +353,21 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  app.put("/api/referrals/:id", async (req, res) => {
+  app.put("/api/referrals/:id", authenticateToken, async (req, res) => {
     try {
       const referralId = parseInt(req.params.id);
       const updates = updateReferralSchema.parse(req.body);
+
+      // Check if user has permission to update this referral
+      const existingReferral = await storage.getReferral(referralId);
+      if (!existingReferral) {
+        return res.status(404).json({ message: "Referral not found" });
+      }
+      
+      // Users can only update referrals they're involved in
+      if (existingReferral.seekerId !== req.user!.id && existingReferral.referrerId !== req.user!.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
 
       const referral = await storage.updateReferral(referralId, updates);
 
@@ -283,10 +394,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Payment route
-  app.post("/api/payment/verify", async (req, res) => {
+  // Payment route - protected
+  app.post("/api/payment/verify", authenticateToken, async (req, res) => {
     try {
       const { paymentId, orderId, referralId } = req.body;
+
+      // Check if user owns this referral
+      const existingReferral = await storage.getReferral(referralId);
+      if (!existingReferral || existingReferral.seekerId !== req.user!.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
 
       // Update referral with payment info
       const referral = await storage.updateReferral(referralId, {
@@ -314,72 +431,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(400).json({ message: "Payment verification failed" });
     }
   });
-  // Step 2: Handle Google callback
-  app.post("/auth/google/callback", async (req, res) => {
-    const { code } = req.body;
-    console.log("code121213", code, GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET);
-    try {
-      // Step 3: Exchange code for tokens
-      const tokenRes = await axios.post(
-        `https://oauth2.googleapis.com/token`,
-        null,
-        {
-          params: {
-            code,
-            client_secret: "VyAxxKf4bi9rWL9YWeHi2P3r",
-            client_id:
-              "314721889104-074oaf5k4i3s2lcn3ljjekvoqnjurebt.apps.googleusercontent.com",
-            redirect_uri:
-              "https://b83b9baa-8b01-4c15-b520-e201b31ba1ab-00-28k0hxkw9obih.janeway.replit.dev/post-login",
-            grant_type: "authorization_code",
-          },
-        },
-      );
-
-      const { access_token } = tokenRes.data;
-
-      // Step 4: Get user info
-      const userRes = await axios.get(
-        "https://www.googleapis.com/oauth2/v2/userinfo",
-        {
-          headers: { Authorization: `Bearer ${access_token}` },
-        },
-      );
-
-      const userData = userRes.data;
-
-      console.log("user data", userData);
-      let user = await storage.getUserByGoogleId(userData.id);
-
-      if (!user) {
-        console.log('creating new user as user DNE in DB')
-        user = await storage.createUser({
-          email: userData.email,
-          name: userData.name,
-          googleId: userData.id,
-          photoUrl: userData.picture,
-          company: userData.company,
-          role: "both",
-          totalEarnings: "0.00",
-          totalSpent: "0.00",
-          successfulReferrals: 0,
-          active: true,
-        });
-      }
-      console.log('user in DB is ', user)
-
-      res.json(user);
-    } catch (err) {
-      console.error("OAuth Error:", err);
-      res.status(500).send("Authentication failed");
-    }
-  });
-
-  // Mock authentication routes for demo purposes
-  // Real Google OAuth would be implemented here in production
-  // Mock authentication routes for demo purposes
-  // Real Google OAuth would be implemented here in production
-
+  
   const httpServer = createServer(app);
   return httpServer;
 }

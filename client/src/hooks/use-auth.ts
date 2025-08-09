@@ -1,7 +1,7 @@
-import { useState, useEffect } from 'react';
-import { auth, GoogleAuthProvider, googleProvider, type User as FirebaseUser } from '@/lib/firebase';
+import { useState } from "react";
 import { apiRequest } from '@/lib/queryClient';
-import { type User } from '@shared/schema';
+import { CognitoAuth } from "@/lib/cognito";
+import type { User } from "@shared/schema";
 
 interface AuthState {
   user: User | null;
@@ -9,77 +9,52 @@ interface AuthState {
   error: string | null;
 }
 
+interface AuthData {
+  user: User;
+  token: string;
+  tokenType: string;
+}
+
 export const useAuth = () => {
+  // Initialize user from localStorage if available
+  const getInitialUser = (): User | null => {
+    try {
+      const saved = localStorage.getItem('circl_user');
+      return saved ? JSON.parse(saved) : null;
+    } catch {
+      return null;
+    }
+  };
+
   const [authState, setAuthState] = useState<AuthState>({
-    user: null,
-    loading: true,
+    user: getInitialUser(),
+    loading: false,
     error: null,
   });
 
-  useEffect(() => {
-    // Clear all storage for fresh demo experience
-    localStorage.clear();
-    
-    // Set loading to false with no user to show pitch screen
-    setAuthState({ user: null, loading: false, error: null });
-  }, []);
-
   const signInWithGoogle = async (): Promise<void> => {
     try {
-      console.log('Starting sign in...');
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
-      const params = new URLSearchParams({
-        client_id: '314721889104-074oaf5k4i3s2lcn3ljjekvoqnjurebt.apps.googleusercontent.com',
-        redirect_uri: window.location.origin + '/post-login',
-        response_type: 'code',
-        scope: 'openid email profile',
-        access_type: 'offline',
-        prompt: 'consent'
-      });
-
-      const authUrl = `https://accounts.google.com/o/oauth2/v2/auth?${params.toString()}`;
-      window.location.href = authUrl;
-      // Simulate authentication delay
-      await new Promise(resolve => setTimeout(resolve, 2000));
       
-      // Create mock user that hasn't completed onboarding
-      const mockUser = {
-        id: 1,
-        email: "john.doe@gmail.com",
-        name: "John Doe",
-        googleId: "mock-google-id-1",
-        photoUrl: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=100&h=100&fit=crop&crop=face",
-        company: null,
-        role: "both" as const,
-        totalEarnings: "0.00",
-        totalSpent: "0.00",
-        successfulReferrals: 0,
-        active: true,
-        onboardingCompleted: false, // Key: starts with incomplete onboarding
-        position: null,
-        department: null,
-        workExperience: null,
-        education: null,
-        targetDomain: null,
-        targetRole: null,
-        experience: null,
-        skills: null,
-        createdAt: new Date(),
+      // Check if Cognito is configured
+      const config = {
+        userPoolId: import.meta.env.VITE_AWS_USER_POOL_ID,
+        userPoolClientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID,
+        domain: import.meta.env.VITE_AWS_COGNITO_DOMAIN
       };
       
-      console.log('Created mock user:', mockUser);
+      if (!config.userPoolId || !config.userPoolClientId || !config.domain) {
+        throw new Error('AWS Cognito configuration is incomplete. Please check your environment variables.');
+      }
       
-      // Store mock user
-      localStorage.setItem('circl_mock_user', JSON.stringify(mockUser));
-      setAuthState({ user: mockUser, loading: false, error: null });
+      await CognitoAuth.signInWithGoogle();
+      // User will be redirected, so no need to handle response here
       
-      console.log('Sign in completed successfully');
     } catch (error) {
-      console.error('Google sign in error:', error);
       setAuthState(prev => ({ 
         ...prev, 
         loading: false,
-        error: error instanceof Error ? error.message : 'Sign in failed' 
+        error: error instanceof Error ? error.message : 'Sign in failed. Please check your AWS Cognito configuration.' 
       }));
     }
   };
@@ -88,17 +63,81 @@ export const useAuth = () => {
     try {
       localStorage.clear(); // Clear all data for fresh start
       setAuthState({ user: null, loading: false, error: null });
-      console.log('Signed out successfully');
     } catch (error) {
-      console.error('Sign out error:', error);
+      // Fallback: clear local state
+      localStorage.removeItem('circl_user');
+      localStorage.removeItem('circl_auth');
+      setAuthState({ user: null, loading: false, error: null });
     }
   };
 
-  // Helper function to clear storage for testing
-  const clearStorage = () => {
-    localStorage.clear();
-    setAuthState({ user: null, loading: false, error: null });
-    window.location.reload();
+  // Helper function to set user and auth data
+  const setUser = (user: User | null, authData?: { token: string; tokenType: string }) => {
+    // Update localStorage
+    if (user) {
+      localStorage.setItem('circl_user', JSON.stringify(user));
+      
+      // Store auth data separately if provided
+      if (authData) {
+        localStorage.setItem('circl_auth', JSON.stringify(authData));
+      }
+    } else {
+      localStorage.removeItem('circl_user');
+      localStorage.removeItem('circl_auth');
+    }
+    
+    // Update React state
+    setAuthState({
+      user: user,
+      loading: false,
+      error: null
+    });
+  };
+
+  // Helper function to set auth data from Cognito callback
+  const setAuthData = (authResponse: AuthData) => {
+    const { user, token, tokenType } = authResponse;
+    setUser(user, { token, tokenType });
+  };
+
+  // Helper function to update user data
+  const updateUser = (updates: Partial<User>): User | null => {
+    try {
+      if (!authState.user) {
+        throw new Error('No user logged in');
+      }
+
+      const updatedUser = { ...authState.user, ...updates };
+      
+      // Use setUser to sync with localStorage (preserve auth data)
+      const authData = localStorage.getItem('circl_auth');
+      const parsedAuthData = authData ? JSON.parse(authData) : undefined;
+      setUser(updatedUser, parsedAuthData);
+
+      return updatedUser;
+    } catch (error) {
+      return null;
+    }
+  };
+
+  // Helper function to check if user is authenticated
+  const isAuthenticated = (): boolean => {
+    const authData = localStorage.getItem('circl_auth');
+    return !!authData && !!authState.user;
+  };
+
+  // Helper function to get current auth token
+  const getAuthToken = (): string | null => {
+    try {
+      const authData = localStorage.getItem('circl_auth');
+      if (authData) {
+        const { token } = JSON.parse(authData);
+        return token;
+      }
+      return null;
+    } catch {
+      return null;
+    }
   };
 
   return {
@@ -107,6 +146,10 @@ export const useAuth = () => {
     error: authState.error,
     signInWithGoogle,
     signOut,
-    clearStorage,
+    setUser,
+    setAuthData,
+    updateUser,
+    isAuthenticated,
+    getAuthToken,
   };
 };

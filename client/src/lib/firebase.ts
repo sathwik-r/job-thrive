@@ -9,49 +9,31 @@ export interface User {
 }
 
 export interface AuthResult {
-  user: User;
+  user: User | null;
   credential?: any;
 }
 
-// Mock Firebase Auth for development
-export const auth = {
-  signInWithPopup: async (provider: any): Promise<AuthResult> => {
-    // In production, this would use actual Firebase Auth
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve({
-          user: {
-            uid: "mock-user-id-" + Date.now(),
-            email: "user@example.com",
-            displayName: "John Doe",
-            photoURL: "https://via.placeholder.com/100",
-          }
-        });
-      }, 1000);
+// Mock Firebase Auth
+const auth = {
+  signInWithPopup: (provider: any): Promise<AuthResult> => {
+    return Promise.resolve({
+      user: null,
+      credential: null
     });
   },
-  
-  signOut: async (): Promise<void> => {
-    localStorage.removeItem('circl_user');
-    return Promise.resolve();
-  },
-  
-  onAuthStateChanged: (callback: (user: User | null) => void) => {
-    // Check if user is already logged in
-    const savedUser = localStorage.getItem('circl_user');
-    if (savedUser) {
-      try {
-        const user = JSON.parse(savedUser);
-        setTimeout(() => callback(user), 100);
-      } catch {
-        setTimeout(() => callback(null), 100);
-      }
-    } else {
-      setTimeout(() => callback(null), 100);
+  signOut: (): Promise<void> => {
+    try {
+      localStorage.clear();
+      return Promise.resolve();
+    } catch (error) {
+      throw error;
     }
-    
-    return () => {}; // unsubscribe function
-  }
+  },
+  onAuthStateChanged: (callback: (user: User | null) => void) => {
+    // Mock implementation
+    return () => {}; // Return unsubscribe function
+  },
+  currentUser: null
 };
 
 class GoogleAuthProvider {
@@ -64,3 +46,15 @@ class GoogleAuthProvider {
 
 export { GoogleAuthProvider };
 export const googleProvider = new GoogleAuthProvider();
+
+export const signOut = async () => {
+  try {
+    await auth.signOut();
+  } catch (error) {
+    throw error;
+  }
+};
+
+export const getCurrentUser = () => {
+  return auth.currentUser;
+};
