@@ -1,3 +1,5 @@
+import { apiRequest } from './queryClient';
+
 declare global {
   interface Window {
     Razorpay: any;
@@ -20,6 +22,9 @@ export interface RazorpayOptions {
     color?: string;
   };
   handler: (response: RazorpayResponse) => void;
+  modal?: {
+    ondismiss?: () => void;
+  };
 }
 
 export interface RazorpayResponse {
@@ -28,8 +33,24 @@ export interface RazorpayResponse {
   razorpay_signature?: string;
 }
 
+export interface CreateOrderResponse {
+  orderId: string;
+  amount: number;
+  currency: string;
+  key: string;
+}
+
+/**
+ * Initialize Razorpay by loading the checkout script
+ */
 export const initializeRazorpay = (): Promise<boolean> => {
   return new Promise((resolve) => {
+    // Check if Razorpay is already loaded
+    if (window.Razorpay) {
+      resolve(true);
+      return;
+    }
+
     const script = document.createElement('script');
     script.src = 'https://checkout.razorpay.com/v1/checkout.js';
     
@@ -38,6 +59,7 @@ export const initializeRazorpay = (): Promise<boolean> => {
     };
     
     script.onerror = () => {
+      console.error('Failed to load Razorpay script');
       resolve(false);
     };
     
@@ -45,18 +67,71 @@ export const initializeRazorpay = (): Promise<boolean> => {
   });
 };
 
+/**
+ * Open Razorpay payment modal with the given options
+ */
 export const openPaymentModal = (options: RazorpayOptions) => {
+  if (!window.Razorpay) {
+    throw new Error('Razorpay is not loaded');
+  }
+
   const rzp = new window.Razorpay(options);
   rzp.open();
 };
 
-export const createRazorpayOrder = async (amount: number): Promise<{ orderId: string }> => {
-  // In production, this would call your backend to create a Razorpay order
-  return new Promise((resolve) => {
-    setTimeout(() => {
-      resolve({
-        orderId: 'order_' + Date.now(),
-      });
-    }, 500);
-  });
+/**
+ * Create a Razorpay order by calling the backend API
+ */
+export const createRazorpayOrder = async (
+  amount: number, 
+  jobId: string | number,
+  currency: string = 'INR'
+): Promise<CreateOrderResponse> => {
+  try {
+    const response = await apiRequest('POST', '/api/payment/create-order', {
+      amount,
+      currency,
+      jobId,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Failed to create order');
+    }
+
+    const orderData = await response.json();
+    return orderData;
+  } catch (error) {
+    console.error('Error creating Razorpay order:', error);
+    throw error;
+  }
+};
+
+/**
+ * Verify payment on the backend
+ */
+export const verifyPayment = async (
+  paymentId: string,
+  orderId: string,
+  signature: string,
+  referralId: string | number
+) => {
+  try {
+    const response = await apiRequest('POST', '/api/payment/verify', {
+      paymentId,
+      orderId,
+      signature,
+      referralId,
+    });
+
+    if (!response.ok) {
+      const errorData = await response.json();
+      throw new Error(errorData.message || 'Payment verification failed');
+    }
+
+    return await response.json();
+  } catch (error) {
+    console.error('Error verifying payment:', error);
+    throw error;
+  }
 };

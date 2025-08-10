@@ -7,6 +7,7 @@ dotenv.config();
 import { insertUserSchema, insertReferralSchema } from "@shared/schema";
 import { z } from "zod";
 import { authenticateToken, optionalAuth, requireRole } from "./auth-middleware";
+import { razorpayService } from './razorpay-service';
 
 
 const authUserSchema = z.object({
@@ -394,12 +395,79 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Payment route - protected
+  // Create Razorpay order - protected
+  app.post("/api/payment/create-order", authenticateToken, async (req, res) => {
+    try {
+      const { amount, currency = 'INR', jobId } = req.body;
+
+      if (!amount || amount <= 0) {
+        return res.status(400).json({ message: "Invalid amount" });
+      }
+
+      if (!jobId) {
+        return res.status(400).json({ message: "Job ID is required" });
+      }
+
+      // Verify job exists and get details
+      const job = await storage.getJob(jobId);
+      if (!job) {
+        return res.status(404).json({ message: "Job not found" });
+      }
+
+      // Verify amount matches job referral fee (no processing fee)
+      const expectedAmount = parseFloat(job.referralFee);
+
+      if (Math.abs(amount - expectedAmount) > 0.01) { // Allow small floating point differences
+        return res.status(400).json({ message: "Amount mismatch" });
+      }
+
+      // Create order with Razorpay
+      const order = await razorpayService.createOrder(
+        amount,
+        currency,
+        `job_${jobId}_user_${req.user!.id}_${Date.now()}`
+      );
+
+      res.json({
+        orderId: order.id,
+        amount: order.amount,
+        currency: order.currency,
+        key: process.env.RAZORPAY_KEY_ID,
+      });
+    } catch (error) {
+      console.error('Error creating Razorpay order:', error);
+      res.status(500).json({ message: "Failed to create payment order" });
+    }
+  });
+
+  // Payment verification - protected
   app.post("/api/payment/verify", authenticateToken, async (req, res) => {
     try {
-      const { paymentId, orderId, referralId } = req.body;
+      const { paymentId, orderId, signature, referralId } = req.body;
 
-      // Check if user owns this referral
+      if (!paymentId || !orderId || !signature) {
+        return res.status(400).json({ message: "Missing payment details" });
+      }
+
+      // Verify payment signature with Razorpay
+      const isValidSignature = razorpayService.verifyPaymentSignature(
+        orderId,
+        paymentId,
+        signature
+      );
+
+      if (!isValidSignature) {
+        return res.status(400).json({ message: "Invalid payment signature" });
+      }
+
+      // Get payment details from Razorpay to verify status
+      const paymentDetails = await razorpayService.getPaymentDetails(paymentId);
+      
+      if (paymentDetails.status !== 'captured') {
+        return res.status(400).json({ message: "Payment not captured" });
+      }
+
+      // Check if referral exists and user owns it
       const existingReferral = await storage.getReferral(referralId);
       if (!existingReferral || existingReferral.seekerId !== req.user!.id) {
         return res.status(403).json({ message: "Access denied" });
@@ -426,8 +494,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({ success: true });
+      res.json({ 
+        success: true, 
+        referral,
+        paymentDetails: {
+          paymentId: paymentDetails.id,
+          amount: Number(paymentDetails.amount) / 100, // Convert from paise
+          currency: paymentDetails.currency,
+          status: paymentDetails.status,
+        }
+      });
     } catch (error) {
+      console.error('Error verifying payment:', error);
       res.status(400).json({ message: "Payment verification failed" });
     }
   });
