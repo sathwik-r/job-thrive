@@ -1,5 +1,4 @@
-import dotenv from 'dotenv';
-dotenv.config();
+import { env } from '../config/env';
 
 import AWS from 'aws-sdk';
 import { readFileSync } from 'fs';
@@ -29,12 +28,12 @@ export interface SendNotificationOptions {
 // SES Configuration
 const ses = new AWS.SES({
   region: 'ap-south-1',
-  accessKeyId: process.env.AWS_ACCESS_KEY_ID || '',
-  secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY || '',
+  accessKeyId: env.AWS_ACCESS_KEY_ID,
+  secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
 });
 
 // Default sender email
-const DEFAULT_FROM_EMAIL = process.env.SES_FROM_EMAIL || 'noreply@jobthrive.com';
+const DEFAULT_FROM_EMAIL = env.SES_FROM_EMAIL;
 
 /**
  * Load HTML template from file system

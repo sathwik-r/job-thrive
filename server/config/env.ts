@@ -23,6 +23,9 @@ const envSchema = z.object({
   // Razorpay Configuration
   RAZORPAY_KEY_ID: z.string(),
   RAZORPAY_KEY_SECRET: z.string(),
+
+  // AWS SES Configuration
+  SES_FROM_EMAIL: z.string().default('noreply@jobthrive.com'),
 });
 
 // Parse and validate environment variables
