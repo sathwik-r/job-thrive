@@ -32,6 +32,44 @@ export const useAuth = () => {
     error: null,
   });
 
+  // Validate token with backend
+  const validateToken = async (): Promise<boolean> => {
+    try {
+      const token = getAuthToken();
+      if (!token) {
+        return false;
+      }
+
+      // Make a request to validate the token
+      const response = await fetch('/api/auth/validate', {
+        method: 'GET',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+          'Content-Type': 'application/json'
+        }
+      });
+
+      if (response.ok) {
+        return true;
+      } else {
+        // Token is invalid, clear auth data
+        clearAuthData();
+        return false;
+      }
+    } catch (error) {
+      // If validation fails, clear auth data
+      clearAuthData();
+      return false;
+    }
+  };
+
+  // Clear all authentication data
+  const clearAuthData = () => {
+    localStorage.removeItem('circl_user');
+    localStorage.removeItem('circl_auth');
+    setAuthState({ user: null, loading: false, error: null });
+  };
+
   const signInWithGoogle = async (): Promise<void> => {
     try {
       setAuthState(prev => ({ ...prev, loading: true, error: null }));
@@ -151,5 +189,7 @@ export const useAuth = () => {
     updateUser,
     isAuthenticated,
     getAuthToken,
+    validateToken,
+    clearAuthData,
   };
 };

@@ -2,6 +2,18 @@ import { QueryClient, QueryFunction } from "@tanstack/react-query";
 
 async function throwIfResNotOk(res: Response) {
   if (!res.ok) {
+    // Handle 401 responses globally
+    if (res.status === 401) {
+      // Clear auth data and redirect to login
+      localStorage.removeItem('circl_user');
+      localStorage.removeItem('circl_auth');
+      
+      // Only redirect if we're not already on login page
+      if (window.location.pathname !== '/login') {
+        window.location.href = '/login';
+      }
+    }
+    
     const text = await res.text();
     throw new Error(`${res.status}: ${text}`);
   }

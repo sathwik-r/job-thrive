@@ -49,7 +49,7 @@ export default function LoginPage() {
             </div>
             
             <h1 className="text-4xl font-bold text-white mb-3 tracking-tight">
-              Welcome to <span className="gradient-text-white">Circl</span>
+              Welcome to <span className="gradient-text-white">Job Thrive</span>
             </h1>
             <p className="text-white/80 text-lg mb-2">Your job referral marketplace</p>
             <p className="text-white/60 text-sm">Connect with Gmail to unlock opportunities</p>

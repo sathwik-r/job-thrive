@@ -15,10 +15,26 @@ import ProfileSettingsPage from "@/pages/profile-settings";
 import { useAuth } from "@/hooks/use-auth";
 import { useEffect } from "react";
 import { useLocation } from "wouter";
+import AuthGuard from "@/components/auth-guard";
 
 function Router() {
-  const { user, loading } = useAuth();
+  const { user, loading, validateToken } = useAuth();
   const [location, setLocation] = useLocation();
+
+  // Global authentication check on app start
+  useEffect(() => {
+    const checkInitialAuth = async () => {
+      if (!loading && user) {
+        // Validate stored token on app start
+        const isTokenValid = await validateToken();
+        if (!isTokenValid) {
+          setLocation('/login');
+        }
+      }
+    };
+
+    checkInitialAuth();
+  }, [loading, user, validateToken, setLocation]);
 
   useEffect(() => {
     if (!loading) {
@@ -75,88 +91,53 @@ function Router() {
         }
       </Route>
       <Route path="/dashboard">
-        {() => {
-          if (!user) return <LoginPage />;
-          if (!user.onboardingCompleted)
-            return (
-              <PostLoginOnboarding
-                onComplete={() => setLocation("/dashboard")}
-              />
-            );
-          return <DashboardPage />;
-        }}
+        {() => (
+          <AuthGuard>
+            <DashboardPage />
+          </AuthGuard>
+        )}
       </Route>
       <Route path="/job-search">
-        {() => {
-          if (!user) return <LoginPage />;
-          if (!user.onboardingCompleted)
-            return (
-              <PostLoginOnboarding
-                onComplete={() => setLocation("/dashboard")}
-              />
-            );
-          return <JobSearchPage />;
-        }}
+        {() => (
+          <AuthGuard>
+            <JobSearchPage />
+          </AuthGuard>
+        )}
       </Route>
       <Route path="/profile">
-        {() => {
-          if (!user) return <LoginPage />;
-          if (!user.onboardingCompleted)
-            return (
-              <PostLoginOnboarding
-                onComplete={() => setLocation("/dashboard")}
-              />
-            );
-          return <ProfilePage />;
-        }}
+        {() => (
+          <AuthGuard>
+            <ProfilePage />
+          </AuthGuard>
+        )}
       </Route>
       <Route path="/profile-settings">
-        {() => {
-          if (!user) return <LoginPage />;
-          if (!user.onboardingCompleted)
-            return (
-              <PostLoginOnboarding
-                onComplete={() => setLocation("/dashboard")}
-              />
-            );
-          return <ProfileSettingsPage />;
-        }}
+        {() => (
+          <AuthGuard>
+            <ProfileSettingsPage />
+          </AuthGuard>
+        )}
       </Route>
       <Route path="/analytics">
-        {() => {
-          if (!user) return <LoginPage />;
-          if (!user.onboardingCompleted)
-            return (
-              <PostLoginOnboarding
-                onComplete={() => setLocation("/dashboard")}
-              />
-            );
-          return <AnalyticsPage />;
-        }}
+        {() => (
+          <AuthGuard>
+            <AnalyticsPage />
+          </AuthGuard>
+        )}
       </Route>
       <Route path="/referral-request/:jobId">
-        {(params) => {
-          if (!user) return <LoginPage />;
-          if (!user.onboardingCompleted)
-            return (
-              <PostLoginOnboarding
-                onComplete={() => setLocation("/dashboard")}
-              />
-            );
-          return <ReferralRequestPage jobId={params.jobId} />;
-        }}
+        {(params) => (
+          <AuthGuard>
+            <ReferralRequestPage jobId={params.jobId} />
+          </AuthGuard>
+        )}
       </Route>
       <Route path="/">
-        {() => {
-          if (!user) return <LoginPage />;
-          if (!user.onboardingCompleted)
-            return (
-              <PostLoginOnboarding
-                onComplete={() => setLocation("/dashboard")}
-              />
-            );
-          return <DashboardPage />;
-        }}
+        {() => (
+          <AuthGuard>
+            <DashboardPage />
+          </AuthGuard>
+        )}
       </Route>
       <Route path="/post-login" component={PostLoginPage} />
       <Route component={() => <div>404 Not Found</div>} />

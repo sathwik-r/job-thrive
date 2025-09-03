@@ -132,7 +132,6 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
       role: user.role,
       cognitoSub: decoded.sub,
     };
-    console.log('User authenticated:', req.user);
     next();
   } catch (error) {
     return res.status(500).json({ message: "Authentication error" });

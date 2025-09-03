@@ -97,7 +97,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
 
   const getTotalSteps = () => {
     if (data.role === 'both') return 4;
-    return 3;
+    return 2;
   };
 
   const addSkill = (skill: string) => {
@@ -125,7 +125,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
               <div className="w-16 h-16 mx-auto bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] rounded-2xl flex items-center justify-center mb-4">
                 <User className="w-8 h-8 text-white" />
               </div>
-              <CardTitle className="text-2xl font-bold gradient-text">What brings you to Circl?</CardTitle>
+              <CardTitle className="text-2xl font-bold gradient-text">What brings you to Job Thrive?</CardTitle>
               <p className="text-gray-600">Choose your primary goal on our platform</p>
             </CardHeader>
             <CardContent className="space-y-4">

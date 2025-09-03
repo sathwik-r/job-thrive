@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>New Job Alert</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            max-width: 600px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .header {
+            background-color: #059669;
+            color: white;
+            padding: 20px;
+            text-align: center;
+            border-radius: 8px 8px 0 0;
+        }
+        .job-card {
+            background-color: #f9fafb;
+            border: 1px solid #e5e7eb;
+            border-radius: 8px;
+            padding: 20px;
+            margin: 20px 0;
+        }
+        .job-title {
+            color: #1f2937;
+            font-size: 20px;
+            font-weight: bold;
+            margin-bottom: 10px;
+        }
+        .company {
+            color: #4f46e5;
+            font-weight: 600;
+            margin-bottom: 10px;
+        }
+        .location {
+            color: #6b7280;
+            margin-bottom: 15px;
+        }
+        .description {
+            color: #374151;
+            margin-bottom: 20px;
+        }
+        .button {
+            display: inline-block;
+            background-color: #059669;
+            color: white;
+            padding: 12px 24px;
+            text-decoration: none;
+            border-radius: 6px;
+            margin: 10px 0;
+        }
+        .footer {
+            text-align: center;
+            margin-top: 30px;
+            color: #6b7280;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>New Job Alert!</h1>
+    </div>
+    
+    <div class="job-card">
+        <div class="job-title">{{jobTitle}}</div>
+        <div class="company">{{companyName}}</div>
+        <div class="location">📍 {{location}}</div>
+        <div class="description">
+            {{jobDescription}}
+        </div>
+        <div>
+            <strong>Salary:</strong> {{salary}}<br>
+            <strong>Experience:</strong> {{experience}}<br>
+            <strong>Type:</strong> {{jobType}}
+        </div>
+        <a href="{{jobUrl}}" class="button">Apply Now</a>
+    </div>
+    
+    <p>This job matches your saved preferences for {{preferenceType}} positions.</p>
+    
+    <p>Don't miss out on this opportunity! Apply now to get ahead of other candidates.</p>
+    
+    <div class="footer">
+        <p>You're receiving this because you have job alerts enabled for {{preferenceType}} positions.</p>
+        <p><a href="{{unsubscribeUrl}}">Unsubscribe</a> | <a href="{{preferencesUrl}}">Manage Preferences</a></p>
+        <p>&copy; 2024 JobThrive. All rights reserved.</p>
+    </div>
+</body>
+</html>

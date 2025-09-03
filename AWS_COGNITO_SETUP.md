@@ -1,6 +1,6 @@
 # AWS Cognito Setup Guide
 
-This guide will help you set up AWS Cognito authentication with Google OAuth for your Circl application.
+This guide will help you set up AWS Cognito authentication with Google OAuth for your Job Thrive application.
 
 ## Prerequisites
 

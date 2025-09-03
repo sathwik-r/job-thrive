@@ -3,11 +3,14 @@ import { createServer, type Server } from "http";
 import { storage } from "./db-storage";
 import axios from "axios";
 import dotenv from "dotenv";
+import crypto from "crypto";
+import AWS from "aws-sdk";
 dotenv.config();
 import { insertUserSchema, insertReferralSchema } from "@shared/schema";
 import { z } from "zod";
 import { authenticateToken, optionalAuth, requireRole } from "./auth-middleware";
 import { razorpayService } from './razorpay-service';
+import { assignReferral } from './match-making';
 
 
 const authUserSchema = z.object({
@@ -42,6 +45,25 @@ const updateReferralSchema = insertReferralSchema.partial().extend({
 });
 
 export async function registerRoutes(app: Express): Promise<Server> {
+  // Health check endpoint for load balancers and uptime checks
+  app.get("/healthz", (_req, res) => {
+    res.status(200).json({ status: "ok" });
+  });
+  // Token validation endpoint
+  app.get("/api/auth/validate", authenticateToken, async (req, res) => {
+    try {
+      // If we get here, the token is valid (authenticateToken middleware passed)
+      // Return user info to confirm authentication
+      const user = await storage.getUser(req.user!.id);
+      if (!user) {
+        return res.status(401).json({ message: "User not found" });
+      }
+      res.json({ valid: true, user });
+    } catch (error) {
+      res.status(401).json({ message: "Token validation failed" });
+    }
+  });
+
   // Cognito callback route
   app.post("/api/auth/cognito-callback", async (req, res) => {
     try {
@@ -67,6 +89,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
           },
         }
       );
+      console.log('Token exchange successful, status:', tokenResponse.status);
 
       const { access_token, id_token } = tokenResponse.data;
 
@@ -229,16 +252,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Job routes - some public, some protected
   app.get("/api/jobs", optionalAuth, async (req, res) => {
     try {
-      const query = req.query.search as string;
+      const query = (req.query.search as string) || '';
+      const pageParam = parseInt((req.query.page as string) || '1', 10);
+      const page = Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
+      console.log("page is ", page);
+      // Hardcoded page size on server
+      const pageSize = 2;
+      const offset = (page - 1) * pageSize;
 
       let jobs;
+      let total;
       if (query) {
-        jobs = await storage.searchJobs(query);
+        [jobs, total] = await Promise.all([
+          storage.searchJobsPaginated(query, offset, pageSize),
+          storage.searchJobsCount(query),
+        ]);
       } else {
-        jobs = await storage.getAllJobs();
+        [jobs, total] = await Promise.all([
+          storage.getJobsPaginated(offset, pageSize),
+          storage.getJobsCount(),
+        ]);
       }
 
-      res.json(jobs);
+      res.json({
+        items: jobs,
+        page,
+        pageSize,
+        total,
+        totalPages: Math.max(1, Math.ceil(total / pageSize)),
+      });
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
     }
@@ -440,6 +482,75 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Generate S3 pre-signed URL for resume upload - protected
+  app.post("/api/upload/resume-presigned-url", authenticateToken, async (req, res) => {
+    try {
+      const { fileName, fileType } = req.body;
+      
+      if (!fileName || !fileType) {
+        return res.status(400).json({ message: "Missing fileName or fileType" });
+      }
+
+      // Validate file type
+      const validTypes = [
+        'application/pdf',
+        'application/msword',
+        'application/vnd.openxmlformats-officedocument.wordprocessingml.document'
+      ];
+      
+      if (!validTypes.includes(fileType)) {
+        return res.status(400).json({ message: "Invalid file type" });
+      }
+
+      // Generate unique file path
+      const now = new Date();
+      const monthYear = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+      const uuid = crypto.randomUUID();
+      const fileExtension = fileName.split('.').pop();
+      const s3Key = `job-thrive/${monthYear}/${fileName}-${uuid}.${fileExtension}`;
+
+      // Configure S3
+      const s3 = new AWS.S3({
+        region: process.env.AWS_REGION || 'us-east-1',
+        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+      });
+
+      // Generate pre-signed URL for PUT operation
+      const presignedUrl = await s3.getSignedUrlPromise('putObject', {
+        Bucket: 'jobthrive',
+        Key: s3Key,
+        ContentType: fileType,
+        Expires: 3600, // URL expires in 1 hour
+      });
+
+      res.json({
+        presignedUrl,
+        s3Key,
+        expiresIn: 3600,
+      });
+    } catch (error) {
+      console.error('Error generating pre-signed URL:', error);
+      res.status(500).json({ message: "Failed to generate upload URL" });
+    }
+  });
+
+  // Test endpoint for assignReferral (remove in production)
+  app.post("/api/test/assign-referral", async (req, res) => {
+    try {
+      const { referralId } = req.body;
+      if (!referralId) {
+        return res.status(400).json({ message: "Missing referralId" });
+      }
+      
+      const result = await assignReferral(parseInt(referralId));
+      res.json(result);
+    } catch (error) {
+      console.error("Test assignment error:", error);
+      res.status(500).json({ message: "Test assignment failed", error: String(error) });
+    }
+  });
+
   // Payment verification - protected
   app.post("/api/payment/verify", authenticateToken, async (req, res) => {
     try {
@@ -477,11 +588,24 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const referral = await storage.updateReferral(referralId, {
         paymentId,
         orderId,
-        status: "assigned", // Move to assigned after payment
+        status: "pending", // Move to assigned after payment
       });
 
       if (!referral) {
         return res.status(404).json({ message: "Referral not found" });
+      }
+
+      // Assign referral to best available referrer using match-making algorithm
+      try {
+        const assignmentResult = await assignReferral(referralId);
+        if (!assignmentResult.success) {
+          console.warn(`Failed to assign referral ${referralId}: ${assignmentResult.message}`);
+        } else {
+          console.log(`Referral ${referralId} assigned successfully to assignment ${assignmentResult.assignmentId}`);
+        }
+      } catch (error) {
+        console.error(`Error assigning referral ${referralId}:`, error);
+        // Continue with payment verification even if assignment fails
       }
 
       // Update seeker's total spent

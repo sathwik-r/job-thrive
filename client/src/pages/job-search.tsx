@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useMemo, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
 import { ArrowLeft, Search, Filter } from 'lucide-react';
@@ -11,14 +11,31 @@ export default function JobSearchPage() {
   const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
   const [activeFilter, setActiveFilter] = useState('All Jobs');
+  const [page, setPage] = useState(1);
 
-  const { data: jobs, isLoading } = useQuery({
-    queryKey: ['/api/jobs', searchQuery],
+  const { data, isLoading } = useQuery({
+    queryKey: ['/api/jobs', searchQuery, page],
+    queryFn: async () => {
+      const params = new URLSearchParams();
+      if (searchQuery) params.append('search', searchQuery);
+      params.append('page', page.toString());
+      
+      const response = await fetch(`/api/jobs?${params.toString()}`);
+      if (!response.ok) {
+        throw new Error('Failed to fetch jobs');
+      }
+      return response.json();
+    },
   });
 
   const filters = ['All Jobs', 'Tech', 'Finance', 'Remote'];
 
-  const filteredJobs = Array.isArray(jobs) ? jobs.filter((job: Job) => {
+  const items = (data && Array.isArray((data as any).items)) ? (data as any).items as Job[] : [];
+  const total = (data as any)?.total ?? items.length;
+  const pageSize = (data as any)?.pageSize ?? items.length;
+  const totalPages = (data as any)?.totalPages ?? 1;
+
+  const filteredJobs = Array.isArray(items) ? items.filter((job: Job) => {
     if (activeFilter === 'All Jobs') return true;
     if (activeFilter === 'Tech') return ['engineer', 'developer', 'tech', 'software'].some(keyword => 
       job.title.toLowerCase().includes(keyword) || job.description.toLowerCase().includes(keyword)
@@ -29,6 +46,11 @@ export default function JobSearchPage() {
     if (activeFilter === 'Remote') return job.remote;
     return true;
   }) : [];
+
+  // Reset page when search query changes
+  useEffect(() => {
+    setPage(1);
+  }, [searchQuery]);
 
   const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     setSearchQuery(e.target.value);
@@ -96,8 +118,17 @@ export default function JobSearchPage() {
           <>
             <div className="flex items-center justify-between mb-4">
               <p className="text-gray-600">
-                {filteredJobs.length} {filteredJobs.length === 1 ? 'job' : 'jobs'} found
+                {total} {total === 1 ? 'job' : 'jobs'} found
               </p>
+              <div className="flex items-center gap-2">
+                <Button variant="outline" size="sm" disabled={page <= 1} onClick={() => setPage(p => Math.max(1, p - 1))}>
+                  Previous
+                </Button>
+                <span className="text-sm text-gray-600">Page {page} of {totalPages}</span>
+                <Button variant="outline" size="sm" disabled={page >= totalPages} onClick={() => setPage(p => Math.min(totalPages, p + 1))}>
+                  Next
+                </Button>
+              </div>
             </div>
             {filteredJobs.map((job: Job) => (
               <JobCard key={job.id} job={job} />

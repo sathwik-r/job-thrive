@@ -1,4 +1,4 @@
-import { eq, and, ilike, or, desc, isNotNull } from "drizzle-orm";
+import { eq, and, ilike, or, desc, isNotNull, sql, count } from "drizzle-orm";
 import { db } from "./db";
 import { users, jobs, referrals } from "@shared/schema";
 import type { User, Job, Referral, InsertUser, InsertJob, InsertReferral } from "@shared/schema";
@@ -40,6 +40,21 @@ export class DbStorage implements IStorage {
     return await db.select().from(jobs).where(eq(jobs.active, true)).orderBy(desc(jobs.createdAt));
   }
 
+  async getJobsPaginated(offset: number, limit: number): Promise<Job[]> {
+    return await db
+      .select()
+      .from(jobs)
+      .where(eq(jobs.active, true))
+      .orderBy(desc(jobs.createdAt))
+      .offset(offset)
+      .limit(limit);
+  }
+
+  async getJobsCount(): Promise<number> {
+    const result = await db.select({ value: count() }).from(jobs).where(eq(jobs.active, true));
+    return Number(result[0]?.value || 0);
+  }
+
   async getJob(id: number): Promise<Job | undefined> {
     const result = await db.select().from(jobs).where(eq(jobs.id, id)).limit(1);
     return result[0];
@@ -56,17 +71,59 @@ export class DbStorage implements IStorage {
   }
 
   async searchJobs(query: string): Promise<Job[]> {
-    return await db.select().from(jobs).where(
-      and(
-        eq(jobs.active, true),
-        or(
-          ilike(jobs.title, `%${query}%`),
-          ilike(jobs.company, `%${query}%`),
-          ilike(jobs.description, `%${query}%`),
-          ilike(jobs.location, `%${query}%`)
+    return await db
+      .select()
+      .from(jobs)
+      .where(
+        and(
+          eq(jobs.active, true),
+          or(
+            ilike(jobs.title, `%${query}%`),
+            ilike(jobs.company, `%${query}%`),
+            ilike(jobs.description, `%${query}%`),
+            ilike(jobs.location, `%${query}%`)
+          )
         )
       )
-    ).orderBy(desc(jobs.createdAt));
+      .orderBy(desc(jobs.createdAt));
+  }
+
+  async searchJobsPaginated(query: string, offset: number, limit: number): Promise<Job[]> {
+    return await db
+      .select()
+      .from(jobs)
+      .where(
+        and(
+          eq(jobs.active, true),
+          or(
+            ilike(jobs.title, `%${query}%`),
+            ilike(jobs.company, `%${query}%`),
+            ilike(jobs.description, `%${query}%`),
+            ilike(jobs.location, `%${query}%`)
+          )
+        )
+      )
+      .orderBy(desc(jobs.createdAt))
+      .offset(offset)
+      .limit(limit);
+  }
+
+  async searchJobsCount(query: string): Promise<number> {
+    const result = await db
+      .select({ value: count() })
+      .from(jobs)
+      .where(
+        and(
+          eq(jobs.active, true),
+          or(
+            ilike(jobs.title, `%${query}%`),
+            ilike(jobs.company, `%${query}%`),
+            ilike(jobs.description, `%${query}%`),
+            ilike(jobs.location, `%${query}%`)
+          )
+        )
+      );
+    return Number(result[0]?.value || 0);
   }
 
   // Referral methods

@@ -12,7 +12,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
 
   const steps = [
     {
-      title: "Welcome to Circl",
+      title: "Welcome to Job Thrive",
       subtitle: "The future of job referrals",
       content: (
         <div className="space-y-8">

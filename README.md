@@ -97,3 +97,41 @@ The application uses PostgreSQL via Neon for data persistence. Update the `DATAB
 - Vite handles hot module replacement in development
 - API routes are prefixed with `/api`
 - The application serves both frontend and backend on the same port 
+
+## Authentication System
+
+The application implements a comprehensive authentication system with the following features:
+
+### Token Validation
+- **Automatic Token Checks**: Every protected route validates the authentication token on page load
+- **Periodic Validation**: Tokens are validated every 5 minutes to ensure they remain valid
+- **Global Interceptor**: All API requests automatically handle 401 responses and redirect to login
+- **Backend Validation**: Tokens are validated against the backend `/api/auth/validate` endpoint
+
+### Protected Routes
+All routes except `/login` and `/post-login` are protected and require valid authentication:
+- `/dashboard` - Main dashboard
+- `/job-search` - Job search functionality
+- `/profile` - User profile
+- `/profile-settings` - Profile settings
+- `/analytics` - Analytics dashboard
+- `/referral-request/:jobId` - Referral request form
+- `/onboarding` - User onboarding (requires authentication but not completed onboarding)
+
+### Authentication Flow
+1. **Login**: Users sign in via Google OAuth through AWS Cognito
+2. **Token Storage**: JWT tokens are stored securely in localStorage
+3. **Route Protection**: AuthGuard component wraps all protected routes
+4. **Automatic Redirects**: Invalid or expired tokens automatically redirect to login
+5. **Error Handling**: User-friendly error messages for authentication failures
+
+### Security Features
+- **Token Expiration**: Automatic detection and handling of expired tokens
+- **Secure Storage**: Tokens stored in localStorage with proper cleanup
+- **Backend Validation**: Server-side token verification on every protected request
+- **Automatic Logout**: Invalid tokens trigger immediate logout and redirect
+
+### Components
+- **AuthGuard**: Wraps protected routes and handles authentication checks
+- **useAuth Hook**: Provides authentication state and methods
+- **Global Interceptors**: Automatic handling of authentication failures 

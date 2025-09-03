@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
-import { ArrowLeft, CreditCard, Upload, FileText, X } from 'lucide-react';
+import { ArrowLeft, CreditCard, Upload, FileText, X, RefreshCw } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
@@ -23,6 +23,7 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
   const [showCelebration, setShowCelebration] = useState(false);
   const [isProcessingPayment, setIsProcessingPayment] = useState(false);
   const [selectedFile, setSelectedFile] = useState<File | null>(null);
+  const [uploadedResumeUrl, setUploadedResumeUrl] = useState<string | null>(null);
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
@@ -43,24 +44,53 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
   });
 
   // File upload handlers
-  const handleFileSelect = (file: File) => {
+  const handleFileSelect = async (file: File) => {
     if (!isValidFile(file)) {
       return;
     }
+    
     setSelectedFile(file);
+    setUploadedResumeUrl(null); // Reset previous upload
+    
     toast({
       title: "Resume Selected",
-      description: `${file.name} has been selected for upload.`,
+      description: `${file.name} has been selected. Uploading to S3...`,
     });
+
+    // Immediately upload to S3
+    try {
+      const resumeUrl = await uploadResumeToS3(file);
+      setUploadedResumeUrl(resumeUrl);
+      toast({
+        title: "Resume Uploaded Successfully",
+        description: "Your resume is now ready for submission.",
+      });
+    } catch (error) {
+      toast({
+        title: "Upload Failed",
+        description: "Failed to upload resume. Please try again.",
+        variant: "destructive",
+      });
+      setSelectedFile(null);
+    }
   };
 
   const handleFileRemove = () => {
     setSelectedFile(null);
+    setUploadedResumeUrl(null);
     setUploadProgress(0);
     toast({
       title: "Resume Removed",
       description: "Resume has been removed from your submission.",
     });
+  };
+
+  const handleReplaceFile = () => {
+    // Reset everything when replacing file
+    setSelectedFile(null);
+    setUploadedResumeUrl(null);
+    setUploadProgress(0);
+    setIsUploading(false);
   };
 
   const isValidFile = (file: File): boolean => {
@@ -119,57 +149,59 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
     }
   };
 
-  const uploadResume = async (): Promise<string | null> => {
-    if (!selectedFile) return null;
-
+  const uploadResumeToS3 = async (file: File): Promise<string> => {
     setIsUploading(true);
     setUploadProgress(0);
 
     try {
-      const formData = new FormData();
-      formData.append('resume', selectedFile);
-      formData.append('userId', user?.id?.toString() || '');
-
-      // Simulate upload progress
-      const progressInterval = setInterval(() => {
-        setUploadProgress(prev => {
-          if (prev >= 90) {
-            clearInterval(progressInterval);
-            return prev;
-          }
-          return prev + 10;
-        });
-      }, 200);
-
-      const response = await fetch('/api/upload/resume', {
-        method: 'POST',
-        body: formData,
+      // Step 1: Get pre-signed URL from server
+      const presignedUrlResponse = await apiRequest('POST', '/api/upload/resume-presigned-url', {
+        fileName: file.name,
+        fileType: file.type,
       });
 
-      clearInterval(progressInterval);
-      setUploadProgress(100);
-
-      if (!response.ok) {
-        throw new Error('Upload failed');
+      if (!presignedUrlResponse.ok) {
+        throw new Error('Failed to get upload URL');
       }
 
-      const result = await response.json();
-      setIsUploading(false);
+      const { presignedUrl, s3Key } = await presignedUrlResponse.json();
+
+      // Step 2: Upload file directly to S3 using pre-signed URL with progress tracking
+      const xhr = new XMLHttpRequest();
       
-      toast({
-        title: "Resume Uploaded",
-        description: "Your resume has been uploaded successfully.",
+      return new Promise((resolve, reject) => {
+        xhr.upload.addEventListener('progress', (event) => {
+          if (event.lengthComputable) {
+            const progress = Math.round((event.loaded / event.total) * 100);
+            setUploadProgress(progress);
+          }
+        });
+
+        xhr.addEventListener('load', () => {
+          if (xhr.status === 200) {
+            // Construct the final S3 URL
+            const s3Url = `https://job-thrive.s3.amazonaws.com/${s3Key}`;
+            
+            setUploadProgress(100);
+            setIsUploading(false);
+            resolve(s3Url);
+          } else {
+            reject(new Error('Upload failed'));
+          }
+        });
+
+        xhr.addEventListener('error', () => {
+          reject(new Error('Upload failed'));
+        });
+
+        xhr.open('PUT', presignedUrl);
+        xhr.setRequestHeader('Content-Type', file.type);
+        xhr.send(file);
       });
 
-      return result.fileUrl;
     } catch (error) {
       setIsUploading(false);
       setUploadProgress(0);
-      toast({
-        title: "Upload Failed",
-        description: "Failed to upload resume. Please try again.",
-        variant: "destructive",
-      });
       throw error;
     }
   };
@@ -185,10 +217,10 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
   const totalAmount = job ? parseFloat(job.referralFee) : 0;
 
   const handlePayment = async () => {
-    if (!selectedFile) {
+    if (!uploadedResumeUrl) {
       toast({
         title: "Resume Required",
-        description: "Please upload your resume before proceeding with payment.",
+        description: "Please wait for resume upload to complete before proceeding with payment.",
         variant: "destructive",
       });
       return;
@@ -197,20 +229,17 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
     setIsProcessingPayment(true);
 
     try {
-      // Upload resume first
-      //const resumeUrl = await uploadResume();
-
       // Initialize Razorpay
       const razorpayLoaded = await initializeRazorpay();
       if (!razorpayLoaded) {
         throw new Error('Payment system is not available');
       }
 
-      // Create the referral request with resume
+      // Create the referral request with resume URL (already uploaded)
       const referral = await createReferralMutation.mutateAsync({
         jobId: job?.id || 0,
         amount: job?.referralFee || "0",
-       // resumeUrl: resumeUrl,
+        resumeUrl: uploadedResumeUrl,
       });
 
       // Create order with backend
@@ -222,7 +251,7 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
         amount: orderData.amount,
         currency: orderData.currency,
         order_id: orderData.orderId,
-        name: 'Circl Referral',
+        name: 'Job Thrive Referral',
         description: `Job Referral Fee for ${job?.title} at ${job?.company}`,
         prefill: {
           name: user?.name,
@@ -392,12 +421,26 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
                   </div>
                 )}
                 
+                {uploadedResumeUrl && !isUploading && (
+                  <div className="p-3 bg-green-50 border border-green-200 rounded-lg">
+                    <div className="flex items-center space-x-2 text-green-700">
+                      <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7" />
+                      </svg>
+                      <span className="font-medium">Resume uploaded successfully!</span>
+                      <p className="text-sm text-green-600 mt-1">Your resume is ready for submission</p>  
+                    </div>
+                  </div>
+                )}
+                
                 <div className="flex space-x-2">
                   <Button
                     variant="outline"
-                    onClick={() => document.getElementById('resume-upload')?.click()}
+                    onClick={handleReplaceFile}
                     className="flex-1"
+                    disabled={isUploading}
                   >
+                    <RefreshCw className="w-4 h-4 mr-2" />
                     Replace File
                   </Button>
                   <input
@@ -432,13 +475,13 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
             {/* Razorpay Payment Button */}
             <Button
               onClick={handlePayment}
-              disabled={isProcessingPayment || !selectedFile || isUploading}
+              disabled={isProcessingPayment || !uploadedResumeUrl || isUploading}
               className="w-full bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl text-lg flex items-center justify-center space-x-3 hover:bg-blue-700 transition-all duration-300 mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <CreditCard className="w-5 h-5" />
               <span>
                 {isProcessingPayment ? 'Processing...' : 
-                 !selectedFile ? 'Upload Resume First' :
+                 !uploadedResumeUrl ? 'Upload Resume First' :
                  isUploading ? 'Uploading Resume...' :
                  'Pay with Razorpay'}
               </span>

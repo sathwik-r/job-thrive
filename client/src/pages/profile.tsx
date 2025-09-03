@@ -21,12 +21,12 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b sticky top-0 z-10">
-        <div className="flex items-center justify-between p-4 max-w-md mx-auto">
+        <div className="relative flex items-center justify-center p-4 max-w-md mx-auto">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setLocation('/dashboard')}
-            className="flex items-center space-x-2"
+            className="absolute left-4 flex items-center space-x-2"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
@@ -34,13 +34,13 @@ export default function ProfilePage() {
           
           <h1 className="text-lg font-semibold text-[var(--dark-gray)]">Profile</h1>
           
-          <Button
+          {/* <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsEditing(!isEditing)}
           >
             <Edit3 className="w-4 h-4" />
-          </Button>
+          </Button> */}
         </div>
       </div>
 

@@ -102,7 +102,7 @@ export default function DashboardPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7l12-4-4 12m0 0L8 15m8 0V7M8 15l0-8"></path>
               </svg>
             </div>
-            <span className="text-xl font-bold text-[var(--dark-gray)]">Circl</span>
+            <span className="text-xl font-bold text-[var(--dark-gray)]">Job Thrive</span>
           </div>
           
           {/* Role Toggle */}
