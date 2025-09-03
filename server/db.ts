@@ -26,9 +26,19 @@ export const db = isNeonConnection
       return drizzleNeon({ client: pool, schema });
     })()
   : (() => {
-      const pool = new PgPool({ 
-        connectionString: process.env.DATABASE_URL,
-        ssl: false
+      const isRdsHost = /rds\.amazonaws\.com/.test(process.env.DATABASE_URL || "");
+      const sslModeEnv = (process.env.PGSSLMODE || process.env.SSLMODE || "").toLowerCase();
+      const sslRequired = isRdsHost || sslModeEnv === "require" || sslModeEnv === "verify-full" || /sslmode=require/.test(process.env.DATABASE_URL || "");
+
+      // Parse connection string to get individual components
+      const url = new URL(process.env.DATABASE_URL);
+      const pool = new PgPool({
+        host: url.hostname,
+        port: parseInt(url.port || '5432'),
+        database: url.pathname.slice(1),  // remove leading '/'
+        user: url.username,
+        password: url.password,
+        ssl: { rejectUnauthorized: false }
       });
       return drizzle({ client: pool, schema });
     })();

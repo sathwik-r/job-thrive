@@ -4,8 +4,8 @@ import { Amplify } from 'aws-amplify';
 const cognitoConfig = {
   Auth: {
     Cognito: {
-      userPoolId: import.meta.env.VITE_AWS_USER_POOL_ID || 'us-east-1_6Jz6IuH4j',
-      userPoolClientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID || '6cmhee7smndjjsl8k1drkjq6tv',
+      userPoolId: import.meta.env.VITE_AWS_USER_POOL_ID || 'ap-south-1_6Jz6IuH4j',
+      userPoolClientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID || '3auncgcoubmgelasbogir4a62',
       // Remove OAuth config to prevent automatic token exchange
     },
   },
@@ -28,8 +28,8 @@ export class CognitoAuth {
   static async signInWithGoogle(): Promise<void> {
     try {
       const config = {
-        domain: import.meta.env.VITE_AWS_COGNITO_DOMAIN || 'us-east-16jz6iuh4j.auth.us-east-1.amazoncognito.com',
-        clientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID || '6cmhee7smndjjsl8k1drkjq6tv',
+        domain: import.meta.env.VITE_AWS_COGNITO_DOMAIN,
+        clientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID ,
         redirectUri: encodeURIComponent(window.location.origin + '/post-login')
       };
       
@@ -47,8 +47,8 @@ export class CognitoAuth {
   static async signOut(): Promise<void> {
     try {
       const config = {
-        domain: import.meta.env.VITE_AWS_COGNITO_DOMAIN || 'us-east-16jz6iuh4j.auth.us-east-1.amazoncognito.com',
-        clientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID || '6cmhee7smndjjsl8k1drkjq6tv',
+        domain: import.meta.env.VITE_AWS_COGNITO_DOMAIN || 'ap-south-16jz6iuh4j.auth.ap-south-1.amazoncognito.com',
+        clientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID || '3auncgcoubmgelasbogir4a62',
         redirectUri: encodeURIComponent(window.location.origin + '/login')
       };
 

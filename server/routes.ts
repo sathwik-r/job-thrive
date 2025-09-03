@@ -69,16 +69,18 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { code, redirectUri } = cognitoCallbackSchema.parse(req.body);
       
-      // Use client secret from environment (secure on backend)
-      const clientId = '6cmhee7smndjjsl8k1drkjq6tv';
-      const clientSecret = process.env.COGNITO_CLIENT_SECRET || 'sm8905e569brs2l26a7kpj9upf57ku7mo756l5ndl7icsorpsl7';
-      
+      const clientId = process.env.COGNITO_CLIENT_ID;
+      const clientSecret = process.env.COGNITO_CLIENT_SECRET;
+      console.log('clientId', clientId);
+      console.log('clientSecret', clientSecret);
+      console.log('redirectUri', redirectUri);
+      console.log('code', code);
       // Exchange authorization code for tokens with client secret
       const tokenResponse = await axios.post(
-        'https://us-east-16jz6iuh4j.auth.us-east-1.amazoncognito.com/oauth2/token',
+        'https://ap-south-1uuoeustm6.auth.ap-south-1.amazoncognito.com/oauth2/token',
         new URLSearchParams({
           grant_type: 'authorization_code',
-          client_id: clientId,
+          client_id: clientId || '',
           code: code,
           redirect_uri: redirectUri,
         }),
@@ -95,7 +97,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Get user info from Cognito
       const userInfoResponse = await axios.get(
-        'https://us-east-16jz6iuh4j.auth.us-east-1.amazoncognito.com/oauth2/userInfo',
+        'https://ap-south-1uuoeustm6.auth.ap-south-1.amazoncognito.com/oauth2/userInfo',
         {
           headers: {
             'Authorization': `Bearer ${access_token}`
@@ -148,6 +150,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         tokenType: 'Bearer'
       });
     } catch (error: any) {
+      console.error('Cognito callback error:', error);
       if (axios.isAxiosError(error)) {
         console.error('Cognito callback error:', error.response?.data);
       }
@@ -511,14 +514,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Configure S3
       const s3 = new AWS.S3({
-        region: process.env.AWS_REGION || 'us-east-1',
+        region: process.env.AWS_REGION || 'ap-south-1',
         accessKeyId: process.env.AWS_ACCESS_KEY_ID,
         secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
       });
 
       // Generate pre-signed URL for PUT operation
       const presignedUrl = await s3.getSignedUrlPromise('putObject', {
-        Bucket: 'jobthrive',
+        Bucket: 'job-thrive',
         Key: s3Key,
         ContentType: fileType,
         Expires: 3600, // URL expires in 1 hour

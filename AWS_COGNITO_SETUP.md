@@ -71,9 +71,9 @@ Create a `.env` file in the `client` directory:
 
 ```env
 # AWS Cognito Configuration
-VITE_AWS_USER_POOL_ID=us-east-1_XXXXXXXXX
+VITE_AWS_USER_POOL_ID=ap-south-1_XXXXXXXXX
 VITE_AWS_USER_POOL_CLIENT_ID=XXXXXXXXXXXXXXXXXXXXXXXXXX
-VITE_AWS_COGNITO_DOMAIN=your-domain.auth.us-east-1.amazoncognito.com
+VITE_AWS_COGNITO_DOMAIN=your-domain.auth.ap-south-1.amazoncognito.com
 ```
 
 Replace the values with:

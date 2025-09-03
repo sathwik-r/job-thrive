@@ -2,7 +2,8 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import jwksClient from "jwks-rsa";
 import { storage } from "./db-storage";
-
+import dotenv from "dotenv";
+dotenv.config();
 // Extend Express Request type to include user
 declare global {
   namespace Express {
@@ -33,13 +34,21 @@ interface CognitoJWTPayload {
   exp: number;
 }
 
-// Use the correct JWKS URL format for Cognito
-const COGNITO_USER_POOL_ID = process.env.COGNITO_USER_POOL_ID || 'us-east-1_6Jz6IuH4j';
-const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID || '6cmhee7smndjjsl8k1drkjq6tv';
+const COGNITO_USER_POOL_ID = process.env.COGNITO_USER_POOL_ID || 'ap-south-1_UUoEustM6';
+const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID || '3auncgcoubmgelasbogir4a62';
+
+// Derive region from the user pool id (before the underscore)
+const COGNITO_REGION = COGNITO_USER_POOL_ID.includes('_')
+  ? COGNITO_USER_POOL_ID.split('_')[0]
+  : 'ap-south-1';
+
+// Construct issuer and JWKS URI from env to ensure consistency
+const COGNITO_ISSUER = `https://cognito-idp.${COGNITO_REGION}.amazonaws.com/${COGNITO_USER_POOL_ID}`;
+const COGNITO_JWKS_URI = `${COGNITO_ISSUER}/.well-known/jwks.json`;
 
 // JWKS client to get public keys from Cognito
 const client = jwksClient({
-  jwksUri: `https://cognito-idp.us-east-1.amazonaws.com/${COGNITO_USER_POOL_ID}/.well-known/jwks.json`,
+  jwksUri: COGNITO_JWKS_URI,
   cache: true,
   cacheMaxEntries: 5,
   cacheMaxAge: 24 * 60 * 60 * 1000, // 24 hours
@@ -61,7 +70,7 @@ export class AuthService {
     return new Promise((resolve) => {
       jwt.verify(token, getKey, {
         audience: COGNITO_CLIENT_ID,
-        issuer: `https://cognito-idp.us-east-1.amazonaws.com/${COGNITO_USER_POOL_ID}`,
+        issuer: COGNITO_ISSUER,
         algorithms: ['RS256'],
       }, (err, decoded) => {
         if (err) {

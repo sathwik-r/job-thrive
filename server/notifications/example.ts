@@ -8,7 +8,7 @@ import { sendNotification, sendTemplateNotification } from './index.js';
 async function exampleUsage() {
   // Debug: Check if environment variables are loaded
   console.log('Environment variables check:');
-  console.log('AWS_REGION:', 'us-east-1');
+  console.log('AWS_REGION:', 'ap-south-1');
   console.log('AWS_ACCESS_KEY_ID:', process.env.AWS_ACCESS_KEY_ID ? 'Set' : 'Not set');
   console.log('AWS_SECRET_ACCESS_KEY:', process.env.AWS_SECRET_ACCESS_KEY ? 'Set' : 'Not set');
   console.log('SES_FROM_EMAIL:', process.env.SES_FROM_EMAIL);
