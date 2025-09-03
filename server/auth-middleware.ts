@@ -2,8 +2,7 @@ import { Request, Response, NextFunction } from "express";
 import jwt from "jsonwebtoken";
 import jwksClient from "jwks-rsa";
 import { storage } from "./db-storage";
-import dotenv from "dotenv";
-dotenv.config();
+import { env } from './config/env';
 // Extend Express Request type to include user
 declare global {
   namespace Express {
@@ -34,8 +33,8 @@ interface CognitoJWTPayload {
   exp: number;
 }
 
-const COGNITO_USER_POOL_ID = process.env.COGNITO_USER_POOL_ID || 'ap-south-1_UUoEustM6';
-const COGNITO_CLIENT_ID = process.env.COGNITO_CLIENT_ID || '3auncgcoubmgelasbogir4a62';
+const COGNITO_USER_POOL_ID = env.COGNITO_USER_POOL_ID;
+const COGNITO_CLIENT_ID = env.COGNITO_CLIENT_ID;
 
 // Derive region from the user pool id (before the underscore)
 const COGNITO_REGION = COGNITO_USER_POOL_ID.includes('_')

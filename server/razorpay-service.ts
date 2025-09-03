@@ -1,5 +1,6 @@
 import Razorpay from 'razorpay';
 import crypto from 'crypto';
+import { env } from './config/env';
 
 /**
  * Razorpay Service for handling payment operations
@@ -8,13 +9,10 @@ class RazorpayService {
   private razorpay: Razorpay;
 
   constructor() {
-    if (!process.env.RAZORPAY_KEY_ID || !process.env.RAZORPAY_KEY_SECRET) {
-      throw new Error('Razorpay credentials are not configured. Please set RAZORPAY_KEY_ID and RAZORPAY_KEY_SECRET in your environment variables.');
-    }
-
+    // Credentials are already validated by env.ts
     this.razorpay = new Razorpay({
-      key_id: process.env.RAZORPAY_KEY_ID,
-      key_secret: process.env.RAZORPAY_KEY_SECRET,
+      key_id: env.RAZORPAY_KEY_ID,
+      key_secret: env.RAZORPAY_KEY_SECRET,
     });
   }
 
@@ -47,7 +45,7 @@ class RazorpayService {
     try {
       const body = `${orderId}|${paymentId}`;
       const expectedSignature = crypto
-        .createHmac('sha256', process.env.RAZORPAY_KEY_SECRET!)
+        .createHmac('sha256', env.RAZORPAY_KEY_SECRET)
         .update(body)
         .digest('hex');
 

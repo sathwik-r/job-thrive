@@ -2,10 +2,9 @@ import { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./db-storage";
 import axios from "axios";
-import dotenv from "dotenv";
+import { env } from './config/env';
 import crypto from "crypto";
 import AWS from "aws-sdk";
-dotenv.config();
 import { insertUserSchema, insertReferralSchema } from "@shared/schema";
 import { z } from "zod";
 import { authenticateToken, optionalAuth, requireRole } from "./auth-middleware";
@@ -69,8 +68,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const { code, redirectUri } = cognitoCallbackSchema.parse(req.body);
       
-      const clientId = process.env.COGNITO_CLIENT_ID;
-      const clientSecret = process.env.COGNITO_CLIENT_SECRET;
+      const clientId = env.COGNITO_CLIENT_ID;
+      const clientSecret = env.COGNITO_CLIENT_SECRET;
       console.log('clientId', clientId);
       console.log('clientSecret', clientSecret);
       console.log('redirectUri', redirectUri);
@@ -477,7 +476,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         orderId: order.id,
         amount: order.amount,
         currency: order.currency,
-        key: process.env.RAZORPAY_KEY_ID,
+        key: env.RAZORPAY_KEY_ID,
       });
     } catch (error) {
       console.error('Error creating Razorpay order:', error);
@@ -514,9 +513,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Configure S3
       const s3 = new AWS.S3({
-        region: process.env.AWS_REGION || 'ap-south-1',
-        accessKeyId: process.env.AWS_ACCESS_KEY_ID,
-        secretAccessKey: process.env.AWS_SECRET_ACCESS_KEY,
+        region: env.AWS_REGION,
+        accessKeyId: env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
       });
 
       // Generate pre-signed URL for PUT operation
