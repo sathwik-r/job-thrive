@@ -4,13 +4,14 @@
   "type": "module",
   "license": "MIT",
   "scripts": {
-      "dev": "NODE_ENV=development tsx watch server/index.ts",
-      "build:client": "vite build",
-      "build:server": "tsc -p tsconfig.server.json",
-      "build": "npm run build:client && npm run build:server",
-      "start": "NODE_ENV=production tsx server/index.ts",
-      "check": "tsc",
-      "db:push": "drizzle-kit push"
+    "dev": "NODE_ENV=development tsx watch server/index.ts",
+    "build:client": "vite build",
+    "build:server": "tsc -p tsconfig.server.json",
+    "build": "npm run build:client && npm run build:server",
+    "start": "NODE_ENV=production tsx server/index.ts",
+    "check": "tsc",
+    "db:push": "drizzle-kit push",
+    "add-dummy-jobs": "NODE_ENV=development tsx scripts/add-dummy-jobs.ts"
   },
   "dependencies": {
     "@aws-amplify/ui-react": "^6.11.2",

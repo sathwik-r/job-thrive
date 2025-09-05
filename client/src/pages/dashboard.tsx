@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
-import { Bell, Search, BarChart3, User } from 'lucide-react';
+import { Search, BarChart3, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import RoleToggle from '@/components/role-toggle';
@@ -109,13 +109,7 @@ export default function DashboardPage() {
           <RoleToggle currentRole={currentRole} onRoleChange={handleRoleChange} />
           
           {/* Profile */}
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5 text-gray-600" />
-              <span className="absolute -top-1 -right-1 bg-[var(--orange-accent)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                3
-              </span>
-            </Button>
+          <div className="flex items-center">
             <div 
               className="w-8 h-8 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200"
               onClick={() => setLocation('/profile')}
