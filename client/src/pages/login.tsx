@@ -78,40 +78,10 @@ export default function LoginPage() {
               </svg>
               <span>{loading ? 'Signing in...' : 'Continue with Gmail'}</span>
             </Button>
-
-            {/* Divider */}
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/20"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-transparent text-white/60 font-medium">or for testing</span>
-              </div>
-            </div>
-            
-            {/* Demo Login Button for Testing */}
-            <Button
-              onClick={handleSignIn}
-              disabled={loading}
-              className="w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-4 px-6 rounded-2xl text-base border border-white/30 backdrop-blur-lg transition-all duration-300 transform hover:scale-105"
-            >
-              {loading ? 'Signing in...' : '🚀 Demo Login (Testing)'}
-            </Button>
+          
           </div>
 
           {/* Footer */}
-          <div className="text-center mt-8">
-            <p className="text-white/50 text-sm">
-              By continuing, you agree to our Terms of Service and Privacy Policy
-            </p>
-            {/* Debug: Clear storage button for testing */}
-            <button 
-              onClick={signOut}
-              className="text-white/30 hover:text-white/50 text-xs mt-4 underline"
-            >
-              Clear Storage (Dev Only)
-            </button>
-          </div>
         </div>
       </div>
     </div>

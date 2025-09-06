@@ -1,14 +1,13 @@
 import React, { useEffect, useState } from 'react';
 import { useLocation } from 'wouter';
-import { useAuth } from '@/hooks/use-auth';
+import { useAuth, type AuthData } from '@/hooks/use-auth';
 import { apiRequest } from '@/lib/queryClient';
-import type { User } from '@shared/schema';
 
 const PostLoginPage: React.FC = () => {
   const [, setLocation] = useLocation();
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState<string | null>(null);
-  const { setAuthData } = useAuth();
+  const { setAuthData, setLoading: setGlobalAuthLoading } = useAuth();
 
 
   useEffect(() => {
@@ -20,6 +19,7 @@ const PostLoginPage: React.FC = () => {
 
     const handleCognitoCallback = async () => {
       try {
+        setGlobalAuthLoading(true);
         // Extract the authorization code from URL
         const urlParams = new URLSearchParams(window.location.search);
         const code = urlParams.get('code');
@@ -49,7 +49,7 @@ const PostLoginPage: React.FC = () => {
           redirectUri: window.location.origin + '/post-login'
         });
         
-        const authData = await response.json();
+        const authData: AuthData = await response.json();
 
         // Store user and auth data
         setAuthData(authData);
@@ -67,6 +67,8 @@ const PostLoginPage: React.FC = () => {
       } catch (error) {
         setError('Authentication failed. Please try again.');
         setLoading(false);
+      } finally {
+        setGlobalAuthLoading(false);
       }
     };
 
