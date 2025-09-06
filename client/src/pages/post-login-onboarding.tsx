@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -32,7 +32,7 @@ interface PostLoginOnboardingProps {
 }
 
 export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingProps) {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, setLoading } = useAuth();
   const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [data, setData] = useState<OnboardingData>({
@@ -67,8 +67,13 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
         updateUser(updatedUser);
       }
       
-      // Call the completion callback
-      onComplete();
+      // Briefly set global auth loading to avoid race with AuthGuard
+      setLoading(true);
+      setTimeout(() => {
+        setLoading(false);
+        // Call the completion callback (navigate to dashboard)
+        onComplete();
+      }, 0);
     },
     onError: (error: any) => {
       toast({
@@ -143,7 +148,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                   <div>
                     <div className="font-semibold text-lg mb-1">I'm looking for a job</div>
                     <div className="text-sm opacity-90">Get referrals from employees at top companies</div>
-                    <div className="text-xs mt-2 font-medium">💰 Referral fees: $150-500</div>
+                    <div className="text-xs mt-2 font-medium">💰 Referral fees: ₹150-500</div>
                   </div>
                 </div>
               </Button>
@@ -162,7 +167,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                   <div>
                     <div className="font-semibold text-lg mb-1">I want to provide referrals</div>
                     <div className="text-sm opacity-90">Earn money by referring candidates</div>
-                    <div className="text-xs mt-2 font-medium">💰 Earn: $2000+ monthly</div>
+                    <div className="text-xs mt-2 font-medium">💰 Earn: ₹2000+ monthly</div>
                   </div>
                 </div>
               </Button>

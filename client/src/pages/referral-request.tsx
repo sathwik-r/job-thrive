@@ -339,7 +339,7 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
             <div className="pt-4 border-t border-white/20">
               <div className="flex items-center justify-between">
                 <span>Referral Fee</span>
-                <span className="text-2xl font-bold">${job?.referralFee}</span>
+                <span className="text-2xl font-bold">₹{job?.referralFee}</span>
               </div>
             </div>
           </CardContent>
@@ -464,11 +464,11 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
             <div className="space-y-4">
               <div className="flex items-center justify-between py-3 border-b border-gray-100">
                 <span className="text-gray-600">Referral Fee</span>
-                <span className="font-semibold text-[var(--dark-gray)]">${job?.referralFee || "0"}</span>
+                <span className="font-semibold text-[var(--dark-gray)]">₹{job?.referralFee || "0"}</span>
               </div>
               <div className="flex items-center justify-between py-3">
                 <span className="text-lg font-semibold text-[var(--dark-gray)]">Total</span>
-                <span className="text-xl font-bold text-[var(--purple-primary)]">${totalAmount.toFixed(2)}</span>
+                <span className="text-xl font-bold text-[var(--purple-primary)]">₹{totalAmount.toFixed(2)}</span>
               </div>
             </div>
             

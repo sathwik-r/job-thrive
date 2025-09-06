@@ -135,7 +135,7 @@ export default function DashboardPage() {
                     <p className="opacity-90">Ready to find your dream job?</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-bold">${totalSpent}</div>
+                    <div className="text-2xl font-bold">₹{totalSpent}</div>
                     <div className="text-sm opacity-75">Total Invested</div>
                   </div>
                 </div>
@@ -227,14 +227,14 @@ export default function DashboardPage() {
                     <p className="opacity-90">Your referral earnings</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-3xl font-bold">${totalEarnings}</div>
+                    <div className="text-3xl font-bold">₹{totalEarnings}</div>
                     <div className="text-sm opacity-75">Total Earned</div>
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-white/20 backdrop-blur-lg rounded-xl p-4 text-center">
-                    <div className="text-xl font-bold">${(totalEarnings * 0.25).toFixed(0)}</div>
+                    <div className="text-xl font-bold">₹{(totalEarnings * 0.25).toFixed(0)}</div>
                     <div className="text-xs opacity-75">This Month</div>
                   </div>
                   <div className="bg-white/20 backdrop-blur-lg rounded-xl p-4 text-center">

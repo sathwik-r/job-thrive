@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Search, Users, DollarSign, Building2, Trophy, CheckCircle } from 'lucide-react';
+import { ArrowRight, Search, Users, IndianRupee, Building2, Trophy, CheckCircle } from 'lucide-react';
 
 interface OnboardingPageProps {
   onComplete: () => void;
@@ -52,7 +52,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
             <Card className="modern-card card-hover">
               <CardContent className="p-6 text-center">
                 <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-r from-[var(--orange-accent)] to-[var(--purple-primary)] rounded-xl flex items-center justify-center">
-                  <DollarSign className="w-6 h-6 text-white" />
+                  <IndianRupee className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-semibold text-[var(--dark-gray)] mb-2">Earn Money</h3>
                 <p className="text-sm text-gray-600">Make money by referring qualified candidates to your company</p>
@@ -107,7 +107,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 <div className="mt-6 p-4 bg-white/10 rounded-xl backdrop-blur-sm">
                   <div className="flex justify-between items-center">
                     <span className="text-sm opacity-90">Average referral fee</span>
-                    <span className="text-2xl font-bold">$150-500</span>
+                    <span className="text-2xl font-bold">₹150-500</span>
                   </div>
                 </div>
               </CardContent>
@@ -152,7 +152,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 <div className="mt-6 p-4 bg-white/10 rounded-xl backdrop-blur-sm">
                   <div className="flex justify-between items-center">
                     <span className="text-sm opacity-90">Potential monthly earnings</span>
-                    <span className="text-2xl font-bold">$2000+</span>
+                    <span className="text-2xl font-bold">₹2000+</span>
                   </div>
                 </div>
               </CardContent>

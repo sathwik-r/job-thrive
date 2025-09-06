@@ -1,10 +1,11 @@
+import React from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Edit3, Mail, MapPin, Building2, Calendar, Award, DollarSign } from 'lucide-react';
+import { ArrowLeft, Edit3, Mail, MapPin, Building2, Calendar, Award, IndianRupee } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { useState } from 'react';
 
@@ -80,8 +81,8 @@ export default function ProfilePage() {
         <div className="grid grid-cols-2 gap-4">
           <Card className="modern-card border-0">
             <CardContent className="p-4 text-center">
-              <DollarSign className="w-8 h-8 mx-auto mb-2 text-[var(--emerald-success)]" />
-              <div className="text-2xl font-bold text-[var(--emerald-success)]">${user.totalEarnings}</div>
+              <IndianRupee className="w-8 h-8 mx-auto mb-2 text-[var(--emerald-success)]" />
+              <div className="text-2xl font-bold text-[var(--emerald-success)]">₹{user.totalEarnings}</div>
               <div className="text-xs text-gray-600">Total Earned</div>
             </CardContent>
           </Card>

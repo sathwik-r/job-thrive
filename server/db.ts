@@ -31,7 +31,7 @@ export const db = isNeonConnection
         database: url.pathname.slice(1),  // remove leading '/'
         user: url.username,
         password: url.password,
-        ssl: { rejectUnauthorized: false }
+        ssl: sslRequired ? { rejectUnauthorized: false } : false
       });
       return drizzle({ client: pool, schema });
     })();
