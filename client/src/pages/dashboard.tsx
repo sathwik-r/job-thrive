@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
-import { Bell, Search, BarChart3, User } from 'lucide-react';
+import { Search, BarChart3, User } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import RoleToggle from '@/components/role-toggle';
@@ -102,20 +102,14 @@ export default function DashboardPage() {
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7l12-4-4 12m0 0L8 15m8 0V7M8 15l0-8"></path>
               </svg>
             </div>
-            <span className="text-xl font-bold text-[var(--dark-gray)]">Circl</span>
+            <span className="text-xl font-bold text-[var(--dark-gray)]">Job Thrive</span>
           </div>
           
           {/* Role Toggle */}
           <RoleToggle currentRole={currentRole} onRoleChange={handleRoleChange} />
           
           {/* Profile */}
-          <div className="flex items-center space-x-2">
-            <Button variant="ghost" size="icon" className="relative">
-              <Bell className="h-5 w-5 text-gray-600" />
-              <span className="absolute -top-1 -right-1 bg-[var(--orange-accent)] text-white text-xs rounded-full w-5 h-5 flex items-center justify-center">
-                3
-              </span>
-            </Button>
+          <div className="flex items-center">
             <div 
               className="w-8 h-8 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200"
               onClick={() => setLocation('/profile')}
@@ -141,7 +135,7 @@ export default function DashboardPage() {
                     <p className="opacity-90">Ready to find your dream job?</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-bold">${totalSpent}</div>
+                    <div className="text-2xl font-bold">₹{totalSpent}</div>
                     <div className="text-sm opacity-75">Total Invested</div>
                   </div>
                 </div>
@@ -233,14 +227,14 @@ export default function DashboardPage() {
                     <p className="opacity-90">Your referral earnings</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-3xl font-bold">${totalEarnings}</div>
+                    <div className="text-3xl font-bold">₹{totalEarnings}</div>
                     <div className="text-sm opacity-75">Total Earned</div>
                   </div>
                 </div>
                 
                 <div className="grid grid-cols-2 gap-4">
                   <div className="bg-white/20 backdrop-blur-lg rounded-xl p-4 text-center">
-                    <div className="text-xl font-bold">${(totalEarnings * 0.25).toFixed(0)}</div>
+                    <div className="text-xl font-bold">₹{(totalEarnings * 0.25).toFixed(0)}</div>
                     <div className="text-xs opacity-75">This Month</div>
                   </div>
                   <div className="bg-white/20 backdrop-blur-lg rounded-xl p-4 text-center">

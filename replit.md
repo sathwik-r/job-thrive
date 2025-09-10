@@ -1,13 +1,13 @@
-# Circl - Job Referral Platform
+# Job Thrive - Job Referral Platform
 
 ## Overview
 
-Circl is a full-stack web application that connects job seekers with referrers in a marketplace-style platform. Users can request referrals for job positions and earn money by providing successful referrals. The application features a modern React frontend with a Node.js/Express backend, using PostgreSQL for data persistence.
+Job Thrive is a full-stack web application that connects job seekers with referrers in a marketplace-style platform. Users can request referrals for job positions and earn money by providing successful referrals. The application features a modern React frontend with a Node.js/Express backend, using PostgreSQL for data persistence.
 
 ## User Preferences
 
 Preferred communication style: Simple, everyday language.
-App name: Must be "Circl" (not Looped)
+App name: Must be "Job Thrive" (not Looped)
 Design preference: World-class UI design inspired by top-rated apps like Instagram, TikTok, fintech apps
 Authentication: Gmail-only authentication for streamlined user experience
 
@@ -121,7 +121,7 @@ The application follows a monorepo structure with shared TypeScript definitions,
 ## Recent Changes (January 2025)
 
 ### Brand Update
-- ✓ Updated application name from "Looped" to "Circl" across all components
+- ✓ Updated application name from "Looped" to "Job Thrive" across all components
 - ✓ Enhanced brand colors and gradient system in CSS
 
 ### UI/UX Enhancements  

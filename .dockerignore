@@ -1,0 +1,16 @@
+node_modules
+npm-debug.log
+dist
+.git
+.gitignore
+.env
+.env.*
+.DS_Store
+**/.vite
+**/coverage
+**/*.log
+client/.next
+server/uploads
+server/public
+attached_assets
+

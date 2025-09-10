@@ -1,7 +1,8 @@
+import React from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
-import { ArrowLeft, TrendingUp, Users, DollarSign, Award, Calendar, Target } from 'lucide-react';
+import { ArrowLeft, TrendingUp, Users, IndianRupee, Award, Calendar, Target } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { useQuery } from '@tanstack/react-query';
 
@@ -65,8 +66,8 @@ export default function AnalyticsPage() {
         <div className="grid grid-cols-2 gap-4">
           <Card className="modern-card border-0 bg-gradient-to-br from-[var(--emerald-success)] to-[var(--emerald-success)]/80 text-white">
             <CardContent className="p-4 text-center">
-              <DollarSign className="w-8 h-8 mx-auto mb-2" />
-              <div className="text-2xl font-bold">${user.totalEarnings}</div>
+              <IndianRupee className="w-8 h-8 mx-auto mb-2" />
+              <div className="text-2xl font-bold">₹{user.totalEarnings}</div>
               <div className="text-xs opacity-90">Total Earned</div>
             </CardContent>
           </Card>
@@ -107,7 +108,7 @@ export default function AnalyticsPage() {
             <div className="bg-gray-100 rounded-xl p-4">
               <div className="flex justify-between items-center mb-2">
                 <span className="text-sm font-medium text-[var(--dark-gray)]">This Month</span>
-                <span className="text-sm font-bold text-[var(--emerald-success)]">${monthlyEarnings.toFixed(0)}</span>
+                <span className="text-sm font-bold text-[var(--emerald-success)]">₹{monthlyEarnings.toFixed(0)}</span>
               </div>
               <div className="w-full bg-gray-200 rounded-full h-2">
                 <div 
@@ -115,7 +116,7 @@ export default function AnalyticsPage() {
                   style={{ width: `${Math.min((monthlyEarnings / 2000) * 100, 100)}%` }}
                 ></div>
               </div>
-              <div className="text-xs text-gray-600 mt-1">Goal: $2,000/month</div>
+              <div className="text-xs text-gray-600 mt-1">Goal: ₹2,000/month</div>
             </div>
           </CardContent>
         </Card>
@@ -139,7 +140,7 @@ export default function AnalyticsPage() {
                 <div className="text-xs text-gray-600">Active</div>
               </div>
               <div>
-                <div className="text-2xl font-bold text-[var(--dark-gray)]">${user.totalSpent}</div>
+                <div className="text-2xl font-bold text-[var(--dark-gray)]">₹{user.totalSpent}</div>
                 <div className="text-xs text-gray-600">Invested</div>
               </div>
             </div>
@@ -147,7 +148,7 @@ export default function AnalyticsPage() {
             {avgReferralValue > 0 && (
               <div className="bg-gradient-to-r from-[var(--purple-primary)]/10 to-[var(--emerald-success)]/10 rounded-xl p-4">
                 <div className="text-center">
-                  <div className="text-lg font-bold text-[var(--purple-primary)]">${avgReferralValue.toFixed(0)}</div>
+                  <div className="text-lg font-bold text-[var(--purple-primary)]">₹{avgReferralValue.toFixed(0)}</div>
                   <div className="text-xs text-gray-600">Average Referral Value</div>
                 </div>
               </div>
@@ -168,14 +169,14 @@ export default function AnalyticsPage() {
               <div className="flex items-center justify-between p-3 bg-gradient-to-r from-[var(--emerald-success)]/10 to-transparent rounded-xl">
                 <div className="flex items-center space-x-3">
                   <div className="w-8 h-8 bg-[var(--emerald-success)] rounded-full flex items-center justify-center">
-                    <DollarSign className="w-4 h-4 text-white" />
+                    <IndianRupee className="w-4 h-4 text-white" />
                   </div>
                   <div>
                     <div className="text-sm font-medium text-[var(--dark-gray)]">Referral Completed</div>
                     <div className="text-xs text-gray-600">2 days ago</div>
                   </div>
                 </div>
-                <div className="text-sm font-bold text-[var(--emerald-success)]">+$250</div>
+                <div className="text-sm font-bold text-[var(--emerald-success)]">+₹250</div>
               </div>
 
               <div className="flex items-center justify-between p-3 bg-gradient-to-r from-[var(--purple-primary)]/10 to-transparent rounded-xl">
@@ -200,7 +201,7 @@ export default function AnalyticsPage() {
                     <div className="text-xs text-gray-600">1 week ago</div>
                   </div>
                 </div>
-                <div className="text-sm font-bold text-[var(--orange-accent)]">-$150</div>
+                <div className="text-sm font-bold text-[var(--orange-accent)]">-₹150</div>
               </div>
             </div>
           </CardContent>

@@ -20,6 +20,9 @@ export const users = pgTable("users", {
   position: text("position"),
   department: text("department"),
   workExperience: text("work_experience"),
+  // Match-making algorithm fields
+  referrerScore: integer("referrer_score").default(100).notNull(),
+  lastScoreUpdate: timestamp("last_score_update").defaultNow().notNull(),
   // Seeker specific fields
   education: text("education"),
   targetDomain: text("target_domain"),
@@ -60,6 +63,20 @@ export const referrals = pgTable("referrals", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const assignments = pgTable("assignments", {
+  id: serial("id").primaryKey(),
+  referralId: integer("referral_id").references(() => referrals.id).notNull(),
+  referrerId: integer("referrer_id").references(() => users.id).notNull(),
+  status: text("status", { 
+    enum: ["assigned", "accepted", "rejected", "expired", "completed"] 
+  }).default("assigned").notNull(),
+  assignedAt: timestamp("assigned_at").defaultNow().notNull(),
+  expiresAt: timestamp("expires_at").notNull(), // 12 hours from assignment
+  acceptedAt: timestamp("accepted_at"),
+  completedAt: timestamp("completed_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
@@ -76,6 +93,11 @@ export const insertReferralSchema = createInsertSchema(referrals).omit({
   createdAt: true,
 });
 
+export const insertAssignmentSchema = createInsertSchema(assignments).omit({
+  id: true,
+  createdAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -85,3 +107,6 @@ export type InsertJob = z.infer<typeof insertJobSchema>;
 
 export type Referral = typeof referrals.$inferSelect;
 export type InsertReferral = z.infer<typeof insertReferralSchema>;
+
+export type Assignment = typeof assignments.$inferSelect;
+export type InsertAssignment = z.infer<typeof insertAssignmentSchema>;

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
@@ -32,7 +32,7 @@ interface PostLoginOnboardingProps {
 }
 
 export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingProps) {
-  const { user } = useAuth();
+  const { user, updateUser, setLoading } = useAuth();
   const { toast } = useToast();
   const [step, setStep] = useState(1);
   const [data, setData] = useState<OnboardingData>({
@@ -42,19 +42,14 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
 
   const updateProfileMutation = useMutation({
     mutationFn: async (profileData: OnboardingData) => {
-      // For mock users, update localStorage directly
-      if (user && localStorage.getItem('circl_mock_user')) {
-        const updatedUser = {
-          ...user,
-          ...profileData,
-          onboardingCompleted: true
-        };
-        localStorage.setItem('circl_mock_user', JSON.stringify(updatedUser));
-        return Promise.resolve({ user: updatedUser });
-      }
+      // Always call the API for profile updates
+      const requestData = {
+        ...profileData,
+        userId: user?.id,
+        email: user?.email
+      };
       
-      // For real users, call the API
-      return apiRequest('/api/user/profile', 'PUT', profileData);
+      return apiRequest('POST', '/api/user/profile', requestData);
     },
     onSuccess: () => {
       toast({
@@ -62,13 +57,25 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
         description: "Your profile has been set up successfully!",
       });
       
-      // Force page reload to update auth state
+      // Update user state with onboarding completed
+      if (user) {
+        const updatedUser = {
+          ...user,
+          ...data,
+          onboardingCompleted: true
+        };
+        updateUser(updatedUser);
+      }
+      
+      // Briefly set global auth loading to avoid race with AuthGuard
+      setLoading(true);
       setTimeout(() => {
-        window.location.reload();
-      }, 1000);
+        setLoading(false);
+        // Call the completion callback (navigate to dashboard)
+        onComplete();
+      }, 0);
     },
     onError: (error: any) => {
-      console.error('Profile update error:', error);
       toast({
         title: "Error",
         description: error.message || "Failed to update profile",
@@ -95,7 +102,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
 
   const getTotalSteps = () => {
     if (data.role === 'both') return 4;
-    return 3;
+    return 2;
   };
 
   const addSkill = (skill: string) => {
@@ -123,7 +130,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
               <div className="w-16 h-16 mx-auto bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] rounded-2xl flex items-center justify-center mb-4">
                 <User className="w-8 h-8 text-white" />
               </div>
-              <CardTitle className="text-2xl font-bold gradient-text">What brings you to Circl?</CardTitle>
+              <CardTitle className="text-2xl font-bold gradient-text">What brings you to Job Thrive?</CardTitle>
               <p className="text-gray-600">Choose your primary goal on our platform</p>
             </CardHeader>
             <CardContent className="space-y-4">
@@ -141,7 +148,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                   <div>
                     <div className="font-semibold text-lg mb-1">I'm looking for a job</div>
                     <div className="text-sm opacity-90">Get referrals from employees at top companies</div>
-                    <div className="text-xs mt-2 font-medium">💰 Referral fees: $150-500</div>
+                    <div className="text-xs mt-2 font-medium">💰 Referral fees: ₹150-500</div>
                   </div>
                 </div>
               </Button>
@@ -160,7 +167,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                   <div>
                     <div className="font-semibold text-lg mb-1">I want to provide referrals</div>
                     <div className="text-sm opacity-90">Earn money by referring candidates</div>
-                    <div className="text-xs mt-2 font-medium">💰 Earn: $2000+ monthly</div>
+                    <div className="text-xs mt-2 font-medium">💰 Earn: ₹2000+ monthly</div>
                   </div>
                 </div>
               </Button>

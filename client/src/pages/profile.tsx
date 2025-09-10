@@ -1,10 +1,11 @@
+import React from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Edit3, Mail, MapPin, Building2, Calendar, Award, DollarSign } from 'lucide-react';
+import { ArrowLeft, Edit3, Mail, MapPin, Building2, Calendar, Award, IndianRupee } from 'lucide-react';
 import { useLocation } from 'wouter';
 import { useState } from 'react';
 
@@ -21,12 +22,12 @@ export default function ProfilePage() {
     <div className="min-h-screen bg-gray-50">
       {/* Header */}
       <div className="bg-white border-b sticky top-0 z-10">
-        <div className="flex items-center justify-between p-4 max-w-md mx-auto">
+        <div className="relative flex items-center justify-center p-4 max-w-md mx-auto">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setLocation('/dashboard')}
-            className="flex items-center space-x-2"
+            className="absolute left-4 flex items-center space-x-2"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
@@ -34,13 +35,13 @@ export default function ProfilePage() {
           
           <h1 className="text-lg font-semibold text-[var(--dark-gray)]">Profile</h1>
           
-          <Button
+          {/* <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsEditing(!isEditing)}
           >
             <Edit3 className="w-4 h-4" />
-          </Button>
+          </Button> */}
         </div>
       </div>
 
@@ -80,8 +81,8 @@ export default function ProfilePage() {
         <div className="grid grid-cols-2 gap-4">
           <Card className="modern-card border-0">
             <CardContent className="p-4 text-center">
-              <DollarSign className="w-8 h-8 mx-auto mb-2 text-[var(--emerald-success)]" />
-              <div className="text-2xl font-bold text-[var(--emerald-success)]">${user.totalEarnings}</div>
+              <IndianRupee className="w-8 h-8 mx-auto mb-2 text-[var(--emerald-success)]" />
+              <div className="text-2xl font-bold text-[var(--emerald-success)]">₹{user.totalEarnings}</div>
               <div className="text-xs text-gray-600">Total Earned</div>
             </CardContent>
           </Card>

@@ -9,6 +9,11 @@ export default defineConfig({
   schema: "./shared/schema.ts",
   dialect: "postgresql",
   dbCredentials: {
-    url: process.env.DATABASE_URL,
+    host: 'job-thrive-db.cj0w2kkqmq02.ap-south-1.rds.amazonaws.com',
+    port: 5432,
+    database: 'jobthrive',
+    user: 'postgres',
+    password: process.env.DB_PASSWORD,
+    ssl: { rejectUnauthorized: false }
   },
 });

@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
@@ -6,15 +6,19 @@ import { AlertCircle } from 'lucide-react';
 import OnboardingPage from './onboarding';
 
 export default function LoginPage() {
-  const { signInWithGoogle, loading, error, clearStorage } = useAuth();
+  const { signInWithGoogle, loading, error, signOut } = useAuth();
   const [showOnboarding, setShowOnboarding] = useState(true);
 
   const handleGetStarted = () => {
     setShowOnboarding(false);
   };
 
-  const handleGoogleSignIn = async () => {
-    await signInWithGoogle();
+  const handleSignIn = async () => {
+    try {
+      await signInWithGoogle();
+    } catch (err) {
+      // Error is already handled by the auth hook
+    }
   };
 
   // Always show onboarding first for new users
@@ -45,10 +49,16 @@ export default function LoginPage() {
             </div>
             
             <h1 className="text-4xl font-bold text-white mb-3 tracking-tight">
-              Welcome to <span className="gradient-text-white">Circl</span>
+              Welcome to <span className="gradient-text-white">Job Thrive</span>
             </h1>
             <p className="text-white/80 text-lg mb-2">Your job referral marketplace</p>
             <p className="text-white/60 text-sm">Connect with Gmail to unlock opportunities</p>
+            <p className="text-white/70 text-sm mt-4 max-w-2xl mx-auto">
+              Job Thrive is a professional referral platform that helps job seekers get high-quality
+              employee referrals from verified professionals across top companies. Discover matched
+              referrers, track referral progress, and increase your interview success rate with a
+              trusted marketplace designed for modern hiring.
+            </p>
           </div>
 
           {/* Login Card */}
@@ -62,7 +72,7 @@ export default function LoginPage() {
             
             {/* Main Login Button */}
             <Button
-              onClick={handleGoogleSignIn}
+              onClick={handleSignIn}
               disabled={loading}
               className="w-full bg-white hover:bg-gray-50 text-[var(--dark-gray)] font-semibold py-6 px-6 rounded-2xl text-lg flex items-center justify-center space-x-4 transition-all duration-300 transform hover:scale-105 hover:shadow-xl border-0 mb-4"
             >
@@ -74,39 +84,38 @@ export default function LoginPage() {
               </svg>
               <span>{loading ? 'Signing in...' : 'Continue with Gmail'}</span>
             </Button>
-
-            {/* Divider */}
-            <div className="relative my-6">
-              <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/20"></div>
-              </div>
-              <div className="relative flex justify-center text-sm">
-                <span className="px-4 bg-transparent text-white/60 font-medium">or for testing</span>
-              </div>
-            </div>
-            
-            {/* Demo Login Button for Testing */}
-            <Button
-              onClick={handleGoogleSignIn}
-              disabled={loading}
-              className="w-full bg-white/10 hover:bg-white/20 text-white font-semibold py-4 px-6 rounded-2xl text-base border border-white/30 backdrop-blur-lg transition-all duration-300 transform hover:scale-105"
-            >
-              {loading ? 'Signing in...' : '🚀 Demo Login (Testing)'}
-            </Button>
+          
           </div>
 
           {/* Footer */}
-          <div className="text-center mt-8">
-            <p className="text-white/50 text-sm">
-              By continuing, you agree to our Terms of Service and Privacy Policy
-            </p>
-            {/* Debug: Clear storage button for testing */}
-            <button 
-              onClick={clearStorage}
-              className="text-white/30 hover:text-white/50 text-xs mt-4 underline"
-            >
-              Clear Storage (Dev Only)
-            </button>
+        </div>
+      </div>
+      {/* SEO Image & Benefits */}
+      <div className="px-6 pb-16 -mt-6">
+        <div className="max-w-3xl mx-auto bg-white/90 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-xl border border-white/30">
+          <div className="grid md:grid-cols-2 gap-6 items-center">
+            <img
+              src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/jobthrive-1.jpeg"
+              alt="Job Thrive referral platform preview showing seeker and referrer workflow"
+              className="w-full h-auto rounded-2xl shadow-md"
+              width={1200}
+              height={630}
+              loading="eager"
+              decoding="async"
+            />
+            <div>
+              <h2 className="text-2xl font-bold text-[var(--dark-gray)] mb-3">Get hired faster with trusted referrals</h2>
+              <p className="text-gray-700 mb-3">
+                Join a curated network of referrers and accelerate your application with credible, trackable
+                recommendations. Whether you are a job seeker or a referrer, Job Thrive simplifies
+                collaboration and ensures transparency from request to result.
+              </p>
+              <ul className="list-disc pl-5 text-gray-700 space-y-1">
+                <li>Verified referrers from leading tech companies</li>
+                <li>Simple request workflow and real-time status updates</li>
+                <li>Secure payments and outcome-based transparency</li>
+              </ul>
+            </div>
           </div>
         </div>
       </div>

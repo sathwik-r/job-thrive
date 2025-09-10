@@ -148,6 +148,8 @@ export class MemStorage implements IStorage {
       targetRole: null,
       experience: null,
       skills: null,
+      referrerScore: 100,
+      lastScoreUpdate: new Date(),
       createdAt: new Date(),
     };
     
@@ -190,6 +192,8 @@ export class MemStorage implements IStorage {
       targetRole: insertUser.targetRole || null,
       experience: insertUser.experience || null,
       skills: insertUser.skills || null,
+      referrerScore: 100,
+      lastScoreUpdate: new Date(),
       createdAt: new Date(),
     };
     this.users.set(id, user);
@@ -297,9 +301,11 @@ export class MemStorage implements IStorage {
   }
 
   async getPendingReferrals(): Promise<Referral[]> {
-    return Array.from(this.referrals.values())
-      .filter(referral => referral.status === "pending");
+    return Array.from(this.referrals.values()).filter(
+      (referral) => referral.status === "pending"
+    );
   }
 }
 
-export const storage = new MemStorage();
+// Legacy memory storage - replaced with database storage (DbStorage)
+// export const storage = new MemStorage();

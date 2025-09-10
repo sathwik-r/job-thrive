@@ -32,7 +32,7 @@ export default function ProfileSettingsPage() {
 
   const updateProfileMutation = useMutation({
     mutationFn: async (profileData: any) => {
-      return apiRequest('/api/user/profile', 'PUT', profileData);
+      return apiRequest('POST', '/api/user/profile', profileData);
     },
     onSuccess: () => {
       toast({
