@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { ArrowRight, Search, Users, IndianRupee, Building2, Trophy, CheckCircle } from 'lucide-react';
@@ -17,14 +17,14 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
       content: (
         <div className="space-y-8">
           <div className="text-center">
-            <div className="w-32 h-32 mx-auto mb-6 glassmorphism rounded-3xl flex items-center justify-center">
-              <div className="w-16 h-16 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] rounded-2xl flex items-center justify-center">
-                <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7l12-4-4 12m0 0L8 15m8 0V7M8 15l0-8"></path>
-                </svg>
-              </div>
+            <div className="w-32 h-32 mx-auto mb-6 glassmorphism rounded-3xl overflow-hidden">
+              <img
+                src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/job-thrive-logo.jpg"
+                alt="Job Thrive"
+                className="w-full h-full object-cover"
+              />
             </div>
-            <h2 className="text-3xl font-bold mb-4 gradient-text">Transform Your Career Journey</h2>
+            <h2 className="text-3xl font-bold mb-4 text-white">Transform Your Career Journey</h2>
             <p className="text-lg text-gray-600 mb-8">Connect, refer, and earn in the world's most advanced referral marketplace</p>
           </div>
 
@@ -35,7 +35,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                   <Search className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-semibold text-[var(--dark-gray)] mb-2">Find Dream Jobs</h3>
-                <p className="text-sm text-gray-600">Access exclusive job opportunities from top companies worldwide</p>
+                <p className="text-sm text-gray-600">Discover exclusive opportunities at top companies—faster than job boards</p>
               </CardContent>
             </Card>
 
@@ -45,7 +45,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                   <Users className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-semibold text-[var(--dark-gray)] mb-2">Get Referred</h3>
-                <p className="text-sm text-gray-600">Connect with employees at your target companies for insider referrals</p>
+                <p className="text-sm text-gray-600">Boost your chances with direct employee referrals and 1-on-1 career calls</p>
               </CardContent>
             </Card>
 
@@ -55,7 +55,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                   <IndianRupee className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-semibold text-[var(--dark-gray)] mb-2">Earn Money</h3>
-                <p className="text-sm text-gray-600">Make money by referring qualified candidates to your company</p>
+                <p className="text-sm text-gray-600">Support great talent, strengthen your network, and earn commissions for referrals</p>
               </CardContent>
             </Card>
           </div>
@@ -107,7 +107,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 <div className="mt-6 p-4 bg-white/10 rounded-xl backdrop-blur-sm">
                   <div className="flex justify-between items-center">
                     <span className="text-sm opacity-90">Average referral fee</span>
-                    <span className="text-2xl font-bold">₹150-500</span>
+                    <span className="text-2xl font-bold">₹499</span>
                   </div>
                 </div>
               </CardContent>
@@ -152,7 +152,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 <div className="mt-6 p-4 bg-white/10 rounded-xl backdrop-blur-sm">
                   <div className="flex justify-between items-center">
                     <span className="text-sm opacity-90">Potential monthly earnings</span>
-                    <span className="text-2xl font-bold">₹2000+</span>
+                    <span className="text-2xl font-bold">Up to ₹20,000</span>
                   </div>
                 </div>
               </CardContent>

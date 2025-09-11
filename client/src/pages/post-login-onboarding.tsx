@@ -11,6 +11,10 @@ import { useAuth } from '@/hooks/use-auth';
 import { useMutation } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
+import { INDIA_TECH_COMPANIES } from '@/lib/companies';
+import { Command, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList } from '@/components/ui/command';
+import { Popover, PopoverContent, PopoverTrigger } from '@/components/ui/popover';
+import { ChevronsUpDown, Check } from 'lucide-react';
 
 interface OnboardingData {
   role: 'seeker' | 'referrer' | 'both';
@@ -39,12 +43,19 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
     role: 'seeker',
     skills: []
   });
+  const [otherEducation, setOtherEducation] = useState('');
+  const [otherTargetDomain, setOtherTargetDomain] = useState('');
+  const [companyQuery, setCompanyQuery] = useState('');
+  const [companyOpen, setCompanyOpen] = useState(false);
+  const [isOtherCompany, setIsOtherCompany] = useState(false);
 
   const updateProfileMutation = useMutation({
     mutationFn: async (profileData: OnboardingData) => {
       // Always call the API for profile updates
       const requestData = {
         ...profileData,
+        education: profileData.education === 'other' ? otherEducation : profileData.education,
+        targetDomain: profileData.targetDomain === 'other' ? otherTargetDomain : profileData.targetDomain,
         userId: user?.id,
         email: user?.email
       };
@@ -148,7 +159,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                   <div>
                     <div className="font-semibold text-lg mb-1">I'm looking for a job</div>
                     <div className="text-sm opacity-90">Get referrals from employees at top companies</div>
-                    <div className="text-xs mt-2 font-medium">💰 Referral fees: ₹150-500</div>
+                    <div className="text-xs mt-2 font-medium">💰 Referral fees: ₹499</div>
                   </div>
                 </div>
               </Button>
@@ -167,7 +178,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                   <div>
                     <div className="font-semibold text-lg mb-1">I want to provide referrals</div>
                     <div className="text-sm opacity-90">Earn money by referring candidates</div>
-                    <div className="text-xs mt-2 font-medium">💰 Earn: ₹2000+ monthly</div>
+                    <div className="text-xs mt-2 font-medium">💰 Earn ₹2000+ monthly</div>
                   </div>
                 </div>
               </Button>
@@ -213,13 +224,73 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                   <Label htmlFor="company" className="text-sm font-medium text-[var(--dark-gray)] mb-2 block">
                     Current Company *
                   </Label>
-                  <Input
-                    id="company"
-                    placeholder="e.g., Google, Microsoft, Apple"
-                    value={data.company || ''}
-                    onChange={(e) => setData(prev => ({ ...prev, company: e.target.value }))}
-                    className="bg-gray-50 border-2 rounded-xl py-3 focus:border-[var(--purple-primary)] focus:bg-white"
-                  />
+                  <Popover open={companyOpen} onOpenChange={setCompanyOpen}>
+                    <PopoverTrigger asChild>
+                      <Button
+                        variant="outline"
+                        role="combobox"
+                        aria-expanded={companyOpen}
+                        className="w-full justify-between bg-gray-50 border-2 rounded-xl py-6"
+                      >
+                        {data.company ? data.company : 'Search company'}
+                        <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
+                      </Button>
+                    </PopoverTrigger>
+                    <PopoverContent className="w-full p-0">
+                      <Command shouldFilter={false}>
+                        <CommandInput
+                          placeholder="Type to search companies..."
+                          value={companyQuery}
+                          onValueChange={(val) => setCompanyQuery(val)}
+                        />
+                        <CommandList>
+                          <CommandEmpty>No results.</CommandEmpty>
+                          <CommandGroup heading="Companies">
+                            {INDIA_TECH_COMPANIES.filter(c => c.toLowerCase().includes(companyQuery.trim().toLowerCase())).slice(0, 500).map((company) => (
+                              <CommandItem
+                                key={company}
+                                onSelect={() => {
+                                  setData(prev => ({ ...prev, company }));
+                                  setIsOtherCompany(false);
+                                  setCompanyOpen(false);
+                                }}
+                                value={company}
+                              >
+                                <Check className={`mr-2 h-4 w-4 ${data.company === company ? 'opacity-100' : 'opacity-0'}`} />
+                                {company}
+                              </CommandItem>
+                            ))}
+                          </CommandGroup>
+                          <CommandGroup heading="Other">
+                            <CommandItem
+                              value="Others"
+                              onSelect={() => {
+                                setIsOtherCompany(true);
+                                setData(prev => ({ ...prev, company: '' }));
+                                setCompanyOpen(false);
+                              }}
+                            >
+                              Others
+                            </CommandItem>
+                          </CommandGroup>
+                        </CommandList>
+                      </Command>
+                    </PopoverContent>
+                  </Popover>
+                  {isOtherCompany && (
+                    <div className="mt-3">
+                      <Label htmlFor="companyOther" className="text-sm font-medium text-[var(--dark-gray)] mb-2 block">
+                        Enter your company
+                      </Label>
+                      <Input
+                        id="companyOther"
+                        placeholder="Type your company name"
+                        value={data.company || ''}
+                        onChange={(e) => setData(prev => ({ ...prev, company: e.target.value }))}
+                        className="bg-gray-50 border-2 rounded-xl py-3 focus:border-[var(--purple-primary)] focus:bg-white"
+                      />
+                    </div>
+                  )}
                 </div>
 
                 <div>
@@ -314,10 +385,24 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                       <SelectItem value="phd">PhD</SelectItem>
                       <SelectItem value="bootcamp">Coding Bootcamp</SelectItem>
                       <SelectItem value="self-taught">Self-taught</SelectItem>
+                      <SelectItem value="other">Other</SelectItem>
                     </SelectContent>
                   </Select>
                 </div>
-
+                  {data.education === 'other' && (
+                    <div>
+                      <Label htmlFor="education" className="text-sm font-medium text-[var(--dark-gray)] mb-2 block">
+                        Please specify your education
+                      </Label>
+                      <Input
+                        id="education"
+                        placeholder="Enter your education background"
+                        className="bg-gray-50 border-2 rounded-xl py-3"
+                        value={otherEducation}
+                        onChange={(e) => setOtherEducation(e.target.value)}
+                      />
+                    </div>
+                  )}
                 <div>
                   <Label htmlFor="targetDomain" className="text-sm font-medium text-[var(--dark-gray)] mb-2 block">
                     Target Domain *
@@ -343,6 +428,22 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                     </SelectContent>
                   </Select>
                 </div>
+
+                {data.targetDomain === 'other' && (
+                  <div>
+                    <Label htmlFor="targetDomain" className="text-sm font-medium text-[var(--dark-gray)] mb-2 block">
+                      Please specify your target domain
+                    </Label>
+                    <Input
+                      id="targetDomain" 
+                      placeholder="Enter your target domain"
+                      className="bg-gray-50 border-2 rounded-xl py-3"
+                      value={otherTargetDomain}
+                      onChange={(e) => setOtherTargetDomain(e.target.value)}
+                    />
+                  </div>
+                )}
+
 
                 <div>
                   <Label htmlFor="targetRole" className="text-sm font-medium text-[var(--dark-gray)] mb-2 block">
@@ -452,11 +553,11 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                     <>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Education:</span>
-                        <span className="font-medium">{data.education}</span>
+                        <span className="font-medium">{data.education === 'other' ? otherEducation : data.education}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Target Domain:</span>
-                        <span className="font-medium">{data.targetDomain}</span>
+                        <span className="font-medium">{data.targetDomain === 'other' ? otherTargetDomain : data.targetDomain}</span>
                       </div>
                       <div className="flex justify-between">
                         <span className="text-gray-600">Experience Level:</span>
@@ -490,12 +591,14 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
         return data.role !== undefined;
       case 2:
         if (data.role === 'referrer' || data.role === 'both') {
-          return data.company && data.position && data.workExperience;
+          return (data.company && data.company.trim().length > 0) && data.position && data.workExperience;
         }
         return true;
       case 3:
         if (data.role === 'seeker' || data.role === 'both') {
-          return data.education && data.targetDomain && data.experience;
+          const hasEducation = data.education === 'other' ? otherEducation.trim().length > 0 : Boolean(data.education);
+          const hasTargetDomain = data.targetDomain === 'other' ? otherTargetDomain.trim().length > 0 : Boolean(data.targetDomain);
+          return hasEducation && hasTargetDomain && Boolean(data.experience);
         }
         return true;
       default:

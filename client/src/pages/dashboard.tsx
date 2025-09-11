@@ -9,6 +9,7 @@ import RoleToggle from '@/components/role-toggle';
 import ReferralCard from '@/components/referral-card';
 import ProofUploadModal from '@/components/proof-upload-modal';
 import { useToast } from '@/hooks/use-toast';
+import React from 'react';
 
 export default function DashboardPage() {
   const { user, signOut } = useAuth();
@@ -98,9 +99,7 @@ export default function DashboardPage() {
           {/* Logo */}
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--purple-light)] rounded-xl flex items-center justify-center">
-              <svg className="w-6 h-6 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7l12-4-4 12m0 0L8 15m8 0V7M8 15l0-8"></path>
-              </svg>
+              <img src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/job-thrive-logo.jpg" alt="Job Thrive" className="w-full h-full object-cover" />
             </div>
             <span className="text-xl font-bold text-[var(--dark-gray)]">Job Thrive</span>
           </div>
@@ -114,9 +113,7 @@ export default function DashboardPage() {
               className="w-8 h-8 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200"
               onClick={() => setLocation('/profile')}
             >
-              <span className="text-white text-sm font-semibold">
-                {getInitials(user.name)}
-              </span>
+             <img src={user.photoUrl || ''} alt="Profile" className="w-8 h-8 rounded-full" />
             </div>
           </div>
         </div>
@@ -348,7 +345,7 @@ export default function DashboardPage() {
             <span className="text-xs font-medium">Search</span>
           </Button>
           
-          <Button
+          {/* <Button
             variant="ghost"
             size="sm"
             onClick={() => handleNavClick('analytics')}
@@ -358,7 +355,7 @@ export default function DashboardPage() {
           >
             <BarChart3 className="w-5 h-5" />
             <span className="text-xs font-medium">Analytics</span>
-          </Button>
+          </Button> */}
           
           <Button
             variant="ghost"
