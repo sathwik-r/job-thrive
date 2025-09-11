@@ -138,13 +138,13 @@ export default function ProfilePage() {
             <CardTitle className="text-lg font-semibold text-[var(--dark-gray)]">Account</CardTitle>
           </CardHeader>
           <CardContent className="space-y-3">
-            <Button
+            {/* <Button
               variant="outline"
               className="w-full justify-start"
               onClick={() => setLocation('/analytics')}
             >
               📊 View Analytics
-            </Button>
+            </Button> */}
             
             <Button
               variant="outline"

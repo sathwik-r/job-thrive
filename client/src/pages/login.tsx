@@ -41,9 +41,11 @@ export default function LoginPage() {
           <div className="text-center mb-12">
             <div className="relative mb-8">
               <div className="w-24 h-24 mx-auto glassmorphism rounded-3xl flex items-center justify-center animate-float">
-                <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M8 7l12-4-4 12m0 0L8 15m8 0V7M8 15l0-8"></path>
-                </svg>
+                <img
+                  src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/job-thrive-logo.jpg"
+                  alt="Job Thrive"
+                  className="w-full h-full object-cover"
+                />
               </div>
               <div className="absolute -inset-4 bg-gradient-to-r from-white/20 to-white/10 rounded-full blur-xl opacity-70"></div>
             </div>
@@ -51,13 +53,10 @@ export default function LoginPage() {
             <h1 className="text-4xl font-bold text-white mb-3 tracking-tight">
               Welcome to <span className="gradient-text-white">Job Thrive</span>
             </h1>
-            <p className="text-white/80 text-lg mb-2">Your job referral marketplace</p>
+            <p className="text-white/80 text-lg mb-2">Your shortcut to better jobs</p>
             <p className="text-white/60 text-sm">Connect with Gmail to unlock opportunities</p>
             <p className="text-white/70 text-sm mt-4 max-w-2xl mx-auto">
-              Job Thrive is a professional referral platform that helps job seekers get high-quality
-              employee referrals from verified professionals across top companies. Discover matched
-              referrers, track referral progress, and increase your interview success rate with a
-              trusted marketplace designed for modern hiring.
+            Get real employee referrals, unlock hidden opportunities, and gain personal guidance from professionals working at your target companies.
             </p>
           </div>
 
@@ -88,35 +87,6 @@ export default function LoginPage() {
           </div>
 
           {/* Footer */}
-        </div>
-      </div>
-      {/* SEO Image & Benefits */}
-      <div className="px-6 pb-16 -mt-6">
-        <div className="max-w-3xl mx-auto bg-white/90 rounded-3xl p-6 md:p-8 shadow-2xl backdrop-blur-xl border border-white/30">
-          <div className="grid md:grid-cols-2 gap-6 items-center">
-            <img
-              src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/jobthrive-1.jpeg"
-              alt="Job Thrive referral platform preview showing seeker and referrer workflow"
-              className="w-full h-auto rounded-2xl shadow-md"
-              width={1200}
-              height={630}
-              loading="eager"
-              decoding="async"
-            />
-            <div>
-              <h2 className="text-2xl font-bold text-[var(--dark-gray)] mb-3">Get hired faster with trusted referrals</h2>
-              <p className="text-gray-700 mb-3">
-                Join a curated network of referrers and accelerate your application with credible, trackable
-                recommendations. Whether you are a job seeker or a referrer, Job Thrive simplifies
-                collaboration and ensures transparency from request to result.
-              </p>
-              <ul className="list-disc pl-5 text-gray-700 space-y-1">
-                <li>Verified referrers from leading tech companies</li>
-                <li>Simple request workflow and real-time status updates</li>
-                <li>Secure payments and outcome-based transparency</li>
-              </ul>
-            </div>
-          </div>
         </div>
       </div>
     </div>
