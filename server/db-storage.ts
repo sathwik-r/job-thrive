@@ -1,7 +1,7 @@
 import { eq, and, ilike, or, desc, isNotNull, sql, count } from "drizzle-orm";
 import { db } from "./db";
-import { users, jobs, referrals } from "@shared/schema";
-import type { User, Job, Referral, InsertUser, InsertJob, InsertReferral } from "@shared/schema";
+import { users, jobs, referrals, assignments } from "@shared/schema";
+import type { User, Job, Referral, InsertUser, InsertJob, InsertReferral, Assignment } from "@shared/schema";
 import type { IStorage } from "./storage";
 
 export class DbStorage implements IStorage {
@@ -157,6 +157,21 @@ export class DbStorage implements IStorage {
 
   async getPendingReferrals(): Promise<Referral[]> {
     return await db.select().from(referrals).where(eq(referrals.status, "pending")).orderBy(desc(referrals.createdAt));
+  }
+
+  async getAssignmentsByReferrerId(referrerId: number): Promise<Assignment[]> {
+      const result = await db.select().from(assignments).where(
+      and(
+        eq(assignments.referrerId, referrerId),
+        sql`${assignments.status} IN ('assigned', 'accepted')`
+      )
+    );
+    return result;
+  }
+
+  async getAssignment(id: number): Promise<Assignment | undefined> {
+    const result = await db.select().from(assignments).where(eq(assignments.id, id));
+    return result[0];
   }
 }
 

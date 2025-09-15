@@ -48,7 +48,7 @@ CREATE TABLE IF NOT EXISTS referrals (
   job_id INTEGER NOT NULL REFERENCES jobs(id),
   seeker_id INTEGER NOT NULL REFERENCES users(id),
   referrer_id INTEGER REFERENCES users(id),
-  status TEXT DEFAULT 'pending' NOT NULL CHECK (status IN ('pending', 'assigned', 'in_review', 'completed', 'expired', 'cancelled')),
+  status TEXT DEFAULT 'pending' NOT NULL CHECK (status IN ('pending', 'assigned', 'verification_pending', 'completed', 'expired', 'cancelled')),
   amount DECIMAL(10,2) NOT NULL,
   resume_url TEXT,
   proof_url TEXT,

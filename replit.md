@@ -56,7 +56,7 @@ Authentication: Gmail-only authentication for streamlined user experience
 
 ### Referral Marketplace
 - Request-response system for referrals
-- Status tracking (pending, assigned, in_review, completed, etc.)
+- Status tracking (pending, assigned, verification_pending, completed, etc.)
 - File upload for resumes and proof documents
 - Payment integration with Razorpay
 

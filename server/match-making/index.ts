@@ -34,6 +34,7 @@ export async function getReferrerScores(): Promise<ReferrerScore[]> {
 
 export async function findBestReferrer(referralId: number): Promise<number | null> {
   // Get referral and job info directly without relations
+  console.log("Finding best referrer for referral:", referralId);
   const referral = await db
     .select()
     .from(referrals)
@@ -41,6 +42,7 @@ export async function findBestReferrer(referralId: number): Promise<number | nul
     .limit(1);
 
   if (!referral.length) {
+    console.log("Referral not found");
     throw new Error("Referral not found");
   }
 
@@ -334,7 +336,8 @@ export async function rejectAssignment(assignmentId: number): Promise<boolean> {
       .update(referrals)
       .set({ 
         status: "pending",
-        assignedAt: null
+        assignedAt: null,
+        referrerId: null
       })
       .where(eq(referrals.id, assignment.referralId));
 
