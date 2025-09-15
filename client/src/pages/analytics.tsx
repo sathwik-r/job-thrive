@@ -34,7 +34,7 @@ export default function AnalyticsPage() {
   const successRate = totalReferralsGiven > 0 ? Math.round((completedReferrals / totalReferralsGiven) * 100) : 0;
   
   const totalApplications = applications.length;
-  const activeApplications = applications.filter((r: any) => ['pending', 'assigned', 'in_review'].includes(r.status)).length;
+  const activeApplications = applications.filter((r: any) => ['pending', 'assigned', 'verification_pending'].includes(r.status)).length;
   
   // Monthly earnings simulation
   const monthlyEarnings = parseFloat(user.totalEarnings) * 0.3; // Simulate 30% earned this month

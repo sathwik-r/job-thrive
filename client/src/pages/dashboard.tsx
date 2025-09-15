@@ -8,6 +8,9 @@ import { Card, CardContent } from '@/components/ui/card';
 import RoleToggle from '@/components/role-toggle';
 import ReferralCard from '@/components/referral-card';
 import ProofUploadModal from '@/components/proof-upload-modal';
+import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/ui/dialog';
+import { Badge } from '@/components/ui/badge';
+import { queryClient, apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import React from 'react';
 
@@ -18,8 +21,12 @@ export default function DashboardPage() {
   const [activeNav, setActiveNav] = useState('dashboard');
   const [proofUploadModal, setProofUploadModal] = useState<{
     isOpen: boolean;
-    referralId: number | null;
-  }>({ isOpen: false, referralId: null });
+    assignmentId: number | null;
+  }>({ isOpen: false, assignmentId: null });
+  const [detailsModal, setDetailsModal] = useState<{
+    isOpen: boolean;
+    request: any | null;
+  }>({ isOpen: false, request: null });
   const { toast } = useToast();
 
   const { data: seekerReferrals, isLoading: seekerLoading } = useQuery({
@@ -27,7 +34,7 @@ export default function DashboardPage() {
     enabled: !!user && currentRole === 'seeker',
   });
 
-  const { data: referrerReferrals, isLoading: referrerLoading } = useQuery({
+  const { data: referreRequest, isLoading: referrerLoading } = useQuery({
     queryKey: ['/api/referrals/referrer', user?.id],
     enabled: !!user && currentRole === 'referrer',
   });
@@ -53,39 +60,82 @@ export default function DashboardPage() {
     }
   };
 
-  const handleUploadProof = (referralId: number) => {
-    setProofUploadModal({ isOpen: true, referralId });
+  const handleUploadProof = (assignmentId: number) => {
+    setProofUploadModal({ isOpen: true, assignmentId });
+  };
+
+  const openReferralDetails = (request: any) => {
+    setDetailsModal({ isOpen: true, request });
+  };
+
+  const handleDecline = async (assignmentId: number) => {
+    try {
+      await apiRequest('PUT', `/api/assignments/${assignmentId}`, { action: 'reject' });
+      // Optimistically close dialog
+      setDetailsModal({ isOpen: false, request: null });
+      // Invalidate lists
+      await queryClient.invalidateQueries({ queryKey: ['/api/referrals/referrer', user?.id] });
+      await queryClient.invalidateQueries({ queryKey: ['/api/referrals/seeker', user?.id] });
+      toast({ title: 'Request declined', description: 'You have declined this referral.' });
+    } catch (e: any) {
+      toast({ title: 'Failed to decline', description: e?.message || 'Please try again.', variant: 'destructive' as any });
+    }
   };
 
   const handleProofSubmit = async (file: File) => {
-    // In production, upload to Firebase Storage and update referral
-    toast({
-      title: "Proof Uploaded",
-      description: "Your proof has been submitted successfully.",
-    });
-    
-    // Close modal and refresh data
-    setProofUploadModal({ isOpen: false, referralId: null });
+    try {
+      // Get pre-signed URL for upload
+      const presignedResponse = await apiRequest('POST', '/api/upload/proof-presigned-url', {
+        fileName: file.name,
+        fileType: file.type
+      });
+      const { uploadUrl, fileUrl } = await presignedResponse.json();
+
+      // Upload file to S3
+      await fetch(uploadUrl, {
+        method: 'PUT',
+        body: file,
+        headers: {
+          'Content-Type': file.type,
+        },
+      });
+
+      // Update assignment with proof URL (backend sets referral to verification_pending)
+      await apiRequest('PUT', `/api/assignments/${proofUploadModal.assignmentId}`, { proofUrl: fileUrl });
+
+      // Close modal and refresh data
+      setProofUploadModal({ isOpen: false, assignmentId: null });
+      await queryClient.invalidateQueries({ queryKey: ['/api/referrals/referrer', user?.id] });
+      await queryClient.invalidateQueries({ queryKey: ['/api/referrals/seeker', user?.id] });
+      
+      toast({
+        title: "Proof Uploaded",
+        description: "Your proof has been submitted successfully.",
+      });
+    } catch (error: any) {
+      toast({
+        title: "Upload Failed",
+        description: error?.message || "Please try again.",
+        variant: "destructive" as any,
+      });
+    }
   };
 
-  const getInitials = (name: string) => {
-    return name.split(' ').map(n => n[0]).join('').toUpperCase();
-  };
 
-  const activeReferrals = Array.isArray(seekerReferrals) ? seekerReferrals.filter((r: any) => 
-    ['pending', 'assigned', 'in_review'].includes(r.status)
+  const activeRequests = Array.isArray(seekerReferrals) ? seekerReferrals.filter((r: any) => 
+    ['pending', 'assigned', 'verification_pending'].includes(r.referral?.status)
   ) : [];
   
-  const pastReferrals = Array.isArray(seekerReferrals) ? seekerReferrals.filter((r: any) => 
-    ['completed', 'expired', 'cancelled'].includes(r.status)
+  const pastRequests = Array.isArray(seekerReferrals) ? seekerReferrals.filter((r: any) => 
+    ['completed', 'expired', 'cancelled'].includes(r.referral?.status)
   ) : [];
 
-  const assignedReferrals = Array.isArray(referrerReferrals) ? referrerReferrals.filter((r: any) => 
-    r.status === 'assigned'
+  const assignedRequests = Array.isArray(referreRequest) ? referreRequest.filter((r: any) => 
+    r.referral?.status === 'assigned' || r.referral?.status === 'verification_pending'
   ) : [];
   
-  const completedReferrals = Array.isArray(referrerReferrals) ? referrerReferrals.filter((r: any) => 
-    r.status === 'completed'
+  const completedRequests = Array.isArray(referreRequest) ? referreRequest.filter((r: any) => 
+    r.referral?.status === 'completed'
   ) : [];
 
   const totalEarnings = parseFloat(user.totalEarnings);
@@ -151,7 +201,7 @@ export default function DashboardPage() {
               <Card className="modern-card card-hover border-0">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold gradient-text">
-                    {activeReferrals.length}
+                    {activeRequests.length}
                   </div>
                   <div className="text-xs text-gray-600 mt-1">Active</div>
                 </CardContent>
@@ -159,7 +209,7 @@ export default function DashboardPage() {
               <Card className="modern-card card-hover border-0">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-[var(--emerald-success)]">
-                    {completedReferrals.length}
+                    {completedRequests.length}
                   </div>
                   <div className="text-xs text-gray-600 mt-1">Completed</div>
                 </CardContent>
@@ -167,7 +217,7 @@ export default function DashboardPage() {
               <Card className="modern-card card-hover border-0">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-[var(--orange-accent)]">
-                    {Array.isArray(seekerReferrals) && seekerReferrals.length > 0 ? Math.round((pastReferrals.filter(r => r.status === 'completed').length / seekerReferrals.length) * 100) : 0}%
+                    {Array.isArray(seekerReferrals) && seekerReferrals.length > 0 ? Math.round((pastRequests.filter(r => r.status === 'completed').length / seekerReferrals.length) * 100) : 0}%
                   </div>
                   <div className="text-xs text-gray-600 mt-1">Success Rate</div>
                 </CardContent>
@@ -179,10 +229,10 @@ export default function DashboardPage() {
               <h3 className="text-lg font-semibold text-[var(--dark-gray)] mb-4">Active Requests</h3>
               {seekerLoading ? (
                 <div className="text-center py-8">Loading...</div>
-              ) : activeReferrals.length > 0 ? (
+              ) : activeRequests.length > 0 ? (
                 <div className="space-y-4">
-                  {activeReferrals.map((referral: any) => (
-                    <ReferralCard key={referral.id} referral={referral} />
+                  {activeRequests.map((r: any) => (
+                    <ReferralCard key={r.referral.id} referral={r} onClick={() => openReferralDetails(r)} onUploadProof={() => handleUploadProof(r.assignment?.id)} onDecline={() => handleDecline(r.assignment?.id)} />
                   ))}
                 </div>
               ) : (
@@ -197,10 +247,10 @@ export default function DashboardPage() {
             {/* Past Requests */}
             <div>
               <h3 className="text-lg font-semibold text-[var(--dark-gray)] mb-4">Past Requests</h3>
-              {pastReferrals.length > 0 ? (
+              {pastRequests.length > 0 ? (
                 <div className="space-y-3">
-                  {pastReferrals.map((referral: any) => (
-                    <ReferralCard key={referral.id} referral={referral} />
+                  {pastRequests.map((referral: any) => (
+                    <ReferralCard key={referral.id} referral={referral} onClick={() => openReferralDetails(referral)} />
                   ))}
                 </div>
               ) : (
@@ -247,7 +297,7 @@ export default function DashboardPage() {
               <Card className="modern-card card-hover border-0">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-[var(--orange-accent)]">
-                    {assignedReferrals.length}
+                    {assignedRequests.length}
                   </div>
                   <div className="text-xs text-gray-600 mt-1">Pending</div>
                 </CardContent>
@@ -255,7 +305,7 @@ export default function DashboardPage() {
               <Card className="modern-card card-hover border-0">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-[var(--emerald-success)]">
-                    {completedReferrals.length}
+                    {completedRequests.length}
                   </div>
                   <div className="text-xs text-gray-600 mt-1">Completed</div>
                 </CardContent>
@@ -263,7 +313,7 @@ export default function DashboardPage() {
               <Card className="modern-card card-hover border-0">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold gradient-text">
-                    {Array.isArray(referrerReferrals) && referrerReferrals.length > 0 ? Math.round((completedReferrals.length / referrerReferrals.length) * 100) : 0}%
+                    {Array.isArray(referreRequest) && referreRequest.length > 0 ? Math.round((completedRequests.length / referreRequest.length) * 100) : 0}%
                   </div>
                   <div className="text-xs text-gray-600 mt-1">Success Rate</div>
                 </CardContent>
@@ -275,14 +325,16 @@ export default function DashboardPage() {
               <h3 className="text-lg font-semibold text-[var(--dark-gray)] mb-4">Assigned Referrals</h3>
               {referrerLoading ? (
                 <div className="text-center py-8">Loading...</div>
-              ) : assignedReferrals.length > 0 ? (
+              ) : assignedRequests.length > 0 ? (
                 <div className="space-y-4">
-                  {assignedReferrals.map((referral: any) => (
+                  {assignedRequests.map((r: any) => (
                     <ReferralCard 
-                      key={referral.id} 
-                      referral={referral} 
+                      key={r.referral.id} 
+                      referral={r} 
                       isReferrer 
-                      onUploadProof={() => handleUploadProof(referral.id)}
+                      onClick={() => openReferralDetails(r)}
+                      onUploadProof={() => handleUploadProof(r.assignment?.id)}
+                      onDecline={() => handleDecline(r.assignment?.id)}
                     />
                   ))}
                 </div>
@@ -298,10 +350,10 @@ export default function DashboardPage() {
             {/* Completed Referrals */}
             <div>
               <h3 className="text-lg font-semibold text-[var(--dark-gray)] mb-4">Completed Referrals</h3>
-              {completedReferrals.length > 0 ? (
+              {completedRequests.length > 0 ? (
                 <div className="space-y-3">
-                  {completedReferrals.map((referral: any) => (
-                    <ReferralCard key={referral.id} referral={referral} isReferrer />
+                  {completedRequests.map((r: any) => (
+                    <ReferralCard key={r.referral.id} referral={r} isReferrer onClick={() => openReferralDetails(r)} onUploadProof={() => handleUploadProof(r.assignment?.id)} onDecline={() => handleDecline(r.assignment?.id)} />
                   ))}
                 </div>
               ) : (
@@ -374,9 +426,82 @@ export default function DashboardPage() {
       {/* Proof Upload Modal */}
       <ProofUploadModal
         isOpen={proofUploadModal.isOpen}
-        onClose={() => setProofUploadModal({ isOpen: false, referralId: null })}
+        onClose={() => setProofUploadModal({ isOpen: false, assignmentId: null })}
         onSubmit={handleProofSubmit}
       />
+
+      {/* Referral Details Modal */}
+      <Dialog open={detailsModal.isOpen} onOpenChange={(open) => !open && setDetailsModal({ isOpen: false, request: null })}>
+        <DialogContent className="sm:max-w-lg">
+          <DialogHeader>
+            <DialogTitle className="text-xl font-bold text-[var(--dark-gray)]">Referral Details</DialogTitle>
+          </DialogHeader>
+          {detailsModal.request && (
+            <div className="space-y-4">
+              <div className="flex items-start justify-between">
+                <div>
+                  <p className="font-semibold text-[var(--dark-gray)]">{detailsModal.request.job?.title || 'Unknown Position'}</p>
+                  <p className="text-sm text-gray-600">{detailsModal.request.job?.company || 'Unknown Company'}</p>
+                  <p className="text-xs text-gray-500">{detailsModal.request.job?.location || 'Location not specified'}</p>
+                </div>
+                <div className="text-right">
+                  <Badge>{(detailsModal.request.referral.status || '').toString().replace(/^./, (c: string) => c.toUpperCase())}</Badge>
+                  <p className="text-sm font-semibold text-[var(--emerald-success)] mt-1">₹ 499</p>
+                </div>
+              </div>
+
+              {detailsModal.request.seeker && (
+                <div className="bg-gray-50 rounded-xl p-4">
+                  <p className="text-sm text-gray-600 mb-1">Seeker</p>
+                  <p className="font-medium text-[var(--dark-gray)]">{detailsModal.request.seeker.name}</p>
+                  {detailsModal.request.seeker.email && (
+                    <p className="text-sm text-gray-600">{detailsModal.request.seeker.email}</p>
+                  )}
+                  {detailsModal.request.seeker.experience && (
+                    <p className="text-sm text-gray-600">Experience: {detailsModal.request.seeker.experience}</p>
+                  )}
+                  {detailsModal.request.seeker.skills && Array.isArray(detailsModal.request.seeker.skills) && detailsModal.request.seeker.skills.length > 0 && (
+                    <p className="text-sm text-gray-600">Skills: {detailsModal.request.seeker.skills.join(', ')}</p>
+                  )}
+                  {detailsModal.request.referral.resumeUrl && detailsModal.request.referral.resumeUrl !== '' && (
+                    <div className="mt-3">
+                      <Button
+                        variant="outline"
+                        onClick={() => window.open(detailsModal.request.referral.resumeUrl, '_blank', 'noopener,noreferrer')}
+                      >
+                        View Resume
+                      </Button>
+                    </div>
+                  )}            
+                </div>
+              )}
+
+              <div className="flex space-x-3">
+                {detailsModal.request.referral && detailsModal.request.referral.status === 'assigned' && (
+                  <Button
+                    className="flex-1 bg-[var(--purple-primary)] hover:bg-[var(--purple-primary)]/90"
+                    onClick={() => {
+                      setDetailsModal({ isOpen: false, request: null });
+                      handleUploadProof(detailsModal.request.assignment.id);
+                    }}
+                  >
+                    Upload Proof
+                  </Button>
+                )}
+                {detailsModal.request.referral && detailsModal.request.referral.status === 'assigned' && (
+                  <Button
+                    variant="outline"
+                    className="flex-1 border-red-300 text-red-600 hover:bg-red-50"
+                    onClick={() => handleDecline(detailsModal.request.assignment.id)}
+                  >
+                    Decline
+                  </Button>
+                )}
+              </div>
+            </div>
+          )}
+        </DialogContent>
+      </Dialog>
     </div>
   );
 }

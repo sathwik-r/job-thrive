@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import React from 'react';
 import { useQuery, useMutation, useQueryClient } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
 import { ArrowLeft, CreditCard, Upload, FileText, X, RefreshCw } from 'lucide-react';

@@ -5,11 +5,11 @@ import axios from "axios";
 import { env } from './config/env';
 import crypto from "crypto";
 import AWS from "aws-sdk";
-import { insertUserSchema, insertReferralSchema } from "@shared/schema";
+import { insertUserSchema, insertReferralSchema, Assignment } from "@shared/schema";
 import { z } from "zod";
 import { authenticateToken, optionalAuth, requireRole } from "./auth-middleware";
 import { razorpayService } from './razorpay-service';
-import { assignReferral } from './match-making';
+import { assignReferral, rejectAssignment, acceptAssignment } from './match-making';
 
 
 const authUserSchema = z.object({
@@ -32,10 +32,9 @@ const createReferralRequestSchema = z.object({
 });
 
 const updateReferralSchema = insertReferralSchema.partial().extend({
-  id: z.number(),
   seekerId: z.number().optional(),
   referrerId: z.number().optional(),
-  status: z.enum(["pending", "assigned", "in_review", "completed", "expired", "cancelled"]).optional(),
+  status: z.enum(["pending", "assigned", "verification_pending", "completed", "expired", "cancelled", "verification_pending"]).optional(),
   proofUrl: z.string().optional(),
   proofDescription: z.string().optional(),
   notes: z.string().optional(),
@@ -362,7 +361,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const referralsWithJobs = await Promise.all(
         referrals.map(async (referral) => {
           const job = await storage.getJob(referral.jobId);
-          return { ...referral, job };
+          return { referral, job };
         }),
       );
 
@@ -381,20 +380,71 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ message: "Access denied" });
       }
       
-      const referrals = await storage.getReferralsByReferrer(userId);
+      const assignments = await storage.getAssignmentsByReferrerId(userId);
 
       // Populate job and seeker data
       const referralsWithData = await Promise.all(
-        referrals.map(async (referral) => {
+        assignments.map(async (assignment: Assignment) => {
+          const referralId = assignment.referralId;
+          const referral = await storage.getReferral(referralId);
+          if (!referral) {
+            return null;
+          }
           const job = await storage.getJob(referral.jobId);
           const seeker = await storage.getUser(referral.seekerId);
-          return { ...referral, job, seeker };
+          return { assignment, job, seeker, referral };
         }),
       );
 
       res.json(referralsWithData);
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Update assignment status (accept/reject) and handle proof submission
+  app.put("/api/assignments/:id", authenticateToken, async (req, res) => {
+    try {
+      const assignmentId = parseInt(req.params.id);
+      const { action, proofUrl } = req.body as { action?: "accept" | "reject"; proofUrl?: string };
+
+      const assignment = await storage.getAssignment(assignmentId);
+      if (!assignment) {
+        return res.status(404).json({ message: "Assignment not found" });
+      }
+
+      // Only assigned referrer can update
+      if (assignment.referrerId !== req.user!.id) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+
+      if (action === "reject") {
+        const ok = await rejectAssignment(assignmentId);
+        if (!ok) return res.status(500).json({ message: "Failed to reject assignment" });
+
+        const updatedReferral = await storage.getReferral(assignment.referralId);
+        return res.json({ success: true, referral: updatedReferral });
+      }
+
+      if (action === "accept" || proofUrl) {
+        const ok = await acceptAssignment(assignmentId);
+        if (!ok) return res.status(500).json({ message: "Failed to accept assignment" });
+
+        // If proof submitted, mark referral verification_pending and save proofUrl
+        if (proofUrl) {
+          await storage.updateReferral(assignment.referralId, {
+            proofUrl,
+            status: "verification_pending",
+          });
+        }
+        const updatedReferral = await storage.getReferral(assignment.referralId);
+        return res.json({ success: true, referral: updatedReferral });
+      }
+
+      return res.status(400).json({ message: "Invalid action" });
+    } catch (error) {
+      console.error("Error updating assignment:", error);
+      return res.status(500).json({ message: "Internal server error" });
     }
   });
 
@@ -406,6 +456,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       // Check if user has permission to update this referral
       const existingReferral = await storage.getReferral(referralId);
       if (!existingReferral) {
+        console.log("Referral not found in update referral");
         return res.status(404).json({ message: "Referral not found" });
       }
       
@@ -414,9 +465,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(403).json({ message: "Access denied" });
       }
 
+      // Decline/accept are handled via /api/assignments/:id now; skip here
+
       const referral = await storage.updateReferral(referralId, updates);
 
       if (!referral) {
+        console.error('Referral not found:', referralId);
         return res.status(404).json({ message: "Referral not found" });
       }
 
@@ -435,6 +489,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       res.json(referral);
     } catch (error) {
+      console.error('Error updating referral:', error);
       res.status(400).json({ message: "Invalid update data" });
     }
   });
@@ -533,6 +588,63 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
     } catch (error) {
       console.error('Error generating pre-signed URL:', error);
+      res.status(500).json({ message: "Failed to generate upload URL" });
+    }
+  });
+
+  // Generate S3 pre-signed URL for proof upload - protected
+  app.post("/api/upload/proof-presigned-url", authenticateToken, async (req, res) => {
+    try {
+      const { fileName, fileType } = req.body;
+      
+      if (!fileName || !fileType) {
+        return res.status(400).json({ message: "Missing fileName or fileType" });
+      }
+
+      // Validate file type (images only for proof)
+      const validTypes = [
+        'image/jpeg',
+        'image/jpg', 
+        'image/png',
+        'image/gif',
+        'image/webp'
+      ];
+      
+      if (!validTypes.includes(fileType)) {
+        return res.status(400).json({ message: "Invalid file type. Only images are allowed for proof upload." });
+      }
+
+      // Generate unique file path
+      const now = new Date();
+      const monthYear = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, '0')}`;
+      const uuid = crypto.randomUUID();
+      const fileExtension = fileName.split('.').pop();
+      const s3Key = `job-thrive/proofs/${monthYear}/${fileName}-${uuid}.${fileExtension}`;
+
+      // Configure S3
+      const s3 = new AWS.S3({
+        region: env.AWS_REGION,
+        accessKeyId: env.AWS_ACCESS_KEY_ID,
+        secretAccessKey: env.AWS_SECRET_ACCESS_KEY,
+      });
+
+      // Generate pre-signed URL for PUT operation
+      const presignedUrl = await s3.getSignedUrlPromise('putObject', {
+        Bucket: 'job-thrive',
+        Key: s3Key,
+        ContentType: fileType,
+        Expires: 3600, // URL expires in 1 hour
+      });
+
+      const fileUrl = `https://job-thrive.s3.ap-south-1.amazonaws.com/${s3Key}`;
+
+      res.json({
+        uploadUrl: presignedUrl,
+        fileUrl,
+        expiresIn: 3600,
+      });
+    } catch (error) {
+      console.error('Error generating proof pre-signed URL:', error);
       res.status(500).json({ message: "Failed to generate upload URL" });
     }
   });

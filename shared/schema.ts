@@ -51,7 +51,7 @@ export const referrals = pgTable("referrals", {
   seekerId: integer("seeker_id").references(() => users.id).notNull(),
   referrerId: integer("referrer_id").references(() => users.id),
   status: text("status", { 
-    enum: ["pending", "assigned", "in_review", "completed", "expired", "cancelled"] 
+    enum: ["pending", "assigned", "verification_pending", "completed", "expired", "cancelled", "verification_pending"] 
   }).default("pending").notNull(),
   amount: decimal("amount", { precision: 10, scale: 2 }).notNull(),
   resumeUrl: text("resume_url"),

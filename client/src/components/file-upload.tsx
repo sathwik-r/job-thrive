@@ -2,6 +2,7 @@ import { useState, useRef } from 'react';
 import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { X, Upload, FileText } from 'lucide-react';
+import React from 'react';
 
 interface FileUploadProps {
   onFileSelect: (file: File) => void;
