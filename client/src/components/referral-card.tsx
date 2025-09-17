@@ -24,8 +24,6 @@ const getStatusColor = (status: string) => {
       return 'bg-[var(--orange-accent)]/20 text-[var(--orange-accent)]';
     case 'completed':
       return 'bg-[var(--emerald-success)]/20 text-[var(--emerald-success)]';
-    case 'verification_pending':
-      return 'bg-yellow-100 text-yellow-600';
     case 'expired':
       return 'bg-red-100 text-red-500';
     case 'cancelled':
@@ -45,8 +43,6 @@ const getProgressValue = (status: string) => {
       return 80;
     case 'completed':
       return 100;
-    case 'verification_pending':
-      return 90;
     case 'expired':
     case 'cancelled':
       return 0;
@@ -65,8 +61,6 @@ const getStatusText = (status: string) => {
       return 'Proof submitted';
     case 'completed':
       return 'Completed';
-    case 'verification_pending':
-      return 'Pending verification';
     case 'expired':
       return 'Expired';
     case 'cancelled':
@@ -114,9 +108,9 @@ export default function ReferralCard({ referral, isReferrer = false, onViewResum
             </p>
           </div>
           <div className="text-right">
-            <Badge className={`px-3 py-1 rounded-full text-xs font-semibold mb-2 ${getStatusColor(displayStatus)}`}>
+          {isReferrer && <Badge className={`px-3 py-1 rounded-full text-xs font-semibold mb-2 ${getStatusColor(displayStatus)}`}>
               {(displayStatus.replace('_', ' ')).charAt(0).toUpperCase() + (displayStatus.replace('_', ' ')).slice(1)}
-            </Badge>
+            </Badge>}
             <p className={`text-sm font-semibold ${isReferrer ? 'text-[var(--emerald-success)]' : 'text-[var(--dark-gray)]'}`}>
               {isReferrer ? '+' : ''}₹ 499
             </p>
