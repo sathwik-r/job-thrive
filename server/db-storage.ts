@@ -169,6 +169,15 @@ export class DbStorage implements IStorage {
     return result;
   }
 
+  async getAllAssignmentsByReferrerId(): Promise<Assignment[]> {
+    const result = await db.select().from(assignments).where(
+    and(
+      isNotNull(assignments.referrerId)
+    )
+  );
+  return result;
+}
+
   async getAssignment(id: number): Promise<Assignment | undefined> {
     const result = await db.select().from(assignments).where(eq(assignments.id, id));
     return result[0];
