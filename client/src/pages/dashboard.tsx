@@ -17,6 +17,7 @@ import React from 'react';
 export default function DashboardPage() {
   const { user, signOut } = useAuth();
   const [, setLocation] = useLocation();
+  console.log('user in dashboard', user);
   const [currentRole, setCurrentRole] = useState<'seeker' | 'referrer'>('seeker');
   const [activeNav, setActiveNav] = useState('dashboard');
   const [proofUploadModal, setProofUploadModal] = useState<{
@@ -38,6 +39,18 @@ export default function DashboardPage() {
     queryKey: ['/api/referrals/referrer', user?.id],
     enabled: !!user && currentRole === 'referrer',
   });
+
+  const { data: seekerMetrics, isLoading: seekerMetricsLoading } = useQuery<any>({
+    queryKey: ['/api/seeker-metrics', user?.id],
+    enabled: !!user && currentRole === 'seeker',
+  });
+  
+
+  const { data: referrerMetrics, isLoading: referrerMetricsLoading } = useQuery<any>({
+    queryKey: ['/api/referrer-metrics', user?.id],
+    enabled: !!user && currentRole === 'referrer',
+  });
+  
 
   if (!user) {
     return null;
@@ -138,8 +151,8 @@ export default function DashboardPage() {
     r.referral?.status === 'completed'
   ) : [];
 
-  const totalEarnings = parseFloat(user.totalEarnings);
-  const totalSpent = parseFloat(user.totalSpent);
+  const totalEarnings = parseFloat(referrerMetrics?.totalEarnings ?? '0');
+  const totalSpent = parseFloat(referrerMetrics?.totalSpent ?? '0');
 
   return (
     <div className="min-h-screen bg-gray-50">
@@ -182,7 +195,7 @@ export default function DashboardPage() {
                     <p className="opacity-90">Ready to find your dream job?</p>
                   </div>
                   <div className="text-right">
-                    <div className="text-2xl font-bold">₹{totalSpent}</div>
+                    <div className="text-2xl font-bold">₹{seekerMetrics?.totalSpent ?? 0}</div>
                     <div className="text-sm opacity-75">Total Invested</div>
                   </div>
                 </div>
@@ -201,25 +214,25 @@ export default function DashboardPage() {
               <Card className="modern-card card-hover border-0">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold gradient-text">
-                    {activeRequests.length}
+                    {seekerMetrics?.jobsCount ?? 0}
                   </div>
-                  <div className="text-xs text-gray-600 mt-1">Active</div>
+                  <div className="text-xs text-gray-600 mt-1">Total Jobs</div>
                 </CardContent>
               </Card>
               <Card className="modern-card card-hover border-0">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-[var(--emerald-success)]">
-                    {completedRequests.length}
+                    {seekerMetrics?.appliedReferrals ?? 0}
                   </div>
-                  <div className="text-xs text-gray-600 mt-1">Completed</div>
+                  <div className="text-xs text-gray-600 mt-1">Applied</div>
                 </CardContent>
               </Card>
               <Card className="modern-card card-hover border-0">
                 <CardContent className="p-4 text-center">
                   <div className="text-2xl font-bold text-[var(--orange-accent)]">
-                    {Array.isArray(seekerReferrals) && seekerReferrals.length > 0 ? Math.round((pastRequests.filter(r => r.status === 'completed').length / seekerReferrals.length) * 100) : 0}%
+                    {seekerMetrics?.successfulReferrals ?? 0}
                   </div>
-                  <div className="text-xs text-gray-600 mt-1">Success Rate</div>
+                  <div className="text-xs text-gray-600 mt-1">Successful</div>
                 </CardContent>
               </Card>
             </div>

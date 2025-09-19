@@ -200,6 +200,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  app.get("/api/referrer-metrics/:id", authenticateToken, async (req, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      const referrals = await storage.getReferralsByReferrer(userId);
+      const completedReferrals = referrals.filter((referral) => referral.status === "completed");
+      const assignments = await storage.getAllAssignmentsByReferrerId();
+      const totalEarnings = completedReferrals.reduce((acc, referral) => acc + parseFloat(referral.amount), 0);
+      const monthlyReferrals = completedReferrals.filter((referral) => referral.createdAt && referral.createdAt >= new Date(new Date().setMonth(new Date().getMonth() - 1)));
+      const monthlyEarnings = monthlyReferrals.reduce((acc, referral) => acc + parseFloat(referral.amount), 0);
+      const successRate = Math.round((completedReferrals.length / assignments.length) * 100);
+      res.json({
+        totalEarnings,
+        monthlyEarnings,
+        successfulReferrals: completedReferrals.length,
+        successRate: successRate,
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  app.get("/api/seeker-metrics/:id", authenticateToken, async (req, res) => {
+    try {
+      const userId = parseInt(req.params.id);
+      const referrals = await storage.getReferralsBySeeker(userId);
+      const jobsCount = await storage.getJobsCount();
+      const activeReferrals = referrals.filter((referral) => referral.status === "pending" || referral.status === "assigned" || referral.status === "verification_pending");
+      const completedReferrals = referrals.filter((referral) => referral.status === "completed");
+      const totalSpent = (activeReferrals.reduce((acc, referral) => acc + parseFloat(referral.amount), 0) + completedReferrals.reduce((acc, referral) => acc + parseFloat(referral.amount), 0));
+      res.json({
+        totalSpent,
+        successfulReferrals: completedReferrals.length,
+        appliedReferrals: referrals.length,
+        successRate: Math.round((completedReferrals.length / referrals.length) * 100),
+        jobsCount,
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   app.put("/api/user/:id", authenticateToken, async (req, res) => {
     try {
       const userId = parseInt(req.params.id);

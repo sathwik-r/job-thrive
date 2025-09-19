@@ -77,24 +77,6 @@ export default function ProfilePage() {
           </CardContent>
         </Card>
 
-        {/* Stats Cards */}
-        <div className="grid grid-cols-2 gap-4">
-          <Card className="modern-card border-0">
-            <CardContent className="p-4 text-center">
-              <IndianRupee className="w-8 h-8 mx-auto mb-2 text-[var(--emerald-success)]" />
-              <div className="text-2xl font-bold text-[var(--emerald-success)]">₹{user.totalEarnings}</div>
-              <div className="text-xs text-gray-600">Total Earned</div>
-            </CardContent>
-          </Card>
-          
-          <Card className="modern-card border-0">
-            <CardContent className="p-4 text-center">
-              <Award className="w-8 h-8 mx-auto mb-2 text-[var(--orange-accent)]" />
-              <div className="text-2xl font-bold text-[var(--orange-accent)]">{user.successfulReferrals}</div>
-              <div className="text-xs text-gray-600">Successful Referrals</div>
-            </CardContent>
-          </Card>
-        </div>
 
         {/* Profile Information */}
         <Card className="modern-card border-0">
