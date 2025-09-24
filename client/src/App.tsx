@@ -18,6 +18,7 @@ import { useEffect } from "react";
 import { useLocation } from "wouter";
 import AuthGuard from "@/components/auth-guard";
 import { AuthProvider } from "@/hooks/use-auth";
+import CoachingDashboard from "./pages/coaching-dashboard";
 
 function Router() {
   const { user, loading, validateToken } = useAuth();
@@ -138,6 +139,13 @@ function Router() {
         {() => (
           <AuthGuard>
             <DashboardPage />
+          </AuthGuard>
+        )}
+      </Route>
+      <Route path="/coaching" >
+        {() => (
+          <AuthGuard>
+            <CoachingDashboard />
           </AuthGuard>
         )}
       </Route>

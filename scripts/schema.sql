@@ -72,6 +72,18 @@ CREATE TABLE IF NOT EXISTS assignments (
   created_at TIMESTAMP DEFAULT NOW() NOT NULL
 );
 
+-- Create mentor_profiles table
+CREATE TABLE IF NOT EXISTS mentor_profiles (
+  id SERIAL PRIMARY KEY,
+  user_id INTEGER NOT NULL REFERENCES users(id),
+  rating DECIMAL(3,2) DEFAULT '0.00' NOT NULL,
+  sessions INTEGER DEFAULT 0 NOT NULL,
+  created_at TIMESTAMP DEFAULT NOW() NOT NULL,
+  updated_at TIMESTAMP DEFAULT NOW() NOT NULL
+);
+
+CREATE INDEX IF NOT EXISTS idx_mentor_profiles_user_id ON mentor_profiles(user_id);
+
 -- Create indexes for better performance
 CREATE INDEX IF NOT EXISTS idx_users_email ON users(email);
 CREATE INDEX IF NOT EXISTS idx_users_google_id ON users(google_id);

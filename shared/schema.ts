@@ -77,6 +77,31 @@ export const assignments = pgTable("assignments", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const coachingRequests = pgTable("coaching_requests", {
+  id: serial("id").primaryKey(),
+  mentorId: integer("mentor_id").references(() => users.id).notNull(),
+  menteeId: integer("mentee_id").references(() => users.id).notNull(),
+  status: text("status", { enum: ["pending", "accepted", "declined", "completed", "cancelled"] }).default("pending").notNull(),
+  sessionType: text("session_type", { enum: ["career-advice", "mock-interview", "technical-review", "project-guidance"] }).notNull(),
+  startTime: timestamp("start_time").notNull(),
+  duration: integer("duration").notNull(),
+  cost: integer("cost").notNull(),
+  paymentId: text("payment_id"),
+  orderId: text("order_id"),
+  cancelledAt: timestamp("cancelled_at"),
+  completedAt: timestamp("completed_at"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const mentorProfiles = pgTable("mentor_profiles", {
+  id: serial("id").primaryKey(),
+  userId: integer("user_id").references(() => users.id).notNull(),
+  rating: decimal("rating", { precision: 3, scale: 2 }).default("0.00").notNull(),
+  sessions: integer("sessions").default(0).notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 // Insert schemas
 export const insertUserSchema = createInsertSchema(users).omit({
   id: true,
@@ -98,6 +123,17 @@ export const insertAssignmentSchema = createInsertSchema(assignments).omit({
   createdAt: true,
 });
 
+export const insertCoachingRequestSchema = createInsertSchema(coachingRequests).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertMentorProfileSchema = createInsertSchema(mentorProfiles).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Types
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -110,3 +146,9 @@ export type InsertReferral = z.infer<typeof insertReferralSchema>;
 
 export type Assignment = typeof assignments.$inferSelect;
 export type InsertAssignment = z.infer<typeof insertAssignmentSchema>;
+
+export type CoachingRequest = typeof coachingRequests.$inferSelect;
+export type InsertCoachingRequest = z.infer<typeof insertCoachingRequestSchema>;
+
+export type MentorProfile = typeof mentorProfiles.$inferSelect;
+export type InsertMentorProfile = z.infer<typeof insertMentorProfileSchema>;
