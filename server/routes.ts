@@ -5,11 +5,12 @@ import axios from "axios";
 import { env } from './config/env';
 import crypto from "crypto";
 import AWS from "aws-sdk";
-import { insertUserSchema, insertReferralSchema, Assignment } from "@shared/schema";
+import { insertUserSchema, insertReferralSchema, Assignment, CoachingRequest } from "@shared/schema";
 import { z } from "zod";
 import { authenticateToken, optionalAuth, requireRole } from "./auth-middleware";
 import { razorpayService } from './razorpay-service';
 import { assignReferral, rejectAssignment, acceptAssignment } from './match-making';
+import { CoachingService } from "./coaching";
 
 
 const authUserSchema = z.object({
@@ -323,6 +324,37 @@ export async function registerRoutes(app: Express): Promise<Server> {
         total,
         totalPages: Math.max(1, Math.ceil(total / pageSize)),
       });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Mentors list - public for browsing, supports pagination and filters
+  app.get("/api/mentors", optionalAuth, async (req, res) => {
+    try {
+      const pageParam = parseInt((req.query.page as string) || '1', 10);
+      const pageSizeParam = parseInt((req.query.pageSize as string) || '12', 10);
+      const page = Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
+      const pageSize = Number.isNaN(pageSizeParam) || pageSizeParam < 1 ? 12 : Math.min(pageSizeParam, 50);
+
+      const search = (req.query.search as string) || '';
+      const company = (req.query.company as string) || undefined;
+      const minExperience = req.query.minExperience ? parseInt(req.query.minExperience as string, 10) : undefined;
+      const skillsParam = (req.query.skills as string) || '';
+      const skills = skillsParam ? skillsParam.split(',').map(s => s.trim()).filter(Boolean) : [];
+      const sortBy = (req.query.sortBy as 'rating' | 'sessions' | 'recent') || 'recent';
+
+      const { items, total } = await storage.getMentorsPaginated({
+        page,
+        pageSize,
+        search,
+        company,
+        minExperience,
+        skills,
+        sortBy,
+      });
+      console.log('[GET /api/mentors]', { page, pageSize, search, company, minExperience, skills, sortBy, total, returned: items.length });
+      res.json({ items, page, pageSize, total, totalPages: Math.max(1, Math.ceil(total / pageSize)) });
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
     }
@@ -788,7 +820,88 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(400).json({ message: "Payment verification failed" });
     }
   });
-  
+
+  app.post("/api/coaching/update-request/:id", authenticateToken, async (req, res) => {
+    try {
+      console.log('Updating coaching request:', req.params.id);
+      const requestId = parseInt(req.params.id);
+      console.log('Request ID:', requestId);
+      const request = await CoachingService.getCoachingRequest(requestId);
+      if (!request) {
+        return res.status(404).json({ message: "Request not found" });
+      }
+
+      if (request.status === "cancelled"){
+        if (request.menteeId !== req.user!.id) {
+          return res.status(403).json({ message: "Access denied" });
+        }
+      } else {
+        if (request.mentorId !== req.user!.id) {
+          return res.status(403).json({ message: "Access denied" });
+        }
+      }
+      const { status } = req.body as { status: "pending" | "accepted" | "declined" | "completed" | "cancelled" };
+      const updateRequest: Partial<CoachingRequest> = { status };
+      if (status === "cancelled") {
+        updateRequest.cancelledAt = new Date();
+      }
+      if (status === "completed") {
+        updateRequest.completedAt = new Date();
+      }
+      const updatedRequest = await CoachingService.updateCoachingRequest(requestId, updateRequest);
+      res.json(updatedRequest);
+    } catch (error) {
+      console.error('Error updating coaching request:', error);
+      res.status(400).json({ message: "Error updating coaching request" });
+    }
+  });
+
+  app.post("/api/coaching/get-requests", authenticateToken, async (req, res) => {
+    try {
+      const mentorRequests = await CoachingService.getCoachingRequestsByMentor(req.user!.id);
+      const menteeRequests = await CoachingService.getCoachingRequestsByMentee(req.user!.id);
+      const userIds = Array.from(new Set([...mentorRequests.map(request => request.menteeId), ...menteeRequests.map(request => request.mentorId)]));
+      const users = await storage.getUsersByIds(userIds);
+      const mentorRequestsWithUsers = mentorRequests.map(request => ({
+        ...request,
+        mentee: users.find(user => user.id === request.menteeId),
+      }));
+      const menteeRequestsWithUsers = menteeRequests.map(request => ({
+        ...request,
+        mentor: users.find(user => user.id === request.mentorId),
+      }));
+      res.json({
+        mentorRequests: mentorRequestsWithUsers,
+        menteeRequests: menteeRequestsWithUsers,
+      });
+    } catch (error) {
+      console.error('Error getting coaching requests:', error);
+      res.status(400).json({ message: "Error getting coaching requests" });
+    }
+  });
+
+  app.post("/api/coaching/create-request", authenticateToken, async (req, res) => {
+    try {
+      const { mentorId, menteeId, sessionType, startTime, duration, cost } = req.body as { mentorId: number, menteeId: number, sessionType: "career-advice" | "mock-interview" | "technical-review" | "project-guidance", startTime: string | Date, duration: number, cost: number };
+      
+      // Convert startTime to Date object if it's a string
+      const startTimeDate = startTime instanceof Date ? startTime : new Date(startTime);
+      
+      const request = await CoachingService.createCoachingRequest({
+        mentorId,
+        menteeId,
+        sessionType,
+        startTime: startTimeDate,
+        duration,
+        cost
+      });
+      res.json(request);
+    } catch (error) {
+      console.error('Error creating coaching request:', error);
+      res.status(400).json({ message: "Error creating coaching request" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }

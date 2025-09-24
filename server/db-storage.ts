@@ -1,6 +1,6 @@
-import { eq, and, ilike, or, desc, isNotNull, sql, count } from "drizzle-orm";
+import { eq, and, ilike, or, desc, isNotNull, sql, count, inArray } from "drizzle-orm";
 import { db } from "./db";
-import { users, jobs, referrals, assignments } from "@shared/schema";
+import { users, jobs, referrals, assignments, mentorProfiles } from "@shared/schema";
 import type { User, Job, Referral, InsertUser, InsertJob, InsertReferral, Assignment } from "@shared/schema";
 import type { IStorage } from "./storage";
 
@@ -9,6 +9,11 @@ export class DbStorage implements IStorage {
   async getUser(id: number): Promise<User | undefined> {
     const result = await db.select().from(users).where(eq(users.id, id)).limit(1);
     return result[0];
+  }
+
+  async getUsersByIds(ids: number[]): Promise<User[]> {
+    const result = await db.select().from(users).where(inArray(users.id, ids));
+    return result;
   }
 
   async getUserByGoogleId(googleId: string): Promise<User | undefined> {
@@ -33,6 +38,97 @@ export class DbStorage implements IStorage {
 
   async getUsersByCompany(company: string): Promise<User[]> {
     return await db.select().from(users).where(eq(users.company, company));
+  }
+
+  async getMentors(): Promise<User[]> {
+    return await db.select().from(users);
+  }
+
+  async getMentorsPaginated(options: {
+    page: number;
+    pageSize: number;
+    search?: string;
+    company?: string;
+    minExperience?: number;
+    skills?: string[];
+    sortBy?: "rating" | "sessions" | "recent";
+  }): Promise<{ items: (User & { rating: string | null; sessions: number | null })[]; total: number }>{
+    const { page, pageSize, search = "", company, minExperience, skills = [], sortBy = "recent" } = options;
+    const offset = (page - 1) * pageSize;
+
+    const conditions: any[] = [];
+
+    if (search) {
+      conditions.push(
+        or(
+          ilike(users.name, `%${search}%`),
+          ilike(users.company, `%${search}%`),
+          ilike(users.position, `%${search}%`)
+        )
+      );
+    }
+    if (company) {
+      conditions.push(eq(users.company, company));
+    }
+    if (typeof minExperience === "number" && minExperience > 0) {
+      conditions.push(
+        sql`COALESCE(NULLIF(regexp_replace(${users.experience}, '[^0-9]', '', 'g'), ''), '0')::int >= ${minExperience}`
+      );
+    }
+    if (skills.length > 0) {
+      // Using text[] contains ANY via SQL since drizzle's array helpers are limited
+      conditions.push(sql`${users.skills} && ${skills}::text[]`);
+    }
+
+    const orderBy =
+      sortBy === "rating"
+        ? desc(mentorProfiles.rating)
+        : sortBy === "sessions"
+        ? desc(mentorProfiles.sessions)
+        : desc(users.createdAt);
+
+    const whereExpr = and(...conditions) ?? sql`true`;
+    const items = await db
+      .select({
+        id: users.id,
+        email: users.email,
+        name: users.name,
+        googleId: users.googleId,
+        photoUrl: users.photoUrl,
+        company: users.company,
+        role: users.role,
+        totalEarnings: users.totalEarnings,
+        totalSpent: users.totalSpent,
+        successfulReferrals: users.successfulReferrals,
+        active: users.active,
+        onboardingCompleted: users.onboardingCompleted,
+        position: users.position,
+        department: users.department,
+        workExperience: users.workExperience,
+        referrerScore: users.referrerScore,
+        lastScoreUpdate: users.lastScoreUpdate,
+        education: users.education,
+        targetDomain: users.targetDomain,
+        targetRole: users.targetRole,
+        experience: users.experience,
+        skills: users.skills,
+        createdAt: users.createdAt,
+        rating: mentorProfiles.rating,
+        sessions: mentorProfiles.sessions,
+      })
+      .from(users)
+      .leftJoin(mentorProfiles, eq(mentorProfiles.userId, users.id))
+      .where(whereExpr)
+      .orderBy(orderBy)
+      .offset(offset)
+      .limit(pageSize);
+
+    const totalResult = await db
+      .select({ value: count() })
+      .from(users)
+      .where(whereExpr);
+
+    return { items: items as any, total: Number(totalResult[0]?.value || 0) };
   }
 
   // Job methods
