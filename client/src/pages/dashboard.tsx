@@ -12,6 +12,7 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle } from '@/components/u
 import { Badge } from '@/components/ui/badge';
 import { queryClient, apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
+import Footer from '@/components/footer';
 import React from 'react';
 
 export default function DashboardPage() {
@@ -476,8 +477,34 @@ export default function DashboardPage() {
       </div>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 px-6 py-4 z-20">
-        <div className="flex items-center justify-around max-w-md mx-auto">
+      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-20">
+        {/* Policy Links */}
+        <div className="px-6 py-2 border-b border-gray-100">
+          <div className="flex justify-center space-x-4 text-xs">
+            <a 
+              href="/terms" 
+              className="text-gray-500 hover:text-gray-700 underline"
+            >
+              Terms
+            </a>
+            <a 
+              href="/privacy" 
+              className="text-gray-500 hover:text-gray-700 underline"
+            >
+              Privacy
+            </a>
+            <a 
+              href="/refund" 
+              className="text-gray-500 hover:text-gray-700 underline"
+            >
+              Refund
+            </a>
+          </div>
+        </div>
+        
+        {/* Navigation Buttons */}
+        <div className="px-6 py-4">
+          <div className="flex items-center justify-around max-w-md mx-auto">
           <Button
             variant="ghost"
             size="sm"
@@ -543,6 +570,7 @@ export default function DashboardPage() {
             <User className="w-5 h-5" />
             <span className="text-xs font-medium">Profile</span>
           </Button>
+          </div>
         </div>
       </nav>
 

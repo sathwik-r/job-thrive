@@ -87,6 +87,22 @@ export default function LoginPage() {
           </div>
 
           {/* Footer */}
+          <div className="mt-8 text-center">
+            <p className="text-white/60 text-sm mb-2">
+              By continuing, you agree to our{' '}
+              <a href="/terms" className="text-white hover:text-white/80 underline">
+                Terms & Conditions
+              </a>
+              ,{' '}
+              <a href="/privacy" className="text-white hover:text-white/80 underline">
+                Privacy Policy
+              </a>
+              , and{' '}
+              <a href="/refund" className="text-white hover:text-white/80 underline">
+                Refund Policy
+              </a>
+            </p>
+          </div>
         </div>
       </div>
     </div>

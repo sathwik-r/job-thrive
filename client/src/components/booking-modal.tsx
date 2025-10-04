@@ -214,6 +214,24 @@ export default function BookingModal({ mentor, isOpen, onClose, onBookSession }:
               </Card>
             )}
 
+            {/* Policy Links */}
+            <div className="pt-4 border-t border-gray-100">
+              <p className="text-xs text-gray-500 text-center">
+                By booking this session, you agree to our{' '}
+                <a href="/terms" className="text-blue-600 hover:text-blue-800 underline">
+                  Terms & Conditions
+                </a>
+                ,{' '}
+                <a href="/privacy" className="text-blue-600 hover:text-blue-800 underline">
+                  Privacy Policy
+                </a>
+                , and{' '}
+                <a href="/refund" className="text-blue-600 hover:text-blue-800 underline">
+                  Refund Policy
+                </a>
+              </p>
+            </div>
+
             {/* Action Buttons */}
             <div className="flex gap-3 pt-4">
               <Button variant="outline" onClick={onClose} className="flex-1" data-testid="button-cancel-booking">
