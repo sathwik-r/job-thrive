@@ -491,6 +491,23 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
             <p className="text-center text-xs text-gray-500 mt-4">
               Secure payment powered by Razorpay. Your payment is protected.
             </p>
+            
+            <div className="mt-4 pt-4 border-t border-gray-100">
+              <p className="text-xs text-gray-500 text-center">
+                By proceeding with payment, you agree to our{' '}
+                <a href="/terms" className="text-blue-600 hover:text-blue-800 underline">
+                  Terms & Conditions
+                </a>
+                ,{' '}
+                <a href="/privacy" className="text-blue-600 hover:text-blue-800 underline">
+                  Privacy Policy
+                </a>
+                , and{' '}
+                <a href="/refund" className="text-blue-600 hover:text-blue-800 underline">
+                  Refund Policy
+                </a>
+              </p>
+            </div>
           </CardContent>
         </Card>
       </div>

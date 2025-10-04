@@ -19,6 +19,9 @@ import { useLocation } from "wouter";
 import AuthGuard from "@/components/auth-guard";
 import { AuthProvider } from "@/hooks/use-auth";
 import CoachingDashboard from "./pages/coaching-dashboard";
+import TermsPage from "./pages/terms";
+import PrivacyPage from "./pages/privacy";
+import RefundPage from "./pages/refund";
 
 function Router() {
   const { user, loading, validateToken } = useAuth();
@@ -41,7 +44,8 @@ function Router() {
 
   useEffect(() => {
     if (!loading) {
-      if (!user && location !== "/login" && location !== "/post-login") {
+      const publicRoutes = ["/login", "/post-login", "/terms", "/privacy", "/refund"];
+      if (!user && !publicRoutes.includes(location)) {
         setLocation("/login");
       } else if (user && location === "/login") {
         // Check if onboarding is completed
@@ -84,6 +88,9 @@ function Router() {
   return (
     <Switch>
       <Route path="/login" component={LoginPage} />
+      <Route path="/terms" component={TermsPage} />
+      <Route path="/privacy" component={PrivacyPage} />
+      <Route path="/refund" component={RefundPage} />
       <Route path="/onboarding">
         {() =>
           user ? (

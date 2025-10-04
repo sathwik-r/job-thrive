@@ -6,6 +6,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import JobCard from '@/components/job-card';
 import { type Job } from '@shared/schema';
+import React from 'react';
 
 export default function JobSearchPage() {
   const [, setLocation] = useLocation();
