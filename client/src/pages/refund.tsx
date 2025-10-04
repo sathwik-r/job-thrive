@@ -19,7 +19,7 @@ export default function RefundPage() {
         <div className="bg-white rounded-lg shadow-sm p-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Refund & Cancellation Policy</h1>
-            <p className="text-gray-600">Last Updated: September 29, 2025</p>
+            <p className="text-gray-600">Last Updated: October 4, 2025</p>
           </div>
 
           <div className="prose prose-gray max-w-none">
@@ -52,6 +52,16 @@ export default function RefundPage() {
             <p className="text-gray-700 mb-6">
               For any refund or cancellation queries, email us at <a href="mailto:Admin@jobthrive.in" className="text-blue-600 hover:text-blue-800 underline">Admin@jobthrive.in</a>. Please include your order ID and purchase details to help us process requests quickly.
             </p>
+
+            <div className="bg-blue-50 p-4 rounded-lg mt-8">
+              <h3 className="font-semibold text-gray-900 mb-3">Contact Information</h3>
+              <div className="text-gray-700 space-y-1">
+                <p><strong>Contact Person:</strong> Rehan Yadav</p>
+                <p><strong>Phone:</strong> +91 7404035548</p>
+                <p><strong>Email:</strong> <a href="mailto:Admin@jobthrive.in" className="text-blue-600 hover:text-blue-800 underline">Admin@jobthrive.in</a></p>
+                <p><strong>Address:</strong> B404, Godrej E-City Phase 1, Electronic City Phase 1, Bengaluru – 560100, Karnataka, India</p>
+              </div>
+            </div>
           </div>
 
           <div className="mt-12 pt-8 border-t border-gray-200">
