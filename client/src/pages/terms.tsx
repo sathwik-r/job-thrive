@@ -19,59 +19,57 @@ export default function TermsPage() {
         <div className="bg-white rounded-lg shadow-sm p-8">
           <div className="mb-8">
             <h1 className="text-3xl font-bold text-gray-900 mb-2">Terms & Conditions</h1>
-            <p className="text-gray-600">Last Updated: September 29, 2025</p>
+            <p className="text-gray-600">Last Updated: October 4, 2025</p>
           </div>
 
           <div className="prose prose-gray max-w-none">
             <p className="text-lg text-gray-700 mb-6">
-              Welcome to <strong>JobThrive.com</strong> ("Website", "we", "our", or "us"). By accessing or using our website and services you agree to these Terms & Conditions ("Terms"). If you do not agree, please do not use the Website.
+              Welcome to <strong>JobThrive</strong> (<a href="https://www.jobthrive.in" className="text-blue-600 hover:text-blue-800 underline">www.jobthrive.in</a>). By accessing or using our website and services, you agree to comply with these Terms and Conditions. Please read them carefully.
             </p>
 
-            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">1. Eligibility</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">1. Services</h2>
             <p className="text-gray-700 mb-6">
-              You must be at least 18 years old to use our services. By using the Website you represent and warrant that you have the right, authority and capacity to enter into these Terms.
+              JobThrive provides online job placement, career consulting, and professional guidance services.
             </p>
 
-            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">2. Our Services</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">2. User Accounts</h2>
             <p className="text-gray-700 mb-6">
-              JobThrive provides career services including consultancy, employee referrals, job-matching assistance, and other related services (collectively, "Services"). We may change, suspend or discontinue any Service at any time.
+              You agree to provide accurate information when creating an account or using our services. You are responsible for maintaining the confidentiality of your login credentials.
             </p>
 
-            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">3. User Obligations</h2>
-            <ul className="list-disc list-inside text-gray-700 mb-6 space-y-2">
-              <li>Provide accurate, current and complete information when registering.</li>
-              <li>Not to use the Website for any illegal or abusive purpose.</li>
-              <li>Not to copy, reproduce or distribute content from the Website without permission.</li>
-            </ul>
-
-            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">4. Payments</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">3. Payments</h2>
             <p className="text-gray-700 mb-6">
-              Payments for Services are processed via third-party payment gateways (for example, Razorpay). By paying for Services you authorize the use of your chosen payment method and agree to the payment processor's terms.
+              All payments for services must be made through approved payment gateways. Prices are listed on the website and may be updated without prior notice.
             </p>
 
-            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">5. Refunds</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">4. Cancellations and Refunds</h2>
             <p className="text-gray-700 mb-6">
-              Refunds are governed by our <a href="/refund" className="text-blue-600 hover:text-blue-800 underline">Refund Policy</a>.
+              Refunds are governed by our <a href="/refund" className="text-blue-600 hover:text-blue-800 underline">Refund & Cancellation Policy</a>.
             </p>
 
-            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">6. Limitation of Liability</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">5. Prohibited Activities</h2>
             <p className="text-gray-700 mb-6">
-              To the maximum extent permitted by law, JobThrive will not be liable for any indirect, incidental, special, consequential or exemplary damages arising from your use of the Website. Our total liability for any claim related to a paid Service will not exceed the fees paid by you for that Service.
+              You agree not to misuse the website, post false information, or engage in any unlawful activity.
             </p>
 
-            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">7. Intellectual Property</h2>
+            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">6. Intellectual Property</h2>
             <p className="text-gray-700 mb-6">
-              All content, trademarks and other intellectual property on the Website are owned or licensed by JobThrive. You may not copy or reuse such content without our prior written permission.
+              All content, branding, and materials on JobThrive are owned by us. Unauthorized use is prohibited.
+            </p>
+
+            <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">7. Liability</h2>
+            <p className="text-gray-700 mb-6">
+              JobThrive is not liable for losses or damages arising from the use of our services, delays, or third-party actions.
             </p>
 
             <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">8. Governing Law</h2>
             <p className="text-gray-700 mb-6">
-              These Terms are governed by the laws of India. Any disputes will be subject to the exclusive jurisdiction of the courts in your registered office city.
+              These terms are governed by the laws of India, and any disputes will be handled under the jurisdiction of Bengaluru, Karnataka.
             </p>
 
             <h2 className="text-xl font-semibold text-gray-900 mt-8 mb-4">9. Contact</h2>
             <p className="text-gray-700 mb-6">
-              If you have any questions about these Terms, contact us at <a href="mailto:Admin@jobthrive.in" className="text-blue-600 hover:text-blue-800 underline">Admin@jobthrive.in</a>.
+              For any questions or concerns, please email us at <a href="mailto:admin@jobthrive.in" className="text-blue-600 hover:text-blue-800 underline">admin@jobthrive.in</a>.
             </p>
           </div>
 
