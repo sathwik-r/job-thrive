@@ -44,8 +44,8 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 <div className="w-12 h-12 mx-auto mb-4 bg-gradient-to-r from-[var(--emerald-success)] to-[var(--orange-accent)] rounded-xl flex items-center justify-center">
                   <Users className="w-6 h-6 text-white" />
                 </div>
-                <h3 className="font-semibold text-[var(--dark-gray)] mb-2">Get Referred</h3>
-                <p className="text-sm text-gray-600">Boost your chances with direct employee referrals and 1-on-1 career calls</p>
+                <h3 className="font-semibold text-[var(--dark-gray)] mb-2">Get Consulted</h3>
+                <p className="text-sm text-gray-600">Accelerate your growth with 1-on-1 guidance from top industry professionals</p>
               </CardContent>
             </Card>
 
@@ -55,7 +55,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                   <IndianRupee className="w-6 h-6 text-white" />
                 </div>
                 <h3 className="font-semibold text-[var(--dark-gray)] mb-2">Earn Money</h3>
-                <p className="text-sm text-gray-600">Support great talent, strengthen your network, and earn commissions for referrals</p>
+                <p className="text-sm text-gray-600">Share your experience, mentor top talent, and earn while helping others grow.</p>
               </CardContent>
             </Card>
           </div>
