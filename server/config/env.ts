@@ -26,7 +26,13 @@ const envSchema = z.object({
 
   // AWS SES Configuration
   SES_FROM_EMAIL: z.string().default('noreply@jobthrive.com'),
+  
+  // Cal.com Configuration
+  CALCOM_API_KEY: z.string(),
+  CALCOM_API_URL: z.string().default('https://api.cal.com/v1'),
+  CALCOM_WEBHOOK_SECRET: z.string().optional(),
 });
+
 
 // Parse and validate environment variables
 const parsed = envSchema.safeParse(process.env);

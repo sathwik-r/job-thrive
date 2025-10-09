@@ -88,6 +88,10 @@ export const coachingRequests = pgTable("coaching_requests", {
   cost: integer("cost").notNull(),
   paymentId: text("payment_id"),
   orderId: text("order_id"),
+  // Cal.com integration fields
+  calcomBookingId: integer("calcom_booking_id"),
+  calcomBookingUid: text("calcom_booking_uid"),
+  videoMeetingUrl: text("video_meeting_url"),
   cancelledAt: timestamp("cancelled_at"),
   completedAt: timestamp("completed_at"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
@@ -98,6 +102,10 @@ export const mentorProfiles = pgTable("mentor_profiles", {
   userId: integer("user_id").references(() => users.id).notNull(),
   rating: decimal("rating", { precision: 3, scale: 2 }).default("0.00").notNull(),
   sessions: integer("sessions").default(0).notNull(),
+  // Cal.com integration fields
+  calcomUserId: integer("calcom_user_id"),
+  calcomEventTypeId: integer("calcom_event_type_id"),
+  calcomUsername: text("calcom_username"),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });

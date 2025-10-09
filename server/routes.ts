@@ -11,6 +11,7 @@ import { authenticateToken, optionalAuth, requireRole } from "./auth-middleware"
 import { razorpayService } from './razorpay-service';
 import { assignReferral, rejectAssignment, acceptAssignment } from './match-making';
 import { CoachingService } from "./coaching";
+import { calComIntegration } from './calcom-integration';
 
 
 const authUserSchema = z.object({
@@ -899,6 +900,186 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error creating coaching request:', error);
       res.status(400).json({ message: "Error creating coaching request" });
+    }
+  });
+
+  // Cal.com Integration Routes
+
+  // Provision mentor in Cal.com
+  app.post("/api/calcom/provision-mentor", authenticateToken, async (req, res) => {
+    try {
+      const userId = req.user!.id;
+      const result = await calComIntegration.provisionMentor(userId);
+      
+      if (result.success) {
+        res.json(result);
+      } else {
+        res.status(400).json({ message: result.error });
+      }
+    } catch (error) {
+      console.error('Error provisioning mentor:', error);
+      res.status(500).json({ message: "Failed to provision mentor" });
+    }
+  });
+
+  // Get mentor availability
+  app.get("/api/calcom/mentor/:mentorId/availability", authenticateToken, async (req, res) => {
+    try {
+      const mentorId = parseInt(req.params.mentorId);
+      const { dateFrom, dateTo } = req.query as { dateFrom: string; dateTo: string };
+      
+      if (!dateFrom || !dateTo) {
+        return res.status(400).json({ message: "dateFrom and dateTo are required" });
+      }
+
+      const availability = await calComIntegration.getMentorAvailability(mentorId, dateFrom, dateTo);
+      res.json(availability);
+    } catch (error) {
+      console.error('Error getting mentor availability:', error);
+      res.status(500).json({ message: "Failed to get mentor availability" });
+    }
+  });
+
+  // Create booking with Cal.com integration
+  app.post("/api/calcom/create-booking", authenticateToken, async (req, res) => {
+    try {
+      const { 
+        mentorId, 
+        sessionType, 
+        startTime, 
+        duration, 
+        menteeEmail, 
+        menteeName,
+        coachingRequestId 
+      } = req.body;
+
+      if (!mentorId || !sessionType || !startTime || !duration || !menteeEmail || !menteeName) {
+        return res.status(400).json({ message: "Missing required fields" });
+      }
+
+      const menteeId = req.user!.id;
+
+      // Create booking in Cal.com
+      const bookingResult = await calComIntegration.createBooking(
+        mentorId,
+        menteeId,
+        sessionType,
+        startTime,
+        duration,
+        menteeEmail,
+        menteeName
+      );
+
+      if (!bookingResult.success) {
+        return res.status(400).json({ message: bookingResult.error });
+      }
+
+      // Update coaching request with booking data if provided
+      if (coachingRequestId && bookingResult.bookingId && bookingResult.bookingUid) {
+        await calComIntegration.updateCoachingRequestWithBooking(
+          coachingRequestId,
+          bookingResult.bookingId,
+          bookingResult.bookingUid,
+          bookingResult.videoMeetingUrl
+        );
+      }
+
+      res.json(bookingResult);
+    } catch (error) {
+      console.error('Error creating Cal.com booking:', error);
+      res.status(500).json({ message: "Failed to create booking" });
+    }
+  });
+
+  // Get mentor's bookings
+  app.get("/api/calcom/mentor/:mentorId/bookings", authenticateToken, async (req, res) => {
+    try {
+      const mentorId = parseInt(req.params.mentorId);
+      const { status } = req.query as { status?: string };
+
+      // Only allow mentors to view their own bookings
+      if (req.user!.id !== mentorId) {
+        return res.status(403).json({ message: "Access denied" });
+      }
+
+      const bookings = await calComIntegration.getMentorBookings(mentorId, status);
+      res.json(bookings);
+    } catch (error) {
+      console.error('Error getting mentor bookings:', error);
+      res.status(500).json({ message: "Failed to get mentor bookings" });
+    }
+  });
+
+  // Cancel booking
+  app.post("/api/calcom/booking/:bookingId/cancel", authenticateToken, async (req, res) => {
+    try {
+      const bookingId = parseInt(req.params.bookingId);
+      const { reason } = req.body;
+
+      const success = await calComIntegration.cancelBooking(bookingId, reason);
+      
+      if (success) {
+        res.json({ success: true });
+      } else {
+        res.status(400).json({ message: "Failed to cancel booking" });
+      }
+    } catch (error) {
+      console.error('Error cancelling booking:', error);
+      res.status(500).json({ message: "Failed to cancel booking" });
+    }
+  });
+
+  // Cal.com webhook handler
+  app.post("/api/calcom/webhook", async (req, res) => {
+    try {
+      const signature = req.headers['cal-signature-256'] as string;
+      const payload = JSON.stringify(req.body);
+
+      // Verify webhook signature if secret is configured
+      if (env.CALCOM_WEBHOOK_SECRET) {
+        const crypto = require('crypto');
+        const expectedSignature = crypto
+          .createHmac('sha256', env.CALCOM_WEBHOOK_SECRET)
+          .update(payload)
+          .digest('hex');
+
+        if (signature !== expectedSignature) {
+          return res.status(401).json({ message: "Invalid signature" });
+        }
+      }
+
+      const { triggerEvent, payload: webhookPayload } = req.body;
+
+      // Handle different webhook events
+      switch (triggerEvent) {
+        case 'BOOKING_CREATED':
+          console.log('Booking created:', webhookPayload);
+          // Update coaching request status if needed
+          break;
+        
+        case 'BOOKING_CANCELLED':
+          console.log('Booking cancelled:', webhookPayload);
+          // Update coaching request status to cancelled
+          break;
+        
+        case 'BOOKING_RESCHEDULED':
+          console.log('Booking rescheduled:', webhookPayload);
+          // Update coaching request with new time
+          break;
+        
+        case 'BOOKING_COMPLETED':
+          console.log('Booking completed:', webhookPayload);
+          // Mark coaching request as completed
+          break;
+        
+        default:
+          console.log('Unhandled webhook event:', triggerEvent, webhookPayload);
+      }
+
+      res.json({ received: true });
+    } catch (error) {
+      console.error('Error handling Cal.com webhook:', error);
+      res.status(500).json({ message: "Webhook processing failed" });
     }
   });
 

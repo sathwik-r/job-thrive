@@ -6,6 +6,7 @@ import MentorCard from '@/components/mentor-card';
 import SearchFilters from '@/components/search-filters';
 import BookingModal from '@/components/booking-modal';
 import RequestsPanel from '@/components/requests-panel';
+import { MentorSchedule } from '@/components/mentor-schedule';
 import {
   Search,
   Users,
@@ -25,7 +26,7 @@ import { useAuth } from '@/hooks/use-auth';
 
 export default function CoachingDashboard() {
   const { user } = useAuth();
-  const [activeView, setActiveView] = useState<'browse' | 'requests'>('browse');
+  const [activeView, setActiveView] = useState<'browse' | 'requests' | 'schedule'>('browse');
   const [selectedMentor, setSelectedMentor] = useState<Mentor | null>(null);
   const [isBookingModalOpen, setIsBookingModalOpen] = useState(false);
   const [filters, setFilters] = useState<FilterOptions>({
@@ -67,38 +68,19 @@ export default function CoachingDashboard() {
       if (response.ok) {
         const data = await response.json();
       
-        const mapped: Mentor[] = (data.items || []).map((u: any) => 
-          {
-          let yoe = 0
-          if (u.workExperience == '0-1') {
-            yoe = 0;
-          } else if (u.workExperience == '1-3') {
-            yoe = 1;
-          } else if (u.workExperience == '3-5') {
-            yoe = 3;
-          } else if (u.workExperience == '5-8') {
-            yoe = 5;
-          } else if (u.workExperience == '8-12') {
-            yoe = 8;
-          } else if (u.workExperience == '12+') {
-            yoe = 12;
-          }
-          return {
-            id: String(u.id),
-            name: u.name,
-            title: u.position || 'Mentor',
-            company: u.company || '—',
-            location: u.location || '—',
-            experience: Number(yoe) || 0,
-            rating: Number(u.rating || 0),
-            reviews: u.sessions || 0,
-            expertise: Array.isArray(u.skills) ? u.skills : [],
-            avatar: u.photoUrl || '',
-            availability: 'available',
-            pricePerHour: 499,
-            bio:  '—',
-          };
-        });
+        const mapped: Mentor[] = (data.items || []).map((u: any) => ({
+          id: u.id,
+          name: u.name,
+          email: u.email,
+          company: u.company,
+          position: u.position,
+          photoUrl: u.photoUrl,
+          rating: Number(u.rating || 0),
+          sessions: u.sessions || 0,
+          skills: Array.isArray(u.skills) ? u.skills : [],
+          workExperience: u.workExperience,
+          department: u.department,
+        }));
         console.log("mapped", mapped);
         setMentors(mapped);
       }
@@ -290,45 +272,37 @@ export default function CoachingDashboard() {
     const matchesSearch =
       filters.search === '' ||
       mentor.name.toLowerCase().includes(filters.search.toLowerCase()) ||
-      mentor.company.toLowerCase().includes(filters.search.toLowerCase()) ||
-      mentor.expertise.some(skill =>
+      (mentor.company && mentor.company.toLowerCase().includes(filters.search.toLowerCase())) ||
+      (mentor.skills && mentor.skills.some(skill =>
         skill.toLowerCase().includes(filters.search.toLowerCase())
-      );
+      ));
 
     const matchesCompany =
       filters.company === '' || mentor.company === filters.company;
     const matchesRole =
-      filters.role === '' || mentor.title.includes(filters.role);
-    const matchesExperience =
-      mentor.experience >= filters.experience[0] &&
-      mentor.experience <= filters.experience[1];
+      filters.role === '' || (mentor.position && mentor.position.includes(filters.role));
     const matchesExpertise =
       filters.expertise.length === 0 ||
-      filters.expertise.some(skill => mentor.expertise.includes(skill));
-    const matchesAvailability =
-      filters.availability === '' ||
-      mentor.availability === filters.availability;
+      (mentor.skills && filters.expertise.some(skill => mentor.skills!.includes(skill)));
 
     return (
       matchesSearch &&
       matchesCompany &&
       matchesRole &&
-      matchesExperience &&
-      matchesExpertise &&
-      matchesAvailability
+      matchesExpertise
     );
   });
 
-  const handleBookSessionClick = (mentorId: string) => {
+  const handleBookSessionClick = (mentorId: number) => {
     console.log('Book session for mentor:', mentorId);
     const mentor = mentors.find(m => m.id === mentorId);
     if (mentor) {
-      setSelectedMentor(mentor as Mentor);
+      setSelectedMentor(mentor);
       setIsBookingModalOpen(true);
     }
   };
 
-  const handleViewProfile = (mentorId: string) => {
+  const handleViewProfile = (mentorId: number) => {
     console.log('View profile for mentor:', mentorId);
     // In a real app, this would navigate to the mentor's detailed profile page
   };
@@ -342,9 +316,7 @@ export default function CoachingDashboard() {
   const statsCards = [
     {
       title: 'Available Mentors',
-      value: mentors
-        .filter(m => m.availability === 'available')
-        .length.toString(),
+      value: mentors.length.toString(),
       icon: Users,
       color: 'text-green-600',
     },
@@ -405,6 +377,14 @@ export default function CoachingDashboard() {
             >
               <Calendar className="h-4 w-4 mr-2" />
               My Sessions
+            </Button>
+            <Button
+              variant={activeView === 'schedule' ? 'default' : 'outline'}
+              onClick={() => setActiveView('schedule')}
+              data-testid="button-manage-schedule"
+            >
+              <Calendar className="h-4 w-4 mr-2" />
+              My Schedule
             </Button>
           </div>
         </div>
@@ -470,8 +450,7 @@ export default function CoachingDashboard() {
                   {filteredMentors.map(mentor => (
                     <MentorCard
                       key={mentor.id}
-                      mentor={mentor as Mentor}
-                      onBookSession={handleBookSessionClick}
+                      mentor={mentor}
                       onViewProfile={handleViewProfile}
                     />
                   ))}
@@ -507,7 +486,7 @@ export default function CoachingDashboard() {
               )}
             </div>
           </div>
-        ) : (
+        ) : activeView === 'requests' ? (
           <div className="max-w-2xl mx-auto">
             {isLoadingRequests ? (
               <Card>
@@ -528,6 +507,10 @@ export default function CoachingDashboard() {
                 onMessageMentor={handleMessageMentor}
               />
             )}
+          </div>
+        ) : (
+          <div className="max-w-4xl mx-auto">
+            {user?.id && <MentorSchedule mentorId={user.id} />}
           </div>
         )}
       </div>
