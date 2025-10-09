@@ -9,7 +9,7 @@ import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useAuth } from '@/hooks/use-auth';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
-import { initializeRazorpay, openPaymentModal, createRazorpayOrder, verifyPayment } from '@/lib/razorpay';
+import { initializeCashfree, openCashfreeCheckout, createCashfreeOrder, verifyCashfreePayment } from '@/lib/cashfree';
 
 interface ReferralRequestPageProps {
   jobId: string;
@@ -28,6 +28,7 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
   const [isDragOver, setIsDragOver] = useState(false);
   const [uploadProgress, setUploadProgress] = useState(0);
   const [isUploading, setIsUploading] = useState(false);
+  const [phone, setPhone] = useState('');
 
   const { data: job, isLoading } = useQuery<any>({
     queryKey: ['/api/jobs', jobId],
@@ -230,9 +231,9 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
     setIsProcessingPayment(true);
 
     try {
-      // Initialize Razorpay
-      const razorpayLoaded = await initializeRazorpay();
-      if (!razorpayLoaded) {
+      // Initialize Cashfree
+      const cashfreeLoaded = await initializeCashfree();
+      if (!cashfreeLoaded) {
         throw new Error('Payment system is not available');
       }
 
@@ -243,54 +244,33 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
         resumeUrl: uploadedResumeUrl,
       });
 
-      // Create order with backend
-      const orderData = await createRazorpayOrder(totalAmount, job?.id || 0);
+      // Create order with backend (Cashfree)
+      const orderData = await createCashfreeOrder(totalAmount, job?.id || 0, 'INR', phone || undefined);
 
-      // Open Razorpay payment modal
-      openPaymentModal({
-        key: orderData.key,
-        amount: orderData.amount,
-        currency: orderData.currency,
-        order_id: orderData.orderId,
-        name: 'Job Thrive Referral',
-        description: `Job Referral Fee for ${job?.title} at ${job?.company}`,
-        prefill: {
-          name: user?.name,
-          email: user?.email,
-        },
-        theme: {
-          color: '#6366F1',
-        },
-        handler: async (response) => {
-          try {
-            // Verify payment with backend
-            await verifyPayment(
-              response.razorpay_payment_id,
-              response.razorpay_order_id!,
-              response.razorpay_signature!,
-              referral.id
-            );
+      // Open Cashfree checkout (popup)
+      const result = await openCashfreeCheckout(orderData.paymentSessionId, orderData.mode, '_modal');
 
-            setShowCelebration(true);
-            toast({
-              title: "Payment Successful!",
-              description: "Your referral request has been submitted successfully.",
-            });
-          } catch (error) {
-            console.error('Payment verification error:', error);
-            toast({
-              title: "Payment Verification Failed",
-              description: error instanceof Error ? error.message : "Please contact support.",
-              variant: "destructive",
-            });
-          }
-        },
-        modal: {
-          ondismiss: () => {
-            setIsProcessingPayment(false);
-          },
-        },
-      });
+      // For popup, promise resolves after payment attempt; verify on server if success
+      if (result && result.paymentDetails) {
+        try {
+          await verifyCashfreePayment(orderData.orderId, referral.id);
+          setShowCelebration(true);
+          toast({
+            title: "Payment Successful!",
+            description: "Your referral request has been submitted successfully.",
+          });
+        } catch (error) {
+          console.error('Payment verification error:', error);
+          toast({
+            title: "Payment Verification Failed",
+            description: error instanceof Error ? error.message : "Please contact support.",
+            variant: "destructive",
+          });
+        }
+      } else {
+        // If result not available, rely on manual verification via return URL flow or user retry
+        setIsProcessingPayment(false);
+      }
     } catch (error) {
       console.error('Payment error:', error);
       toast({
@@ -463,6 +443,19 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
             <h4 className="text-lg font-semibold text-[var(--dark-gray)] mb-4">Payment Details</h4>
             
             <div className="space-y-4">
+              <div className="space-y-2">
+                <label className="text-sm text-gray-600">Phone Number (required for payment)</label>
+                <input
+                  type="tel"
+                  inputMode="numeric"
+                  pattern="[0-9]*"
+                  maxLength={10}
+                  value={phone}
+                  onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
+                  placeholder="Enter your 10-digit phone"
+                  className="w-full border rounded-md px-3 py-2 outline-none focus:ring-2 focus:ring-[var(--purple-primary)]"
+                />
+              </div>
               <div className="flex items-center justify-between py-3 border-b border-gray-100">
                 <span className="text-gray-600">Referral Fee</span>
                 <span className="font-semibold text-[var(--dark-gray)]">₹{job?.referralFee || "0"}</span>
@@ -473,10 +466,10 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
               </div>
             </div>
             
-            {/* Razorpay Payment Button */}
+            {/* Cashfree Payment Button */}
             <Button
               onClick={handlePayment}
-              disabled={isProcessingPayment || !uploadedResumeUrl || isUploading}
+              disabled={isProcessingPayment || !uploadedResumeUrl || isUploading || phone.trim().length < 10}
               className="w-full bg-blue-600 text-white font-bold py-4 px-6 rounded-2xl text-lg flex items-center justify-center space-x-3 hover:bg-blue-700 transition-all duration-300 mt-6 disabled:opacity-50 disabled:cursor-not-allowed"
             >
               <CreditCard className="w-5 h-5" />
@@ -484,12 +477,12 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
                 {isProcessingPayment ? 'Processing...' : 
                  !uploadedResumeUrl ? 'Upload Resume First' :
                  isUploading ? 'Uploading Resume...' :
-                 'Pay with Razorpay'}
+                 'Pay Securely'}
               </span>
             </Button>
             
             <p className="text-center text-xs text-gray-500 mt-4">
-              Secure payment powered by Razorpay. Your payment is protected.
+              Secure payment powered by Cashfree. Your payment is protected.
             </p>
             
             <div className="mt-4 pt-4 border-t border-gray-100">

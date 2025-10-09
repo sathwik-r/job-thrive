@@ -70,6 +70,7 @@ export const initializeRazorpay = (): Promise<boolean> => {
 /**
  * Open Razorpay payment modal with the given options
  */
+// Deprecated: Razorpay integration removed in favor of Cashfree
 export const openPaymentModal = (options: RazorpayOptions) => {
   if (!window.Razorpay) {
     throw new Error('Razorpay is not loaded');
@@ -82,6 +83,7 @@ export const openPaymentModal = (options: RazorpayOptions) => {
 /**
  * Create a Razorpay order by calling the backend API
  */
+// Deprecated: Kept for migration safety. Server now returns Cashfree data
 export const createRazorpayOrder = async (
   amount: number, 
   jobId: string | number,
@@ -110,6 +112,7 @@ export const createRazorpayOrder = async (
 /**
  * Verify payment on the backend
  */
+// Deprecated: Kept for migration safety. Use verifyCashfreePayment instead
 export const verifyPayment = async (
   paymentId: string,
   orderId: string,

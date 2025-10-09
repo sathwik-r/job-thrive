@@ -20,9 +20,14 @@ const envSchema = z.object({
   COGNITO_CLIENT_ID: z.string(),
   COGNITO_CLIENT_SECRET: z.string(),
   
-  // Razorpay Configuration
-  RAZORPAY_KEY_ID: z.string(),
-  RAZORPAY_KEY_SECRET: z.string(),
+  // Cashfree Configuration
+  CASHFREE_CLIENT_ID: z.string(),
+  CASHFREE_CLIENT_SECRET: z.string(),
+  CASHFREE_ENV: z.enum(["sandbox", "production"]).default("sandbox"),
+
+  // Legacy Razorpay (deprecated) - keep optional to avoid breaking older envs during migration
+  RAZORPAY_KEY_ID: z.string().optional(),
+  RAZORPAY_KEY_SECRET: z.string().optional(),
 
   // AWS SES Configuration
   SES_FROM_EMAIL: z.string().default('noreply@jobthrive.com'),
