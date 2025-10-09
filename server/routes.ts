@@ -8,7 +8,7 @@ import AWS from "aws-sdk";
 import { insertUserSchema, insertReferralSchema, Assignment, CoachingRequest } from "@shared/schema";
 import { z } from "zod";
 import { authenticateToken, optionalAuth, requireRole } from "./auth-middleware";
-import { razorpayService } from './razorpay-service';
+import { cashfreeService } from './cashfree-service';
 import { assignReferral, rejectAssignment, acceptAssignment } from './match-making';
 import { CoachingService } from "./coaching";
 
@@ -567,10 +567,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Create Razorpay order - protected
+  // Create Cashfree order - protected
   app.post("/api/payment/create-order", authenticateToken, async (req, res) => {
     try {
-      const { amount, currency = 'INR', jobId } = req.body;
+      const { amount, currency = 'INR', jobId, customerPhone } = req.body as { amount: number, currency?: string, jobId: number, customerPhone?: string };
 
       if (!amount || amount <= 0) {
         return res.status(400).json({ message: "Invalid amount" });
@@ -593,21 +593,35 @@ export async function registerRoutes(app: Express): Promise<Server> {
         return res.status(400).json({ message: "Amount mismatch" });
       }
 
-      // Create order with Razorpay
-      const order = await razorpayService.createOrder(
+      // Validate phone: digits only, length 10
+      const sanitizedPhone = (customerPhone || '').replace(/\D/g, '');
+      if (!sanitizedPhone || sanitizedPhone.length !== 10) {
+        return res.status(400).json({ message: "Invalid phone. Enter 10 digits." });
+      }
+
+      // Create order with Cashfree
+      const origin = (req.headers.origin as string) || 'http://localhost:5173';
+      const orderResponse = await cashfreeService.createOrder({
         amount,
         currency,
-        `job_${jobId}_user_${req.user!.id}_${Date.now()}`
-      );
+        customerId: `user_${req.user!.id}`,
+        customerName: req.user!.name,
+        customerEmail: req.user!.email,
+        customerPhone: sanitizedPhone,
+        returnUrl: `${origin}/dashboard`,
+        orderNote: `job_${jobId}`,
+        receipt: `job_${jobId}_user_${req.user!.id}_${Date.now()}`,
+      });
 
       res.json({
-        orderId: order.id,
-        amount: order.amount,
-        currency: order.currency,
-        key: env.RAZORPAY_KEY_ID,
+        orderId: orderResponse.order_id,
+        paymentSessionId: orderResponse.payment_session_id,
+        amount,
+        currency,
+        mode: env.CASHFREE_ENV,
       });
     } catch (error) {
-      console.error('Error creating Razorpay order:', error);
+      console.error('Error creating Cashfree order:', error);
       res.status(500).json({ message: "Failed to create payment order" });
     }
   });
@@ -738,31 +752,20 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
-  // Payment verification - protected
+  // Payment verification - protected (Cashfree)
   app.post("/api/payment/verify", authenticateToken, async (req, res) => {
     try {
-      const { paymentId, orderId, signature, referralId } = req.body;
+      const { orderId, referralId } = req.body as { orderId: string, referralId: number };
 
-      if (!paymentId || !orderId || !signature) {
-        return res.status(400).json({ message: "Missing payment details" });
+      if (!orderId) {
+        return res.status(400).json({ message: "Missing orderId" });
       }
 
-      // Verify payment signature with Razorpay
-      const isValidSignature = razorpayService.verifyPaymentSignature(
-        orderId,
-        paymentId,
-        signature
-      );
-
-      if (!isValidSignature) {
-        return res.status(400).json({ message: "Invalid payment signature" });
-      }
-
-      // Get payment details from Razorpay to verify status
-      const paymentDetails = await razorpayService.getPaymentDetails(paymentId);
-      
-      if (paymentDetails.status !== 'captured') {
-        return res.status(400).json({ message: "Payment not captured" });
+      // Fetch order from Cashfree and verify it's paid
+      const order = await cashfreeService.fetchOrder(orderId) as any;
+      const status = (order?.data?.order_status || order?.order_status || '').toUpperCase();
+      if (status !== 'PAID') {
+        return res.status(400).json({ message: "Payment not successful", orderStatus: status });
       }
 
       // Check if referral exists and user owns it
@@ -773,8 +776,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Update referral with payment info
       const referral = await storage.updateReferral(referralId, {
-        paymentId,
-        orderId,
+        paymentId: orderId,
+        orderId: orderId,
         status: "pending", // Move to assigned after payment
       });
 
@@ -805,16 +808,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
-      res.json({ 
-        success: true, 
-        referral,
-        paymentDetails: {
-          paymentId: paymentDetails.id,
-          amount: Number(paymentDetails.amount) / 100, // Convert from paise
-          currency: paymentDetails.currency,
-          status: paymentDetails.status,
-        }
-      });
+      res.json({ success: true, referral, orderStatus: status });
     } catch (error) {
       console.error('Error verifying payment:', error);
       res.status(400).json({ message: "Payment verification failed" });
