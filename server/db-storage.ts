@@ -1,4 +1,4 @@
-import { eq, and, ilike, or, desc, isNotNull, sql, count, inArray } from "drizzle-orm";
+import { eq, and, ilike, or, desc, isNotNull, sql, count, inArray, ne } from "drizzle-orm";
 import { db } from "./db";
 import { users, jobs, referrals, assignments, mentorProfiles } from "@shared/schema";
 import type { User, Job, Referral, InsertUser, InsertJob, InsertReferral, Assignment } from "@shared/schema";
@@ -136,18 +136,34 @@ export class DbStorage implements IStorage {
     return await db.select().from(jobs).where(eq(jobs.active, true)).orderBy(desc(jobs.createdAt));
   }
 
-  async getJobsPaginated(offset: number, limit: number): Promise<Job[]> {
+  async getJobsPaginated(offset: number, limit: number, excludeCompanyNormalized?: string): Promise<Job[]> {
+    const baseCondition = eq(jobs.active, true);
+    const whereExpr = excludeCompanyNormalized
+      ? and(
+          baseCondition,
+          sql`LOWER(BTRIM(${jobs.company})) <> ${excludeCompanyNormalized}`
+        )
+      : baseCondition;
+
     return await db
       .select()
       .from(jobs)
-      .where(eq(jobs.active, true))
+      .where(whereExpr)
       .orderBy(desc(jobs.createdAt))
       .offset(offset)
       .limit(limit);
   }
 
-  async getJobsCount(): Promise<number> {
-    const result = await db.select({ value: count() }).from(jobs).where(eq(jobs.active, true));
+  async getJobsCount(excludeCompanyNormalized?: string): Promise<number> {
+    const baseCondition = eq(jobs.active, true);
+    const whereExpr = excludeCompanyNormalized
+      ? and(
+          baseCondition,
+          sql`LOWER(BTRIM(${jobs.company})) <> ${excludeCompanyNormalized}`
+        )
+      : baseCondition;
+
+    const result = await db.select({ value: count() }).from(jobs).where(whereExpr);
     return Number(result[0]?.value || 0);
   }
 
@@ -184,41 +200,47 @@ export class DbStorage implements IStorage {
       .orderBy(desc(jobs.createdAt));
   }
 
-  async searchJobsPaginated(query: string, offset: number, limit: number): Promise<Job[]> {
+  async searchJobsPaginated(query: string, offset: number, limit: number, excludeCompanyNormalized?: string): Promise<Job[]> {
+    const searchCondition = and(
+      eq(jobs.active, true),
+      or(
+        ilike(jobs.title, `%${query}%`),
+        ilike(jobs.company, `%${query}%`),
+        ilike(jobs.description, `%${query}%`),
+        ilike(jobs.location, `%${query}%`)
+      )
+    );
+    const whereExpr = excludeCompanyNormalized
+      ? and(searchCondition, sql`LOWER(BTRIM(${jobs.company})) <> ${excludeCompanyNormalized}`)
+      : searchCondition;
+
     return await db
       .select()
       .from(jobs)
-      .where(
-        and(
-          eq(jobs.active, true),
-          or(
-            ilike(jobs.title, `%${query}%`),
-            ilike(jobs.company, `%${query}%`),
-            ilike(jobs.description, `%${query}%`),
-            ilike(jobs.location, `%${query}%`)
-          )
-        )
-      )
+      .where(whereExpr)
       .orderBy(desc(jobs.createdAt))
       .offset(offset)
       .limit(limit);
   }
 
-  async searchJobsCount(query: string): Promise<number> {
+  async searchJobsCount(query: string, excludeCompanyNormalized?: string): Promise<number> {
+    const searchCondition = and(
+      eq(jobs.active, true),
+      or(
+        ilike(jobs.title, `%${query}%`),
+        ilike(jobs.company, `%${query}%`),
+        ilike(jobs.description, `%${query}%`),
+        ilike(jobs.location, `%${query}%`)
+      )
+    );
+    const whereExpr = excludeCompanyNormalized
+      ? and(searchCondition, sql`LOWER(BTRIM(${jobs.company})) <> ${excludeCompanyNormalized}`)
+      : searchCondition;
+
     const result = await db
       .select({ value: count() })
       .from(jobs)
-      .where(
-        and(
-          eq(jobs.active, true),
-          or(
-            ilike(jobs.title, `%${query}%`),
-            ilike(jobs.company, `%${query}%`),
-            ilike(jobs.description, `%${query}%`),
-            ilike(jobs.location, `%${query}%`)
-          )
-        )
-      );
+      .where(whereExpr);
     return Number(result[0]?.value || 0);
   }
 

@@ -14,6 +14,10 @@ export interface IStorage {
   getJob(id: number): Promise<Job | undefined>;
   createJob(job: InsertJob): Promise<Job>;
   searchJobs(query: string): Promise<Job[]>;
+  getJobsPaginated(offset: number, limit: number, excludeCompanyNormalized?: string): Promise<Job[]>;
+  getJobsCount(excludeCompanyNormalized?: string): Promise<number>;
+  searchJobsPaginated(query: string, offset: number, limit: number, excludeCompanyNormalized?: string): Promise<Job[]>;
+  searchJobsCount(query: string, excludeCompanyNormalized?: string): Promise<number>;
   
   // Referral methods
   getReferral(id: number): Promise<Referral | undefined>;

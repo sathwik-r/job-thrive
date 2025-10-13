@@ -1,5 +1,6 @@
 import { useMemo, useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
+import { apiRequest } from '@/lib/queryClient';
 import { useLocation } from 'wouter';
 import { ArrowLeft, Search, Filter } from 'lucide-react';
 import { Button } from '@/components/ui/button';
@@ -21,10 +22,7 @@ export default function JobSearchPage() {
       if (searchQuery) params.append('search', searchQuery);
       params.append('page', page.toString());
       
-      const response = await fetch(`/api/jobs?${params.toString()}`);
-      if (!response.ok) {
-        throw new Error('Failed to fetch jobs');
-      }
+      const response = await apiRequest('GET', `/api/jobs?${params.toString()}`);
       return response.json();
     },
   });

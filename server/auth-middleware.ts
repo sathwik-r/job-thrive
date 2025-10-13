@@ -13,6 +13,7 @@ declare global {
         name: string;
         role: string;
         cognitoSub: string;
+        company?: string;
       };
     }
   }
@@ -139,6 +140,7 @@ export const authenticateToken = async (req: Request, res: Response, next: NextF
       name: user.name,
       role: user.role,
       cognitoSub: decoded.sub,
+      company: user.company,
     };
     next();
   } catch (error) {
@@ -163,6 +165,7 @@ export const optionalAuth = async (req: Request, res: Response, next: NextFuncti
             name: user.name,
             role: user.role,
             cognitoSub: decoded.sub,
+            company: user.company,
           };
         }
       }

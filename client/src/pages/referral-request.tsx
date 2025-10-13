@@ -30,9 +30,14 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
   const [isUploading, setIsUploading] = useState(false);
   const [phone, setPhone] = useState('');
 
-  const { data: job, isLoading } = useQuery<any>({
+  const { data: job, isLoading, isError } = useQuery<any>({
     queryKey: ['/api/jobs', jobId],
+    queryFn: async () => {
+      const res = await apiRequest('GET', `/api/jobs/${jobId}`);
+      return res.json();
+    },
     enabled: !!jobId,
+    retry: false,
   });
 
   const createReferralMutation = useMutation({
@@ -208,10 +213,21 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
     }
   };
 
-  if (isLoading || !job) {
+  if (isLoading) {
     return (
       <div className="min-h-screen bg-gray-50 flex items-center justify-center">
         <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--purple-primary)]"></div>
+      </div>
+    );
+  }
+
+  if (isError || !job) {
+    return (
+      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+        <div className="text-center space-y-2">
+          <p className="text-lg font-semibold text-[var(--dark-gray)]">Job not found</p>
+          <Button variant="outline" onClick={() => setLocation('/job-search')}>Back to Jobs</Button>
+        </div>
       </div>
     );
   }

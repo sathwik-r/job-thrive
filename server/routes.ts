@@ -303,17 +303,25 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const pageSize = 2;
       const offset = (page - 1) * pageSize;
 
+      // Exclude user's own company if available
+      let excludeCompanyNormalized: string | undefined;
+      const reqUserCompany = (req.user as any)?.company as string | undefined;
+      if (reqUserCompany) {
+        const normalized = String(reqUserCompany).trim().toLowerCase();
+        if (normalized) excludeCompanyNormalized = normalized;
+      }
+
       let jobs;
       let total;
       if (query) {
         [jobs, total] = await Promise.all([
-          storage.searchJobsPaginated(query, offset, pageSize),
-          storage.searchJobsCount(query),
+          storage.searchJobsPaginated(query, offset, pageSize, excludeCompanyNormalized),
+          storage.searchJobsCount(query, excludeCompanyNormalized),
         ]);
       } else {
         [jobs, total] = await Promise.all([
-          storage.getJobsPaginated(offset, pageSize),
-          storage.getJobsCount(),
+          storage.getJobsPaginated(offset, pageSize, excludeCompanyNormalized),
+          storage.getJobsCount(excludeCompanyNormalized),
         ]);
       }
 
@@ -365,7 +373,12 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const jobId = parseInt(req.params.id);
       const job = await storage.getJob(jobId);
 
-      if (!job) {
+      // Also block if job matches user's company
+      const userCompanySrc = (req.user as any)?.company as string | undefined;
+      const userCompany = userCompanySrc ? String(userCompanySrc).trim().toLowerCase() : undefined;
+      const jobCompany = job?.company ? String(job.company).trim().toLowerCase() : undefined;
+
+      if (!job || (userCompany && jobCompany && userCompany === jobCompany)) {
         return res.status(404).json({ message: "Job not found" });
       }
 
@@ -380,6 +393,15 @@ export async function registerRoutes(app: Express): Promise<Server> {
     try {
       const referralData = createReferralRequestSchema.parse(req.body);
       const userId = req.user!.id; // Get from authenticated user
+
+      // Validate: Job should not be from the seeker's own company
+      const job = await storage.getJob(referralData.jobId);
+      const userCompanySrc2 = (req.user as any)?.company as string | undefined;
+      const userCompany = userCompanySrc2 ? String(userCompanySrc2).trim().toLowerCase() : undefined;
+      const jobCompany = job?.company ? String(job.company).trim().toLowerCase() : undefined;
+      if (!job || (userCompany && jobCompany && userCompany === jobCompany)) {
+        return res.status(400).json({ message: "Invalid referral request" });
+      }
 
       // Create referral request
       const referral = await storage.createReferral({
@@ -397,7 +419,6 @@ export async function registerRoutes(app: Express): Promise<Server> {
       });
 
       // Auto-assign referrer
-      const job = await storage.getJob(referralData.jobId);
       if (job) {
         const eligibleReferrers = await storage.getUsersByCompany(job.company);
         const availableReferrer = eligibleReferrers.find(
