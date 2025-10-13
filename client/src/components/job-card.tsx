@@ -3,6 +3,7 @@ import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { type Job } from '@shared/schema';
 import { useLocation } from 'wouter';
+import React from 'react';
 
 interface JobCardProps {
   job: Job;
@@ -59,7 +60,7 @@ export default function JobCard({ job }: JobCardProps) {
           <div className="flex items-center space-x-4">
             <span className="text-xs text-gray-500">{formatTimeAgo(job.createdAt)}</span>
             <span className="text-xs text-[var(--orange-accent)] font-semibold">
-              Referral: ${job.referralFee}
+              Referral: ₹{job.referralFee}
             </span>
           </div>
           <Button

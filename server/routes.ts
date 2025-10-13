@@ -300,7 +300,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const page = Number.isNaN(pageParam) || pageParam < 1 ? 1 : pageParam;
       console.log("page is ", page);
       // Hardcoded page size on server
-      const pageSize = 2;
+      const pageSize = 20;
       const offset = (page - 1) * pageSize;
 
       // Exclude user's own company if available
