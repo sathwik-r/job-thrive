@@ -307,8 +307,6 @@ export default function DashboardPage() {
                       key={r.referral.id}
                       referral={r}
                       onClick={() => openReferralDetails(r)}
-                      onUploadProof={() => handleUploadProof(r.assignment?.id)}
-                      onDecline={() => handleDecline(r.assignment?.id)}
                     />
                   ))}
                 </div>
@@ -667,29 +665,30 @@ export default function DashboardPage() {
               )}
 
               <div className="flex space-x-3">
-                {detailsModal.request.referral &&
-                  detailsModal.request.referral.status === 'assigned' && (
-                    <Button
-                      className="flex-1 bg-[var(--purple-primary)] hover:bg-[var(--purple-primary)]/90"
-                      onClick={() => {
-                        setDetailsModal({ isOpen: false, request: null });
-                        handleUploadProof(detailsModal.request.assignment.id);
-                      }}
-                    >
-                      Upload Proof
-                    </Button>
-                  )}
-                {detailsModal.request.referral &&
-                  detailsModal.request.referral.status === 'assigned' && (
-                    <Button
-                      variant="outline"
-                      className="flex-1 border-red-300 text-red-600 hover:bg-red-50"
-                      onClick={() =>
-                        handleDecline(detailsModal.request.assignment.id)
-                      }
-                    >
-                      Decline
-                    </Button>
+                {currentRole === 'referrer' &&
+                  detailsModal.request.referral &&
+                  detailsModal.request.referral.status === 'assigned' &&
+                  detailsModal.request.referral.referrerId === user.id && (
+                    <>
+                      <Button
+                        className="flex-1 bg-[var(--purple-primary)] hover:bg-[var(--purple-primary)]/90"
+                        onClick={() => {
+                          setDetailsModal({ isOpen: false, request: null });
+                          handleUploadProof(detailsModal.request.assignment.id);
+                        }}
+                      >
+                        Upload Proof
+                      </Button>
+                      <Button
+                        variant="outline"
+                        className="flex-1 border-red-300 text-red-600 hover:bg-red-50"
+                        onClick={() =>
+                          handleDecline(detailsModal.request.assignment.id)
+                        }
+                      >
+                        Decline
+                      </Button>
+                    </>
                   )}
               </div>
             </div>
