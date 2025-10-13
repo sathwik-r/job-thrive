@@ -1,6 +1,6 @@
 import { db } from "../db";
 import { users, referrals, assignments, jobs } from "../../shared/schema";
-import { eq, and, gte, lte, desc, asc, sql } from "drizzle-orm";
+import { eq, and, gte, lte, desc, asc, sql, not } from "drizzle-orm";
 import { addHours, isAfter, isBefore } from "date-fns";
 
 export interface MatchMakingResult {
@@ -70,7 +70,8 @@ export async function findBestReferrer(referralId: number): Promise<number | nul
         eq(users.active, true),
         sql`${users.role} IN ('referrer', 'both')`,
         // Compare LOWER(TRIM(users.company)) to normalized job company
-        sql`LOWER(BTRIM(${users.company})) = ${jobCompanyNormalized}`
+        sql`LOWER(BTRIM(${users.company})) = ${jobCompanyNormalized}`,
+        not(eq(users.id, referralData.seekerId))
       )
     )
     .orderBy(desc(users.referrerScore))
