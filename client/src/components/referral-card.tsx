@@ -112,7 +112,7 @@ export default function ReferralCard({ referral, isReferrer = false, onViewResum
               {(displayStatus.replace('_', ' ')).charAt(0).toUpperCase() + (displayStatus.replace('_', ' ')).slice(1)}
             </Badge>}
             <p className={`text-sm font-semibold ${isReferrer ? 'text-[var(--emerald-success)]' : 'text-[var(--dark-gray)]'}`}>
-              {isReferrer ? '+' : ''}₹ 299
+              {isReferrer ? '+' : ''}₹ 249
             </p>
           </div>
         </div>
