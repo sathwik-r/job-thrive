@@ -45,7 +45,7 @@ class RazorpayService {
     try {
       const body = `${orderId}|${paymentId}`;
       const expectedSignature = crypto
-        .createHmac('sha256', env.RAZORPAY_KEY_SECRET)
+        .createHmac('sha256', env.RAZORPAY_KEY_SECRET || '')
         .update(body)
         .digest('hex');
 
