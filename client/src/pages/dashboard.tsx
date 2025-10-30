@@ -371,7 +371,7 @@ export default function DashboardPage() {
                   </div>
                   <div className="bg-white/20 backdrop-blur-lg rounded-xl p-4 text-center">
                     <div className="text-xl font-bold">
-                      {user.successfulReferrals}
+                      {referrerMetrics?.successRate}
                     </div>
                     <div className="text-xs opacity-75">Successful</div>
                   </div>
