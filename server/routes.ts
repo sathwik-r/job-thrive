@@ -207,9 +207,9 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const referrals = await storage.getReferralsByReferrer(userId);
       const completedReferrals = referrals.filter((referral) => referral.status === "completed");
       const assignments = await storage.getAllAssignmentsByReferrerId();
-      const totalEarnings = completedReferrals.reduce((acc, referral) => acc + parseFloat(referral.amount), 0);
+      const totalEarnings = completedReferrals.reduce((acc, referral) => acc + parseFloat("249"), 0);
       const monthlyReferrals = completedReferrals.filter((referral) => referral.createdAt && referral.createdAt >= new Date(new Date().setMonth(new Date().getMonth() - 1)));
-      const monthlyEarnings = monthlyReferrals.reduce((acc, referral) => acc + parseFloat(referral.amount), 0);
+      const monthlyEarnings = monthlyReferrals.reduce((acc, referral) => acc + parseFloat("249"), 0);
       const successRate = Math.round((completedReferrals.length / assignments.length) * 100);
       res.json({
         totalEarnings,
