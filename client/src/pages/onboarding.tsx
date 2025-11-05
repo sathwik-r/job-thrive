@@ -19,7 +19,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
           <div className="text-center">
             <div className="w-32 h-32 mx-auto mb-6 glassmorphism rounded-3xl overflow-hidden">
               <img
-                src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/job-thrive-logo.jpg"
+                src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/job-thrive-logo.png"
                 alt="Job Thrive"
                 className="w-full h-full object-cover"
               />

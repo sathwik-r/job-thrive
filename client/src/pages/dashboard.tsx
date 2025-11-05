@@ -165,7 +165,7 @@ export default function DashboardPage() {
           <div className="flex items-center space-x-3">
             <div className="w-10 h-10 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--purple-light)] rounded-xl flex items-center justify-center">
               <img
-                src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/job-thrive-logo.jpg"
+                src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/job-thrive-logo.png"
                 alt="Job Thrive"
                 className="w-full h-full object-cover"
               />

@@ -42,7 +42,7 @@ export default function LoginPage() {
             <div className="relative mb-8">
               <div className="w-24 h-24 mx-auto glassmorphism rounded-3xl flex items-center justify-center animate-float">
                 <img
-                  src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/job-thrive-logo.jpg"
+                  src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/job-thrive-logo.png"
                   alt="Job Thrive"
                   className="w-full h-full object-cover"
                 />
