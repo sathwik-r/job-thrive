@@ -58,16 +58,16 @@ aws ssm put-parameter \
   --type "SecureString" \
   --region ap-south-1
 
-# Razorpay Keys
+# Cashfree Keys
 aws ssm put-parameter \
-  --name "/job-thrive/razorpay-key-id" \
-  --value "your-razorpay-key-id" \
+  --name "/job-thrive/cashfree-client-id" \
+  --value "your-cashfree-client-id" \
   --type "SecureString" \
   --region ap-south-1
 
 aws ssm put-parameter \
-  --name "/job-thrive/razorpay-key-secret" \
-  --value "your-razorpay-key-secret" \
+  --name "/job-thrive/cashfree-client-secret" \
+  --value "your-cashfree-client-secret" \
   --type "SecureString" \
   --region ap-south-1
 ```
@@ -102,12 +102,16 @@ The ECS task definition automatically injects these variables:
       "valueFrom": "arn:aws:ssm:ap-south-1:ACCOUNT_ID:parameter/job-thrive/cognito-client-secret"
     },
     {
-      "name": "RAZORPAY_KEY_ID",
-      "valueFrom": "arn:aws:ssm:ap-south-1:ACCOUNT_ID:parameter/job-thrive/razorpay-key-id"
+      "name": "CASHFREE_CLIENT_ID",
+      "valueFrom": "arn:aws:ssm:ap-south-1:ACCOUNT_ID:parameter/job-thrive/cashfree-client-id"
     },
     {
-      "name": "RAZORPAY_KEY_SECRET",
-      "valueFrom": "arn:aws:ssm:ap-south-1:ACCOUNT_ID:parameter/job-thrive/razorpay-key-secret"
+      "name": "CASHFREE_CLIENT_SECRET",
+      "valueFrom": "arn:aws:ssm:ap-south-1:ACCOUNT_ID:parameter/job-thrive/cashfree-client-secret"
+    },
+    {
+      "name": "CASHFREE_ENV",
+      "value": "sandbox"
     }
   ]
 }

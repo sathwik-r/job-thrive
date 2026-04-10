@@ -12,6 +12,15 @@ import { cashfreeService } from './cashfree-service';
 import { assignReferral, rejectAssignment, acceptAssignment } from './match-making';
 import { CoachingService } from "./coaching";
 
+function getCognitoBaseUrl(): string {
+  // Prefer explicit env var; fallback to current hardcoded domain.
+  const domain = env.COGNITO_DOMAIN?.trim();
+  const normalized = (domain || "ap-south-1u1oays3zw.auth.ap-south-1.amazoncognito.com")
+    .replace(/^https?:\/\//, "")
+    .replace(/\/+$/, "");
+  return `https://${normalized}`;
+}
+
 
 const authUserSchema = z.object({
   email: z.string().email(),
@@ -70,13 +79,14 @@ export async function registerRoutes(app: Express): Promise<Server> {
       
       const clientId = env.COGNITO_CLIENT_ID;
       const clientSecret = env.COGNITO_CLIENT_SECRET;
+      const cognitoBaseUrl = getCognitoBaseUrl();
       console.log('clientId', clientId);
       console.log('clientSecret', clientSecret);
       console.log('redirectUri', redirectUri);
       console.log('code', code);
       // Exchange authorization code for tokens with client secret
       const tokenResponse = await axios.post(
-        'https://ap-south-1uuoeustm6.auth.ap-south-1.amazoncognito.com/oauth2/token',
+        `${cognitoBaseUrl}/oauth2/token`,
         new URLSearchParams({
           grant_type: 'authorization_code',
           client_id: clientId || '',
@@ -96,7 +106,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
 
       // Get user info from Cognito
       const userInfoResponse = await axios.get(
-        'https://ap-south-1uuoeustm6.auth.ap-south-1.amazoncognito.com/oauth2/userInfo',
+        `${cognitoBaseUrl}/oauth2/userInfo`,
         {
           headers: {
             'Authorization': `Bearer ${access_token}`

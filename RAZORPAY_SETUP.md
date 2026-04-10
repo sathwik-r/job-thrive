@@ -1,6 +1,8 @@
-# Razorpay Integration Setup Guide
+# Payments Integration Update
 
-This guide will help you set up the complete Razorpay payment integration for the Job Thrive application.
+Razorpay integration has been removed. The application now uses Cashfree Hosted Checkout.
+
+Refer to `ENVIRONMENT_VARIABLES.md` for required keys and see server `cashfree-service.ts` and route `/api/payment/create-order` for the new flow. Client utilities are in `client/src/lib/cashfree.ts` and the referral page uses Cashfree.
 
 ## Prerequisites
 

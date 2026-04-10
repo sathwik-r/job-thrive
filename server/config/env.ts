@@ -16,9 +16,10 @@ const envSchema = z.object({
   AWS_SECRET_ACCESS_KEY: z.string(),
   
   // Cognito Configuration
-  COGNITO_USER_POOL_ID: z.string().default('ap-south-1_UUoEustM6'),
+  COGNITO_USER_POOL_ID: z.string().default('ap-south-1_U1oAYS3Zw'),
   COGNITO_CLIENT_ID: z.string(),
   COGNITO_CLIENT_SECRET: z.string(),
+  COGNITO_DOMAIN: z.string().optional(),
   
   // Cashfree Configuration
   CASHFREE_CLIENT_ID: z.string(),

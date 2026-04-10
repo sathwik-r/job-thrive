@@ -5,7 +5,7 @@ const cognitoConfig = {
   Auth: {
     Cognito: {
       userPoolId: import.meta.env.VITE_AWS_USER_POOL_ID || 'ap-south-1_6Jz6IuH4j',
-      userPoolClientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID || '3auncgcoubmgelasbogir4a62',
+      userPoolClientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID || '55fvkviiqqa309chmtvgpmdm9g',
       // Remove OAuth config to prevent automatic token exchange
     },
   },
@@ -48,7 +48,7 @@ export class CognitoAuth {
     try {
       const config = {
         domain: import.meta.env.VITE_AWS_COGNITO_DOMAIN || 'ap-south-16jz6iuh4j.auth.ap-south-1.amazoncognito.com',
-        clientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID || '3auncgcoubmgelasbogir4a62',
+        clientId: import.meta.env.VITE_AWS_USER_POOL_CLIENT_ID || '55fvkviiqqa309chmtvgpmdm9g',
         redirectUri: encodeURIComponent(window.location.origin + '/login')
       };
 
