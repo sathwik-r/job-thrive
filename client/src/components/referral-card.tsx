@@ -3,6 +3,7 @@ import { Card, CardContent } from '@/components/ui/card';
 import { Button } from '@/components/ui/button';
 import { Badge } from '@/components/ui/badge';
 import { Progress } from '@/components/ui/progress';
+import { Upload, X, Clock, CheckCircle2, AlertCircle, Ban } from 'lucide-react';
 import { type Referral, type Job, type User } from '@shared/schema';
 
 interface ReferralCardProps {
@@ -14,153 +15,178 @@ interface ReferralCardProps {
   onDecline?: () => void;
 }
 
-const getStatusColor = (status: string) => {
-  switch (status) {
-    case 'pending':
-      return 'bg-[var(--orange-accent)]/20 text-[var(--orange-accent)]';
-    case 'assigned':
-      return 'bg-blue-100 text-blue-600';
-    case 'verification_pending':
-      return 'bg-[var(--orange-accent)]/20 text-[var(--orange-accent)]';
-    case 'completed':
-      return 'bg-[var(--emerald-success)]/20 text-[var(--emerald-success)]';
-    case 'expired':
-      return 'bg-red-100 text-red-500';
-    case 'cancelled':
-      return 'bg-gray-100 text-gray-500';
-    default:
-      return 'bg-gray-100 text-gray-600';
-  }
+const statusConfig: Record<string, { color: string; bg: string; icon: React.ReactNode; label: string; progress: number }> = {
+  pending: {
+    color: 'text-amber-600',
+    bg: 'bg-amber-50 border-amber-100',
+    icon: <Clock className="w-3.5 h-3.5" />,
+    label: 'Pending',
+    progress: 20,
+  },
+  assigned: {
+    color: 'text-blue-600',
+    bg: 'bg-blue-50 border-blue-100',
+    icon: <CheckCircle2 className="w-3.5 h-3.5" />,
+    label: 'Assigned',
+    progress: 50,
+  },
+  verification_pending: {
+    color: 'text-violet-600',
+    bg: 'bg-violet-50 border-violet-100',
+    icon: <AlertCircle className="w-3.5 h-3.5" />,
+    label: 'Verifying',
+    progress: 80,
+  },
+  completed: {
+    color: 'text-emerald-600',
+    bg: 'bg-emerald-50 border-emerald-100',
+    icon: <CheckCircle2 className="w-3.5 h-3.5" />,
+    label: 'Completed',
+    progress: 100,
+  },
+  expired: {
+    color: 'text-red-500',
+    bg: 'bg-red-50 border-red-100',
+    icon: <Ban className="w-3.5 h-3.5" />,
+    label: 'Expired',
+    progress: 0,
+  },
+  cancelled: {
+    color: 'text-gray-500',
+    bg: 'bg-gray-50 border-gray-100',
+    icon: <X className="w-3.5 h-3.5" />,
+    label: 'Cancelled',
+    progress: 0,
+  },
 };
 
-const getProgressValue = (status: string) => {
-  switch (status) {
-    case 'pending':
-      return 20;
-    case 'assigned':
-      return 50;
-    case 'verification_pending':
-      return 80;
-    case 'completed':
-      return 100;
-    case 'expired':
-    case 'cancelled':
-      return 0;
-    default:
-      return 0;
-  }
-};
-
-const getStatusText = (status: string) => {
-  switch (status) {
-    case 'pending':
-      return 'Pending assignment';
-    case 'assigned':
-      return 'Referrer assigned';
-    case 'verification_pending':
-      return 'Proof submitted';
-    case 'completed':
-      return 'Completed';
-    case 'expired':
-      return 'Expired';
-    case 'cancelled':
-      return 'Cancelled';
-    default:
-      return status;
-  }
-};
+function getCompanyDomain(company: string): string {
+  const cleaned = company.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '');
+  const domainMap: Record<string, string> = {
+    google: 'google.com', microsoft: 'microsoft.com', amazon: 'amazon.com',
+    flipkart: 'flipkart.com', swiggy: 'swiggy.com', meta: 'meta.com',
+    apple: 'apple.com', netflix: 'netflix.com', uber: 'uber.com',
+    zomato: 'zomato.com', paytm: 'paytm.com', razorpay: 'razorpay.com',
+    stripe: 'stripe.com', atlassian: 'atlassian.com', adobe: 'adobe.com',
+    salesforce: 'salesforce.com', oracle: 'oracle.com', ibm: 'ibm.com',
+    tcs: 'tcs.com', infosys: 'infosys.com', wipro: 'wipro.com',
+  };
+  return domainMap[cleaned] || `${cleaned}.com`;
+}
 
 export default function ReferralCard({ referral, isReferrer = false, onViewResume, onUploadProof, onClick, onDecline }: ReferralCardProps) {
   const formatDate = (date: Date | null) => {
     if (!date) return null;
-    return new Intl.DateTimeFormat('en-US', {
-      month: 'short',
-      day: 'numeric',
-      year: 'numeric'
-    }).format(new Date(date));
+    return new Intl.DateTimeFormat('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).format(new Date(date));
   };
 
-  // Normalize data shape from either flat Referral or { assignment, referral, job, seeker }
   const referralData: Referral | undefined = referral?.referral;
   const assignment = referral?.assignment;
-  const job: Job | undefined = referral?.job ;
-  const seeker: User | undefined = referral?.seeker ;
+  const job: Job | undefined = referral?.job;
+  const seeker: User | undefined = referral?.seeker;
   const displayStatus: string = referralData?.status ?? 'pending';
+  const config = statusConfig[displayStatus] || statusConfig.pending;
 
   return (
-    <Card className={`card-hover ${onClick ? 'cursor-pointer' : ''}`} onClick={onClick}>
-      <CardContent className="p-5">
-        <div className="flex items-start justify-between mb-4">
-          <div className="flex-1">
-            <h4 className="font-semibold text-[var(--dark-gray)] mb-1">
-              {job?.title || 'Unknown Position'}
-            </h4>
-            <p className="text-gray-600 text-sm mb-1">
-              {job?.company || 'Unknown Company'}
-            </p>
-            {isReferrer && seeker && (
-              <p className="text-gray-500 text-xs">
-                Candidate: <span className="font-medium">{seeker.name}</span>
+    <Card
+      className={`modern-card card-hover border-0 overflow-hidden ${onClick ? 'cursor-pointer' : ''}`}
+      onClick={onClick}
+    >
+      <CardContent className="p-0">
+        <div className="flex">
+          {/* Left accent bar */}
+          <div
+            className={`w-1 shrink-0 ${
+              displayStatus === 'completed' ? 'bg-emerald-500' :
+              displayStatus === 'assigned' ? 'bg-blue-500' :
+              displayStatus === 'pending' ? 'bg-amber-400' :
+              displayStatus === 'verification_pending' ? 'bg-violet-500' :
+              'bg-gray-300'
+            }`}
+          />
+
+          <div className="flex-1 p-4">
+            <div className="flex items-start justify-between gap-3">
+              <div className="flex items-start gap-3 flex-1 min-w-0">
+                {/* Company logo */}
+                {job?.company && (
+                  <img
+                    src={`https://logo.clearbit.com/${getCompanyDomain(job.company)}`}
+                    alt=""
+                    className="company-logo shrink-0 mt-0.5"
+                    onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
+                  />
+                )}
+                <div className="min-w-0">
+                  <h4 className="font-semibold text-[var(--dark-gray)] text-sm leading-tight truncate">
+                    {job?.title || 'Unknown Position'}
+                  </h4>
+                  <p className="text-xs text-muted-foreground mt-0.5">
+                    {job?.company || 'Unknown Company'} · {job?.location || 'Remote'}
+                  </p>
+                  {isReferrer && seeker && (
+                    <p className="text-xs text-muted-foreground mt-1">
+                      Candidate: <span className="font-medium text-foreground">{seeker.name}</span>
+                    </p>
+                  )}
+                </div>
+              </div>
+
+              <div className="flex flex-col items-end gap-1.5 shrink-0">
+                <div className={`pill-badge ${config.bg} ${config.color} border gap-1`}>
+                  {config.icon}
+                  {config.label}
+                </div>
+                <p className={`text-sm font-semibold ${isReferrer ? 'text-emerald-600' : 'text-[var(--dark-gray)]'}`}>
+                  {isReferrer ? '+' : ''}Rs.499
+                </p>
+              </div>
+            </div>
+
+            {/* Progress bar for seekers */}
+            {!isReferrer && referralData && (
+              <div className="mt-3 pt-3 border-t border-gray-100/80">
+                <div className="flex items-center justify-between text-xs mb-1.5">
+                  <span className="text-muted-foreground">Progress</span>
+                  <span className={`font-medium ${config.color}`}>{config.label}</span>
+                </div>
+                <Progress value={config.progress} className="h-1.5" />
+              </div>
+            )}
+
+            {/* Referrer action buttons */}
+            {isReferrer && assignment?.status === 'assigned' && (
+              <div className="flex items-center gap-2 mt-3 pt-3 border-t border-gray-100/80">
+                {onUploadProof && (
+                  <Button
+                    size="sm"
+                    onClick={(e) => { e.stopPropagation(); onUploadProof(); }}
+                    className="flex-1 h-8 text-xs font-medium bg-[var(--purple-primary)] hover:bg-[var(--purple-primary)]/90 rounded-lg"
+                  >
+                    <Upload className="w-3.5 h-3.5 mr-1.5" />
+                    Upload Proof
+                  </Button>
+                )}
+                {onDecline && (
+                  <Button
+                    variant="ghost"
+                    size="sm"
+                    onClick={(e) => { e.stopPropagation(); onDecline(); }}
+                    className="h-8 text-xs text-red-500 hover:text-red-600 hover:bg-red-50"
+                  >
+                    Decline
+                  </Button>
+                )}
+              </div>
+            )}
+
+            {referralData?.completedAt && (
+              <p className="mt-2 text-[10px] text-muted-foreground">
+                Completed {formatDate(referralData.completedAt)}
               </p>
             )}
-            <p className="text-gray-500 text-xs">
-              {job?.location || 'Location not specified'}
-            </p>
-          </div>
-          <div className="text-right">
-          {isReferrer && <Badge className={`px-3 py-1 rounded-full text-xs font-semibold mb-2 ${getStatusColor(displayStatus)}`}>
-              {(displayStatus.replace('_', ' ')).charAt(0).toUpperCase() + (displayStatus.replace('_', ' ')).slice(1)}
-            </Badge>}
-            <p className={`text-sm font-semibold ${isReferrer ? 'text-[var(--emerald-success)]' : 'text-[var(--dark-gray)]'}`}>
-              {isReferrer ? '+' : ''}₹ 249
-            </p>
           </div>
         </div>
-
-        {!isReferrer && referralData && (
-          <div className="bg-gray-50 rounded-xl p-3 mb-4">
-            <div className="flex items-center justify-between text-sm mb-2">
-              <span className="text-gray-600">Progress</span>
-              <span className={`font-medium ${displayStatus === 'completed' ? 'text-[var(--emerald-success)]' : 'text-[var(--purple-primary)]'}`}>
-                {getStatusText(displayStatus)}
-              </span>
-            </div>
-            <Progress value={getProgressValue(displayStatus)} className="h-2" />
-          </div>
-        )}
-
-        {isReferrer && assignment?.status === 'assigned' && (
-          <div className="flex items-center space-x-3 mt-4">
-            {onUploadProof && (
-              <Button
-                size="sm"
-                onClick={(e) => { e.stopPropagation(); onUploadProof(); }}
-                className="flex-1 bg-[var(--purple-primary)] text-white font-medium py-2 px-4 rounded-xl hover:bg-[var(--purple-primary)]/90 transition-colors"
-              >
-                <svg className="w-4 h-4 mr-2" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M7 16a4 4 0 01-.88-7.903A5 5 0 1115.9 6L16 6a5 5 0 011 9.9M15 13l-3-3m0 0l-3 3m3-3v12" />
-                </svg>
-                Upload Proof
-              </Button>
-            )}
-            {onDecline && (
-              <Button
-                variant="outline"
-                size="sm"
-                onClick={(e) => { e.stopPropagation(); onDecline(); }}
-                className="flex-1 border-red-300 text-red-600 hover:bg-red-50"
-              >
-                Decline
-              </Button>
-            )}
-          </div>
-        )}
-
-        {referralData?.completedAt && (
-          <div className="mt-2 text-xs text-gray-500">
-            Completed on {formatDate(referralData.completedAt)}
-          </div>
-        )}
       </CardContent>
     </Card>
   );

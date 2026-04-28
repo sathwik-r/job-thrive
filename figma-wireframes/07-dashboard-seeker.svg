@@ -1,0 +1,123 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="812" viewBox="0 0 375 812">
+  <rect id="Background" width="375" height="812" fill="#F9FAFB" rx="20"/>
+
+  <defs>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Sticky Header -->
+  <g id="Header">
+    <rect x="0" y="0" width="375" height="60" fill="#FFFFFF" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.06))"/>
+    <!-- Logo -->
+    <rect x="16" y="14" width="32" height="32" rx="8" fill="#7C3AED"/>
+    <text x="32" y="35" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">JT</text>
+    <text x="56" y="36" font-family="Inter, sans-serif" font-size="16" font-weight="700" fill="#1F2937">Job Thrive</text>
+
+    <!-- Role Toggle -->
+    <g id="Role-Toggle">
+      <rect x="148" y="14" width="130" height="32" rx="16" fill="#F3F4F6"/>
+      <rect x="150" y="16" width="60" height="28" rx="14" fill="#7C3AED"/>
+      <text x="180" y="35" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF" text-anchor="middle">Seeker</text>
+      <text x="244" y="35" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#6B7280" text-anchor="middle">Referrer</text>
+    </g>
+
+    <!-- Profile Avatar -->
+    <circle cx="343" cy="30" r="16" fill="url(#purple)"/>
+    <text x="343" y="35" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#FFFFFF" text-anchor="middle">R</text>
+  </g>
+
+  <!-- Welcome Card -->
+  <g id="Welcome-Card">
+    <rect x="16" y="76" width="343" height="140" rx="16" fill="url(#purple)"/>
+    <text x="32" y="104" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#FFFFFF">Rehan Yadav</text>
+    <text x="32" y="124" font-family="Inter, sans-serif" font-size="13" fill="rgba(255,255,255,0.9)">Ready to find your dream job?</text>
+
+    <text x="310" y="104" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="end">Rs.0</text>
+    <text x="310" y="120" font-family="Inter, sans-serif" font-size="11" fill="rgba(255,255,255,0.75)" text-anchor="end">Total Invested</text>
+
+    <!-- Find Jobs Button -->
+    <rect x="32" y="144" width="311" height="44" rx="16" fill="rgba(255,255,255,0.2)"/>
+    <text x="187" y="171" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="middle">S  Find Jobs</text>
+  </g>
+
+  <!-- Quick Stats -->
+  <g id="Quick-Stats">
+    <rect x="16" y="232" width="107" height="72" rx="12" fill="#FFFFFF" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))"/>
+    <text x="69" y="262" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#7C3AED" text-anchor="middle">12</text>
+    <text x="69" y="280" font-family="Inter, sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Total Jobs</text>
+
+    <rect x="133" y="232" width="107" height="72" rx="12" fill="#FFFFFF" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))"/>
+    <text x="186" y="262" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#10B981" text-anchor="middle">3</text>
+    <text x="186" y="280" font-family="Inter, sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Applied</text>
+
+    <rect x="250" y="232" width="107" height="72" rx="12" fill="#FFFFFF" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))"/>
+    <text x="303" y="262" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#F59E0B" text-anchor="middle">1</text>
+    <text x="303" y="280" font-family="Inter, sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Successful</text>
+  </g>
+
+  <!-- 1v1 Coaching Card -->
+  <g id="Coaching-CTA">
+    <rect x="16" y="320" width="343" height="90" rx="12" fill="#FFFFFF" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))"/>
+    <rect x="32" y="340" width="36" height="36" rx="8" fill="rgba(124,58,237,0.1)"/>
+    <text x="50" y="363" font-family="Inter, sans-serif" font-size="16" fill="#7C3AED" text-anchor="middle">M</text>
+    <text x="80" y="354" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#1F2937">1v1 Coaching</text>
+    <text x="80" y="372" font-family="Inter, sans-serif" font-size="11" fill="#6B7280">Connect with professionals for guidance</text>
+    <rect x="274" y="342" width="72" height="32" rx="8" fill="#7C3AED"/>
+    <text x="310" y="363" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF" text-anchor="middle">Get Started</text>
+    <text x="80" y="396" font-family="Inter, sans-serif" font-size="10" fill="#9CA3AF">500+ Mentors   |   Flexible   |   Global</text>
+  </g>
+
+  <!-- Active Requests Section -->
+  <g id="Active-Requests">
+    <text x="16" y="440" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#1F2937">Active Requests</text>
+
+    <!-- Referral Card 1 -->
+    <rect x="16" y="456" width="343" height="80" rx="12" fill="#FFFFFF" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.05))"/>
+    <text x="32" y="480" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#1F2937">Software Engineer</text>
+    <text x="32" y="498" font-family="Inter, sans-serif" font-size="12" fill="#7C3AED">Google</text>
+    <text x="32" y="516" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Bangalore</text>
+    <rect x="280" y="472" width="60" height="22" rx="11" fill="rgba(245,158,11,0.1)"/>
+    <text x="310" y="487" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#F59E0B" text-anchor="middle">Pending</text>
+    <text x="320" y="520" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#10B981" text-anchor="end">Rs.499</text>
+
+    <!-- Referral Card 2 -->
+    <rect x="16" y="548" width="343" height="80" rx="12" fill="#FFFFFF" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.05))"/>
+    <text x="32" y="572" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#1F2937">Product Manager</text>
+    <text x="32" y="590" font-family="Inter, sans-serif" font-size="12" fill="#7C3AED">Microsoft</text>
+    <text x="32" y="608" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Hyderabad</text>
+    <rect x="276" y="564" width="66" height="22" rx="11" fill="rgba(124,58,237,0.1)"/>
+    <text x="309" y="579" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#7C3AED" text-anchor="middle">Assigned</text>
+    <text x="320" y="612" font-family="Inter, sans-serif" font-size="12" font-weight="600" fill="#10B981" text-anchor="end">Rs.499</text>
+  </g>
+
+  <!-- Past Requests -->
+  <g id="Past-Requests">
+    <text x="16" y="660" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#1F2937">Past Requests</text>
+    <rect x="16" y="674" width="343" height="50" rx="12" fill="#FFFFFF" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.05))"/>
+    <text x="187" y="705" font-family="Inter, sans-serif" font-size="13" fill="#9CA3AF" text-anchor="middle">No past requests yet.</text>
+  </g>
+
+  <!-- Bottom Navigation -->
+  <g id="Bottom-Nav">
+    <rect x="0" y="740" width="375" height="72" fill="#FFFFFF" filter="drop-shadow(0 -1px 3px rgba(0,0,0,0.06))"/>
+    <!-- Policy Links -->
+    <text x="187" y="756" font-family="Inter, sans-serif" font-size="9" fill="#9CA3AF" text-anchor="middle" text-decoration="underline">Terms   Privacy   Refund</text>
+
+    <!-- Nav Items -->
+    <g id="Nav-Dashboard">
+      <rect x="48" y="766" width="20" height="16" rx="2" fill="none" stroke="#7C3AED" stroke-width="1.5"/>
+      <text x="58" y="798" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#7C3AED" text-anchor="middle">Dashboard</text>
+    </g>
+    <g id="Nav-Search">
+      <circle cx="187" cy="774" r="8" fill="none" stroke="#9CA3AF" stroke-width="1.5"/>
+      <text x="187" y="798" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#9CA3AF" text-anchor="middle">Search</text>
+    </g>
+    <g id="Nav-Profile">
+      <circle cx="316" cy="774" r="8" fill="none" stroke="#9CA3AF" stroke-width="1.5"/>
+      <text x="316" y="798" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#9CA3AF" text-anchor="middle">Profile</text>
+    </g>
+  </g>
+</svg>

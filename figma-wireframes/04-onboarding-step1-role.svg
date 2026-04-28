@@ -1,0 +1,63 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="812" viewBox="0 0 375 812">
+  <rect id="Background" width="375" height="812" fill="#F9FAFB" rx="20"/>
+
+  <!-- Progress Bar -->
+  <g id="Progress-Bar">
+    <text x="24" y="56" font-family="Inter, sans-serif" font-size="12" fill="#6B7280">Step 1 of 2</text>
+    <text x="310" y="56" font-family="Inter, sans-serif" font-size="12" fill="#6B7280">50% Complete</text>
+    <rect x="24" y="66" width="327" height="8" rx="4" fill="#E5E7EB"/>
+    <rect x="24" y="66" width="163" height="8" rx="4" fill="url(#progress)"/>
+    <defs>
+      <linearGradient id="progress" x1="0" y1="0" x2="1" y2="0">
+        <stop offset="0%" stop-color="#7C3AED"/>
+        <stop offset="100%" stop-color="#10B981"/>
+      </linearGradient>
+    </defs>
+  </g>
+
+  <!-- Card -->
+  <g id="Role-Selection-Card">
+    <rect x="20" y="100" width="335" height="520" rx="20" fill="#FFFFFF" filter="drop-shadow(0 4px 20px rgba(0,0,0,0.08))"/>
+
+    <!-- Icon -->
+    <rect x="147" y="125" width="56" height="56" rx="16" fill="url(#progress)"/>
+    <text x="175" y="160" font-family="Inter, sans-serif" font-size="24" fill="#FFFFFF" text-anchor="middle">U</text>
+
+    <!-- Title -->
+    <text x="187" y="210" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#7C3AED" text-anchor="middle">What brings you to Job Thrive?</text>
+    <text x="187" y="232" font-family="Inter, sans-serif" font-size="13" fill="#6B7280" text-anchor="middle">Choose your primary goal on our platform</text>
+
+    <!-- Option 1: Seeker -->
+    <g id="Option-Seeker">
+      <rect x="40" y="260" width="295" height="80" rx="12" fill="#7C3AED" stroke="none"/>
+      <text x="80" y="290" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#FFFFFF">I'm looking for a job</text>
+      <text x="80" y="310" font-family="Inter, sans-serif" font-size="11" fill="rgba(255,255,255,0.9)">Get referrals from employees at top companies</text>
+      <text x="80" y="328" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="rgba(255,255,255,0.8)">Referral fees: Rs.499</text>
+    </g>
+
+    <!-- Option 2: Referrer -->
+    <g id="Option-Referrer">
+      <rect x="40" y="355" width="295" height="80" rx="12" fill="none" stroke="#E5E7EB" stroke-width="2"/>
+      <text x="80" y="385" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#1F2937">I want to provide referrals</text>
+      <text x="80" y="405" font-family="Inter, sans-serif" font-size="11" fill="#6B7280">Earn money by referring candidates</text>
+      <text x="80" y="423" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#6B7280">Earn Rs.2000+ monthly</text>
+    </g>
+
+    <!-- Option 3: Both -->
+    <g id="Option-Both">
+      <rect x="40" y="450" width="295" height="80" rx="12" fill="none" stroke="#E5E7EB" stroke-width="2"/>
+      <text x="80" y="480" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#1F2937">Both - Job seeker &amp; Referrer</text>
+      <text x="80" y="500" font-family="Inter, sans-serif" font-size="11" fill="#6B7280">Looking for jobs while helping others</text>
+      <text x="80" y="518" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#6B7280">Best of both worlds</text>
+    </g>
+  </g>
+
+  <!-- Navigation -->
+  <g id="Nav-Buttons">
+    <rect x="24" y="650" width="80" height="40" rx="8" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="64" y="675" font-family="Inter, sans-serif" font-size="13" fill="#6B7280" text-anchor="middle">&lt; Back</text>
+
+    <rect x="260" y="650" width="90" height="40" rx="8" fill="#7C3AED"/>
+    <text x="305" y="675" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#FFFFFF" text-anchor="middle">Next &gt;</text>
+  </g>
+</svg>

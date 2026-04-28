@@ -1,0 +1,324 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="2400" height="1400" viewBox="0 0 2400 1400">
+  <rect width="2400" height="1400" fill="#FAFAFA"/>
+
+  <defs>
+    <marker id="arrow" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#7C3AED"/>
+    </marker>
+    <marker id="arrow-green" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#10B981"/>
+    </marker>
+    <marker id="arrow-orange" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#F59E0B"/>
+    </marker>
+    <marker id="arrow-gray" markerWidth="8" markerHeight="8" refX="8" refY="4" orient="auto">
+      <path d="M0,0 L8,4 L0,8 Z" fill="#9CA3AF"/>
+    </marker>
+  </defs>
+
+  <!-- Title -->
+  <text x="1200" y="50" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#1F2937" text-anchor="middle">Job Thrive - Complete UI/UX Flow Map</text>
+  <text x="1200" y="75" font-family="Inter, sans-serif" font-size="14" fill="#6B7280" text-anchor="middle">All screens and navigation paths</text>
+
+  <!-- Legend -->
+  <g id="Legend" transform="translate(50, 90)">
+    <rect width="400" height="30" rx="6" fill="#F3F4F6"/>
+    <line x1="20" y1="15" x2="50" y2="15" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow)"/>
+    <text x="60" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Primary Flow</text>
+    <line x1="130" y1="15" x2="160" y2="15" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
+    <text x="170" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Seeker Flow</text>
+    <line x1="240" y1="15" x2="270" y2="15" stroke="#F59E0B" stroke-width="2" marker-end="url(#arrow-orange)"/>
+    <text x="280" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Referrer Flow</text>
+    <line x1="350" y1="15" x2="380" y2="15" stroke="#9CA3AF" stroke-width="2" stroke-dasharray="4 3" marker-end="url(#arrow-gray)"/>
+    <text x="390" y="20" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Optional</text>
+  </g>
+
+  <!-- ============ ROW 1: AUTH FLOW ============ -->
+
+  <!-- Screen: Onboarding Splash -->
+  <g id="Screen-Onboarding-Splash" transform="translate(100, 160)">
+    <rect width="200" height="100" rx="12" fill="#7C3AED" filter="drop-shadow(0 2px 8px rgba(124,58,237,0.3))"/>
+    <text x="100" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">01 - Onboarding Splash</text>
+    <text x="100" y="50" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">/login (initial)</text>
+    <text x="100" y="68" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">2 slides: Welcome + Marketplace</text>
+    <text x="100" y="82" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">PUBLIC</text>
+  </g>
+
+  <!-- Arrow: Splash -> Login -->
+  <line x1="300" y1="210" x2="380" y2="210" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="340" y="200" font-family="Inter, sans-serif" font-size="9" fill="#7C3AED" text-anchor="middle">Get Started</text>
+
+  <!-- Screen: Login -->
+  <g id="Screen-Login" transform="translate(380, 160)">
+    <rect width="200" height="100" rx="12" fill="#7C3AED" filter="drop-shadow(0 2px 8px rgba(124,58,237,0.3))"/>
+    <text x="100" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">02 - Login</text>
+    <text x="100" y="50" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">/login</text>
+    <text x="100" y="68" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Google Sign-in via Cognito</text>
+    <text x="100" y="82" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">PUBLIC</text>
+  </g>
+
+  <!-- Arrow: Login -> Post-Login -->
+  <line x1="580" y1="210" x2="660" y2="210" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="620" y="200" font-family="Inter, sans-serif" font-size="9" fill="#7C3AED" text-anchor="middle">OAuth</text>
+
+  <!-- Screen: Post-Login Callback -->
+  <g id="Screen-PostLogin" transform="translate(660, 160)">
+    <rect width="200" height="100" rx="12" fill="#6D28D9" filter="drop-shadow(0 2px 8px rgba(109,40,217,0.3))"/>
+    <text x="100" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">03 - Post-Login Callback</text>
+    <text x="100" y="50" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">/post-login</text>
+    <text x="100" y="68" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Token exchange + redirect</text>
+    <text x="100" y="82" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">PUBLIC (transient)</text>
+  </g>
+
+  <!-- Arrow: Post-Login -> Onboarding (new user) -->
+  <path d="M 860 230 Q 900 300 860 340" fill="none" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="910" y="290" font-family="Inter, sans-serif" font-size="9" fill="#7C3AED">New user</text>
+
+  <!-- Arrow: Post-Login -> Dashboard (returning) -->
+  <line x1="860" y1="210" x2="1100" y2="210" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 3"/>
+  <text x="980" y="200" font-family="Inter, sans-serif" font-size="9" fill="#7C3AED" text-anchor="middle">Returning user</text>
+
+  <!-- ============ ROW 2: ONBOARDING ============ -->
+
+  <!-- Screen: Onboarding Step 1 -->
+  <g id="Screen-Onboarding-Role" transform="translate(660, 340)">
+    <rect width="200" height="100" rx="12" fill="#8B5CF6" filter="drop-shadow(0 2px 8px rgba(139,92,246,0.3))"/>
+    <text x="100" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">04 - Onboarding</text>
+    <text x="100" y="50" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">/onboarding</text>
+    <text x="100" y="68" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Role + Profile Setup</text>
+    <text x="100" y="82" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">2-4 steps based on role</text>
+  </g>
+
+  <!-- Arrow: Onboarding -> Dashboard -->
+  <line x1="860" y1="390" x2="1100" y2="350" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="980" y="355" font-family="Inter, sans-serif" font-size="9" fill="#7C3AED" text-anchor="middle">Complete Setup</text>
+
+  <!-- ============ ROW 1-2: DASHBOARD (CENTER) ============ -->
+
+  <!-- Screen: Dashboard -->
+  <g id="Screen-Dashboard" transform="translate(1100, 280)">
+    <rect width="240" height="120" rx="12" fill="#1F2937" filter="drop-shadow(0 4px 12px rgba(0,0,0,0.2))"/>
+    <rect x="4" y="4" width="232" height="112" rx="10" fill="#1F2937" stroke="#7C3AED" stroke-width="2"/>
+    <text x="120" y="35" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">05 - DASHBOARD</text>
+    <text x="120" y="55" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">/dashboard (main hub)</text>
+    <text x="120" y="75" font-family="Inter, sans-serif" font-size="10" fill="#10B981" text-anchor="middle">Seeker View  |  Referrer View</text>
+    <text x="120" y="95" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.6)" text-anchor="middle">Role toggle, stats, referrals, coaching CTA</text>
+  </g>
+
+  <!-- ============ SEEKER FLOW (RIGHT-TOP) ============ -->
+
+  <!-- Arrow: Dashboard -> Job Search -->
+  <line x1="1340" y1="310" x2="1480" y2="210" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="1420" y="245" font-family="Inter, sans-serif" font-size="9" fill="#10B981">Find Jobs</text>
+
+  <!-- Screen: Job Search -->
+  <g id="Screen-JobSearch" transform="translate(1480, 160)">
+    <rect width="200" height="100" rx="12" fill="#10B981" filter="drop-shadow(0 2px 8px rgba(16,185,129,0.3))"/>
+    <text x="100" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">06 - Job Search</text>
+    <text x="100" y="50" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">/job-search</text>
+    <text x="100" y="68" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Search, filter, paginate jobs</text>
+    <text x="100" y="82" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">SEEKER AUTH</text>
+  </g>
+
+  <!-- Arrow: Job Search -> Referral Request -->
+  <line x1="1680" y1="210" x2="1760" y2="210" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
+  <text x="1720" y="200" font-family="Inter, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">Apply</text>
+
+  <!-- Screen: Referral Request -->
+  <g id="Screen-ReferralRequest" transform="translate(1760, 160)">
+    <rect width="220" height="100" rx="12" fill="#059669" filter="drop-shadow(0 2px 8px rgba(5,150,105,0.3))"/>
+    <text x="110" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">07 - Referral Request</text>
+    <text x="110" y="50" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">/referral-request/:jobId</text>
+    <text x="110" y="68" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Resume upload (S3) + Pay Rs.499</text>
+    <text x="110" y="82" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Cashfree payment</text>
+  </g>
+
+  <!-- Arrow: Referral Request -> Success Modal -->
+  <line x1="1870" y1="260" x2="1870" y2="310" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)"/>
+
+  <!-- Screen: Payment Success Modal -->
+  <g id="Screen-PaymentSuccess" transform="translate(1760, 310)">
+    <rect width="220" height="70" rx="12" fill="#FFFFFF" stroke="#10B981" stroke-width="2" filter="drop-shadow(0 2px 8px rgba(16,185,129,0.2))"/>
+    <text x="110" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#10B981" text-anchor="middle">Payment Success Modal</text>
+    <text x="110" y="50" font-family="Inter, sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">Celebration -> Continue -> Dashboard</text>
+  </g>
+
+  <!-- Arrow: Success -> Dashboard -->
+  <path d="M 1760 345 Q 1500 450 1340 380" fill="none" stroke="#10B981" stroke-width="2" marker-end="url(#arrow-green)" stroke-dasharray="6 3"/>
+  <text x="1540" y="430" font-family="Inter, sans-serif" font-size="9" fill="#10B981" text-anchor="middle">Continue</text>
+
+  <!-- ============ REFERRER FLOW (RIGHT-BOTTOM) ============ -->
+
+  <!-- Arrow: Dashboard -> Referrer actions -->
+  <line x1="1340" y1="370" x2="1480" y2="470" stroke="#F59E0B" stroke-width="2" marker-end="url(#arrow-orange)"/>
+  <text x="1420" y="440" font-family="Inter, sans-serif" font-size="9" fill="#F59E0B">Referrer view</text>
+
+  <!-- Screen: Referrer Actions -->
+  <g id="Screen-ReferrerActions" transform="translate(1480, 440)">
+    <rect width="240" height="100" rx="12" fill="#F59E0B" filter="drop-shadow(0 2px 8px rgba(245,158,11,0.3))"/>
+    <text x="120" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">Referrer Dashboard View</text>
+    <text x="120" y="50" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">/dashboard (referrer toggle)</text>
+    <text x="120" y="68" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Assigned referrals, earnings</text>
+    <text x="120" y="82" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Upload Proof | Decline | View Details</text>
+  </g>
+
+  <!-- ============ COACHING FLOW (BOTTOM-CENTER) ============ -->
+
+  <!-- Arrow: Dashboard -> Coaching -->
+  <line x1="1220" y1="400" x2="1220" y2="520" stroke="#7C3AED" stroke-width="2" marker-end="url(#arrow)"/>
+  <text x="1250" y="465" font-family="Inter, sans-serif" font-size="9" fill="#7C3AED">Get Started</text>
+
+  <!-- Screen: Coaching Dashboard -->
+  <g id="Screen-Coaching" transform="translate(1080, 520)">
+    <rect width="280" height="120" rx="12" fill="#6D28D9" filter="drop-shadow(0 2px 8px rgba(109,40,217,0.3))"/>
+    <text x="140" y="30" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#FFFFFF" text-anchor="middle">08 - Coaching Dashboard</text>
+    <text x="140" y="50" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">/coaching</text>
+    <text x="140" y="70" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Browse Mentors | My Sessions</text>
+    <text x="140" y="86" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Search, filter, book sessions (Rs.499)</text>
+    <text x="140" y="102" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Accept/Decline/Cancel requests</text>
+  </g>
+
+  <!-- ============ PROFILE FLOW (LEFT-BOTTOM) ============ -->
+
+  <!-- Arrow: Dashboard -> Profile -->
+  <line x1="1100" y1="360" x2="800" y2="520" stroke="#9CA3AF" stroke-width="2" marker-end="url(#arrow-gray)"/>
+  <text x="930" y="455" font-family="Inter, sans-serif" font-size="9" fill="#9CA3AF">Profile nav</text>
+
+  <!-- Screen: Profile -->
+  <g id="Screen-Profile" transform="translate(620, 520)">
+    <rect width="200" height="100" rx="12" fill="#4B5563" filter="drop-shadow(0 2px 8px rgba(75,85,99,0.3))"/>
+    <text x="100" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">09 - Profile</text>
+    <text x="100" y="50" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">/profile</text>
+    <text x="100" y="68" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Avatar, info, role badge</text>
+    <text x="100" y="82" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Settings + Sign Out</text>
+  </g>
+
+  <!-- Arrow: Profile -> Profile Settings -->
+  <line x1="720" y1="620" x2="720" y2="680" stroke="#9CA3AF" stroke-width="2" marker-end="url(#arrow-gray)"/>
+  <text x="750" y="655" font-family="Inter, sans-serif" font-size="9" fill="#9CA3AF">Settings</text>
+
+  <!-- Screen: Profile Settings -->
+  <g id="Screen-ProfileSettings" transform="translate(620, 680)">
+    <rect width="200" height="100" rx="12" fill="#374151" filter="drop-shadow(0 2px 8px rgba(55,65,81,0.3))"/>
+    <text x="100" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#FFFFFF" text-anchor="middle">10 - Profile Settings</text>
+    <text x="100" y="50" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle">/profile-settings</text>
+    <text x="100" y="68" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">Edit role, work info, skills</text>
+    <text x="100" y="82" font-family="Inter, sans-serif" font-size="9" fill="rgba(255,255,255,0.7)" text-anchor="middle">POST /api/user/profile</text>
+  </g>
+
+  <!-- Arrow: Profile -> Sign Out -> Login -->
+  <path d="M 620 570 Q 400 570 400 280" fill="none" stroke="#EF4444" stroke-width="2" marker-end="url(#arrow)" stroke-dasharray="6 3"/>
+  <text x="460" y="450" font-family="Inter, sans-serif" font-size="9" fill="#EF4444">Sign Out</text>
+
+  <!-- ============ STATIC PAGES (BOTTOM) ============ -->
+
+  <!-- Screen: Analytics (stub) -->
+  <g id="Screen-Analytics" transform="translate(100, 520)">
+    <rect width="160" height="80" rx="12" fill="#E5E7EB" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="80" y="30" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#6B7280" text-anchor="middle">11 - Analytics</text>
+    <text x="80" y="48" font-family="Inter, sans-serif" font-size="10" fill="#9CA3AF" text-anchor="middle">/analytics</text>
+    <text x="80" y="66" font-family="Inter, sans-serif" font-size="9" fill="#9CA3AF" text-anchor="middle">STUB - Empty body</text>
+  </g>
+
+  <!-- Static Pages Group -->
+  <g id="Static-Pages" transform="translate(100, 680)">
+    <rect width="420" height="80" rx="12" fill="#F3F4F6" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="210" y="25" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#6B7280" text-anchor="middle">Static Legal Pages (PUBLIC)</text>
+
+    <rect x="16" y="40" width="120" height="28" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="76" y="58" font-family="Inter, sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">12 - Terms /terms</text>
+
+    <rect x="150" y="40" width="120" height="28" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="210" y="58" font-family="Inter, sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">13 - Privacy /privacy</text>
+
+    <rect x="284" y="40" width="120" height="28" rx="8" fill="#FFFFFF" stroke="#D1D5DB" stroke-width="1"/>
+    <text x="344" y="58" font-family="Inter, sans-serif" font-size="10" fill="#6B7280" text-anchor="middle">14 - Refund /refund</text>
+  </g>
+
+  <!-- ============ STATUS FLOW DIAGRAMS ============ -->
+
+  <!-- Referral Status Flow -->
+  <g id="Referral-Status-Flow" transform="translate(1500, 620)">
+    <rect width="460" height="140" rx="12" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="230" y="25" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#1F2937" text-anchor="middle">Referral Status Lifecycle</text>
+
+    <rect x="20" y="50" width="70" height="28" rx="6" fill="#FEF3C7"/>
+    <text x="55" y="68" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#92400E" text-anchor="middle">pending</text>
+
+    <line x1="90" y1="64" x2="120" y2="64" stroke="#7C3AED" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+    <rect x="120" y="50" width="70" height="28" rx="6" fill="#EDE9FE"/>
+    <text x="155" y="68" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#5B21B6" text-anchor="middle">assigned</text>
+
+    <line x1="190" y1="64" x2="220" y2="64" stroke="#7C3AED" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+    <rect x="220" y="50" width="90" height="28" rx="6" fill="#DBEAFE"/>
+    <text x="265" y="68" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#1E40AF" text-anchor="middle">verification</text>
+
+    <line x1="310" y1="64" x2="340" y2="64" stroke="#7C3AED" stroke-width="1.5" marker-end="url(#arrow)"/>
+
+    <rect x="340" y="50" width="80" height="28" rx="6" fill="#D1FAE5"/>
+    <text x="380" y="68" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#065F46" text-anchor="middle">completed</text>
+
+    <!-- Branch: expired -->
+    <line x1="265" y1="78" x2="265" y2="105" stroke="#EF4444" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <rect x="230" y="105" width="70" height="24" rx="6" fill="#FEE2E2"/>
+    <text x="265" y="121" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#991B1B" text-anchor="middle">expired</text>
+
+    <!-- Branch: cancelled -->
+    <line x1="155" y1="78" x2="155" y2="105" stroke="#EF4444" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <rect x="120" y="105" width="70" height="24" rx="6" fill="#FEE2E2"/>
+    <text x="155" y="121" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#991B1B" text-anchor="middle">cancelled</text>
+  </g>
+
+  <!-- Coaching Status Flow -->
+  <g id="Coaching-Status-Flow" transform="translate(1500, 780)">
+    <rect width="460" height="100" rx="12" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="230" y="25" font-family="Inter, sans-serif" font-size="13" font-weight="700" fill="#1F2937" text-anchor="middle">Coaching Request Lifecycle</text>
+
+    <rect x="20" y="45" width="70" height="28" rx="6" fill="#FEF3C7"/>
+    <text x="55" y="63" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#92400E" text-anchor="middle">pending</text>
+
+    <line x1="90" y1="59" x2="130" y2="48" stroke="#10B981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+    <rect x="130" y="35" width="70" height="28" rx="6" fill="#D1FAE5"/>
+    <text x="165" y="53" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#065F46" text-anchor="middle">accepted</text>
+
+    <line x1="200" y1="49" x2="240" y2="49" stroke="#10B981" stroke-width="1.5" marker-end="url(#arrow-green)"/>
+    <rect x="240" y="35" width="80" height="28" rx="6" fill="#D1FAE5"/>
+    <text x="280" y="53" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#065F46" text-anchor="middle">completed</text>
+
+    <line x1="90" y1="59" x2="130" y2="72" stroke="#EF4444" stroke-width="1.5" marker-end="url(#arrow)"/>
+    <rect x="130" y="65" width="70" height="24" rx="6" fill="#FEE2E2"/>
+    <text x="165" y="81" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#991B1B" text-anchor="middle">declined</text>
+
+    <rect x="240" y="65" width="70" height="24" rx="6" fill="#FEE2E2"/>
+    <text x="275" y="81" font-family="Inter, sans-serif" font-size="9" font-weight="600" fill="#991B1B" text-anchor="middle">cancelled</text>
+  </g>
+
+  <!-- API Endpoints Summary -->
+  <g id="API-Summary" transform="translate(100, 850)">
+    <rect width="800" height="200" rx="12" fill="#FFFFFF" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="400" y="25" font-family="Inter, sans-serif" font-size="14" font-weight="700" fill="#1F2937" text-anchor="middle">Key API Endpoints</text>
+
+    <text x="30" y="52" font-family="Inter, mono" font-size="10" fill="#7C3AED">AUTH</text>
+    <text x="100" y="52" font-family="Inter, mono" font-size="9" fill="#6B7280">POST /api/auth/cognito-callback  |  GET /api/auth/validate</text>
+
+    <text x="30" y="72" font-family="Inter, mono" font-size="10" fill="#10B981">JOBS</text>
+    <text x="100" y="72" font-family="Inter, mono" font-size="9" fill="#6B7280">GET /api/jobs?search&amp;page  |  GET /api/jobs/:id</text>
+
+    <text x="30" y="92" font-family="Inter, mono" font-size="10" fill="#F59E0B">REFERRALS</text>
+    <text x="100" y="92" font-family="Inter, mono" font-size="9" fill="#6B7280">POST /api/referrals  |  GET /api/referrals/seeker/:id  |  GET /api/referrals/referrer/:id</text>
+
+    <text x="30" y="112" font-family="Inter, mono" font-size="10" fill="#F59E0B">ASSIGNMENTS</text>
+    <text x="100" y="112" font-family="Inter, mono" font-size="9" fill="#6B7280">PUT /api/assignments/:id (proof upload, accept, reject)</text>
+
+    <text x="30" y="132" font-family="Inter, mono" font-size="10" fill="#6D28D9">COACHING</text>
+    <text x="100" y="132" font-family="Inter, mono" font-size="9" fill="#6B7280">GET /api/mentors  |  POST /api/coaching/create-request  |  POST /api/coaching/get-requests  |  POST /api/coaching/update-request/:id</text>
+
+    <text x="30" y="152" font-family="Inter, mono" font-size="10" fill="#4B5563">PROFILE</text>
+    <text x="100" y="152" font-family="Inter, mono" font-size="9" fill="#6B7280">POST /api/user/profile  |  GET /api/seeker-metrics/:id  |  GET /api/referrer-metrics/:id</text>
+
+    <text x="30" y="172" font-family="Inter, mono" font-size="10" fill="#4B5563">UPLOAD</text>
+    <text x="100" y="172" font-family="Inter, mono" font-size="9" fill="#6B7280">POST /api/upload/resume-presigned-url  |  POST /api/upload/proof-presigned-url</text>
+  </g>
+</svg>

@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="812" viewBox="0 0 375 812">
+  <rect id="Background" width="375" height="812" fill="#F9FAFB" rx="20"/>
+
+  <!-- Header -->
+  <g id="Header">
+    <rect x="0" y="0" width="375" height="52" fill="#FFFFFF" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.06))"/>
+    <text x="24" y="33" font-family="Inter, sans-serif" font-size="13" fill="#6B7280">&lt; Back</text>
+    <text x="187" y="33" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">Profile Settings</text>
+    <text x="348" y="33" font-family="Inter, sans-serif" font-size="16" fill="#6B7280" text-anchor="end">E</text>
+  </g>
+
+  <!-- Role Card -->
+  <g id="Role-Card">
+    <rect x="16" y="68" width="343" height="80" rx="16" fill="#FFFFFF" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))"/>
+    <text x="32" y="96" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#7C3AED">Your Role</text>
+    <rect x="32" y="106" width="88" height="26" rx="13" fill="rgba(124,58,237,0.08)" stroke="#7C3AED" stroke-width="1"/>
+    <text x="76" y="124" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#7C3AED" text-anchor="middle">Seeker &amp; Referrer</text>
+  </g>
+
+  <!-- Work Information Card -->
+  <g id="Work-Info-Card">
+    <rect x="16" y="164" width="343" height="220" rx="16" fill="#FFFFFF" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))"/>
+    <text x="56" y="196" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#7C3AED">Work Information</text>
+
+    <text x="32" y="226" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#1F2937">Company</text>
+    <text x="32" y="242" font-family="Inter, sans-serif" font-size="13" fill="#6B7280">TCS</text>
+
+    <text x="32" y="268" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#1F2937">Position</text>
+    <text x="32" y="284" font-family="Inter, sans-serif" font-size="13" fill="#6B7280">Software Engineer</text>
+
+    <text x="32" y="310" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#1F2937">Department</text>
+    <text x="32" y="326" font-family="Inter, sans-serif" font-size="13" fill="#6B7280">Engineering</text>
+
+    <text x="32" y="352" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#1F2937">Work Experience</text>
+    <text x="32" y="368" font-family="Inter, sans-serif" font-size="13" fill="#6B7280">3-5 years</text>
+  </g>
+
+  <!-- Job Search Profile Card -->
+  <g id="Search-Profile-Card">
+    <rect x="16" y="400" width="343" height="240" rx="16" fill="#FFFFFF" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))"/>
+    <text x="56" y="432" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#7C3AED">Job Search Profile</text>
+
+    <text x="32" y="460" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#1F2937">Education</text>
+    <text x="32" y="476" font-family="Inter, sans-serif" font-size="13" fill="#6B7280">Bachelor's - Computer Science</text>
+
+    <text x="32" y="502" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#1F2937">Target Domain</text>
+    <text x="32" y="518" font-family="Inter, sans-serif" font-size="13" fill="#6B7280">Software Engineering</text>
+
+    <text x="32" y="544" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#1F2937">Experience Level</text>
+    <text x="32" y="560" font-family="Inter, sans-serif" font-size="13" fill="#6B7280">Mid Level (2-5 years)</text>
+
+    <text x="32" y="586" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#1F2937">Skills</text>
+    <!-- Skill Tags -->
+    <rect x="32" y="594" width="52" height="22" rx="11" fill="rgba(124,58,237,0.1)"/>
+    <text x="58" y="609" font-family="Inter, sans-serif" font-size="10" fill="#7C3AED" text-anchor="middle">React</text>
+    <rect x="92" y="594" width="58" height="22" rx="11" fill="rgba(124,58,237,0.1)"/>
+    <text x="121" y="609" font-family="Inter, sans-serif" font-size="10" fill="#7C3AED" text-anchor="middle">Python</text>
+    <rect x="158" y="594" width="44" height="22" rx="11" fill="rgba(124,58,237,0.1)"/>
+    <text x="180" y="609" font-family="Inter, sans-serif" font-size="10" fill="#7C3AED" text-anchor="middle">AWS</text>
+  </g>
+</svg>

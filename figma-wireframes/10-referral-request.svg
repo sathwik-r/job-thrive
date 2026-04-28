@@ -1,0 +1,82 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="812" viewBox="0 0 375 812">
+  <rect id="Background" width="375" height="812" fill="#F9FAFB" rx="20"/>
+  <defs>
+    <linearGradient id="purple" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#8B5CF6"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Back + Title -->
+  <g id="Header">
+    <text x="16" y="36" font-family="Inter, sans-serif" font-size="13" fill="#6B7280">&lt; Back to Jobs</text>
+    <text x="16" y="66" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#1F2937">Apply for Referral</text>
+  </g>
+
+  <!-- Job Info Card -->
+  <g id="Job-Info-Card">
+    <rect x="16" y="84" width="343" height="120" rx="16" fill="url(#purple)"/>
+    <text x="32" y="112" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#FFFFFF">Senior Software Engineer</text>
+    <text x="32" y="134" font-family="Inter, sans-serif" font-size="14" fill="rgba(255,255,255,0.9)">Google</text>
+    <text x="32" y="152" font-family="Inter, sans-serif" font-size="12" fill="rgba(255,255,255,0.75)">Bangalore, India</text>
+    <line x1="32" y1="168" x2="330" y2="168" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    <text x="32" y="190" font-family="Inter, sans-serif" font-size="13" fill="rgba(255,255,255,0.9)">Referral Fee</text>
+    <text x="330" y="190" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#FFFFFF" text-anchor="end">Rs.499</text>
+  </g>
+
+  <!-- Resume Upload Card -->
+  <g id="Resume-Upload">
+    <rect x="16" y="220" width="343" height="210" rx="16" fill="#FFFFFF" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))"/>
+    <text x="32" y="250" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#1F2937">Upload Your Resume</text>
+
+    <!-- Drag Drop Zone -->
+    <rect x="32" y="266" width="311" height="120" rx="12" fill="none" stroke="#D1D5DB" stroke-width="2" stroke-dasharray="8 4"/>
+
+    <!-- Upload Icon -->
+    <rect x="165" y="282" width="24" height="20" rx="2" fill="none" stroke="#9CA3AF" stroke-width="1.5"/>
+    <line x1="177" y1="276" x2="177" y2="290" stroke="#9CA3AF" stroke-width="1.5"/>
+    <polyline points="171,282 177,276 183,282" fill="none" stroke="#9CA3AF" stroke-width="1.5"/>
+
+    <text x="187" y="318" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#1F2937" text-anchor="middle">Drop your resume here</text>
+    <text x="187" y="336" font-family="Inter, sans-serif" font-size="12" fill="#6B7280" text-anchor="middle">or click to browse files</text>
+
+    <rect x="147" y="348" width="80" height="28" rx="8" fill="none" stroke="#7C3AED" stroke-width="1.5"/>
+    <text x="187" y="367" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#7C3AED" text-anchor="middle">Choose File</text>
+
+    <text x="187" y="400" font-family="Inter, sans-serif" font-size="9" fill="#9CA3AF" text-anchor="middle">Supported: PDF, DOC, DOCX (Max 5MB)</text>
+
+    <!-- Uploaded State (alternative) -->
+    <rect x="32" y="414" width="311" height="0" rx="8" fill="#F0FDF4" stroke="#BBF7D0" stroke-width="1"/>
+  </g>
+
+  <!-- Payment Section -->
+  <g id="Payment-Section">
+    <rect x="16" y="446" width="343" height="270" rx="16" fill="#FFFFFF" filter="drop-shadow(0 2px 8px rgba(0,0,0,0.06))"/>
+    <text x="32" y="476" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#1F2937">Payment Details</text>
+
+    <!-- Phone Input -->
+    <text x="32" y="502" font-family="Inter, sans-serif" font-size="11" fill="#6B7280">Phone Number (required for payment)</text>
+    <rect x="32" y="510" width="311" height="38" rx="8" fill="none" stroke="#E5E7EB" stroke-width="1.5"/>
+    <text x="48" y="534" font-family="Inter, sans-serif" font-size="13" fill="#9CA3AF">Enter your 10-digit phone</text>
+
+    <!-- Fee Breakdown -->
+    <line x1="32" y1="564" x2="330" y2="564" stroke="#F3F4F6" stroke-width="1"/>
+    <text x="32" y="584" font-family="Inter, sans-serif" font-size="13" fill="#6B7280">Referral Fee</text>
+    <text x="330" y="584" font-family="Inter, sans-serif" font-size="13" font-weight="600" fill="#1F2937" text-anchor="end">Rs.499</text>
+
+    <line x1="32" y1="598" x2="330" y2="598" stroke="#F3F4F6" stroke-width="1"/>
+    <text x="32" y="620" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#1F2937">Total</text>
+    <text x="330" y="620" font-family="Inter, sans-serif" font-size="17" font-weight="700" fill="#7C3AED" text-anchor="end">Rs.499.00</text>
+
+    <!-- Pay Button -->
+    <rect x="32" y="640" width="311" height="48" rx="16" fill="#2563EB"/>
+    <text x="187" y="669" font-family="Inter, sans-serif" font-size="15" font-weight="700" fill="#FFFFFF" text-anchor="middle">Pay Securely</text>
+
+    <text x="187" y="702" font-family="Inter, sans-serif" font-size="9" fill="#9CA3AF" text-anchor="middle">Secure payment powered by Cashfree</text>
+  </g>
+
+  <!-- Footer Links -->
+  <g id="Footer">
+    <text x="187" y="740" font-family="Inter, sans-serif" font-size="9" fill="#9CA3AF" text-anchor="middle">By proceeding, you agree to our Terms, Privacy, and Refund Policy</text>
+  </g>
+</svg>

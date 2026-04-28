@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { useQuery } from '@tanstack/react-query';
 import { useLocation } from 'wouter';
-import { Search, BarChart3, User, Calendar, MapPin, Users, MessageSquare } from 'lucide-react';
+import { Search, Home, User, Calendar, MapPin, Users, MessageSquare } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import RoleToggle from '@/components/role-toggle';
@@ -13,7 +13,22 @@ import { Badge } from '@/components/ui/badge';
 import { queryClient, apiRequest } from '@/lib/queryClient';
 import { useToast } from '@/hooks/use-toast';
 import Footer from '@/components/footer';
+import Logo from '@/components/logo';
+import { motion, AnimatePresence } from 'framer-motion';
 import React from 'react';
+
+const containerVariants = {
+  hidden: { opacity: 0 },
+  visible: {
+    opacity: 1,
+    transition: { staggerChildren: 0.08, delayChildren: 0.1 },
+  },
+};
+
+const itemVariants = {
+  hidden: { opacity: 0, y: 20 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.4, ease: 'easeOut' } },
+};
 
 export default function DashboardPage() {
   const { user, signOut } = useAuth();
@@ -45,13 +60,13 @@ export default function DashboardPage() {
     queryKey: ['/api/seeker-metrics', user?.id],
     enabled: !!user && currentRole === 'seeker',
   });
-  
+
 
   const { data: referrerMetrics, isLoading: referrerMetricsLoading } = useQuery<any>({
     queryKey: ['/api/referrer-metrics', user?.id],
     enabled: !!user && currentRole === 'referrer',
   });
-  
+
 
   if (!user) {
     return null;
@@ -121,7 +136,7 @@ export default function DashboardPage() {
       setProofUploadModal({ isOpen: false, assignmentId: null });
       await queryClient.invalidateQueries({ queryKey: ['/api/referrals/referrer', user?.id] });
       await queryClient.invalidateQueries({ queryKey: ['/api/referrals/seeker', user?.id] });
-      
+
       toast({
         title: "Proof Uploaded",
         description: "Your proof has been submitted successfully.",
@@ -136,19 +151,19 @@ export default function DashboardPage() {
   };
 
 
-  const activeRequests = Array.isArray(seekerReferrals) ? seekerReferrals.filter((r: any) => 
+  const activeRequests = Array.isArray(seekerReferrals) ? seekerReferrals.filter((r: any) =>
     ['pending', 'assigned', 'verification_pending'].includes(r.referral?.status)
   ) : [];
-  
-  const pastRequests = Array.isArray(seekerReferrals) ? seekerReferrals.filter((r: any) => 
+
+  const pastRequests = Array.isArray(seekerReferrals) ? seekerReferrals.filter((r: any) =>
     ['completed', 'expired', 'cancelled'].includes(r.referral?.status)
   ) : [];
 
-  const assignedRequests = Array.isArray(referreRequest) ? referreRequest.filter((r: any) => 
+  const assignedRequests = Array.isArray(referreRequest) ? referreRequest.filter((r: any) =>
     r.referral?.status === 'assigned' || r.referral?.status === 'verification_pending'
   ) : [];
-  
-  const completedRequests = Array.isArray(referreRequest) ? referreRequest.filter((r: any) => 
+
+  const completedRequests = Array.isArray(referreRequest) ? referreRequest.filter((r: any) =>
     r.referral?.status === 'completed'
   ) : [];
 
@@ -157,23 +172,17 @@ export default function DashboardPage() {
   const totalSpent = parseFloat(referrerMetrics?.totalSpent ?? '0');
 
   return (
-    <div className="min-h-screen bg-gray-50">
+    <div className="min-h-screen bg-gradient-to-b from-gray-50 to-white">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-100 px-6 py-4 sticky top-0 z-30">
-        <div className="flex items-center justify-between">
+      <motion.header
+        initial={{ opacity: 0, y: -20 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ duration: 0.4 }}
+        className="glassmorphism sticky top-0 z-30 px-6 py-3"
+      >
+        <div className="flex items-center justify-between max-w-2xl mx-auto">
           {/* Logo */}
-          <div className="flex items-center space-x-3">
-            <div className="w-10 h-10 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--purple-light)] rounded-xl flex items-center justify-center">
-              <img
-                src="https://job-thrive.s3.ap-south-1.amazonaws.com/assets/job-thrive-logo.png"
-                alt="Job Thrive"
-                className="w-full h-full object-cover"
-              />
-            </div>
-            <span className="text-xl font-bold text-[var(--dark-gray)]">
-              Job Thrive
-            </span>
-          </div>
+          <Logo showText={true} size={32} />
 
           {/* Role Toggle */}
           <RoleToggle
@@ -182,392 +191,415 @@ export default function DashboardPage() {
           />
 
           {/* Profile */}
-          <div className="flex items-center">
-            <div
-              className="w-8 h-8 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] rounded-full flex items-center justify-center cursor-pointer hover:scale-110 transition-transform duration-200"
-              onClick={() => setLocation('/profile')}
-            >
-              <img
-                src={user.photoUrl || ''}
-                alt="Profile"
-                className="w-8 h-8 rounded-full"
-              />
-            </div>
+          <div
+            className="w-10 h-10 rounded-full ring-2 ring-purple-200 ring-offset-2 cursor-pointer hover:scale-110 transition-transform duration-200 overflow-hidden"
+            onClick={() => setLocation('/profile')}
+          >
+            <img
+              src={user.photoUrl || ''}
+              alt="Profile"
+              className="w-full h-full object-cover rounded-full"
+            />
           </div>
         </div>
-      </header>
+      </motion.header>
 
       {/* Main Content */}
-      <div className="pb-20">
-        {currentRole === 'seeker' ? (
-          <div className="p-6 space-y-6">
-            {/* Welcome Section */}
-            <Card className="bg-gradient-to-r from-[var(--purple-primary)] to-[var(--purple-light)] text-white">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h2 className="text-xl font-bold">{user.name}</h2>
-                    <p className="opacity-90">Ready to find your dream job?</p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-2xl font-bold">
-                      ₹{seekerMetrics?.totalSpent ?? 0}
-                    </div>
-                    <div className="text-sm opacity-75">Total Invested</div>
-                  </div>
-                </div>
-                <Button
-                  onClick={() => setLocation('/job-search')}
-                  className="w-full bg-white/20 backdrop-blur-lg text-white font-semibold py-3 px-6 rounded-2xl hover:bg-white/30 transition-all duration-300"
-                >
-                  <Search className="w-5 h-5 mr-2" />
-                  Find Jobs
-                </Button>
-              </CardContent>
-            </Card>
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-4">
-              <Card className="modern-card card-hover border-0">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold gradient-text">
-                    {seekerMetrics?.jobsCount ?? 0}
-                  </div>
-                  <div className="text-xs text-gray-600 mt-1">Total Jobs</div>
-                </CardContent>
-              </Card>
-              <Card className="modern-card card-hover border-0">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-[var(--emerald-success)]">
-                    {seekerMetrics?.appliedReferrals ?? 0}
-                  </div>
-                  <div className="text-xs text-gray-600 mt-1">Applied</div>
-                </CardContent>
-              </Card>
-              <Card className="modern-card card-hover border-0">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-[var(--orange-accent)]">
-                    {seekerMetrics?.successfulReferrals ?? 0}
-                  </div>
-                  <div className="text-xs text-gray-600 mt-1">Successful</div>
-                </CardContent>
-              </Card>
-            </div>
-            {/* 1v1 Coaching */}
-            <div className="mb-8 hover-elevate">
-              <Card className="mb-8 hover-elevate">
-                <CardHeader>
-                  <div className="flex items-center justify-between">
-                    <div className="flex items-center gap-3">
-                      <div className="w-10 h-10 bg-primary/10 rounded-lg flex items-center justify-center">
-                        <MessageSquare className="h-5 w-5 text-primary" />
-                      </div>
+      <div className="pb-36">
+        <AnimatePresence mode="wait">
+          {currentRole === 'seeker' ? (
+            <motion.div
+              key="seeker"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              className="px-5 py-6 space-y-8 max-w-2xl mx-auto"
+            >
+              {/* Welcome Section */}
+              <motion.div variants={itemVariants} className="animate-fade-in">
+                <Card className="modern-card border-0 overflow-hidden bg-gradient-to-br from-[var(--purple-primary)] via-[#7c3aed] to-[var(--purple-light)] text-white shadow-xl">
+                  <CardContent className="p-7">
+                    <div className="flex items-center justify-between mb-6">
                       <div>
-                        <CardTitle className="text-lg">1v1 Coaching</CardTitle>
-                        <p className="text-sm text-muted-foreground">
-                          Connect with industry professionals for personalized
-                          career guidance
-                        </p>
+                        <h2 className="text-2xl font-extrabold tracking-tight">{user.name}</h2>
+                        <p className="text-white/80 text-sm mt-1">Ready to find your dream job?</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-3xl font-extrabold">
+                          Rs.{seekerMetrics?.totalSpent ?? 0}
+                        </div>
+                        <div className="text-xs text-white/60 mt-1 font-medium uppercase tracking-wider">Total Invested</div>
                       </div>
                     </div>
-                    <Button data-testid="button-start-coaching" onClick={() => setLocation('/coaching')}>
-                      Get Started
-                      
+                    <Button
+                      onClick={() => setLocation('/job-search')}
+                      className="w-full bg-white/20 backdrop-blur-xl text-white font-semibold py-4 px-6 rounded-2xl hover:bg-white/30 transition-all duration-300 text-base h-auto"
+                    >
+                      <Search className="w-5 h-5 mr-2" />
+                      Find Jobs
                     </Button>
-                  </div>
-                </CardHeader>
-                <CardContent>
-                  <div className="flex items-center gap-4 text-sm text-muted-foreground">
-                    <div className="flex items-center gap-1">
-                      <Users className="h-4 w-4" />
-                      <span>500+ Mentors</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <Calendar className="h-4 w-4" />
-                      <span>Flexible Scheduling</span>
-                    </div>
-                    <div className="flex items-center gap-1">
-                      <MapPin className="h-4 w-4" />
-                      <span>Global Network</span>
-                    </div>
-                  </div>
-                </CardContent>
-              </Card>
-            </div>
-            {/* Active Requests */}
-            <div>
-              <h3 className="text-lg font-semibold text-[var(--dark-gray)] mb-4">
-                Active Requests
-              </h3>
-              {seekerLoading ? (
-                <div className="text-center py-8">Loading...</div>
-              ) : activeRequests.length > 0 ? (
-                <div className="space-y-4">
-                  {activeRequests.map((r: any) => (
-                    <ReferralCard
-                      key={r.referral.id}
-                      referral={r}
-                      onClick={() => openReferralDetails(r)}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <Card>
-                  <CardContent className="p-8 text-center">
-                    <p className="text-gray-500">
-                      No active requests. Start by searching for jobs!
-                    </p>
                   </CardContent>
                 </Card>
-              )}
-            </div>
+              </motion.div>
 
-            {/* Past Requests */}
-            <div>
-              <h3 className="text-lg font-semibold text-[var(--dark-gray)] mb-4">
-                Past Requests
-              </h3>
-              {pastRequests.length > 0 ? (
-                <div className="space-y-3">
-                  {pastRequests.map((referral: any) => (
-                    <ReferralCard
-                      key={referral.id}
-                      referral={referral}
-                      onClick={() => openReferralDetails(referral)}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <Card>
-                  <CardContent className="p-8 text-center">
-                    <p className="text-gray-500">No past requests yet.</p>
-                  </CardContent>
-                </Card>
-              )}
-            </div>
-          </div>
-        ) : (
-          /* Referrer View */
-          <div className="p-6 space-y-6">
-            {/* Earnings Overview */}
-            <Card className="bg-gradient-to-r from-[var(--emerald-success)] to-[var(--purple-light)] text-white">
-              <CardContent className="p-6">
-                <div className="flex items-center justify-between mb-4">
-                  <div>
-                    <h2 className="text-xl font-bold">{user.name}</h2>
-                    <p className="opacity-90">Your referral earnings</p>
-                  </div>
-                  <div className="text-right">
-                    <div className="text-3xl font-bold">₹{totalEarnings}</div>
-                    <div className="text-sm opacity-75">Total Earned</div>
-                  </div>
-                </div>
-
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-white/20 backdrop-blur-lg rounded-xl p-4 text-center">
-                    <div className="text-xl font-bold">
-                      ₹{monthlyEarnings.toFixed(0)}
+              {/* Quick Stats */}
+              <motion.div variants={itemVariants} className="grid grid-cols-3 gap-4 animate-slide-up">
+                <Card className="stat-card modern-card card-hover border-0">
+                  <CardContent className="p-5 text-center">
+                    <div className="text-3xl font-extrabold gradient-text">
+                      {seekerMetrics?.jobsCount ?? 0}
                     </div>
-                    <div className="text-xs opacity-75">This Month</div>
-                  </div>
-                  <div className="bg-white/20 backdrop-blur-lg rounded-xl p-4 text-center">
-                    <div className="text-xl font-bold">
-                      {referrerMetrics?.successfulReferrals}
+                    <div className="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Total Jobs</div>
+                  </CardContent>
+                </Card>
+                <Card className="stat-card modern-card card-hover border-0">
+                  <CardContent className="p-5 text-center">
+                    <div className="text-3xl font-extrabold text-[var(--emerald-success)]">
+                      {seekerMetrics?.appliedReferrals ?? 0}
                     </div>
-                    <div className="text-xs opacity-75">Successful</div>
-                  </div>
-                </div>
-              </CardContent>
-            </Card>
-
-            {/* Quick Stats */}
-            <div className="grid grid-cols-3 gap-4">
-              <Card className="modern-card card-hover border-0">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-[var(--orange-accent)]">
-                    {assignedRequests.length}
-                  </div>
-                  <div className="text-xs text-gray-600 mt-1">Pending</div>
-                </CardContent>
-              </Card>
-              <Card className="modern-card card-hover border-0">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold text-[var(--emerald-success)]">
-                    {completedRequests.length}
-                  </div>
-                  <div className="text-xs text-gray-600 mt-1">Completed</div>
-                </CardContent>
-              </Card>
-              <Card className="modern-card card-hover border-0">
-                <CardContent className="p-4 text-center">
-                  <div className="text-2xl font-bold gradient-text">
-                    {Array.isArray(referreRequest) && referreRequest.length > 0
-                      ? Math.round(
-                          (completedRequests.length / referreRequest.length) *
-                            100
-                        )
-                      : 0}
-                    %
-                  </div>
-                  <div className="text-xs text-gray-600 mt-1">Success Rate</div>
-                </CardContent>
-              </Card>
-            </div>
-
-            {/* Assigned Referrals */}
-            <div>
-              <h3 className="text-lg font-semibold text-[var(--dark-gray)] mb-4">
-                Assigned Referrals
-              </h3>
-              {referrerLoading ? (
-                <div className="text-center py-8">Loading...</div>
-              ) : assignedRequests.length > 0 ? (
-                <div className="space-y-4">
-                  {assignedRequests.map((r: any) => (
-                    <ReferralCard
-                      key={r.referral.id}
-                      referral={r}
-                      isReferrer
-                      onClick={() => openReferralDetails(r)}
-                      onUploadProof={() => handleUploadProof(r.assignment?.id)}
-                      onDecline={() => handleDecline(r.assignment?.id)}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <Card>
-                  <CardContent className="p-8 text-center">
-                    <p className="text-gray-500">
-                      No assigned referrals at the moment.
-                    </p>
+                    <div className="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Applied</div>
                   </CardContent>
                 </Card>
-              )}
-            </div>
-
-            {/* Completed Referrals */}
-            <div>
-              <h3 className="text-lg font-semibold text-[var(--dark-gray)] mb-4">
-                Completed Referrals
-              </h3>
-              {completedRequests.length > 0 ? (
-                <div className="space-y-3">
-                  {completedRequests.map((r: any) => (
-                    <ReferralCard
-                      key={r.referral.id}
-                      referral={r}
-                      isReferrer
-                      onClick={() => openReferralDetails(r)}
-                      onUploadProof={() => handleUploadProof(r.assignment?.id)}
-                      onDecline={() => handleDecline(r.assignment?.id)}
-                    />
-                  ))}
-                </div>
-              ) : (
-                <Card>
-                  <CardContent className="p-8 text-center">
-                    <p className="text-gray-500">No completed referrals yet.</p>
+                <Card className="stat-card modern-card card-hover border-0">
+                  <CardContent className="p-5 text-center">
+                    <div className="text-3xl font-extrabold text-[var(--orange-accent)]">
+                      {seekerMetrics?.successfulReferrals ?? 0}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Successful</div>
                   </CardContent>
                 </Card>
-              )}
-            </div>
-          </div>
-        )}
+              </motion.div>
+
+              {/* 1v1 Coaching */}
+              <motion.div variants={itemVariants} className="animate-slide-up">
+                <Card className="modern-card card-hover hover-elevate border-0">
+                  <CardHeader className="pb-3">
+                    <div className="flex items-center justify-between">
+                      <div className="flex items-center gap-4">
+                        <div className="w-12 h-12 bg-gradient-to-br from-purple-100 to-purple-50 rounded-xl flex items-center justify-center">
+                          <MessageSquare className="h-6 w-6 text-[var(--purple-primary)]" />
+                        </div>
+                        <div>
+                          <CardTitle className="text-lg font-bold">1v1 Coaching</CardTitle>
+                          <p className="text-sm text-muted-foreground mt-0.5">
+                            Personalized career guidance from industry pros
+                          </p>
+                        </div>
+                      </div>
+                      <Button
+                        data-testid="button-start-coaching"
+                        onClick={() => setLocation('/coaching')}
+                        className="rounded-xl px-5 h-10"
+                      >
+                        Get Started
+                      </Button>
+                    </div>
+                  </CardHeader>
+                  <CardContent className="pt-0">
+                    <div className="flex items-center gap-5 text-sm text-muted-foreground">
+                      <div className="flex items-center gap-1.5">
+                        <Users className="h-4 w-4 text-purple-400" />
+                        <span>500+ Mentors</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <Calendar className="h-4 w-4 text-purple-400" />
+                        <span>Flexible Scheduling</span>
+                      </div>
+                      <div className="flex items-center gap-1.5">
+                        <MapPin className="h-4 w-4 text-purple-400" />
+                        <span>Global Network</span>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Active Requests */}
+              <motion.div variants={itemVariants}>
+                <h3 className="text-2xl font-extrabold text-[var(--dark-gray)] mb-5">
+                  Active Requests
+                </h3>
+                {seekerLoading ? (
+                  <div className="text-center py-12 text-gray-400">Loading...</div>
+                ) : activeRequests.length > 0 ? (
+                  <div className="space-y-4">
+                    {activeRequests.map((r: any, index: number) => (
+                      <motion.div
+                        key={r.referral.id}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.06, duration: 0.35 }}
+                      >
+                        <ReferralCard
+                          referral={r}
+                          onClick={() => openReferralDetails(r)}
+                        />
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <Card className="modern-card border-0">
+                    <CardContent className="p-10 text-center">
+                      <p className="text-gray-400 text-sm">
+                        No active requests. Start by searching for jobs!
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
+              </motion.div>
+
+              {/* Past Requests */}
+              <motion.div variants={itemVariants}>
+                <h3 className="text-2xl font-extrabold text-[var(--dark-gray)] mb-5">
+                  Past Requests
+                </h3>
+                {pastRequests.length > 0 ? (
+                  <div className="space-y-4">
+                    {pastRequests.map((referral: any, index: number) => (
+                      <motion.div
+                        key={referral.id}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.06, duration: 0.35 }}
+                      >
+                        <ReferralCard
+                          referral={referral}
+                          onClick={() => openReferralDetails(referral)}
+                        />
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <Card className="modern-card border-0">
+                    <CardContent className="p-10 text-center">
+                      <p className="text-gray-400 text-sm">No past requests yet.</p>
+                    </CardContent>
+                  </Card>
+                )}
+              </motion.div>
+            </motion.div>
+          ) : (
+            /* Referrer View */
+            <motion.div
+              key="referrer"
+              variants={containerVariants}
+              initial="hidden"
+              animate="visible"
+              exit="hidden"
+              className="px-5 py-6 space-y-8 max-w-2xl mx-auto"
+            >
+              {/* Earnings Overview */}
+              <motion.div variants={itemVariants} className="animate-fade-in">
+                <Card className="modern-card border-0 overflow-hidden bg-gradient-to-br from-[var(--emerald-success)] via-emerald-500 to-[var(--purple-light)] text-white shadow-xl">
+                  <CardContent className="p-7">
+                    <div className="flex items-center justify-between mb-6">
+                      <div>
+                        <h2 className="text-2xl font-extrabold tracking-tight">{user.name}</h2>
+                        <p className="text-white/80 text-sm mt-1">Your referral earnings</p>
+                      </div>
+                      <div className="text-right">
+                        <div className="text-3xl font-extrabold">Rs.{totalEarnings}</div>
+                        <div className="text-xs text-white/60 mt-1 font-medium uppercase tracking-wider">Total Earned</div>
+                      </div>
+                    </div>
+
+                    <div className="grid grid-cols-2 gap-4">
+                      <div className="glassmorphism rounded-2xl p-5 text-center">
+                        <div className="text-2xl font-extrabold">
+                          Rs.{monthlyEarnings.toFixed(0)}
+                        </div>
+                        <div className="text-xs text-white/60 mt-1 font-medium uppercase tracking-wider">This Month</div>
+                      </div>
+                      <div className="glassmorphism rounded-2xl p-5 text-center">
+                        <div className="text-2xl font-extrabold">
+                          {referrerMetrics?.successfulReferrals}
+                        </div>
+                        <div className="text-xs text-white/60 mt-1 font-medium uppercase tracking-wider">Successful</div>
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Quick Stats */}
+              <motion.div variants={itemVariants} className="grid grid-cols-3 gap-4 animate-slide-up">
+                <Card className="stat-card modern-card card-hover border-0">
+                  <CardContent className="p-5 text-center">
+                    <div className="text-3xl font-extrabold text-[var(--orange-accent)]">
+                      {assignedRequests.length}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Pending</div>
+                  </CardContent>
+                </Card>
+                <Card className="stat-card modern-card card-hover border-0">
+                  <CardContent className="p-5 text-center">
+                    <div className="text-3xl font-extrabold text-[var(--emerald-success)]">
+                      {completedRequests.length}
+                    </div>
+                    <div className="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Completed</div>
+                  </CardContent>
+                </Card>
+                <Card className="stat-card modern-card card-hover border-0">
+                  <CardContent className="p-5 text-center">
+                    <div className="text-3xl font-extrabold gradient-text">
+                      {Array.isArray(referreRequest) && referreRequest.length > 0
+                        ? Math.round(
+                            (completedRequests.length / referreRequest.length) *
+                              100
+                          )
+                        : 0}
+                      %
+                    </div>
+                    <div className="text-xs text-gray-500 mt-2 font-medium uppercase tracking-wider">Success Rate</div>
+                  </CardContent>
+                </Card>
+              </motion.div>
+
+              {/* Assigned Referrals */}
+              <motion.div variants={itemVariants}>
+                <h3 className="text-2xl font-extrabold text-[var(--dark-gray)] mb-5">
+                  Assigned Referrals
+                </h3>
+                {referrerLoading ? (
+                  <div className="text-center py-12 text-gray-400">Loading...</div>
+                ) : assignedRequests.length > 0 ? (
+                  <div className="space-y-4">
+                    {assignedRequests.map((r: any, index: number) => (
+                      <motion.div
+                        key={r.referral.id}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.06, duration: 0.35 }}
+                      >
+                        <ReferralCard
+                          referral={r}
+                          isReferrer
+                          onClick={() => openReferralDetails(r)}
+                          onUploadProof={() => handleUploadProof(r.assignment?.id)}
+                          onDecline={() => handleDecline(r.assignment?.id)}
+                        />
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <Card className="modern-card border-0">
+                    <CardContent className="p-10 text-center">
+                      <p className="text-gray-400 text-sm">
+                        No assigned referrals at the moment.
+                      </p>
+                    </CardContent>
+                  </Card>
+                )}
+              </motion.div>
+
+              {/* Completed Referrals */}
+              <motion.div variants={itemVariants}>
+                <h3 className="text-2xl font-extrabold text-[var(--dark-gray)] mb-5">
+                  Completed Referrals
+                </h3>
+                {completedRequests.length > 0 ? (
+                  <div className="space-y-4">
+                    {completedRequests.map((r: any, index: number) => (
+                      <motion.div
+                        key={r.referral.id}
+                        initial={{ opacity: 0, y: 16 }}
+                        animate={{ opacity: 1, y: 0 }}
+                        transition={{ delay: index * 0.06, duration: 0.35 }}
+                      >
+                        <ReferralCard
+                          referral={r}
+                          isReferrer
+                          onClick={() => openReferralDetails(r)}
+                          onUploadProof={() => handleUploadProof(r.assignment?.id)}
+                          onDecline={() => handleDecline(r.assignment?.id)}
+                        />
+                      </motion.div>
+                    ))}
+                  </div>
+                ) : (
+                  <Card className="modern-card border-0">
+                    <CardContent className="p-10 text-center">
+                      <p className="text-gray-400 text-sm">No completed referrals yet.</p>
+                    </CardContent>
+                  </Card>
+                )}
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Bottom Navigation */}
-      <nav className="fixed bottom-0 left-0 right-0 bg-white border-t border-gray-100 z-20">
+      <nav className="bottom-nav fixed bottom-0 left-0 right-0 z-20">
         {/* Policy Links */}
-        <div className="px-6 py-2 border-b border-gray-100">
-          <div className="flex justify-center space-x-4 text-xs">
-            <a 
-              href="/terms" 
-              className="text-gray-500 hover:text-gray-700 underline"
+        <div className="px-6 py-2 border-b border-gray-100/50">
+          <div className="flex justify-center space-x-6 text-xs">
+            <a
+              href="/terms"
+              className="text-gray-400 hover:text-gray-600 transition-colors"
             >
               Terms
             </a>
-            <a 
-              href="/privacy" 
-              className="text-gray-500 hover:text-gray-700 underline"
+            <a
+              href="/privacy"
+              className="text-gray-400 hover:text-gray-600 transition-colors"
             >
               Privacy
             </a>
-            <a 
-              href="/refund" 
-              className="text-gray-500 hover:text-gray-700 underline"
+            <a
+              href="/refund"
+              className="text-gray-400 hover:text-gray-600 transition-colors"
             >
               Refund
             </a>
           </div>
         </div>
-        
+
         {/* Navigation Buttons */}
-        <div className="px-6 py-4">
+        <div className="px-6 py-3">
           <div className="flex items-center justify-around max-w-md mx-auto">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => handleNavClick('dashboard')}
-            className={`flex flex-col items-center space-y-1 ${
-              activeNav === 'dashboard'
-                ? 'text-[var(--purple-primary)]'
-                : 'text-gray-400'
-            }`}
-          >
-            <svg
-              className="w-5 h-5"
-              fill="none"
-              stroke="currentColor"
-              viewBox="0 0 24 24"
+            <Button
+              variant="ghost"
+              size="lg"
+              onClick={() => handleNavClick('dashboard')}
+              className={`flex flex-col items-center gap-1 min-w-[72px] min-h-[56px] rounded-2xl transition-all duration-200 ${
+                activeNav === 'dashboard'
+                  ? 'text-[var(--purple-primary)] bg-purple-50'
+                  : 'text-gray-400 hover:text-gray-600'
+              }`}
             >
-              <path
-                strokeLinecap="round"
-                strokeLinejoin="round"
-                strokeWidth="2"
-                d="M3 12l2-2m0 0l7-7 7 7M5 10v10a1 1 0 001 1h3m10-11l2 2m-2-2v10a1 1 0 01-1 1h-3m-6 0a1 1 0 001-1v-4a1 1 0 011-1h2a1 1 0 011 1v4a1 1 0 001 1m-6 0h6"
-              />
-            </svg>
-            <span className="text-xs font-medium">Dashboard</span>
-          </Button>
+              <Home className="w-5 h-5" />
+              <span className="text-xs font-semibold">Dashboard</span>
+            </Button>
 
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => handleNavClick('search')}
-            className={`flex flex-col items-center space-y-1 ${
-              activeNav === 'search'
-                ? 'text-[var(--purple-primary)]'
-                : 'text-gray-400'
-            }`}
-          >
-            <Search className="w-5 h-5" />
-            <span className="text-xs font-medium">Search</span>
-          </Button>
+            <Button
+              variant="ghost"
+              size="lg"
+              onClick={() => handleNavClick('search')}
+              className={`flex flex-col items-center gap-1 min-w-[72px] min-h-[56px] rounded-2xl transition-all duration-200 ${
+                activeNav === 'search'
+                  ? 'text-[var(--purple-primary)] bg-purple-50'
+                  : 'text-gray-400 hover:text-gray-600'
+              }`}
+            >
+              <Search className="w-5 h-5" />
+              <span className="text-xs font-semibold">Search</span>
+            </Button>
 
-          {/* <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => handleNavClick('analytics')}
-            className={`flex flex-col items-center space-y-1 ${
-              activeNav === 'analytics' ? 'text-[var(--purple-primary)]' : 'text-gray-400'
-            }`}
-          >
-            <BarChart3 className="w-5 h-5" />
-            <span className="text-xs font-medium">Analytics</span>
-          </Button> */}
-
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => handleNavClick('profile')}
-            className={`flex flex-col items-center space-y-1 ${
-              activeNav === 'profile'
-                ? 'text-[var(--purple-primary)]'
-                : 'text-gray-400'
-            }`}
-          >
-            <User className="w-5 h-5" />
-            <span className="text-xs font-medium">Profile</span>
-          </Button>
+            <Button
+              variant="ghost"
+              size="lg"
+              onClick={() => handleNavClick('profile')}
+              className={`flex flex-col items-center gap-1 min-w-[72px] min-h-[56px] rounded-2xl transition-all duration-200 ${
+                activeNav === 'profile'
+                  ? 'text-[var(--purple-primary)] bg-purple-50'
+                  : 'text-gray-400 hover:text-gray-600'
+              }`}
+            >
+              <User className="w-5 h-5" />
+              <span className="text-xs font-semibold">Profile</span>
+            </Button>
           </div>
         </div>
       </nav>
@@ -588,67 +620,76 @@ export default function DashboardPage() {
           !open && setDetailsModal({ isOpen: false, request: null })
         }
       >
-        <DialogContent className="sm:max-w-lg">
+        <DialogContent className="sm:max-w-lg rounded-3xl">
           <DialogHeader>
-            <DialogTitle className="text-xl font-bold text-[var(--dark-gray)]">
+            <DialogTitle className="text-2xl font-extrabold text-[var(--dark-gray)]">
               Referral Details
             </DialogTitle>
           </DialogHeader>
           {detailsModal.request && (
-            <div className="space-y-4">
+            <div className="space-y-5">
               <div className="flex items-start justify-between">
-                <div>
-                  <p className="font-semibold text-[var(--dark-gray)]">
-                    {detailsModal.request.job?.title || 'Unknown Position'}
-                  </p>
-                  <p className="text-sm text-gray-600">
-                    {detailsModal.request.job?.company || 'Unknown Company'}
-                  </p>
-                  <p className="text-xs text-gray-500">
-                    {detailsModal.request.job?.location ||
-                      'Location not specified'}
-                  </p>
+                <div className="flex items-start gap-4">
+                  <img
+                    src={`https://logo.clearbit.com/${(detailsModal.request.job?.company || 'example').toLowerCase().replace(/\s+/g, '')}.com`}
+                    alt={detailsModal.request.job?.company || ''}
+                    className="company-logo w-12 h-12 rounded-xl object-contain bg-gray-50 p-1.5"
+                    onError={(e: any) => { e.target.style.display = 'none'; }}
+                  />
+                  <div>
+                    <p className="font-bold text-lg text-[var(--dark-gray)]">
+                      {detailsModal.request.job?.title || 'Unknown Position'}
+                    </p>
+                    <p className="text-sm text-gray-500 mt-0.5">
+                      {detailsModal.request.job?.company || 'Unknown Company'}
+                    </p>
+                    <p className="text-xs text-gray-400 mt-0.5">
+                      {detailsModal.request.job?.location ||
+                        'Location not specified'}
+                    </p>
+                  </div>
                 </div>
                 <div className="text-right">
-                  <Badge>
+                  <Badge className="pill-badge">
                     {(detailsModal.request.referral.status || '')
                       .toString()
                       .replace(/^./, (c: string) => c.toUpperCase())}
                   </Badge>
-                  <p className="text-sm font-semibold text-[var(--emerald-success)] mt-1">
-                    ₹ 499
+                  <p className="text-sm font-bold text-[var(--emerald-success)] mt-2">
+                    Rs.499
                   </p>
                 </div>
               </div>
 
               {detailsModal.request.seeker && (
-                <div className="bg-gray-50 rounded-xl p-4">
-                  <p className="text-sm text-gray-600 mb-1">Seeker</p>
-                  <p className="font-medium text-[var(--dark-gray)]">
+                <div className="bg-gray-50/80 rounded-2xl p-5">
+                  <p className="text-xs text-gray-400 mb-2 font-medium uppercase tracking-wider">Seeker</p>
+                  <p className="font-semibold text-[var(--dark-gray)]">
                     {detailsModal.request.seeker.name}
                   </p>
                   {detailsModal.request.seeker.email && (
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-500 mt-1">
                       {detailsModal.request.seeker.email}
                     </p>
                   )}
                   {detailsModal.request.seeker.experience && (
-                    <p className="text-sm text-gray-600">
+                    <p className="text-sm text-gray-500">
                       Experience: {detailsModal.request.seeker.experience}
                     </p>
                   )}
                   {detailsModal.request.seeker.skills &&
                     Array.isArray(detailsModal.request.seeker.skills) &&
                     detailsModal.request.seeker.skills.length > 0 && (
-                      <p className="text-sm text-gray-600">
+                      <p className="text-sm text-gray-500">
                         Skills: {detailsModal.request.seeker.skills.join(', ')}
                       </p>
                     )}
                   {detailsModal.request.referral.resumeUrl &&
                     detailsModal.request.referral.resumeUrl !== '' && (
-                      <div className="mt-3">
+                      <div className="mt-4">
                         <Button
                           variant="outline"
+                          className="rounded-xl"
                           onClick={() =>
                             window.open(
                               detailsModal.request.referral.resumeUrl,
@@ -664,14 +705,14 @@ export default function DashboardPage() {
                 </div>
               )}
 
-              <div className="flex space-x-3">
+              <div className="flex space-x-3 pt-2">
                 {currentRole === 'referrer' &&
                   detailsModal.request.referral &&
                   detailsModal.request.referral.status === 'assigned' &&
                   detailsModal.request.referral.referrerId === user.id && (
                     <>
                       <Button
-                        className="flex-1 bg-[var(--purple-primary)] hover:bg-[var(--purple-primary)]/90"
+                        className="flex-1 bg-[var(--purple-primary)] hover:bg-[var(--purple-primary)]/90 rounded-xl h-12 text-base font-semibold"
                         onClick={() => {
                           setDetailsModal({ isOpen: false, request: null });
                           handleUploadProof(detailsModal.request.assignment.id);
@@ -681,7 +722,7 @@ export default function DashboardPage() {
                       </Button>
                       <Button
                         variant="outline"
-                        className="flex-1 border-red-300 text-red-600 hover:bg-red-50"
+                        className="flex-1 border-red-200 text-red-500 hover:bg-red-50 rounded-xl h-12 text-base font-semibold"
                         onClick={() =>
                           handleDecline(detailsModal.request.assignment.id)
                         }

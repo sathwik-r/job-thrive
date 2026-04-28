@@ -1,0 +1,21 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="812" viewBox="0 0 375 812">
+  <rect id="Background" width="375" height="812" fill="rgba(0,0,0,0.5)" rx="20"/>
+
+  <!-- Modal -->
+  <g id="Success-Modal">
+    <rect x="32" y="260" width="311" height="280" rx="20" fill="#FFFFFF" filter="drop-shadow(0 8px 30px rgba(0,0,0,0.2))"/>
+
+    <!-- Success Icon -->
+    <circle cx="187" cy="320" r="36" fill="#10B981"/>
+    <polyline points="170,320 182,332 204,310" fill="none" stroke="#FFFFFF" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round"/>
+
+    <!-- Text -->
+    <text x="187" y="390" font-family="Inter, sans-serif" font-size="20" font-weight="700" fill="#1F2937" text-anchor="middle">Payment Successful!</text>
+    <text x="187" y="416" font-family="Inter, sans-serif" font-size="13" fill="#6B7280" text-anchor="middle">Your referral request has been</text>
+    <text x="187" y="434" font-family="Inter, sans-serif" font-size="13" fill="#6B7280" text-anchor="middle">submitted successfully</text>
+
+    <!-- Continue Button -->
+    <rect x="52" y="460" width="271" height="48" rx="16" fill="#7C3AED"/>
+    <text x="187" y="490" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#FFFFFF" text-anchor="middle">Continue</text>
+  </g>
+</svg>

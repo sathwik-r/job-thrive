@@ -11,6 +11,7 @@ import { authenticateToken, optionalAuth, requireRole } from "./auth-middleware"
 import { cashfreeService } from './cashfree-service';
 import { assignReferral, rejectAssignment, acceptAssignment } from './match-making';
 import { CoachingService } from "./coaching";
+import { fetchAndStoreJobs } from "./job-fetcher";
 
 function getCognitoBaseUrl(): string {
   // Prefer explicit env var; fallback to current hardcoded domain.
@@ -924,6 +925,16 @@ export async function registerRoutes(app: Express): Promise<Server> {
     } catch (error) {
       console.error('Error creating coaching request:', error);
       res.status(400).json({ message: "Error creating coaching request" });
+    }
+  });
+
+  // Manual job fetch trigger (admin use)
+  app.post("/api/admin/fetch-jobs", async (_req, res) => {
+    try {
+      const result = await fetchAndStoreJobs();
+      res.json({ success: true, ...result });
+    } catch (error) {
+      res.status(500).json({ message: "Job fetch failed", error: String(error) });
     }
   });
 

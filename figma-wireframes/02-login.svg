@@ -1,0 +1,51 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="812" viewBox="0 0 375 812">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#6D28D9"/>
+    </linearGradient>
+  </defs>
+  <rect id="Background" width="375" height="812" fill="url(#bg)" rx="20"/>
+
+  <!-- Decorative Circles -->
+  <circle cx="50" cy="120" r="40" fill="rgba(255,255,255,0.08)"/>
+  <circle cx="330" cy="500" r="30" fill="rgba(255,255,255,0.05)"/>
+
+  <!-- Logo -->
+  <g id="Logo-Section">
+    <rect x="147" y="180" width="80" height="80" rx="24" fill="rgba(255,255,255,0.15)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+    <text x="187" y="228" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#FFFFFF" text-anchor="middle">JT</text>
+    <rect x="135" y="168" width="104" height="104" rx="52" fill="none" stroke="rgba(255,255,255,0.1)" stroke-width="1"/>
+  </g>
+
+  <!-- Title -->
+  <g id="Title">
+    <text x="187" y="310" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#FFFFFF" text-anchor="middle">Welcome to</text>
+    <text x="187" y="342" font-family="Inter, sans-serif" font-size="28" font-weight="700" fill="#FFFFFF" text-anchor="middle">Job Thrive</text>
+    <text x="187" y="372" font-family="Inter, sans-serif" font-size="16" fill="rgba(255,255,255,0.8)" text-anchor="middle">Your shortcut to better jobs</text>
+    <text x="187" y="396" font-family="Inter, sans-serif" font-size="12" fill="rgba(255,255,255,0.6)" text-anchor="middle">Connect with Gmail to unlock opportunities</text>
+  </g>
+
+  <!-- Description -->
+  <g id="Description">
+    <text x="187" y="432" font-family="Inter, sans-serif" font-size="11" fill="rgba(255,255,255,0.7)" text-anchor="middle">Get real employee referrals, unlock hidden</text>
+    <text x="187" y="448" font-family="Inter, sans-serif" font-size="11" fill="rgba(255,255,255,0.7)" text-anchor="middle">opportunities, and gain personal guidance.</text>
+  </g>
+
+  <!-- Login Card -->
+  <g id="Login-Card">
+    <rect x="30" y="480" width="315" height="100" rx="24" fill="rgba(255,255,255,0.12)" stroke="rgba(255,255,255,0.2)" stroke-width="1"/>
+
+    <!-- Google Sign-in Button -->
+    <rect x="50" y="500" width="275" height="56" rx="16" fill="#FFFFFF"/>
+    <circle cx="90" cy="528" r="14" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="90" y="533" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#4285F4" text-anchor="middle">G</text>
+    <text x="200" y="533" font-family="Inter, sans-serif" font-size="16" font-weight="600" fill="#1F2937" text-anchor="middle">Continue with Gmail</text>
+  </g>
+
+  <!-- Footer -->
+  <g id="Footer">
+    <text x="187" y="630" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.6)" text-anchor="middle">By continuing, you agree to our</text>
+    <text x="187" y="646" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.8)" text-anchor="middle" text-decoration="underline">Terms &amp; Conditions, Privacy Policy, and Refund Policy</text>
+  </g>
+</svg>

@@ -1,0 +1,28 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="812" viewBox="0 0 375 812">
+  <defs>
+    <linearGradient id="bg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#6D28D9"/>
+    </linearGradient>
+  </defs>
+  <rect id="Background" width="375" height="812" fill="url(#bg)" rx="20"/>
+
+  <!-- Spinner Icon -->
+  <g id="Spinner-Container">
+    <rect x="155" y="340" width="64" height="64" rx="24" fill="rgba(255,255,255,0.2)"/>
+    <circle cx="187" cy="372" r="16" fill="none" stroke="#FFFFFF" stroke-width="3" stroke-dasharray="60 30" stroke-linecap="round"/>
+  </g>
+
+  <!-- Loading Text -->
+  <g id="Loading-Text">
+    <text x="187" y="440" font-family="Inter, sans-serif" font-size="18" fill="rgba(255,255,255,0.9)" text-anchor="middle">Completing sign in...</text>
+  </g>
+
+  <!-- Annotation -->
+  <g id="Annotation" opacity="0.5">
+    <rect x="50" y="520" width="275" height="80" rx="12" fill="rgba(255,255,255,0.08)" stroke="rgba(255,255,255,0.15)" stroke-width="1" stroke-dasharray="4 4"/>
+    <text x="187" y="548" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.6)" text-anchor="middle">Exchanges Cognito auth code for JWT token</text>
+    <text x="187" y="565" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.6)" text-anchor="middle">POST /api/auth/cognito-callback</text>
+    <text x="187" y="582" font-family="Inter, sans-serif" font-size="10" fill="rgba(255,255,255,0.6)" text-anchor="middle">Then redirects to /onboarding or /dashboard</text>
+  </g>
+</svg>

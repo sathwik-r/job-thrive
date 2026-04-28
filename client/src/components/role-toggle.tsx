@@ -1,4 +1,5 @@
 import { Button } from '@/components/ui/button';
+import { Search, Share2 } from 'lucide-react';
 import React from 'react';
 
 interface RoleToggleProps {
@@ -8,33 +9,34 @@ interface RoleToggleProps {
 
 export default function RoleToggle({ currentRole, onRoleChange }: RoleToggleProps) {
   return (
-    <div className="bg-gray-100 rounded-2xl p-1 role-toggle">
-      <div className="flex">
-        <Button
-          variant={currentRole === 'seeker' ? 'default' : 'ghost'}
-          size="sm"
-          onClick={() => onRoleChange('seeker')}
-          className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
-            currentRole === 'seeker'
-              ? 'bg-[var(--purple-primary)] text-white hover:bg-[var(--purple-primary)]'
-              : 'text-gray-600 hover:text-gray-800'
-          }`}
-        >
-          Seeker
-        </Button>
-        <Button
-          variant={currentRole === 'referrer' ? 'default' : 'ghost'}
-          size="sm"
-          onClick={() => onRoleChange('referrer')}
-          className={`px-6 py-2 rounded-xl text-sm font-semibold transition-all duration-300 ${
-            currentRole === 'referrer'
-              ? 'bg-[var(--purple-primary)] text-white hover:bg-[var(--purple-primary)]'
-              : 'text-gray-600 hover:text-gray-800'
-          }`}
-        >
-          Referrer
-        </Button>
-      </div>
+    <div className="relative bg-gray-100/80 rounded-xl p-0.5 flex">
+      {/* Sliding pill indicator */}
+      <div
+        className="absolute top-0.5 h-[calc(100%-4px)] w-[calc(50%-2px)] rounded-[10px] bg-[var(--purple-primary)] shadow-sm transition-all duration-300 ease-out"
+        style={{ left: currentRole === 'seeker' ? '2px' : 'calc(50% + 0px)' }}
+      />
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => onRoleChange('seeker')}
+        className={`relative z-10 px-4 py-1.5 rounded-[10px] text-xs font-semibold transition-colors duration-200 hover:bg-transparent ${
+          currentRole === 'seeker' ? 'text-white' : 'text-gray-500'
+        }`}
+      >
+        <Search className="w-3 h-3 mr-1.5" />
+        Seeker
+      </Button>
+      <Button
+        variant="ghost"
+        size="sm"
+        onClick={() => onRoleChange('referrer')}
+        className={`relative z-10 px-4 py-1.5 rounded-[10px] text-xs font-semibold transition-colors duration-200 hover:bg-transparent ${
+          currentRole === 'referrer' ? 'text-white' : 'text-gray-500'
+        }`}
+      >
+        <Share2 className="w-3 h-3 mr-1.5" />
+        Referrer
+      </Button>
     </div>
   );
 }

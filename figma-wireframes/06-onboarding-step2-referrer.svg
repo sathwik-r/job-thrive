@@ -1,0 +1,73 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="812" viewBox="0 0 375 812">
+  <rect id="Background" width="375" height="812" fill="#F9FAFB" rx="20"/>
+
+  <defs>
+    <linearGradient id="progress" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#7C3AED"/>
+      <stop offset="100%" stop-color="#10B981"/>
+    </linearGradient>
+    <linearGradient id="iconGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#10B981"/>
+      <stop offset="100%" stop-color="#F59E0B"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Progress Bar -->
+  <g id="Progress-Bar">
+    <text x="24" y="56" font-family="Inter, sans-serif" font-size="12" fill="#6B7280">Step 2 of 2</text>
+    <text x="295" y="56" font-family="Inter, sans-serif" font-size="12" fill="#6B7280">100% Complete</text>
+    <rect x="24" y="66" width="327" height="8" rx="4" fill="#E5E7EB"/>
+    <rect x="24" y="66" width="327" height="8" rx="4" fill="url(#progress)"/>
+  </g>
+
+  <!-- Card -->
+  <g id="Referrer-Work-Card">
+    <rect x="20" y="95" width="335" height="560" rx="20" fill="#FFFFFF" filter="drop-shadow(0 4px 20px rgba(0,0,0,0.08))"/>
+
+    <rect x="147" y="115" width="56" height="56" rx="16" fill="url(#iconGrad)"/>
+    <text x="175" y="150" font-family="Inter, sans-serif" font-size="22" fill="#FFFFFF" text-anchor="middle">B</text>
+
+    <text x="187" y="195" font-family="Inter, sans-serif" font-size="18" font-weight="700" fill="#7C3AED" text-anchor="middle">Tell us about your work</text>
+    <text x="187" y="215" font-family="Inter, sans-serif" font-size="12" fill="#6B7280" text-anchor="middle">This helps us match you with referral requests</text>
+
+    <!-- Field: Company -->
+    <g id="Field-Company">
+      <text x="40" y="250" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#1F2937">Current Company *</text>
+      <rect x="40" y="258" width="275" height="42" rx="10" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="2"/>
+      <text x="56" y="284" font-family="Inter, sans-serif" font-size="13" fill="#9CA3AF">Search company</text>
+      <text x="298" y="284" font-family="Inter, sans-serif" font-size="12" fill="#9CA3AF">v</text>
+    </g>
+
+    <!-- Field: Position -->
+    <g id="Field-Position">
+      <text x="40" y="325" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#1F2937">Current Position *</text>
+      <rect x="40" y="333" width="275" height="42" rx="10" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="2"/>
+      <text x="56" y="359" font-family="Inter, sans-serif" font-size="13" fill="#9CA3AF">e.g., Senior Software Engineer</text>
+    </g>
+
+    <!-- Field: Department -->
+    <g id="Field-Department">
+      <text x="40" y="400" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#1F2937">Department</text>
+      <rect x="40" y="408" width="275" height="42" rx="10" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="2"/>
+      <text x="56" y="434" font-family="Inter, sans-serif" font-size="13" fill="#9CA3AF">Select department</text>
+      <text x="298" y="434" font-family="Inter, sans-serif" font-size="12" fill="#9CA3AF">v</text>
+    </g>
+
+    <!-- Field: Experience -->
+    <g id="Field-Experience">
+      <text x="40" y="480" font-family="Inter, sans-serif" font-size="12" font-weight="500" fill="#1F2937">Total Work Experience *</text>
+      <rect x="40" y="488" width="275" height="42" rx="10" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="2"/>
+      <text x="56" y="514" font-family="Inter, sans-serif" font-size="13" fill="#9CA3AF">Select experience range</text>
+      <text x="298" y="514" font-family="Inter, sans-serif" font-size="12" fill="#9CA3AF">v</text>
+    </g>
+  </g>
+
+  <!-- Navigation -->
+  <g id="Nav-Buttons">
+    <rect x="24" y="680" width="80" height="44" rx="8" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="64" y="707" font-family="Inter, sans-serif" font-size="13" fill="#6B7280" text-anchor="middle">&lt; Back</text>
+
+    <rect x="200" y="680" width="150" height="44" rx="12" fill="url(#progress)"/>
+    <text x="275" y="707" font-family="Inter, sans-serif" font-size="14" font-weight="600" fill="#FFFFFF" text-anchor="middle">Complete Setup</text>
+  </g>
+</svg>

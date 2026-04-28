@@ -374,36 +374,48 @@ export default function CoachingDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-gray-50" data-testid="dashboard-coaching">
+    <div className="min-h-screen bg-[#fafafa]" data-testid="dashboard-coaching">
       {/* Header */}
-      <header className="bg-white shadow-sm border-b border-gray-100 px-6 py-4 sticky top-0 z-30">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+      <header className="bg-white/90 backdrop-blur-lg border-b border-gray-100/80 px-6 py-4 sticky top-0 z-30">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 max-w-7xl mx-auto">
           <div>
             <h1
-              className="text-2xl font-bold"
+              className="text-xl font-extrabold text-[var(--dark-gray)] tracking-tight"
               data-testid="text-dashboard-title"
             >
               1v1 Coaching
             </h1>
-            <p className="text-muted-foreground">
-              Connect with industry professionals for career guidance
+            <p className="text-sm text-muted-foreground">
+              Personalized career guidance from top professionals
             </p>
           </div>
-          <div className="flex gap-2">
+          <div className="flex gap-1.5 bg-gray-100/80 rounded-xl p-0.5">
             <Button
-              variant={activeView === 'browse' ? 'default' : 'outline'}
+              variant="ghost"
+              size="sm"
               onClick={() => setActiveView('browse')}
+              className={`rounded-[10px] text-xs font-semibold px-4 transition-all ${
+                activeView === 'browse'
+                  ? 'bg-[var(--purple-primary)] text-white shadow-sm hover:bg-[var(--purple-primary)]'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
               data-testid="button-browse-mentors"
             >
-              <Search className="h-4 w-4 mr-2" />
+              <Search className="h-3.5 w-3.5 mr-1.5" />
               Browse Mentors
             </Button>
             <Button
-              variant={activeView === 'requests' ? 'default' : 'outline'}
+              variant="ghost"
+              size="sm"
               onClick={() => setActiveView('requests')}
+              className={`rounded-[10px] text-xs font-semibold px-4 transition-all ${
+                activeView === 'requests'
+                  ? 'bg-[var(--purple-primary)] text-white shadow-sm hover:bg-[var(--purple-primary)]'
+                  : 'text-gray-500 hover:text-gray-700'
+              }`}
               data-testid="button-manage-requests"
             >
-              <Calendar className="h-4 w-4 mr-2" />
+              <Calendar className="h-3.5 w-3.5 mr-1.5" />
               My Sessions
             </Button>
           </div>
@@ -411,25 +423,27 @@ export default function CoachingDashboard() {
       </header>
 
       {/* Main Content */}
-      <div className="p-6 space-y-6">
+      <div className="p-6 space-y-6 max-w-7xl mx-auto">
         {/* Stats Cards */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {statsCards.map(stat => (
-            <Card key={stat.title} className="hover-elevate">
+            <Card key={stat.title} className="modern-card stat-card border-0 overflow-hidden">
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-xs text-muted-foreground font-medium">
+                    <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-wider">
                       {stat.title}
                     </p>
                     <p
-                      className="text-2xl font-bold mt-1"
+                      className="text-2xl font-extrabold mt-1 text-[var(--dark-gray)]"
                       data-testid={`text-stat-${stat.title.toLowerCase().replace(/\s+/g, '-')}`}
                     >
                       {stat.value}
                     </p>
                   </div>
-                  <stat.icon className={`h-8 w-8 ${stat.color}`} />
+                  <div className="h-10 w-10 rounded-xl bg-gray-50 flex items-center justify-center">
+                    <stat.icon className={`h-5 w-5 ${stat.color}`} />
+                  </div>
                 </div>
               </CardContent>
             </Card>
@@ -459,12 +473,30 @@ export default function CoachingDashboard() {
               </div>
 
               {isLoadingMentors ? (
-                <Card>
-                  <CardContent className="py-12 text-center">
-                    <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-                    <p className="text-muted-foreground">Loading mentors...</p>
-                  </CardContent>
-                </Card>
+                <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
+                  {Array.from({ length: 6 }).map((_, i) => (
+                    <Card key={i} className="modern-card border-0 animate-pulse">
+                      <CardContent className="p-4 space-y-3">
+                        <div className="flex gap-3">
+                          <div className="w-11 h-11 rounded-full bg-gray-200" />
+                          <div className="flex-1 space-y-2">
+                            <div className="h-4 bg-gray-200 rounded w-3/4" />
+                            <div className="h-3 bg-gray-100 rounded w-1/2" />
+                          </div>
+                        </div>
+                        <div className="h-3 bg-gray-100 rounded w-full" />
+                        <div className="flex gap-1">
+                          <div className="h-5 bg-gray-100 rounded-full w-14" />
+                          <div className="h-5 bg-gray-100 rounded-full w-16" />
+                        </div>
+                        <div className="flex gap-2 pt-2">
+                          <div className="h-8 bg-gray-100 rounded-lg flex-1" />
+                          <div className="h-8 bg-gray-200 rounded-lg flex-1" />
+                        </div>
+                      </CardContent>
+                    </Card>
+                  ))}
+                </div>
               ) : (
                 <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-4">
                   {filteredMentors.map(mentor => (
@@ -479,15 +511,19 @@ export default function CoachingDashboard() {
               )}
 
               {!isLoadingMentors && filteredMentors.length === 0 && (
-                <Card>
-                  <CardContent className="py-12 text-center">
-                    <Search className="h-12 w-12 text-muted-foreground mx-auto mb-4" />
-                    <h3 className="font-medium mb-2">No mentors found</h3>
-                    <p className="text-sm text-muted-foreground mb-4">
+                <Card className="modern-card border-0">
+                  <CardContent className="py-16 text-center">
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gray-100 flex items-center justify-center">
+                      <Search className="h-7 w-7 text-gray-400" />
+                    </div>
+                    <h3 className="font-semibold text-[var(--dark-gray)] mb-1">No mentors found</h3>
+                    <p className="text-sm text-muted-foreground mb-5">
                       Try adjusting your filters or search terms
                     </p>
                     <Button
                       variant="outline"
+                      size="sm"
+                      className="rounded-xl"
                       onClick={() =>
                         setFilters({
                           search: '',

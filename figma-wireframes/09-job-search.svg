@@ -1,0 +1,99 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="375" height="812" viewBox="0 0 375 812">
+  <rect id="Background" width="375" height="812" fill="#F9FAFB" rx="20"/>
+
+  <!-- Header -->
+  <g id="Header">
+    <rect x="0" y="0" width="375" height="170" fill="#FFFFFF" filter="drop-shadow(0 1px 3px rgba(0,0,0,0.06))"/>
+    <!-- Back -->
+    <text x="16" y="30" font-family="Inter, sans-serif" font-size="13" fill="#6B7280">&lt; Back to Dashboard</text>
+    <text x="16" y="60" font-family="Inter, sans-serif" font-size="22" font-weight="700" fill="#1F2937">Find Your Dream Job</text>
+
+    <!-- Search Bar -->
+    <rect x="16" y="76" width="343" height="44" rx="22" fill="#F9FAFB" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="40" y="103" font-family="Inter, sans-serif" font-size="13" fill="#9CA3AF">Search by title or company</text>
+    <circle cx="338" cy="98" r="8" fill="none" stroke="#9CA3AF" stroke-width="1.5"/>
+
+    <!-- Filter Pills -->
+    <g id="Filters">
+      <rect x="16" y="132" width="62" height="28" rx="14" fill="#7C3AED"/>
+      <text x="47" y="150" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#FFFFFF" text-anchor="middle">All Jobs</text>
+
+      <rect x="86" y="132" width="48" height="28" rx="14" fill="#F3F4F6"/>
+      <text x="110" y="150" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#6B7280" text-anchor="middle">Tech</text>
+
+      <rect x="142" y="132" width="62" height="28" rx="14" fill="#F3F4F6"/>
+      <text x="173" y="150" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#6B7280" text-anchor="middle">Finance</text>
+
+      <rect x="212" y="132" width="62" height="28" rx="14" fill="#F3F4F6"/>
+      <text x="243" y="150" font-family="Inter, sans-serif" font-size="11" font-weight="500" fill="#6B7280" text-anchor="middle">Remote</text>
+    </g>
+  </g>
+
+  <!-- Results Info + Pagination -->
+  <g id="Results-Bar">
+    <text x="16" y="200" font-family="Inter, sans-serif" font-size="12" fill="#6B7280">48 jobs found</text>
+    <text x="340" y="200" font-family="Inter, sans-serif" font-size="11" fill="#6B7280" text-anchor="end">Page 1 of 4</text>
+  </g>
+
+  <!-- Job Card 1 -->
+  <g id="Job-Card-1">
+    <rect x="16" y="216" width="343" height="130" rx="12" fill="#FFFFFF" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.05))"/>
+    <text x="32" y="244" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#1F2937">Senior Software Engineer</text>
+    <text x="32" y="264" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#7C3AED">Google</text>
+    <text x="32" y="282" font-family="Inter, sans-serif" font-size="11" fill="#6B7280">Bangalore, India</text>
+
+    <rect x="280" y="232" width="62" height="22" rx="11" fill="#7C3AED"/>
+    <text x="311" y="247" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#FFFFFF" text-anchor="middle">Remote OK</text>
+    <text x="326" y="268" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#1F2937" text-anchor="end">25-40 LPA</text>
+
+    <text x="32" y="305" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Design and build scalable systems...</text>
+    <text x="32" y="330" font-family="Inter, sans-serif" font-size="10" fill="#9CA3AF">2 days ago</text>
+    <text x="110" y="330" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#F59E0B">Referral: Rs.499</text>
+    <rect x="250" y="314" width="96" height="28" rx="10" fill="#7C3AED"/>
+    <text x="298" y="333" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF" text-anchor="middle">Apply for Referral</text>
+  </g>
+
+  <!-- Job Card 2 -->
+  <g id="Job-Card-2">
+    <rect x="16" y="362" width="343" height="130" rx="12" fill="#FFFFFF" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.05))"/>
+    <text x="32" y="390" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#1F2937">Product Manager</text>
+    <text x="32" y="410" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#7C3AED">Microsoft</text>
+    <text x="32" y="428" font-family="Inter, sans-serif" font-size="11" fill="#6B7280">Hyderabad, India</text>
+
+    <rect x="290" y="378" width="52" height="22" rx="11" fill="#F3F4F6"/>
+    <text x="316" y="393" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#6B7280" text-anchor="middle">On-site</text>
+    <text x="326" y="414" font-family="Inter, sans-serif" font-size="12" font-weight="700" fill="#1F2937" text-anchor="end">30-50 LPA</text>
+
+    <text x="32" y="451" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Lead product strategy for cloud services...</text>
+    <text x="32" y="476" font-family="Inter, sans-serif" font-size="10" fill="#9CA3AF">5 days ago</text>
+    <text x="110" y="476" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#F59E0B">Referral: Rs.499</text>
+    <rect x="250" y="460" width="96" height="28" rx="10" fill="#7C3AED"/>
+    <text x="298" y="479" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF" text-anchor="middle">Apply for Referral</text>
+  </g>
+
+  <!-- Job Card 3 -->
+  <g id="Job-Card-3">
+    <rect x="16" y="508" width="343" height="130" rx="12" fill="#FFFFFF" filter="drop-shadow(0 2px 6px rgba(0,0,0,0.05))"/>
+    <text x="32" y="536" font-family="Inter, sans-serif" font-size="15" font-weight="600" fill="#1F2937">Data Scientist</text>
+    <text x="32" y="556" font-family="Inter, sans-serif" font-size="13" font-weight="500" fill="#7C3AED">Flipkart</text>
+    <text x="32" y="574" font-family="Inter, sans-serif" font-size="11" fill="#6B7280">Bangalore, India</text>
+
+    <rect x="280" y="524" width="62" height="22" rx="11" fill="#7C3AED"/>
+    <text x="311" y="539" font-family="Inter, sans-serif" font-size="10" font-weight="500" fill="#FFFFFF" text-anchor="middle">Remote OK</text>
+
+    <text x="32" y="597" font-family="Inter, sans-serif" font-size="10" fill="#6B7280">Build ML models for recommendation engine...</text>
+    <text x="32" y="622" font-family="Inter, sans-serif" font-size="10" fill="#9CA3AF">Today</text>
+    <text x="110" y="622" font-family="Inter, sans-serif" font-size="10" font-weight="600" fill="#F59E0B">Referral: Rs.499</text>
+    <rect x="250" y="606" width="96" height="28" rx="10" fill="#7C3AED"/>
+    <text x="298" y="625" font-family="Inter, sans-serif" font-size="11" font-weight="600" fill="#FFFFFF" text-anchor="middle">Apply for Referral</text>
+  </g>
+
+  <!-- Pagination -->
+  <g id="Pagination">
+    <rect x="100" y="660" width="70" height="30" rx="6" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="135" y="680" font-family="Inter, sans-serif" font-size="11" fill="#9CA3AF" text-anchor="middle">Previous</text>
+    <text x="187" y="680" font-family="Inter, sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">1 of 4</text>
+    <rect x="210" y="660" width="56" height="30" rx="6" fill="none" stroke="#E5E7EB" stroke-width="1"/>
+    <text x="238" y="680" font-family="Inter, sans-serif" font-size="11" fill="#6B7280" text-anchor="middle">Next</text>
+  </g>
+</svg>

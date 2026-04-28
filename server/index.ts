@@ -2,6 +2,7 @@ import { env } from './config/env.js';
 import express, { type Request, Response, NextFunction } from "express";
 import { registerRoutes } from "./routes.js";
 import { setupVite, serveStatic, log } from "./vite.js";
+import { startJobFetchCron } from "./job-fetcher.js";
 
 const app = express();
 app.use(express.json());
@@ -67,5 +68,7 @@ app.use((req, res, next) => {
     // reusePort: true, // Disabled for macOS compatibility
   }, () => {
     log(`serving on port ${port}`);
+    // Start automated job fetching cron (daily at 3 AM IST)
+    startJobFetchCron();
   });
 })();
