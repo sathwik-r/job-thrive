@@ -66,18 +66,18 @@ export default function ProofUploadModal({ isOpen, onClose, onSubmit }: ProofUpl
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
           <DialogTitle className="text-xl font-bold text-[var(--dark-gray)]">Upload Proof</DialogTitle>
-          <p className="text-gray-600 text-sm">Upload a screenshot showing you submitted the referral</p>
+          <p className="text-[#A1A0B3] text-sm">Upload a screenshot showing you submitted the referral</p>
         </DialogHeader>
 
         <div className="space-y-6">
           {!selectedFile ? (
             <div
-              className="border-2 border-dashed border-gray-300 rounded-2xl p-8 text-center cursor-pointer hover:border-[var(--purple-primary)] transition-colors"
+              className="border-2 border-dashed border-[#302D45] rounded-2xl p-8 text-center cursor-pointer hover:border-[var(--purple-primary)] transition-colors"
               onClick={() => fileInputRef.current?.click()}
             >
-              <Camera className="w-12 h-12 text-gray-400 mx-auto mb-4" />
-              <p className="text-gray-600 mb-2">Take Photo or Upload</p>
-              <p className="text-sm text-gray-500">PNG, JPG (Max 10MB)</p>
+              <Camera className="w-12 h-12 text-[#5C5A72] mx-auto mb-4" />
+              <p className="text-[#A1A0B3] mb-2">Take Photo or Upload</p>
+              <p className="text-sm text-[#5C5A72]">PNG, JPG (Max 10MB)</p>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -106,12 +106,12 @@ export default function ProofUploadModal({ isOpen, onClose, onSubmit }: ProofUpl
                   </Button>
                 </div>
               )}
-              <div className="bg-gray-50 rounded-xl p-4">
+              <div className="bg-[#13121D] rounded-xl p-4">
                 <div className="flex items-center space-x-3">
                   <Upload className="w-5 h-5 text-[var(--purple-primary)]" />
                   <div>
                     <p className="font-medium text-[var(--dark-gray)]">{selectedFile.name}</p>
-                    <p className="text-sm text-gray-500">
+                    <p className="text-sm text-[#5C5A72]">
                       {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
                     </p>
                   </div>

@@ -1,0 +1,323 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="2000" viewBox="0 0 1200 2000">
+  <rect width="1200" height="2000" fill="#09090B"/>
+
+  <!-- Title -->
+  <text x="60" y="50" font-family="Inter, system-ui" font-size="20" font-weight="800" fill="#FAFAFA">FINAL DIRECTION — A + C Hybrid</text>
+  <text x="60" y="75" font-family="Inter, system-ui" font-size="13" fill="#52525B">Premium dark + vibrant energy · High engagement · Bold yet refined</text>
+
+  <!-- ═══════════ COLOR SYSTEM ═══════════ -->
+  <text x="60" y="120" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="#52525B" letter-spacing="2">COLOR SYSTEM</text>
+
+  <defs>
+    <linearGradient id="heroGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#6D5BF7"/>
+      <stop offset="50%" stop-color="#A259FF"/>
+      <stop offset="100%" stop-color="#1DB954"/>
+    </linearGradient>
+    <linearGradient id="ctaGrad" x1="0" y1="0" x2="1" y2="0">
+      <stop offset="0%" stop-color="#6D5BF7"/>
+      <stop offset="100%" stop-color="#1DB954"/>
+    </linearGradient>
+    <linearGradient id="warmGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF7262"/>
+      <stop offset="100%" stop-color="#FFB347"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Palette -->
+  <rect x="60" y="138" width="50" height="36" rx="8" fill="#09090B" stroke="#27272A" stroke-width="1"/>
+  <text x="85" y="190" font-family="Inter, mono" font-size="8" fill="#3F3F46" text-anchor="middle">BG</text>
+  <rect x="118" y="138" width="50" height="36" rx="8" fill="#141416"/>
+  <text x="143" y="190" font-family="Inter, mono" font-size="8" fill="#3F3F46" text-anchor="middle">Surface</text>
+  <rect x="176" y="138" width="50" height="36" rx="8" fill="#1E1E22"/>
+  <text x="201" y="190" font-family="Inter, mono" font-size="8" fill="#3F3F46" text-anchor="middle">Card</text>
+  <rect x="234" y="138" width="50" height="36" rx="8" fill="#6D5BF7"/>
+  <text x="259" y="190" font-family="Inter, mono" font-size="8" fill="#3F3F46" text-anchor="middle">Purple</text>
+  <rect x="292" y="138" width="50" height="36" rx="8" fill="#1DB954"/>
+  <text x="317" y="190" font-family="Inter, mono" font-size="8" fill="#3F3F46" text-anchor="middle">Green</text>
+  <rect x="350" y="138" width="50" height="36" rx="8" fill="#A259FF"/>
+  <text x="375" y="190" font-family="Inter, mono" font-size="8" fill="#3F3F46" text-anchor="middle">Violet</text>
+  <rect x="408" y="138" width="50" height="36" rx="8" fill="#FF7262"/>
+  <text x="433" y="190" font-family="Inter, mono" font-size="8" fill="#3F3F46" text-anchor="middle">Coral</text>
+  <rect x="466" y="138" width="50" height="36" rx="8" fill="#FAFAFA"/>
+  <text x="491" y="190" font-family="Inter, mono" font-size="8" fill="#3F3F46" text-anchor="middle">White</text>
+  <rect x="524" y="138" width="50" height="36" rx="8" fill="#27272A"/>
+  <text x="549" y="190" font-family="Inter, mono" font-size="8" fill="#3F3F46" text-anchor="middle">Border</text>
+
+  <text x="620" y="155" font-family="Inter, system-ui" font-size="10" fill="#3F3F46">Key principles:</text>
+  <text x="620" y="172" font-family="Inter, system-ui" font-size="10" fill="#52525B">· Purple = primary actions, brand</text>
+  <text x="620" y="186" font-family="Inter, system-ui" font-size="10" fill="#52525B">· Green = success, money, growth</text>
+  <text x="620" y="200" font-family="Inter, system-ui" font-size="10" fill="#52525B">· Coral = alerts, urgency, hot items</text>
+  <text x="620" y="214" font-family="Inter, system-ui" font-size="10" fill="#52525B">· Gradient = CTAs, hero sections only</text>
+
+  <!-- ═══════════ LOGO ═══════════ -->
+  <text x="60" y="250" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="#52525B" letter-spacing="2">LOGO</text>
+
+  <!-- Dark bg logo -->
+  <rect x="60" y="268" width="320" height="100" rx="14" fill="#141416" stroke="#27272A" stroke-width="1"/>
+  <!-- Mark: rounded square with gradient + arrow symbol -->
+  <rect x="84" y="290" width="52" height="52" rx="14" fill="url(#heroGrad)"/>
+  <!-- Upward chevron/arrow (growth + thrive) -->
+  <path d="M98 324 L110 302 L122 324" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="110" cy="296" r="3.5" fill="white" opacity="0.9"/>
+  <!-- Wordmark -->
+  <text x="148" y="324" font-family="Inter, system-ui" font-size="24" font-weight="900" fill="#FAFAFA" letter-spacing="-0.8">jobthrive</text>
+
+  <!-- Light bg logo -->
+  <rect x="410" y="268" width="320" height="100" rx="14" fill="#FAFAFA"/>
+  <rect x="434" y="290" width="52" height="52" rx="14" fill="url(#heroGrad)"/>
+  <path d="M448 324 L460 302 L472 324" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="460" cy="296" r="3.5" fill="white" opacity="0.9"/>
+  <text x="498" y="324" font-family="Inter, system-ui" font-size="24" font-weight="900" fill="#09090B" letter-spacing="-0.8">jobthrive</text>
+
+  <!-- Icon only -->
+  <rect x="760" y="268" width="100" height="100" rx="14" fill="#141416" stroke="#27272A" stroke-width="1"/>
+  <rect x="784" y="290" width="52" height="52" rx="14" fill="url(#heroGrad)"/>
+  <path d="M798 324 L810 302 L822 324" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="810" cy="296" r="3.5" fill="white" opacity="0.9"/>
+
+  <text x="60" y="395" font-family="Inter, system-ui" font-size="10" fill="#3F3F46">Arrow = career growth · Dot = person/goal · Gradient = energy · Lowercase = modern/approachable</text>
+
+  <!-- ═══════════ LOGIN SCREEN ═══════════ -->
+  <text x="60" y="440" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="#52525B" letter-spacing="2">LOGIN</text>
+
+  <rect x="60" y="458" width="340" height="700" rx="24" fill="#09090B" stroke="#1E1E22" stroke-width="1.5"/>
+
+  <!-- Ambient glow blobs -->
+  <circle cx="170" cy="580" r="120" fill="#6D5BF7" opacity="0.04"/>
+  <circle cx="300" cy="640" r="90" fill="#1DB954" opacity="0.03"/>
+  <circle cx="130" cy="700" r="60" fill="#A259FF" opacity="0.03"/>
+
+  <!-- Subtle noise texture via dots -->
+  <circle cx="120" cy="520" r="1" fill="#27272A" opacity="0.5"/>
+  <circle cx="280" cy="550" r="1" fill="#27272A" opacity="0.5"/>
+  <circle cx="200" cy="690" r="1" fill="#27272A" opacity="0.5"/>
+
+  <!-- Logo -->
+  <rect x="194" y="560" width="52" height="52" rx="14" fill="url(#heroGrad)"/>
+  <path d="M208 594 L220 572 L232 594" stroke="white" stroke-width="3.5" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="220" cy="566" r="3.5" fill="white" opacity="0.9"/>
+
+  <text x="230" y="648" font-family="Inter, system-ui" font-size="28" font-weight="900" fill="#FAFAFA" text-anchor="middle" letter-spacing="-1">jobthrive</text>
+  <text x="230" y="672" font-family="Inter, system-ui" font-size="13" fill="#52525B" text-anchor="middle">land your dream role, faster</text>
+
+  <!-- Feature pills -->
+  <rect x="85" y="700" width="78" height="24" rx="12" fill="#6D5BF712" stroke="#6D5BF730" stroke-width="1"/>
+  <text x="124" y="716" font-family="Inter, system-ui" font-size="9" font-weight="600" fill="#6D5BF7" text-anchor="middle">Referrals</text>
+  <rect x="171" y="700" width="78" height="24" rx="12" fill="#1DB95412" stroke="#1DB95430" stroke-width="1"/>
+  <text x="210" y="716" font-family="Inter, system-ui" font-size="9" font-weight="600" fill="#1DB954" text-anchor="middle">Coaching</text>
+  <rect x="257" y="700" width="78" height="24" rx="12" fill="#FF726212" stroke="#FF726230" stroke-width="1"/>
+  <text x="296" y="716" font-family="Inter, system-ui" font-size="9" font-weight="600" fill="#FF7262" text-anchor="middle">Earn Rs.499+</text>
+
+  <!-- Login card -->
+  <rect x="78" y="748" width="284" height="120" rx="16" fill="#141416" stroke="#27272A" stroke-width="1"/>
+
+  <!-- Google button with gradient border -->
+  <rect x="96" y="770" width="248" height="50" rx="12" fill="#FAFAFA"/>
+  <circle cx="124" cy="795" r="10" fill="none" stroke="#E4E4E7" stroke-width="1"/>
+  <text x="124" y="800" font-family="Inter, system-ui" font-size="12" font-weight="700" fill="#4285F4" text-anchor="middle">G</text>
+  <text x="220" y="800" font-family="Inter, system-ui" font-size="14" font-weight="700" fill="#09090B" text-anchor="middle">Continue with Google</text>
+
+  <text x="220" y="850" font-family="Inter, system-ui" font-size="9" fill="#3F3F46" text-anchor="middle">Terms · Privacy · Refund</text>
+
+  <!-- Social proof -->
+  <text x="230" y="910" font-family="Inter, system-ui" font-size="10" fill="#3F3F46" text-anchor="middle">Trusted by 500+ professionals at</text>
+  <!-- Company logos row -->
+  <rect x="108" y="922" width="44" height="20" rx="4" fill="#1E1E22"/>
+  <text x="130" y="936" font-family="Inter, system-ui" font-size="8" font-weight="600" fill="#52525B" text-anchor="middle">Google</text>
+  <rect x="158" y="922" width="56" height="20" rx="4" fill="#1E1E22"/>
+  <text x="186" y="936" font-family="Inter, system-ui" font-size="8" font-weight="600" fill="#52525B" text-anchor="middle">Microsoft</text>
+  <rect x="220" y="922" width="48" height="20" rx="4" fill="#1E1E22"/>
+  <text x="244" y="936" font-family="Inter, system-ui" font-size="8" font-weight="600" fill="#52525B" text-anchor="middle">Amazon</text>
+  <rect x="274" y="922" width="44" height="20" rx="4" fill="#1E1E22"/>
+  <text x="296" y="936" font-family="Inter, system-ui" font-size="8" font-weight="600" fill="#52525B" text-anchor="middle">Meta</text>
+
+  <!-- ═══════════ DASHBOARD ═══════════ -->
+  <text x="460" y="440" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="#52525B" letter-spacing="2">DASHBOARD — SEEKER VIEW</text>
+
+  <rect x="460" y="458" width="340" height="700" rx="24" fill="#09090B" stroke="#1E1E22" stroke-width="1.5"/>
+
+  <!-- Header with blur -->
+  <rect x="461" y="459" width="338" height="54" rx="23" fill="#09090B" opacity="0.95"/>
+  <rect x="461" y="512" width="338" height="1" fill="#1E1E22"/>
+  <!-- Logo small -->
+  <rect x="476" y="470" width="30" height="30" rx="8" fill="url(#heroGrad)"/>
+  <path d="M485 490 L491 480 L497 490" stroke="white" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <circle cx="491" cy="477" r="2" fill="white"/>
+  <text x="514" y="490" font-family="Inter, system-ui" font-size="13" font-weight="900" fill="#FAFAFA" letter-spacing="-0.5">jobthrive</text>
+  <!-- Role toggle with gradient pill -->
+  <rect x="630" y="474" width="100" height="24" rx="12" fill="#1E1E22"/>
+  <rect x="632" y="476" width="48" height="20" rx="10" fill="url(#ctaGrad)"/>
+  <text x="656" y="490" font-family="Inter, system-ui" font-size="9" font-weight="700" fill="white" text-anchor="middle">Seeker</text>
+  <text x="706" y="490" font-family="Inter, system-ui" font-size="9" fill="#52525B" text-anchor="middle">Referrer</text>
+  <!-- Avatar with green ring -->
+  <circle cx="770" cy="486" r="13" fill="none" stroke="#1DB954" stroke-width="1.5"/>
+  <circle cx="770" cy="486" r="10" fill="#1E1E22"/>
+  <text x="770" y="490" font-family="Inter, system-ui" font-size="9" font-weight="700" fill="#52525B" text-anchor="middle">R</text>
+
+  <!-- Hero card with gradient top border -->
+  <rect x="476" y="526" width="308" height="108" rx="14" fill="#141416"/>
+  <rect x="476" y="526" width="308" height="3" rx="1.5" fill="url(#heroGrad)"/>
+  <text x="492" y="552" font-family="Inter, system-ui" font-size="10" fill="#52525B" letter-spacing="1.5">WELCOME BACK</text>
+  <text x="492" y="576" font-family="Inter, system-ui" font-size="20" font-weight="800" fill="#FAFAFA">Rehan Yadav</text>
+  <!-- CTA with gradient -->
+  <rect x="492" y="594" width="140" height="30" rx="8" fill="url(#ctaGrad)"/>
+  <text x="562" y="614" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="white" text-anchor="middle">Explore 95 Jobs</text>
+  <!-- Investment badge -->
+  <text x="762" y="558" font-family="Inter, system-ui" font-size="22" font-weight="900" fill="#1DB954" text-anchor="end">Rs.0</text>
+  <text x="762" y="574" font-family="Inter, system-ui" font-size="8" fill="#52525B" text-anchor="end" letter-spacing="1">INVESTED</text>
+
+  <!-- Stats row with colored top accents -->
+  <rect x="476" y="648" width="98" height="62" rx="10" fill="#141416"/>
+  <rect x="476" y="648" width="98" height="2.5" rx="1" fill="#6D5BF7"/>
+  <text x="525" y="676" font-family="Inter, system-ui" font-size="24" font-weight="900" fill="#FAFAFA" text-anchor="middle">95</text>
+  <text x="525" y="694" font-family="Inter, system-ui" font-size="8" fill="#52525B" text-anchor="middle" letter-spacing="1">JOBS</text>
+
+  <rect x="582" y="648" width="98" height="62" rx="10" fill="#141416"/>
+  <rect x="582" y="648" width="98" height="2.5" rx="1" fill="#1DB954"/>
+  <text x="631" y="676" font-family="Inter, system-ui" font-size="24" font-weight="900" fill="#1DB954" text-anchor="middle">3</text>
+  <text x="631" y="694" font-family="Inter, system-ui" font-size="8" fill="#52525B" text-anchor="middle" letter-spacing="1">APPLIED</text>
+
+  <rect x="688" y="648" width="98" height="62" rx="10" fill="#141416"/>
+  <rect x="688" y="648" width="98" height="2.5" rx="1" fill="#FF7262"/>
+  <text x="737" y="676" font-family="Inter, system-ui" font-size="24" font-weight="900" fill="#FF7262" text-anchor="middle">1</text>
+  <text x="737" y="694" font-family="Inter, system-ui" font-size="8" fill="#52525B" text-anchor="middle" letter-spacing="1">SUCCESS</text>
+
+  <!-- Coaching CTA card -->
+  <rect x="476" y="724" width="308" height="56" rx="10" fill="#141416" stroke="#27272A" stroke-width="1"/>
+  <rect x="492" y="738" width="28" height="28" rx="8" fill="#A259FF20"/>
+  <text x="506" y="757" font-family="Inter, system-ui" font-size="14" fill="#A259FF" text-anchor="middle">M</text>
+  <text x="530" y="752" font-family="Inter, system-ui" font-size="12" font-weight="700" fill="#FAFAFA">1v1 Coaching</text>
+  <text x="530" y="768" font-family="Inter, system-ui" font-size="9" fill="#52525B">500+ mentors available</text>
+  <rect x="714" y="740" width="56" height="24" rx="6" fill="#A259FF"/>
+  <text x="742" y="756" font-family="Inter, system-ui" font-size="9" font-weight="700" fill="white" text-anchor="middle">Start</text>
+
+  <!-- Active referrals section -->
+  <text x="476" y="808" font-family="Inter, system-ui" font-size="10" font-weight="700" fill="#52525B" letter-spacing="1.5">ACTIVE REFERRALS</text>
+
+  <!-- Card 1 with left accent -->
+  <rect x="476" y="822" width="308" height="70" rx="10" fill="#141416"/>
+  <rect x="476" y="822" width="3" height="70" rx="1.5" fill="#A259FF"/>
+  <rect x="492" y="836" width="34" height="34" rx="9" fill="#1E1E22"/>
+  <text x="509" y="858" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="#52525B" text-anchor="middle">G</text>
+  <text x="538" y="852" font-family="Inter, system-ui" font-size="12" font-weight="700" fill="#FAFAFA">Sr. Software Engineer</text>
+  <text x="538" y="868" font-family="Inter, system-ui" font-size="10" fill="#3F3F46">Google · Bangalore</text>
+  <rect x="538" y="874" width="50" height="14" rx="7" fill="#A259FF15"/>
+  <text x="563" y="884" font-family="Inter, system-ui" font-size="7" font-weight="700" fill="#A259FF" text-anchor="middle">Pending</text>
+  <text x="762" y="862" font-family="Inter, system-ui" font-size="12" font-weight="800" fill="#FAFAFA" text-anchor="end">Rs.499</text>
+
+  <!-- Card 2 -->
+  <rect x="476" y="900" width="308" height="70" rx="10" fill="#141416"/>
+  <rect x="476" y="900" width="3" height="70" rx="1.5" fill="#1DB954"/>
+  <rect x="492" y="914" width="34" height="34" rx="9" fill="#1E1E22"/>
+  <text x="509" y="936" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="#52525B" text-anchor="middle">M</text>
+  <text x="538" y="930" font-family="Inter, system-ui" font-size="12" font-weight="700" fill="#FAFAFA">Product Manager</text>
+  <text x="538" y="946" font-family="Inter, system-ui" font-size="10" fill="#3F3F46">Microsoft · Hyderabad</text>
+  <rect x="538" y="952" width="56" height="14" rx="7" fill="#1DB95415"/>
+  <text x="566" y="962" font-family="Inter, system-ui" font-size="7" font-weight="700" fill="#1DB954" text-anchor="middle">Assigned</text>
+  <text x="762" y="940" font-family="Inter, system-ui" font-size="12" font-weight="800" fill="#1DB954" text-anchor="end">Rs.499</text>
+
+  <!-- Bottom nav with glow -->
+  <rect x="460" y="1108" width="340" height="50" fill="#09090B"/>
+  <rect x="460" y="1108" width="340" height="1" fill="#1E1E22"/>
+  <!-- Active indicator glow -->
+  <circle cx="530" cy="1128" r="12" fill="#6D5BF7" opacity="0.1"/>
+  <circle cx="530" cy="1125" r="2" fill="#6D5BF7"/>
+  <text x="530" y="1145" font-family="Inter, system-ui" font-size="9" font-weight="700" fill="#FAFAFA" text-anchor="middle">Home</text>
+  <text x="630" y="1140" font-family="Inter, system-ui" font-size="9" fill="#3F3F46" text-anchor="middle">Search</text>
+  <text x="730" y="1140" font-family="Inter, system-ui" font-size="9" fill="#3F3F46" text-anchor="middle">Profile</text>
+
+  <!-- ═══════════ JOB SEARCH ═══════════ -->
+  <text x="860" y="440" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="#52525B" letter-spacing="2">JOB SEARCH</text>
+
+  <rect x="860" y="458" width="300" height="700" rx="24" fill="#09090B" stroke="#1E1E22" stroke-width="1.5"/>
+
+  <!-- Header -->
+  <text x="880" y="494" font-family="Inter, system-ui" font-size="11" fill="#52525B">&lt; Back</text>
+  <text x="880" y="524" font-family="Inter, system-ui" font-size="18" font-weight="800" fill="#FAFAFA">Find Jobs</text>
+
+  <!-- Search bar with gradient glow -->
+  <rect x="876" y="540" width="268" height="44" rx="12" fill="#141416" stroke="#27272A" stroke-width="1"/>
+  <text x="900" y="567" font-family="Inter, system-ui" font-size="12" fill="#3F3F46">Search title or company...</text>
+
+  <!-- Filter pills -->
+  <rect x="876" y="596" width="54" height="24" rx="12" fill="url(#ctaGrad)"/>
+  <text x="903" y="612" font-family="Inter, system-ui" font-size="9" font-weight="700" fill="white" text-anchor="middle">All</text>
+  <rect x="936" y="596" width="50" height="24" rx="12" fill="#1E1E22"/>
+  <text x="961" y="612" font-family="Inter, system-ui" font-size="9" fill="#52525B" text-anchor="middle">Tech</text>
+  <rect x="992" y="596" width="62" height="24" rx="12" fill="#1E1E22"/>
+  <text x="1023" y="612" font-family="Inter, system-ui" font-size="9" fill="#52525B" text-anchor="middle">Remote</text>
+  <rect x="1060" y="596" width="62" height="24" rx="12" fill="#1E1E22"/>
+  <text x="1091" y="612" font-family="Inter, system-ui" font-size="9" fill="#52525B" text-anchor="middle">Finance</text>
+
+  <text x="876" y="648" font-family="Inter, system-ui" font-size="10" fill="#3F3F46">95 jobs found</text>
+
+  <!-- Job card 1 -->
+  <rect x="876" y="660" width="268" height="88" rx="10" fill="#141416"/>
+  <rect x="876" y="660" width="268" height="2.5" rx="1" fill="url(#ctaGrad)" opacity="0"/>
+  <rect x="892" y="676" width="34" height="34" rx="9" fill="#1E1E22"/>
+  <text x="909" y="698" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="#52525B" text-anchor="middle">G</text>
+  <text x="936" y="692" font-family="Inter, system-ui" font-size="12" font-weight="700" fill="#FAFAFA">Sr. Software Engineer</text>
+  <text x="936" y="708" font-family="Inter, system-ui" font-size="9" fill="#3F3F46">Google · Bangalore</text>
+  <rect x="936" y="716" width="46" height="14" rx="7" fill="#1DB95415"/>
+  <text x="959" y="726" font-family="Inter, system-ui" font-size="7" font-weight="600" fill="#1DB954" text-anchor="middle">Remote</text>
+  <text x="1122" y="726" font-family="Inter, system-ui" font-size="10" font-weight="700" fill="#FF7262" text-anchor="end">Rs.499</text>
+  <!-- Apply button -->
+  <rect x="1052" y="676" width="80" height="26" rx="7" fill="url(#ctaGrad)"/>
+  <text x="1092" y="694" font-family="Inter, system-ui" font-size="9" font-weight="700" fill="white" text-anchor="middle">Apply</text>
+
+  <!-- Job card 2 -->
+  <rect x="876" y="758" width="268" height="88" rx="10" fill="#141416"/>
+  <rect x="892" y="774" width="34" height="34" rx="9" fill="#1E1E22"/>
+  <text x="909" y="796" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="#52525B" text-anchor="middle">A</text>
+  <text x="936" y="790" font-family="Inter, system-ui" font-size="12" font-weight="700" fill="#FAFAFA">Frontend Developer</text>
+  <text x="936" y="806" font-family="Inter, system-ui" font-size="9" fill="#3F3F46">Amazon · Bangalore</text>
+  <rect x="936" y="814" width="42" height="14" rx="7" fill="#6D5BF715"/>
+  <text x="957" y="824" font-family="Inter, system-ui" font-size="7" font-weight="600" fill="#6D5BF7" text-anchor="middle">Hybrid</text>
+  <text x="1122" y="824" font-family="Inter, system-ui" font-size="10" font-weight="700" fill="#FF7262" text-anchor="end">Rs.499</text>
+  <rect x="1052" y="774" width="80" height="26" rx="7" fill="url(#ctaGrad)"/>
+  <text x="1092" y="792" font-family="Inter, system-ui" font-size="9" font-weight="700" fill="white" text-anchor="middle">Apply</text>
+
+  <!-- Job card 3 -->
+  <rect x="876" y="856" width="268" height="88" rx="10" fill="#141416"/>
+  <rect x="892" y="872" width="34" height="34" rx="9" fill="#1E1E22"/>
+  <text x="909" y="894" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="#52525B" text-anchor="middle">F</text>
+  <text x="936" y="888" font-family="Inter, system-ui" font-size="12" font-weight="700" fill="#FAFAFA">Data Scientist</text>
+  <text x="936" y="904" font-family="Inter, system-ui" font-size="9" fill="#3F3F46">Flipkart · Bangalore</text>
+  <rect x="936" y="912" width="42" height="14" rx="7" fill="#FF726215"/>
+  <text x="957" y="922" font-family="Inter, system-ui" font-size="7" font-weight="600" fill="#FF7262" text-anchor="middle">On-site</text>
+  <text x="1122" y="922" font-family="Inter, system-ui" font-size="10" font-weight="700" fill="#FF7262" text-anchor="end">Rs.499</text>
+  <rect x="1052" y="872" width="80" height="26" rx="7" fill="url(#ctaGrad)"/>
+  <text x="1092" y="890" font-family="Inter, system-ui" font-size="9" font-weight="700" fill="white" text-anchor="middle">Apply</text>
+
+  <!-- ═══════════ DESIGN RULES ═══════════ -->
+  <text x="60" y="1220" font-family="Inter, system-ui" font-size="11" font-weight="700" fill="#52525B" letter-spacing="2">DESIGN RULES</text>
+
+  <rect x="60" y="1240" width="500" height="220" rx="12" fill="#141416" stroke="#27272A" stroke-width="1"/>
+  <text x="80" y="1268" font-family="Inter, system-ui" font-size="12" font-weight="700" fill="#FAFAFA">Typography</text>
+  <text x="80" y="1288" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Inter font, weights 400-900</text>
+  <text x="80" y="1304" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Titles: 900 weight, tight tracking (-0.5 to -1)</text>
+  <text x="80" y="1320" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Labels: 700 weight, uppercase, letter-spacing 1-2px</text>
+  <text x="80" y="1336" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Body: 400 weight, #52525B</text>
+
+  <text x="80" y="1366" font-family="Inter, system-ui" font-size="12" font-weight="700" fill="#FAFAFA">Engagement Patterns</text>
+  <text x="80" y="1386" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Gradient top-border on hero/stat cards</text>
+  <text x="80" y="1402" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Colored left-accent on list items (status-coded)</text>
+  <text x="80" y="1418" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Subtle ambient glow blobs on key screens</text>
+  <text x="80" y="1434" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Staggered fade-in animations (framer-motion)</text>
+  <text x="80" y="1450" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Gradient CTAs for primary actions only</text>
+
+  <rect x="600" y="1240" width="500" height="220" rx="12" fill="#141416" stroke="#27272A" stroke-width="1"/>
+  <text x="620" y="1268" font-family="Inter, system-ui" font-size="12" font-weight="700" fill="#FAFAFA">Spacing &amp; Layout</text>
+  <text x="620" y="1288" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Border radius: 10-14px cards, 24px phone frames</text>
+  <text x="620" y="1304" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Card padding: 16px compact, 20px standard</text>
+  <text x="620" y="1320" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Section gap: 16-20px</text>
+  <text x="620" y="1336" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Borders: #27272A (subtle), no heavy shadows</text>
+
+  <text x="620" y="1366" font-family="Inter, system-ui" font-size="12" font-weight="700" fill="#FAFAFA">Micro-interactions</text>
+  <text x="620" y="1386" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Cards: translateY(-2px) on hover</text>
+  <text x="620" y="1402" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Buttons: scale(1.02) hover, scale(0.98) press</text>
+  <text x="620" y="1418" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Toggle: sliding pill with gradient fill</text>
+  <text x="620" y="1434" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Page entry: stagger 50ms per element</text>
+  <text x="620" y="1450" font-family="Inter, system-ui" font-size="11" fill="#52525B">· Nav: active dot glow indicator</text>
+</svg>

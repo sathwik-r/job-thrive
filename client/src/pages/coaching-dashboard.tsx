@@ -374,22 +374,22 @@ export default function CoachingDashboard() {
   ];
 
   return (
-    <div className="min-h-screen bg-[#fafafa]" data-testid="dashboard-coaching">
+    <div className="min-h-screen" style={{ background: '#0B0A10' }} data-testid="dashboard-coaching">
       {/* Header */}
-      <header className="bg-white/90 backdrop-blur-lg border-b border-gray-100/80 px-6 py-4 sticky top-0 z-30">
+      <header className="backdrop-blur-lg px-6 py-4 sticky top-0 z-30" style={{ background: 'rgba(11,10,16,0.92)', borderBottom: '1px solid #252336' }}>
         <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 max-w-7xl mx-auto">
           <div>
             <h1
-              className="text-xl font-extrabold text-[var(--dark-gray)] tracking-tight"
+              className="text-xl font-black text-[#FAFAFA] tracking-tight"
               data-testid="text-dashboard-title"
             >
               1v1 Coaching
             </h1>
-            <p className="text-sm text-muted-foreground">
+            <p className="text-sm text-[#5C5A72]">
               Personalized career guidance from top professionals
             </p>
           </div>
-          <div className="flex gap-1.5 bg-gray-100/80 rounded-xl p-0.5">
+          <div className="flex gap-1.5 bg-[#1A1828]/80 rounded-xl p-0.5">
             <Button
               variant="ghost"
               size="sm"
@@ -397,7 +397,7 @@ export default function CoachingDashboard() {
               className={`rounded-[10px] text-xs font-semibold px-4 transition-all ${
                 activeView === 'browse'
                   ? 'bg-[var(--purple-primary)] text-white shadow-sm hover:bg-[var(--purple-primary)]'
-                  : 'text-gray-500 hover:text-gray-700'
+                  : 'text-[#5C5A72] hover:text-[#A1A0B3]'
               }`}
               data-testid="button-browse-mentors"
             >
@@ -411,7 +411,7 @@ export default function CoachingDashboard() {
               className={`rounded-[10px] text-xs font-semibold px-4 transition-all ${
                 activeView === 'requests'
                   ? 'bg-[var(--purple-primary)] text-white shadow-sm hover:bg-[var(--purple-primary)]'
-                  : 'text-gray-500 hover:text-gray-700'
+                  : 'text-[#5C5A72] hover:text-[#A1A0B3]'
               }`}
               data-testid="button-manage-requests"
             >
@@ -431,17 +431,17 @@ export default function CoachingDashboard() {
               <CardContent className="p-4">
                 <div className="flex items-center justify-between">
                   <div>
-                    <p className="text-[11px] text-muted-foreground font-medium uppercase tracking-wider">
+                    <p className="text-[11px] text-[#5C5A72] font-medium uppercase tracking-wider">
                       {stat.title}
                     </p>
                     <p
-                      className="text-2xl font-extrabold mt-1 text-[var(--dark-gray)]"
+                      className="text-2xl font-extrabold mt-1 text-[#FAFAFA]"
                       data-testid={`text-stat-${stat.title.toLowerCase().replace(/\s+/g, '-')}`}
                     >
                       {stat.value}
                     </p>
                   </div>
-                  <div className="h-10 w-10 rounded-xl bg-gray-50 flex items-center justify-center">
+                  <div className="h-10 w-10 rounded-xl bg-[#13121D] flex items-center justify-center">
                     <stat.icon className={`h-5 w-5 ${stat.color}`} />
                   </div>
                 </div>
@@ -462,7 +462,7 @@ export default function CoachingDashboard() {
             <div className="lg:col-span-3">
               <div className="flex items-center justify-between mb-4">
                 <p
-                  className="text-sm text-muted-foreground"
+                  className="text-sm text-[#5C5A72]"
                   data-testid="text-results-count"
                 >
                   {filteredMentors.length} mentors found
@@ -478,20 +478,20 @@ export default function CoachingDashboard() {
                     <Card key={i} className="modern-card border-0 animate-pulse">
                       <CardContent className="p-4 space-y-3">
                         <div className="flex gap-3">
-                          <div className="w-11 h-11 rounded-full bg-gray-200" />
+                          <div className="w-11 h-11 rounded-full bg-[#211F30]" />
                           <div className="flex-1 space-y-2">
-                            <div className="h-4 bg-gray-200 rounded w-3/4" />
-                            <div className="h-3 bg-gray-100 rounded w-1/2" />
+                            <div className="h-4 bg-[#211F30] rounded w-3/4" />
+                            <div className="h-3 bg-[#1A1828] rounded w-1/2" />
                           </div>
                         </div>
-                        <div className="h-3 bg-gray-100 rounded w-full" />
+                        <div className="h-3 bg-[#1A1828] rounded w-full" />
                         <div className="flex gap-1">
-                          <div className="h-5 bg-gray-100 rounded-full w-14" />
-                          <div className="h-5 bg-gray-100 rounded-full w-16" />
+                          <div className="h-5 bg-[#1A1828] rounded-full w-14" />
+                          <div className="h-5 bg-[#1A1828] rounded-full w-16" />
                         </div>
                         <div className="flex gap-2 pt-2">
-                          <div className="h-8 bg-gray-100 rounded-lg flex-1" />
-                          <div className="h-8 bg-gray-200 rounded-lg flex-1" />
+                          <div className="h-8 bg-[#1A1828] rounded-lg flex-1" />
+                          <div className="h-8 bg-[#211F30] rounded-lg flex-1" />
                         </div>
                       </CardContent>
                     </Card>
@@ -513,11 +513,11 @@ export default function CoachingDashboard() {
               {!isLoadingMentors && filteredMentors.length === 0 && (
                 <Card className="modern-card border-0">
                   <CardContent className="py-16 text-center">
-                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-gray-100 flex items-center justify-center">
-                      <Search className="h-7 w-7 text-gray-400" />
+                    <div className="w-16 h-16 mx-auto mb-4 rounded-2xl bg-[#1A1828] flex items-center justify-center">
+                      <Search className="h-7 w-7 text-[#5C5A72]" />
                     </div>
-                    <h3 className="font-semibold text-[var(--dark-gray)] mb-1">No mentors found</h3>
-                    <p className="text-sm text-muted-foreground mb-5">
+                    <h3 className="font-semibold text-[#FAFAFA] mb-1">No mentors found</h3>
+                    <p className="text-sm text-[#5C5A72] mb-5">
                       Try adjusting your filters or search terms
                     </p>
                     <Button
@@ -549,7 +549,7 @@ export default function CoachingDashboard() {
               <Card>
                 <CardContent className="py-12 text-center">
                   <Loader2 className="h-8 w-8 animate-spin mx-auto mb-4" />
-                  <p className="text-muted-foreground">
+                  <p className="text-[#5C5A72]">
                     Loading session requests...
                   </p>
                 </CardContent>

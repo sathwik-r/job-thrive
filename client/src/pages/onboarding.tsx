@@ -60,48 +60,76 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
           animate="center"
         >
           <motion.div className="text-center" variants={fadeUp}>
-            <div className="w-24 h-24 mx-auto mb-6 glassmorphism rounded-2xl flex items-center justify-center shadow-lg shadow-white/5">
-              <Logo variant="white" size={64} showText={false} />
+            <div className="flex justify-center mb-6">
+              <Logo size={64} showText={false} />
             </div>
-            <h2 className="text-2xl sm:text-3xl font-bold mb-3 text-white tracking-tight">Transform Your Career Journey</h2>
-            <p className="text-base text-white/60 mb-8 max-w-lg mx-auto leading-relaxed">Connect, refer, and earn in the world's most advanced referral marketplace</p>
+            <h2
+              className="text-2xl sm:text-3xl mb-3 tracking-tight"
+              style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#FAFAFA' }}
+            >
+              Transform Your Career Journey
+            </h2>
+            <p
+              className="text-base mb-8 max-w-lg mx-auto leading-relaxed"
+              style={{ color: '#A1A0B3', fontFamily: 'Inter, sans-serif' }}
+            >
+              Connect, refer, and earn in the world's most advanced referral marketplace
+            </p>
           </motion.div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               {
-                icon: <Search className="w-5 h-5 text-white" />,
-                gradient: "from-[var(--purple-primary)] to-[var(--purple-light)]",
+                icon: <Search className="w-5 h-5" style={{ color: '#FAFAFA' }} />,
+                gradientBg: 'linear-gradient(135deg, #6D5BF7, #A259FF)',
                 title: "Find Dream Jobs",
                 desc: "Discover exclusive opportunities at top companies -- faster than job boards",
               },
               {
-                icon: <Users className="w-5 h-5 text-white" />,
-                gradient: "from-[var(--emerald-success)] to-[var(--orange-accent)]",
+                icon: <Users className="w-5 h-5" style={{ color: '#FAFAFA' }} />,
+                gradientBg: 'linear-gradient(135deg, #1DB954, #A259FF)',
                 title: "Get Consulted",
                 desc: "Accelerate your growth with 1-on-1 guidance from top industry professionals",
               },
               {
-                icon: <IndianRupee className="w-5 h-5 text-white" />,
-                gradient: "from-[var(--orange-accent)] to-[var(--purple-primary)]",
+                icon: <IndianRupee className="w-5 h-5" style={{ color: '#FAFAFA' }} />,
+                gradientBg: 'linear-gradient(135deg, #FF7262, #FFB347)',
                 title: "Earn Money",
                 desc: "Share your experience, mentor top talent, and earn while helping others grow.",
               },
             ].map((item, i) => (
               <motion.div key={i} variants={fadeUp}>
-                <Card className="modern-card card-hover group cursor-default">
-                  <CardContent className="p-6 text-center">
-                    <motion.div
-                      className={`w-11 h-11 mx-auto mb-4 bg-gradient-to-r ${item.gradient} rounded-xl flex items-center justify-center shadow-md`}
-                      whileHover={{ scale: 1.1, rotate: 3 }}
-                      transition={{ type: 'spring', stiffness: 400, damping: 20 }}
-                    >
-                      {item.icon}
-                    </motion.div>
-                    <h3 className="font-semibold text-[var(--dark-gray)] mb-1.5 text-sm">{item.title}</h3>
-                    <p className="text-xs text-gray-500 leading-relaxed">{item.desc}</p>
-                  </CardContent>
-                </Card>
+                <div
+                  className="rounded-2xl p-6 text-center transition-all duration-300 group cursor-default"
+                  style={{
+                    backgroundColor: '#1A1828',
+                    border: '1px solid #252336',
+                  }}
+                  onMouseEnter={(e) => {
+                    (e.currentTarget as HTMLElement).style.borderColor = '#302D45';
+                  }}
+                  onMouseLeave={(e) => {
+                    (e.currentTarget as HTMLElement).style.borderColor = '#252336';
+                  }}
+                >
+                  <motion.div
+                    className="w-11 h-11 mx-auto mb-4 rounded-xl flex items-center justify-center shadow-md"
+                    style={{ background: item.gradientBg }}
+                    whileHover={{ scale: 1.1, rotate: 3 }}
+                    transition={{ type: 'spring', stiffness: 400, damping: 20 }}
+                  >
+                    {item.icon}
+                  </motion.div>
+                  <h3
+                    className="mb-1.5 text-sm"
+                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, color: '#FAFAFA' }}
+                  >
+                    {item.title}
+                  </h3>
+                  <p className="text-xs leading-relaxed" style={{ color: '#A1A0B3' }}>
+                    {item.desc}
+                  </p>
+                </div>
               </motion.div>
             ))}
           </div>
@@ -119,93 +147,141 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
           animate="center"
         >
           <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-            {/* Job Seeker Side */}
+            {/* Job Seeker Side - Purple tones */}
             <motion.div variants={fadeUp}>
-              <Card className="bg-gradient-to-br from-[var(--purple-primary)] to-[var(--purple-light)] text-white p-6 border-0 shadow-xl shadow-purple-900/20 hover:shadow-2xl hover:shadow-purple-900/30 transition-shadow duration-300">
-                <CardContent className="p-0">
-                  <div className="flex items-center mb-5">
-                    <div className="w-11 h-11 bg-white/20 rounded-xl flex items-center justify-center mr-3 backdrop-blur-sm">
-                      <Search className="w-5 h-5" />
-                    </div>
-                    <h3 className="text-lg font-bold tracking-tight">As a Job Seeker</h3>
+              <div
+                className="rounded-2xl p-6 transition-all duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(109, 91, 247, 0.15), rgba(162, 89, 255, 0.1))',
+                  border: '1px solid rgba(109, 91, 247, 0.25)',
+                }}
+              >
+                <div className="flex items-center mb-5">
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center mr-3"
+                    style={{ background: 'linear-gradient(135deg, #6D5BF7, #A259FF)' }}
+                  >
+                    <Search className="w-5 h-5" style={{ color: '#FAFAFA' }} />
                   </div>
+                  <h3
+                    className="text-lg tracking-tight"
+                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#FAFAFA' }}
+                  >
+                    As a Job Seeker
+                  </h3>
+                </div>
 
-                  <div className="space-y-3.5">
-                    {[
-                      { title: "Browse Premium Jobs", desc: "Access hidden job market from top companies" },
-                      { title: "Get Internal Referrals", desc: "Connected directly with company employees" },
-                      { title: "Track Your Progress", desc: "Real-time updates on referral status" },
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-start space-x-2.5">
-                        <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0 opacity-80" />
-                        <div>
-                          <p className="font-medium text-sm">{item.title}</p>
-                          <p className="text-xs opacity-75">{item.desc}</p>
-                        </div>
+                <div className="space-y-3.5">
+                  {[
+                    { title: "Browse Premium Jobs", desc: "Access hidden job market from top companies" },
+                    { title: "Get Internal Referrals", desc: "Connected directly with company employees" },
+                    { title: "Track Your Progress", desc: "Real-time updates on referral status" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start space-x-2.5">
+                      <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#6D5BF7' }} />
+                      <div>
+                        <p className="text-sm" style={{ fontWeight: 600, color: '#FAFAFA', fontFamily: 'Inter, sans-serif' }}>
+                          {item.title}
+                        </p>
+                        <p className="text-xs" style={{ color: '#A1A0B3' }}>{item.desc}</p>
                       </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-5 p-3.5 bg-white/10 rounded-xl backdrop-blur-sm">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs opacity-80">Average referral fee</span>
-                      <span className="text-xl font-bold">Rs. 499</span>
                     </div>
+                  ))}
+                </div>
+
+                <div
+                  className="mt-5 p-3.5 rounded-xl"
+                  style={{ backgroundColor: 'rgba(109, 91, 247, 0.1)', border: '1px solid rgba(109, 91, 247, 0.15)' }}
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs" style={{ color: '#A1A0B3' }}>Average referral fee</span>
+                    <span className="text-xl" style={{ fontWeight: 900, color: '#6D5BF7', fontFamily: 'Inter, sans-serif' }}>
+                      Rs. 499
+                    </span>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </motion.div>
 
-            {/* Referrer Side */}
+            {/* Referrer Side - Green tones */}
             <motion.div variants={fadeUp}>
-              <Card className="bg-gradient-to-br from-[var(--emerald-success)] to-[var(--orange-accent)] text-white p-6 border-0 shadow-xl shadow-emerald-900/20 hover:shadow-2xl hover:shadow-emerald-900/30 transition-shadow duration-300">
-                <CardContent className="p-0">
-                  <div className="flex items-center mb-5">
-                    <div className="w-11 h-11 bg-white/20 rounded-xl flex items-center justify-center mr-3 backdrop-blur-sm">
-                      <Building2 className="w-5 h-5" />
-                    </div>
-                    <h3 className="text-lg font-bold tracking-tight">As a Referrer</h3>
+              <div
+                className="rounded-2xl p-6 transition-all duration-300"
+                style={{
+                  background: 'linear-gradient(135deg, rgba(29, 185, 84, 0.15), rgba(29, 185, 84, 0.05))',
+                  border: '1px solid rgba(29, 185, 84, 0.25)',
+                }}
+              >
+                <div className="flex items-center mb-5">
+                  <div
+                    className="w-11 h-11 rounded-xl flex items-center justify-center mr-3"
+                    style={{ background: 'linear-gradient(135deg, #1DB954, #A259FF)' }}
+                  >
+                    <Building2 className="w-5 h-5" style={{ color: '#FAFAFA' }} />
                   </div>
+                  <h3
+                    className="text-lg tracking-tight"
+                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#FAFAFA' }}
+                  >
+                    As a Referrer
+                  </h3>
+                </div>
 
-                  <div className="space-y-3.5">
-                    {[
-                      { title: "Automatic Assignments", desc: "Get matched with qualified candidates instantly" },
-                      { title: "Earn Passive Income", desc: "Make money from successful referrals" },
-                      { title: "Build Your Network", desc: "Connect with talent in your industry" },
-                    ].map((item, i) => (
-                      <div key={i} className="flex items-start space-x-2.5">
-                        <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0 opacity-80" />
-                        <div>
-                          <p className="font-medium text-sm">{item.title}</p>
-                          <p className="text-xs opacity-75">{item.desc}</p>
-                        </div>
+                <div className="space-y-3.5">
+                  {[
+                    { title: "Automatic Assignments", desc: "Get matched with qualified candidates instantly" },
+                    { title: "Earn Passive Income", desc: "Make money from successful referrals" },
+                    { title: "Build Your Network", desc: "Connect with talent in your industry" },
+                  ].map((item, i) => (
+                    <div key={i} className="flex items-start space-x-2.5">
+                      <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#1DB954' }} />
+                      <div>
+                        <p className="text-sm" style={{ fontWeight: 600, color: '#FAFAFA', fontFamily: 'Inter, sans-serif' }}>
+                          {item.title}
+                        </p>
+                        <p className="text-xs" style={{ color: '#A1A0B3' }}>{item.desc}</p>
                       </div>
-                    ))}
-                  </div>
-
-                  <div className="mt-5 p-3.5 bg-white/10 rounded-xl backdrop-blur-sm">
-                    <div className="flex justify-between items-center">
-                      <span className="text-xs opacity-80">Potential monthly earnings</span>
-                      <span className="text-xl font-bold">Up to Rs. 20,000</span>
                     </div>
+                  ))}
+                </div>
+
+                <div
+                  className="mt-5 p-3.5 rounded-xl"
+                  style={{ backgroundColor: 'rgba(29, 185, 84, 0.1)', border: '1px solid rgba(29, 185, 84, 0.15)' }}
+                >
+                  <div className="flex justify-between items-center">
+                    <span className="text-xs" style={{ color: '#A1A0B3' }}>Potential monthly earnings</span>
+                    <span className="text-xl" style={{ fontWeight: 900, color: '#1DB954', fontFamily: 'Inter, sans-serif' }}>
+                      Up to Rs. 20,000
+                    </span>
                   </div>
-                </CardContent>
-              </Card>
+                </div>
+              </div>
             </motion.div>
           </div>
 
           <motion.div className="text-center" variants={fadeUp}>
-            <Card className="modern-card p-5 inline-block card-hover">
+            <div
+              className="p-5 inline-block rounded-2xl transition-all duration-300"
+              style={{ backgroundColor: '#1A1828', border: '1px solid #252336' }}
+            >
               <div className="flex items-center space-x-3">
-                <div className="w-10 h-10 bg-gradient-to-r from-[var(--orange-accent)] to-[var(--purple-primary)] rounded-xl flex items-center justify-center flex-shrink-0">
-                  <Trophy className="w-5 h-5 text-white" />
+                <div
+                  className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
+                  style={{ background: 'linear-gradient(135deg, #FFB347, #FF7262)' }}
+                >
+                  <Trophy className="w-5 h-5" style={{ color: '#FAFAFA' }} />
                 </div>
                 <div className="text-left">
-                  <p className="font-semibold text-[var(--dark-gray)] text-sm">Smart Assignment Algorithm</p>
-                  <p className="text-xs text-gray-500">AI-powered matching ensures fair distribution and higher success rates</p>
+                  <p className="text-sm" style={{ fontWeight: 700, color: '#FAFAFA', fontFamily: 'Inter, sans-serif' }}>
+                    Smart Assignment Algorithm
+                  </p>
+                  <p className="text-xs" style={{ color: '#A1A0B3' }}>
+                    AI-powered matching ensures fair distribution and higher success rates
+                  </p>
                 </div>
               </div>
-            </Card>
+            </div>
           </motion.div>
         </motion.div>
       )
@@ -229,15 +305,38 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
   };
 
   return (
-    <div className="min-h-screen gradient-bg flex flex-col items-center justify-center p-6 relative overflow-hidden">
-      {/* Background accents */}
+    <div
+      className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden gradient-bg-animated"
+      style={{ backgroundColor: '#0B0A10' }}
+    >
+      {/* Ambient Glow Blobs */}
       <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-16 right-20 w-36 h-36 bg-white/[0.04] rounded-full blur-2xl animate-float" />
-        <div className="absolute bottom-24 left-12 w-28 h-28 bg-white/[0.03] rounded-full blur-xl animate-float" style={{ animationDelay: '2s' }} />
+        <div
+          className="absolute top-[-5%] right-[10%] w-[450px] h-[450px] rounded-full blur-[120px]"
+          style={{ background: '#6D5BF7', opacity: 0.04 }}
+        />
+        <div
+          className="absolute bottom-[-5%] left-[5%] w-[350px] h-[350px] rounded-full blur-[100px]"
+          style={{ background: '#1DB954', opacity: 0.03 }}
+        />
+        <div
+          className="absolute top-[50%] left-[50%] w-[250px] h-[250px] rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2"
+          style={{ background: '#A259FF', opacity: 0.02 }}
+        />
       </div>
 
       <div className="relative z-10 w-full flex flex-col items-center justify-center">
-        {/* Progress Indicator */}
+        {/* Logo */}
+        <motion.div
+          className="mb-6"
+          initial={{ opacity: 0, y: -8 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.4 }}
+        >
+          <Logo size={36} showText={true} />
+        </motion.div>
+
+        {/* Progress Dots */}
         <motion.div
           className="w-full max-w-xs mb-8"
           initial={{ opacity: 0, y: -12 }}
@@ -248,16 +347,28 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
             {steps.map((_, index) => (
               <motion.div
                 key={index}
-                className="h-1.5 rounded-full transition-all duration-500"
+                className="h-2 rounded-full"
                 animate={{
-                  width: index === currentStep ? 32 : 8,
-                  backgroundColor: index <= currentStep ? 'rgba(255,255,255,0.9)' : 'rgba(255,255,255,0.25)',
+                  width: index === currentStep ? 28 : 8,
+                  background: index === currentStep
+                    ? 'linear-gradient(135deg, #6D5BF7, #1DB954)'
+                    : index < currentStep
+                      ? '#6D5BF7'
+                      : '#252336',
                 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 25 }}
               />
             ))}
           </div>
-          <div className="text-center text-white/50 text-xs font-medium tracking-wide">
+          <div
+            className="text-center text-xs font-medium tracking-wide"
+            style={{
+              color: '#5C5A72',
+              fontFamily: 'Inter, sans-serif',
+              textTransform: 'uppercase',
+              letterSpacing: '0.1em',
+            }}
+          >
             Step {currentStep + 1} of {steps.length}
           </div>
         </motion.div>
@@ -275,8 +386,18 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
               transition={pageTransition}
             >
               <div className="text-center mb-8">
-                <h1 className="text-3xl sm:text-4xl font-bold text-white mb-2 tracking-tight">{steps[currentStep].title}</h1>
-                <p className="text-lg text-white/65 font-medium">{steps[currentStep].subtitle}</p>
+                <h1
+                  className="text-3xl sm:text-4xl mb-2 tracking-tight"
+                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#FAFAFA' }}
+                >
+                  {steps[currentStep].title}
+                </h1>
+                <p
+                  className="text-lg font-medium"
+                  style={{ color: '#A1A0B3', fontFamily: 'Inter, sans-serif' }}
+                >
+                  {steps[currentStep].subtitle}
+                </p>
               </div>
 
               <div className="mb-10">
@@ -292,18 +413,26 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.3 }}
           >
+            {/* Previous - Ghost Button */}
             <motion.div whileHover={{ x: -2 }} whileTap={{ scale: 0.97 }}>
               <Button
                 variant="ghost"
                 onClick={handlePrevious}
                 disabled={currentStep === 0}
-                className="text-white/70 hover:text-white hover:bg-white/10 disabled:opacity-30 disabled:cursor-not-allowed transition-all duration-200 rounded-xl px-5 py-2.5 text-sm font-medium flex items-center gap-1.5"
+                className="rounded-xl px-5 py-2.5 text-sm font-medium flex items-center gap-1.5 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
+                style={{
+                  color: currentStep === 0 ? '#3F3D52' : '#A1A0B3',
+                  backgroundColor: 'transparent',
+                  border: '1px solid #252336',
+                  fontFamily: 'Inter, sans-serif',
+                }}
               >
                 <ArrowLeft className="w-4 h-4" />
                 <span>Previous</span>
               </Button>
             </motion.div>
 
+            {/* Next / Get Started - Gradient CTA */}
             <motion.div
               whileHover={{ scale: 1.03 }}
               whileTap={{ scale: 0.97 }}
@@ -311,7 +440,12 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
             >
               <Button
                 onClick={handleNext}
-                className="bg-white text-[var(--purple-primary)] font-semibold px-7 py-3 rounded-2xl hover:bg-gray-50 transition-all duration-200 flex items-center gap-2 shadow-lg shadow-black/10 hover:shadow-xl text-sm"
+                className="font-semibold px-7 py-3 rounded-2xl transition-all duration-200 flex items-center gap-2 shadow-lg text-sm border-0"
+                style={{
+                  background: 'linear-gradient(135deg, #6D5BF7, #1DB954)',
+                  color: '#FAFAFA',
+                  fontFamily: 'Inter, sans-serif',
+                }}
               >
                 <span>{currentStep === steps.length - 1 ? 'Get Started' : 'Next'}</span>
                 <ArrowRight className="w-4 h-4" />
@@ -326,18 +460,17 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <p className="text-white/45 text-xs leading-relaxed">
-              By continuing, you agree to our{' '}
-              <a href="/terms" className="text-white/65 hover:text-white transition-colors duration-200 underline underline-offset-2">
-                Terms & Conditions
+            <p className="text-xs" style={{ color: '#3F3D52', fontFamily: 'Inter, sans-serif' }}>
+              <a href="/terms" className="hover:underline transition-colors duration-200" style={{ color: '#3F3D52' }}>
+                Terms
               </a>
-              ,{' '}
-              <a href="/privacy" className="text-white/65 hover:text-white transition-colors duration-200 underline underline-offset-2">
-                Privacy Policy
+              {' \u00B7 '}
+              <a href="/privacy" className="hover:underline transition-colors duration-200" style={{ color: '#3F3D52' }}>
+                Privacy
               </a>
-              , and{' '}
-              <a href="/refund" className="text-white/65 hover:text-white transition-colors duration-200 underline underline-offset-2">
-                Refund Policy
+              {' \u00B7 '}
+              <a href="/refund" className="hover:underline transition-colors duration-200" style={{ color: '#3F3D52' }}>
+                Refund
               </a>
             </p>
           </motion.div>

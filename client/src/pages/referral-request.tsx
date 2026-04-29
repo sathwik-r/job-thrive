@@ -225,18 +225,18 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
-        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[var(--purple-primary)]"></div>
+      <div className="min-h-screen bg-[#0B0A10] flex items-center justify-center">
+        <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-[#6D5BF7]"></div>
       </div>
     );
   }
 
   if (isError || !job) {
     return (
-      <div className="min-h-screen bg-gray-50 flex items-center justify-center">
+      <div className="min-h-screen bg-[#0B0A10] flex items-center justify-center">
         <div className="text-center space-y-2">
-          <p className="text-lg font-semibold text-[var(--dark-gray)]">Job not found</p>
-          <Button variant="outline" onClick={() => setLocation('/job-search')}>Back to Jobs</Button>
+          <p className="text-lg font-semibold text-[#FAFAFA]">Job not found</p>
+          <Button variant="outline" onClick={() => setLocation('/job-search')} className="bg-transparent border-[#252336] text-[#A1A0B3] hover:bg-[#1A1828] hover:text-[#FAFAFA]">Back to Jobs</Button>
         </div>
       </div>
     );
@@ -322,7 +322,7 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
   };
 
   return (
-    <div className="min-h-screen bg-gray-50/80">
+    <div className="min-h-screen bg-[#0B0A10]">
       <div className="p-6 space-y-8 pb-24 max-w-lg mx-auto">
         {/* Back + Title */}
         <motion.div
@@ -335,46 +335,48 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
           <Button
             variant="ghost"
             onClick={() => setLocation('/job-search')}
-            className="flex items-center space-x-2 text-gray-400 hover:text-[var(--purple-primary)] transition-colors -ml-2"
+            className="flex items-center space-x-2 text-[#A1A0B3] hover:text-[#6D5BF7] hover:bg-transparent transition-colors -ml-2"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back to Jobs</span>
           </Button>
 
-          <h2 className="text-2xl font-bold text-[var(--dark-gray)] tracking-tight">Apply for Referral</h2>
+          <h2 className="text-2xl font-[900] text-[#FAFAFA] tracking-tight">Apply for Referral</h2>
         </motion.div>
 
-        {/* Selected Job Info - Gradient Card */}
+        {/* Selected Job Info - Dark Gradient Card */}
         <motion.div
           custom={1}
           initial="hidden"
           animate="visible"
           variants={fadeIn}
         >
-          <Card className="border-0 overflow-hidden shadow-xl shadow-[var(--purple-primary)]/10">
-            <div className="relative bg-gradient-to-br from-[var(--purple-primary)] via-[var(--purple-light)] to-[var(--emerald-success)] p-[1px] rounded-xl">
-              <CardContent className="relative p-6 bg-gradient-to-br from-[var(--purple-primary)] to-[var(--purple-light)] rounded-[11px] text-white overflow-hidden">
+          <Card className="border-0 overflow-hidden shadow-xl shadow-[#6D5BF7]/10 rounded-2xl">
+            <div className="relative">
+              {/* Gradient top border */}
+              <div className="h-1 bg-gradient-to-r from-[#6D5BF7] via-[#A259FF] to-[#1DB954]" />
+              <CardContent className="relative p-6 bg-[#1A1828] text-[#FAFAFA] overflow-hidden">
                 {/* Decorative circles */}
-                <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-white/5 -translate-y-1/2 translate-x-1/2" />
-                <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-white/5 translate-y-1/2 -translate-x-1/2" />
+                <div className="absolute top-0 right-0 w-32 h-32 rounded-full bg-[#6D5BF7]/5 -translate-y-1/2 translate-x-1/2" />
+                <div className="absolute bottom-0 left-0 w-24 h-24 rounded-full bg-[#1DB954]/5 translate-y-1/2 -translate-x-1/2" />
 
                 <div className="relative z-10">
-                  <h3 className="text-xl font-bold mb-1.5 tracking-tight">{job?.title}</h3>
-                  <div className="flex items-center space-x-2 text-white/80 mb-1">
-                    <Building2 className="w-3.5 h-3.5" />
+                  <h3 className="text-xl font-[900] mb-1.5 tracking-tight text-[#FAFAFA]">{job?.title}</h3>
+                  <div className="flex items-center space-x-2 text-[#A1A0B3] mb-1">
+                    <Building2 className="w-3.5 h-3.5 text-[#6D5BF7]" />
                     <span className="text-sm font-medium">{job?.company}</span>
                   </div>
-                  <div className="flex items-center space-x-2 text-white/60 mb-5">
-                    <MapPin className="w-3.5 h-3.5" />
+                  <div className="flex items-center space-x-2 text-[#5C5A72] mb-5">
+                    <MapPin className="w-3.5 h-3.5 text-[#A259FF]" />
                     <span className="text-sm">{job?.location}</span>
                   </div>
 
-                  <div className="pt-4 border-t border-white/15">
+                  <div className="pt-4 border-t border-[#252336]">
                     <div className="flex items-center justify-between">
-                      <span className="text-white/70 text-sm font-medium">Referral Fee</span>
+                      <span className="text-[#5C5A72] text-sm font-medium uppercase tracking-wider">Referral Fee</span>
                       <div className="flex items-center space-x-1">
-                        <IndianRupee className="w-5 h-5 text-white/90" />
-                        <span className="text-2xl font-bold">{job?.referralFee}</span>
+                        <IndianRupee className="w-5 h-5 text-[#1DB954]" />
+                        <span className="text-2xl font-[900] bg-gradient-to-r from-[#6D5BF7] to-[#1DB954] bg-clip-text text-transparent">{job?.referralFee}</span>
                       </div>
                     </div>
                   </div>
@@ -391,21 +393,21 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
           animate="visible"
           variants={fadeIn}
         >
-          <Card className="modern-card border-0">
+          <Card className="bg-[#1A1828] border border-[#252336] rounded-2xl shadow-none">
             <CardContent className="p-6">
               <div className="flex items-center space-x-2.5 mb-5">
-                <div className="w-8 h-8 rounded-lg bg-[var(--purple-primary)]/8 flex items-center justify-center">
-                  <FileText className="w-4 h-4 text-[var(--purple-primary)]" />
+                <div className="w-8 h-8 rounded-lg bg-[#211F30] flex items-center justify-center">
+                  <FileText className="w-4 h-4 text-[#6D5BF7]" />
                 </div>
-                <h4 className="text-sm font-semibold text-[var(--dark-gray)]">Upload Your Resume</h4>
+                <h4 className="text-sm font-semibold text-[#FAFAFA]">Upload Your Resume</h4>
               </div>
 
               {!selectedFile ? (
                 <div
                   className={`relative border-2 border-dashed rounded-2xl p-10 text-center transition-all duration-300 cursor-pointer group ${
                     isDragOver
-                      ? 'border-[var(--purple-primary)] bg-[var(--purple-primary)]/5 scale-[1.01]'
-                      : 'border-gray-200 hover:border-[var(--purple-primary)]/40 hover:bg-gray-50/50'
+                      ? 'border-[#6D5BF7] bg-[#6D5BF7]/5 scale-[1.01]'
+                      : 'border-[#302D45] hover:border-[#6D5BF7]/40 hover:bg-[#13121D]/50'
                   }`}
                   onDrop={handleDrop}
                   onDragOver={handleDragOver}
@@ -414,18 +416,18 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
                 >
                   <div className={`w-16 h-16 mx-auto mb-5 rounded-2xl flex items-center justify-center transition-all duration-300 ${
                     isDragOver
-                      ? 'bg-[var(--purple-primary)]/12 scale-110'
-                      : 'bg-gray-100 group-hover:bg-[var(--purple-primary)]/8'
+                      ? 'bg-[#6D5BF7]/15 scale-110'
+                      : 'bg-[#13121D] group-hover:bg-[#6D5BF7]/10'
                   }`}>
                     <Upload className={`w-7 h-7 transition-colors duration-300 ${
-                      isDragOver ? 'text-[var(--purple-primary)]' : 'text-gray-400 group-hover:text-[var(--purple-primary)]'
+                      isDragOver ? 'text-[#6D5BF7]' : 'text-[#5C5A72] group-hover:text-[#6D5BF7]'
                     }`} />
                   </div>
 
-                  <h5 className="text-base font-semibold text-[var(--dark-gray)] mb-1.5">
+                  <h5 className="text-base font-semibold text-[#FAFAFA] mb-1.5">
                     {isDragOver ? 'Drop it here' : 'Drop your resume here'}
                   </h5>
-                  <p className="text-sm text-gray-400 mb-5">
+                  <p className="text-sm text-[#5C5A72] mb-5">
                     or click to browse files
                   </p>
 
@@ -437,30 +439,30 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
                     id="resume-upload"
                   />
 
-                  <div className="flex items-center justify-center space-x-4 text-xs text-gray-300">
-                    <span className="pill-badge bg-gray-100 text-gray-400 px-2.5 py-1 rounded-full">PDF</span>
-                    <span className="pill-badge bg-gray-100 text-gray-400 px-2.5 py-1 rounded-full">DOC</span>
-                    <span className="pill-badge bg-gray-100 text-gray-400 px-2.5 py-1 rounded-full">DOCX</span>
-                    <span className="text-gray-300">Max 5MB</span>
+                  <div className="flex items-center justify-center space-x-4 text-xs">
+                    <span className="bg-[#211F30] text-[#5C5A72] px-2.5 py-1 rounded-full">PDF</span>
+                    <span className="bg-[#211F30] text-[#5C5A72] px-2.5 py-1 rounded-full">DOC</span>
+                    <span className="bg-[#211F30] text-[#5C5A72] px-2.5 py-1 rounded-full">DOCX</span>
+                    <span className="text-[#3F3D52]">Max 5MB</span>
                   </div>
                 </div>
               ) : (
                 <div className="space-y-4">
-                  <div className="flex items-center justify-between p-4 bg-gray-50/80 rounded-xl border border-gray-100">
+                  <div className="flex items-center justify-between p-4 bg-[#13121D] rounded-xl border border-[#252336]">
                     <div className="flex items-center space-x-3 min-w-0">
-                      <div className="w-11 h-11 rounded-xl bg-[var(--purple-primary)]/8 flex items-center justify-center flex-shrink-0">
-                        <FileText className="w-5 h-5 text-[var(--purple-primary)]" />
+                      <div className="w-11 h-11 rounded-xl bg-[#211F30] flex items-center justify-center flex-shrink-0">
+                        <FileText className="w-5 h-5 text-[#6D5BF7]" />
                       </div>
                       <div className="min-w-0">
-                        <p className="font-semibold text-sm text-[var(--dark-gray)] truncate">{selectedFile.name}</p>
-                        <p className="text-xs text-gray-400 mt-0.5">{formatFileSize(selectedFile.size)}</p>
+                        <p className="font-semibold text-sm text-[#FAFAFA] truncate">{selectedFile.name}</p>
+                        <p className="text-xs text-[#5C5A72] mt-0.5">{formatFileSize(selectedFile.size)}</p>
                       </div>
                     </div>
                     <Button
                       variant="ghost"
                       size="sm"
                       onClick={handleFileRemove}
-                      className="text-gray-400 hover:text-red-500 hover:bg-red-50 rounded-lg flex-shrink-0 ml-2 transition-colors"
+                      className="text-[#5C5A72] hover:text-[#FF7262] hover:bg-[#FF7262]/10 rounded-lg flex-shrink-0 ml-2 transition-colors"
                     >
                       <X className="w-4 h-4" />
                     </Button>
@@ -474,12 +476,12 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
                       className="space-y-2.5 px-1"
                     >
                       <div className="flex justify-between text-xs">
-                        <span className="text-gray-500 font-medium">Uploading...</span>
-                        <span className="text-[var(--purple-primary)] font-semibold">{uploadProgress}%</span>
+                        <span className="text-[#A1A0B3] font-medium">Uploading...</span>
+                        <span className="text-[#6D5BF7] font-semibold">{uploadProgress}%</span>
                       </div>
-                      <div className="w-full bg-gray-100 rounded-full h-2 overflow-hidden">
+                      <div className="w-full bg-[#211F30] rounded-full h-2 overflow-hidden">
                         <motion.div
-                          className="h-full rounded-full bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)]"
+                          className="h-full rounded-full bg-gradient-to-r from-[#6D5BF7] to-[#1DB954]"
                           initial={{ width: 0 }}
                           animate={{ width: `${uploadProgress}%` }}
                           transition={{ duration: 0.3, ease: 'easeOut' }}
@@ -494,14 +496,14 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
                       initial={{ opacity: 0, scale: 0.96 }}
                       animate={{ opacity: 1, scale: 1 }}
                       transition={{ duration: 0.3 }}
-                      className="flex items-center space-x-3 p-3.5 bg-[var(--emerald-success)]/5 border border-[var(--emerald-success)]/15 rounded-xl"
+                      className="flex items-center space-x-3 p-3.5 bg-[#1DB954]/8 border border-[#1DB954]/20 rounded-xl"
                     >
-                      <div className="w-8 h-8 rounded-full bg-[var(--emerald-success)]/10 flex items-center justify-center flex-shrink-0">
-                        <CheckCircle2 className="w-4.5 h-4.5 text-[var(--emerald-success)]" />
+                      <div className="w-8 h-8 rounded-full bg-[#1DB954]/15 flex items-center justify-center flex-shrink-0">
+                        <CheckCircle2 className="w-4.5 h-4.5 text-[#1DB954]" />
                       </div>
                       <div>
-                        <span className="text-sm font-semibold text-[var(--emerald-success)]">Upload complete</span>
-                        <p className="text-xs text-[var(--emerald-success)]/70 mt-0.5">Your resume is ready for submission</p>
+                        <span className="text-sm font-semibold text-[#1DB954]">Upload complete</span>
+                        <p className="text-xs text-[#1DB954]/70 mt-0.5">Your resume is ready for submission</p>
                       </div>
                     </motion.div>
                   )}
@@ -510,7 +512,7 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
                     <Button
                       variant="outline"
                       onClick={handleReplaceFile}
-                      className="flex-1 h-11 rounded-xl border-gray-200 text-gray-500 hover:text-[var(--purple-primary)] hover:border-[var(--purple-primary)]/30 transition-colors"
+                      className="flex-1 h-11 rounded-xl bg-transparent border-[#252336] text-[#A1A0B3] hover:text-[#6D5BF7] hover:border-[#6D5BF7]/30 transition-colors"
                       disabled={isUploading}
                     >
                       <RefreshCw className="w-3.5 h-3.5 mr-2" />
@@ -537,19 +539,19 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
           animate="visible"
           variants={fadeIn}
         >
-          <Card className="modern-card border-0">
+          <Card className="bg-[#1A1828] border border-[#252336] rounded-2xl shadow-none">
             <CardContent className="p-6">
               <div className="flex items-center space-x-2.5 mb-6">
-                <div className="w-8 h-8 rounded-lg bg-[var(--emerald-success)]/8 flex items-center justify-center">
-                  <CreditCard className="w-4 h-4 text-[var(--emerald-success)]" />
+                <div className="w-8 h-8 rounded-lg bg-[#211F30] flex items-center justify-center">
+                  <CreditCard className="w-4 h-4 text-[#1DB954]" />
                 </div>
-                <h4 className="text-sm font-semibold text-[var(--dark-gray)]">Payment Details</h4>
+                <h4 className="text-sm font-semibold text-[#FAFAFA]">Payment Details</h4>
               </div>
 
               <div className="space-y-5">
                 {/* Phone Input */}
                 <div className="space-y-2">
-                  <label className="text-xs font-semibold text-gray-400 uppercase tracking-wider">Phone Number</label>
+                  <label className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Phone Number</label>
                   <input
                     type="tel"
                     inputMode="numeric"
@@ -558,20 +560,20 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
                     value={phone}
                     onChange={(e) => setPhone(e.target.value.replace(/\D/g, ''))}
                     placeholder="Enter your 10-digit phone"
-                    className="w-full h-12 border border-gray-200 rounded-xl px-4 outline-none focus:ring-2 focus:ring-[var(--purple-primary)]/20 focus:border-[var(--purple-primary)] text-base placeholder:text-gray-300 transition-all"
+                    className="w-full h-11 bg-[#13121D] border border-[#252336] rounded-xl px-4 outline-none focus:ring-2 focus:ring-[#6D5BF7]/20 focus:border-[#6D5BF7] text-[#FAFAFA] text-base placeholder:text-[#5C5A72] transition-all"
                   />
                 </div>
 
                 {/* Fee Breakdown */}
-                <div className="bg-gray-50/80 rounded-xl p-4 space-y-3">
+                <div className="bg-[#13121D] rounded-xl p-4 space-y-3">
                   <div className="flex items-center justify-between">
-                    <span className="text-sm text-gray-500">Referral Fee</span>
-                    <span className="text-sm font-semibold text-[var(--dark-gray)]">{job?.referralFee || "0"}</span>
+                    <span className="text-sm text-[#A1A0B3]">Referral Fee</span>
+                    <span className="text-sm font-semibold text-[#FAFAFA]">{job?.referralFee || "0"}</span>
                   </div>
-                  <div className="border-t border-gray-200/60" />
+                  <div className="border-t border-[#252336]" />
                   <div className="flex items-center justify-between">
-                    <span className="text-base font-semibold text-[var(--dark-gray)]">Total</span>
-                    <span className="text-xl font-bold gradient-text">{totalAmount.toFixed(2)}</span>
+                    <span className="text-base font-semibold text-[#FAFAFA]">Total</span>
+                    <span className="text-xl font-[900] bg-gradient-to-r from-[#6D5BF7] to-[#1DB954] bg-clip-text text-transparent">{totalAmount.toFixed(2)}</span>
                   </div>
                 </div>
               </div>
@@ -580,7 +582,7 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
               <Button
                 onClick={handlePayment}
                 disabled={isProcessingPayment || !uploadedResumeUrl || isUploading || phone.trim().length < 10}
-                className="w-full h-14 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--purple-light)] text-white font-semibold text-base rounded-2xl flex items-center justify-center space-x-2.5 mt-6 shadow-lg shadow-[var(--purple-primary)]/20 hover:shadow-xl hover:shadow-[var(--purple-primary)]/30 transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:translate-y-0"
+                className="w-full h-14 bg-gradient-to-r from-[#6D5BF7] to-[#1DB954] text-white font-semibold text-base rounded-xl flex items-center justify-center space-x-2.5 mt-6 shadow-lg shadow-[#6D5BF7]/20 hover:shadow-xl hover:shadow-[#6D5BF7]/30 transition-all duration-300 hover:-translate-y-0.5 disabled:opacity-50 disabled:cursor-not-allowed disabled:shadow-none disabled:hover:translate-y-0 border-0"
               >
                 {isProcessingPayment ? (
                   <>
@@ -606,24 +608,24 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
               </Button>
 
               <div className="flex items-center justify-center space-x-1.5 mt-4">
-                <Shield className="w-3 h-3 text-gray-300" />
-                <p className="text-xs text-gray-400">
+                <Shield className="w-3 h-3 text-[#3F3D52]" />
+                <p className="text-xs text-[#5C5A72]">
                   Secure payment powered by Cashfree
                 </p>
               </div>
 
-              <div className="mt-4 pt-4 border-t border-gray-100">
-                <p className="text-xs text-gray-400 text-center leading-relaxed">
+              <div className="mt-4 pt-4 border-t border-[#252336]">
+                <p className="text-xs text-[#5C5A72] text-center leading-relaxed">
                   By proceeding with payment, you agree to our{' '}
-                  <a href="/terms" className="text-[var(--purple-primary)] hover:underline">
+                  <a href="/terms" className="text-[#6D5BF7] hover:underline">
                     Terms & Conditions
                   </a>
                   ,{' '}
-                  <a href="/privacy" className="text-[var(--purple-primary)] hover:underline">
+                  <a href="/privacy" className="text-[#6D5BF7] hover:underline">
                     Privacy Policy
                   </a>
                   , and{' '}
-                  <a href="/refund" className="text-[var(--purple-primary)] hover:underline">
+                  <a href="/refund" className="text-[#6D5BF7] hover:underline">
                     Refund Policy
                   </a>
                 </p>
@@ -633,27 +635,27 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
         </motion.div>
       </div>
 
-      {/* Success Modal with confetti-style feel */}
+      {/* Success Modal */}
       <Dialog open={showCelebration} onOpenChange={setShowCelebration}>
-        <DialogContent className="sm:max-w-md border-0 shadow-2xl">
+        <DialogContent className="sm:max-w-md border border-[#252336] bg-[#1A1828] shadow-2xl">
           <div className="text-center space-y-6 p-8 relative overflow-hidden">
             {/* Decorative confetti-like elements */}
             <div className="absolute inset-0 pointer-events-none">
-              <div className="absolute top-4 left-6 w-2 h-2 rounded-full bg-[var(--purple-primary)]/20 animate-bounce" style={{ animationDelay: '0s' }} />
-              <div className="absolute top-8 right-8 w-3 h-3 rounded-full bg-[var(--emerald-success)]/20 animate-bounce" style={{ animationDelay: '0.2s' }} />
-              <div className="absolute top-12 left-16 w-1.5 h-1.5 rounded-full bg-amber-400/30 animate-bounce" style={{ animationDelay: '0.4s' }} />
-              <div className="absolute top-6 right-20 w-2.5 h-2.5 rounded-full bg-pink-400/20 animate-bounce" style={{ animationDelay: '0.1s' }} />
-              <div className="absolute bottom-20 left-8 w-2 h-2 rounded-full bg-blue-400/20 animate-bounce" style={{ animationDelay: '0.3s' }} />
-              <div className="absolute bottom-16 right-10 w-1.5 h-1.5 rounded-full bg-[var(--purple-primary)]/15 animate-bounce" style={{ animationDelay: '0.5s' }} />
-              <div className="absolute top-20 left-1/2 w-2 h-2 rounded-full bg-[var(--emerald-success)]/15 animate-bounce" style={{ animationDelay: '0.15s' }} />
-              <div className="absolute bottom-28 left-1/3 w-3 h-3 rounded-full bg-amber-300/15 animate-bounce" style={{ animationDelay: '0.35s' }} />
+              <div className="absolute top-4 left-6 w-2 h-2 rounded-full bg-[#6D5BF7]/20 animate-bounce" style={{ animationDelay: '0s' }} />
+              <div className="absolute top-8 right-8 w-3 h-3 rounded-full bg-[#1DB954]/20 animate-bounce" style={{ animationDelay: '0.2s' }} />
+              <div className="absolute top-12 left-16 w-1.5 h-1.5 rounded-full bg-[#FF7262]/30 animate-bounce" style={{ animationDelay: '0.4s' }} />
+              <div className="absolute top-6 right-20 w-2.5 h-2.5 rounded-full bg-[#A259FF]/20 animate-bounce" style={{ animationDelay: '0.1s' }} />
+              <div className="absolute bottom-20 left-8 w-2 h-2 rounded-full bg-[#6D5BF7]/20 animate-bounce" style={{ animationDelay: '0.3s' }} />
+              <div className="absolute bottom-16 right-10 w-1.5 h-1.5 rounded-full bg-[#1DB954]/15 animate-bounce" style={{ animationDelay: '0.5s' }} />
+              <div className="absolute top-20 left-1/2 w-2 h-2 rounded-full bg-[#A259FF]/15 animate-bounce" style={{ animationDelay: '0.15s' }} />
+              <div className="absolute bottom-28 left-1/3 w-3 h-3 rounded-full bg-[#FF7262]/15 animate-bounce" style={{ animationDelay: '0.35s' }} />
             </div>
 
             <div className="relative z-10">
               {/* Success Icon */}
               <div className="relative w-24 h-24 mx-auto mb-6">
-                <div className="absolute inset-0 rounded-full bg-[var(--emerald-success)]/10 animate-ping" style={{ animationDuration: '2s' }} />
-                <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-[var(--emerald-success)] to-emerald-400 flex items-center justify-center shadow-lg shadow-[var(--emerald-success)]/25">
+                <div className="absolute inset-0 rounded-full bg-[#1DB954]/10 animate-ping" style={{ animationDuration: '2s' }} />
+                <div className="relative w-24 h-24 rounded-full bg-gradient-to-br from-[#1DB954] to-emerald-400 flex items-center justify-center shadow-lg shadow-[#1DB954]/25">
                   <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2.5" d="M5 13l4 4L19 7" />
                   </svg>
@@ -661,20 +663,20 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
               </div>
 
               <div className="flex items-center justify-center space-x-1.5 mb-2">
-                <Sparkles className="w-4 h-4 text-amber-400" />
-                <span className="text-xs font-semibold text-amber-500 uppercase tracking-wider">Success</span>
-                <Sparkles className="w-4 h-4 text-amber-400" />
+                <Sparkles className="w-4 h-4 text-[#FF7262]" />
+                <span className="text-xs font-semibold text-[#FF7262] uppercase tracking-wider">Success</span>
+                <Sparkles className="w-4 h-4 text-[#FF7262]" />
               </div>
 
-              <h3 className="text-2xl font-bold text-[var(--dark-gray)] mb-2 tracking-tight">Payment Successful!</h3>
-              <p className="text-gray-400 text-sm leading-relaxed max-w-xs mx-auto">
+              <h3 className="text-2xl font-[900] text-[#FAFAFA] mb-2 tracking-tight">Payment Successful!</h3>
+              <p className="text-[#A1A0B3] text-sm leading-relaxed max-w-xs mx-auto">
                 Your referral request has been submitted successfully. You'll hear back soon.
               </p>
             </div>
 
             <Button
               onClick={handleCelebrationClose}
-              className="relative z-10 w-full h-13 bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] text-white font-semibold rounded-2xl shadow-lg shadow-[var(--purple-primary)]/20 hover:shadow-xl hover:shadow-[var(--purple-primary)]/30 transition-all duration-300 hover:-translate-y-0.5"
+              className="relative z-10 w-full h-13 bg-gradient-to-r from-[#6D5BF7] to-[#1DB954] text-white font-semibold rounded-xl shadow-lg shadow-[#6D5BF7]/20 hover:shadow-xl hover:shadow-[#6D5BF7]/30 transition-all duration-300 hover:-translate-y-0.5 border-0"
             >
               Continue to Dashboard
             </Button>

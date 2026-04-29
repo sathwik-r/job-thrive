@@ -1,0 +1,161 @@
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="1800" viewBox="0 0 1200 1800">
+  <!-- Background -->
+  <rect width="1200" height="1800" fill="#FFFFFF"/>
+
+  <!-- Title -->
+  <text x="60" y="60" font-family="Inter, system-ui" font-size="24" font-weight="700" fill="#1A1A1A">OPTION B</text>
+  <text x="60" y="95" font-family="Inter, system-ui" font-size="16" fill="#666">Inspired by: Airbnb + Notion + Calm</text>
+  <text x="60" y="120" font-family="Inter, system-ui" font-size="14" fill="#999">Warm whites, rounded, friendly, spacious, trust-focused</text>
+
+  <!-- Color Palette -->
+  <text x="60" y="170" font-family="Inter, system-ui" font-size="14" font-weight="600" fill="#999">COLOR PALETTE</text>
+  <rect x="60" y="185" width="60" height="40" rx="8" fill="#FAFAF8"/>
+  <text x="90" y="240" font-family="Inter, mono" font-size="9" fill="#999" text-anchor="middle">Cream</text>
+  <rect x="130" y="185" width="60" height="40" rx="8" fill="#1A1A1A"/>
+  <text x="160" y="240" font-family="Inter, mono" font-size="9" fill="#999" text-anchor="middle">Text</text>
+  <rect x="200" y="185" width="60" height="40" rx="8" fill="#FF5A5F"/>
+  <text x="230" y="240" font-family="Inter, mono" font-size="9" fill="#999" text-anchor="middle">Coral</text>
+  <rect x="270" y="185" width="60" height="40" rx="8" fill="#00A699"/>
+  <text x="300" y="240" font-family="Inter, mono" font-size="9" fill="#999" text-anchor="middle">Teal</text>
+  <rect x="340" y="185" width="60" height="40" rx="8" fill="#FFB400"/>
+  <text x="370" y="240" font-family="Inter, mono" font-size="9" fill="#999" text-anchor="middle">Amber</text>
+  <rect x="410" y="185" width="60" height="40" rx="8" fill="#E8E5E0"/>
+  <text x="440" y="240" font-family="Inter, mono" font-size="9" fill="#999" text-anchor="middle">Sand</text>
+
+  <!-- LOGO CONCEPT -->
+  <text x="60" y="290" font-family="Inter, system-ui" font-size="14" font-weight="600" fill="#999">LOGO CONCEPT — Warm wordmark + rising person</text>
+
+  <defs>
+    <linearGradient id="coralGrad" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#FF5A5F"/>
+      <stop offset="100%" stop-color="#FF8A5C"/>
+    </linearGradient>
+  </defs>
+
+  <!-- Logo on light -->
+  <rect x="60" y="310" width="280" height="120" rx="16" fill="#FAFAF8" stroke="#E8E5E0" stroke-width="1"/>
+  <!-- Icon: abstract person rising / upward arc -->
+  <circle cx="104" cy="350" r="8" fill="url(#coralGrad)"/>
+  <path d="M88 385 Q104 340 120 385" stroke="url(#coralGrad)" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <text x="138" y="376" font-family="Georgia, serif" font-size="24" font-weight="700" fill="#1A1A1A" letter-spacing="-0.5">Job<tspan fill="#FF5A5F">Thrive</tspan></text>
+
+  <!-- Logo on dark -->
+  <rect x="370" y="310" width="280" height="120" rx="16" fill="#1A1A1A"/>
+  <circle cx="414" cy="350" r="8" fill="url(#coralGrad)"/>
+  <path d="M398 385 Q414 340 430 385" stroke="url(#coralGrad)" stroke-width="3" stroke-linecap="round" fill="none"/>
+  <text x="448" y="376" font-family="Georgia, serif" font-size="24" font-weight="700" fill="#FAFAF8" letter-spacing="-0.5">Job<tspan fill="#FF5A5F">Thrive</tspan></text>
+
+  <!-- UI MOCKUP: Login -->
+  <text x="60" y="470" font-family="Inter, system-ui" font-size="14" font-weight="600" fill="#999">LOGIN SCREEN</text>
+
+  <rect x="60" y="490" width="340" height="700" rx="28" fill="#FAFAF8" stroke="#E8E5E0" stroke-width="1"/>
+
+  <!-- Warm gradient top -->
+  <rect x="61" y="491" width="338" height="200" rx="27" fill="url(#coralGrad)" opacity="0.06"/>
+
+  <!-- Logo -->
+  <circle cx="230" cy="600" r="32" fill="url(#coralGrad)" opacity="0.12"/>
+  <circle cx="230" cy="588" r="8" fill="#FF5A5F"/>
+  <path d="M214 620 Q230 580 246 620" stroke="#FF5A5F" stroke-width="2.5" stroke-linecap="round" fill="none"/>
+
+  <text x="230" y="666" font-family="Georgia, serif" font-size="28" font-weight="700" fill="#1A1A1A" text-anchor="middle">Job<tspan fill="#FF5A5F">Thrive</tspan></text>
+  <text x="230" y="692" font-family="Inter, system-ui" font-size="14" fill="#666" text-anchor="middle">Find your path. Thrive in it.</text>
+
+  <!-- Illustration area - simple shapes -->
+  <circle cx="140" cy="740" r="20" fill="#00A699" opacity="0.08"/>
+  <circle cx="320" cy="730" r="16" fill="#FFB400" opacity="0.1"/>
+  <circle cx="230" cy="760" r="12" fill="#FF5A5F" opacity="0.06"/>
+
+  <!-- Login card -->
+  <rect x="80" y="790" width="280" height="130" rx="20" fill="#FFFFFF" stroke="#E8E5E0" stroke-width="1"/>
+  <!-- Google button -->
+  <rect x="100" y="815" width="240" height="52" rx="26" fill="#1A1A1A"/>
+  <text x="220" y="847" font-family="Inter, system-ui" font-size="15" font-weight="600" fill="white" text-anchor="middle">Continue with Google</text>
+
+  <text x="220" y="900" font-family="Inter, system-ui" font-size="11" fill="#999" text-anchor="middle">By continuing you agree to our Terms</text>
+
+  <!-- Trust badges -->
+  <rect x="100" y="950" width="76" height="28" rx="14" fill="#00A69910" stroke="#00A69930" stroke-width="1"/>
+  <text x="138" y="968" font-family="Inter, system-ui" font-size="9" font-weight="600" fill="#00A699" text-anchor="middle">Verified</text>
+  <rect x="184" y="950" width="56" height="28" rx="14" fill="#FFB40010" stroke="#FFB40030" stroke-width="1"/>
+  <text x="212" y="968" font-family="Inter, system-ui" font-size="9" font-weight="600" fill="#CC8F00" text-anchor="middle">Free</text>
+  <rect x="248" y="950" width="76" height="28" rx="14" fill="#FF5A5F10" stroke="#FF5A5F30" stroke-width="1"/>
+  <text x="286" y="968" font-family="Inter, system-ui" font-size="9" font-weight="600" fill="#FF5A5F" text-anchor="middle">Rs.499 only</text>
+
+  <!-- DASHBOARD -->
+  <text x="460" y="470" font-family="Inter, system-ui" font-size="14" font-weight="600" fill="#999">DASHBOARD</text>
+
+  <rect x="460" y="490" width="340" height="700" rx="28" fill="#FAFAF8" stroke="#E8E5E0" stroke-width="1"/>
+
+  <!-- Header -->
+  <rect x="461" y="491" width="338" height="50" rx="27" fill="#FFFFFF"/>
+  <circle cx="490" cy="516" r="10" fill="url(#coralGrad)" opacity="0.15"/>
+  <circle cx="490" cy="511" r="4" fill="#FF5A5F"/>
+  <path d="M484 523 Q490 510 496 523" stroke="#FF5A5F" stroke-width="1.5" stroke-linecap="round" fill="none"/>
+  <text x="508" y="521" font-family="Georgia, serif" font-size="14" font-weight="700" fill="#1A1A1A">JobThrive</text>
+  <!-- Toggle -->
+  <rect x="630" y="504" width="100" height="24" rx="12" fill="#E8E5E0"/>
+  <rect x="632" y="506" width="48" height="20" rx="10" fill="#FF5A5F"/>
+  <text x="656" y="520" font-family="Inter, system-ui" font-size="9" font-weight="600" fill="white" text-anchor="middle">Seeker</text>
+  <text x="706" y="520" font-family="Inter, system-ui" font-size="9" fill="#999" text-anchor="middle">Referrer</text>
+  <circle cx="770" cy="516" r="12" fill="#E8E5E0"/>
+
+  <!-- Welcome card -->
+  <rect x="476" y="556" width="308" height="100" rx="20" fill="#FFFFFF" stroke="#E8E5E0" stroke-width="1"/>
+  <text x="492" y="582" font-family="Inter, system-ui" font-size="20" font-weight="700" fill="#1A1A1A">Good morning, Rehan</text>
+  <text x="492" y="602" font-family="Inter, system-ui" font-size="13" fill="#666">Ready to find your next opportunity?</text>
+  <rect x="492" y="618" width="140" height="28" rx="14" fill="#FF5A5F"/>
+  <text x="562" y="637" font-family="Inter, system-ui" font-size="11" font-weight="600" fill="white" text-anchor="middle">Browse Jobs</text>
+
+  <!-- Stats - rounded soft cards -->
+  <rect x="476" y="672" width="98" height="70" rx="16" fill="#FFFFFF" stroke="#E8E5E0" stroke-width="1"/>
+  <text x="525" y="700" font-family="Inter, system-ui" font-size="24" font-weight="800" fill="#1A1A1A" text-anchor="middle">95</text>
+  <text x="525" y="720" font-family="Inter, system-ui" font-size="10" fill="#999" text-anchor="middle">Jobs</text>
+
+  <rect x="582" y="672" width="98" height="70" rx="16" fill="#FFFFFF" stroke="#E8E5E0" stroke-width="1"/>
+  <text x="631" y="700" font-family="Inter, system-ui" font-size="24" font-weight="800" fill="#00A699" text-anchor="middle">3</text>
+  <text x="631" y="720" font-family="Inter, system-ui" font-size="10" fill="#999" text-anchor="middle">Applied</text>
+
+  <rect x="688" y="672" width="98" height="70" rx="16" fill="#FFFFFF" stroke="#E8E5E0" stroke-width="1"/>
+  <text x="737" y="700" font-family="Inter, system-ui" font-size="24" font-weight="800" fill="#FF5A5F" text-anchor="middle">1</text>
+  <text x="737" y="720" font-family="Inter, system-ui" font-size="10" fill="#999" text-anchor="middle">Success</text>
+
+  <!-- Job cards - warm, rounded -->
+  <text x="476" y="770" font-family="Inter, system-ui" font-size="13" font-weight="600" fill="#1A1A1A">Active Referrals</text>
+
+  <rect x="476" y="784" width="308" height="80" rx="16" fill="#FFFFFF" stroke="#E8E5E0" stroke-width="1"/>
+  <rect x="492" y="800" width="36" height="36" rx="10" fill="#FAFAF8" stroke="#E8E5E0" stroke-width="1"/>
+  <text x="510" y="824" font-family="Inter, system-ui" font-size="13" font-weight="600" fill="#999" text-anchor="middle">G</text>
+  <text x="540" y="816" font-family="Inter, system-ui" font-size="14" font-weight="600" fill="#1A1A1A">Sr. Software Engineer</text>
+  <text x="540" y="834" font-family="Inter, system-ui" font-size="11" fill="#999">Google · Bangalore</text>
+  <rect x="540" y="842" width="48" height="16" rx="8" fill="#FFB40015"/>
+  <text x="564" y="853" font-family="Inter, system-ui" font-size="8" font-weight="600" fill="#CC8F00" text-anchor="middle">Pending</text>
+  <text x="762" y="828" font-family="Inter, system-ui" font-size="13" font-weight="700" fill="#1A1A1A" text-anchor="end">Rs.499</text>
+
+  <rect x="476" y="874" width="308" height="80" rx="16" fill="#FFFFFF" stroke="#E8E5E0" stroke-width="1"/>
+  <rect x="492" y="890" width="36" height="36" rx="10" fill="#FAFAF8" stroke="#E8E5E0" stroke-width="1"/>
+  <text x="510" y="914" font-family="Inter, system-ui" font-size="13" font-weight="600" fill="#999" text-anchor="middle">M</text>
+  <text x="540" y="906" font-family="Inter, system-ui" font-size="14" font-weight="600" fill="#1A1A1A">Product Manager</text>
+  <text x="540" y="924" font-family="Inter, system-ui" font-size="11" fill="#999">Microsoft · Hyderabad</text>
+  <rect x="540" y="932" width="56" height="16" rx="8" fill="#00A69915"/>
+  <text x="568" y="943" font-family="Inter, system-ui" font-size="8" font-weight="600" fill="#00A699" text-anchor="middle">Assigned</text>
+  <text x="762" y="918" font-family="Inter, system-ui" font-size="13" font-weight="700" fill="#1A1A1A" text-anchor="end">Rs.499</text>
+
+  <!-- Bottom nav -->
+  <rect x="460" y="1140" width="340" height="50" rx="0" fill="#FFFFFF"/>
+  <rect x="460" y="1140" width="340" height="1" fill="#E8E5E0"/>
+  <text x="530" y="1172" font-family="Inter, system-ui" font-size="9" font-weight="600" fill="#FF5A5F" text-anchor="middle">Home</text>
+  <text x="630" y="1172" font-family="Inter, system-ui" font-size="9" fill="#999" text-anchor="middle">Search</text>
+  <text x="730" y="1172" font-family="Inter, system-ui" font-size="9" fill="#999" text-anchor="middle">Profile</text>
+
+  <!-- TRAITS -->
+  <text x="860" y="500" font-family="Inter, system-ui" font-size="14" font-weight="600" fill="#999">TRAITS</text>
+  <text x="860" y="530" font-family="Inter, system-ui" font-size="12" fill="#666">- Light/warm cream backgrounds</text>
+  <text x="860" y="550" font-family="Inter, system-ui" font-size="12" fill="#666">- Coral + teal + amber palette</text>
+  <text x="860" y="570" font-family="Inter, system-ui" font-size="12" fill="#666">- Large rounded corners (16-28px)</text>
+  <text x="860" y="590" font-family="Inter, system-ui" font-size="12" fill="#666">- Serif + sans-serif mix</text>
+  <text x="860" y="610" font-family="Inter, system-ui" font-size="12" fill="#666">- Generous whitespace</text>
+  <text x="860" y="630" font-family="Inter, system-ui" font-size="12" fill="#666">- Trust badges, friendly copy</text>
+  <text x="860" y="650" font-family="Inter, system-ui" font-size="12" fill="#666">- Feels: welcoming, human, trustworthy</text>
+  <text x="860" y="680" font-family="Inter, system-ui" font-size="12" font-weight="600" fill="#FF5A5F">Best for: broad audience, all demographics</text>
+</svg>

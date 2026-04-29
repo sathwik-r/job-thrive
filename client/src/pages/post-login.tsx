@@ -77,11 +77,11 @@ const PostLoginPage: React.FC = () => {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center gradient-bg">
-        <div className="text-center text-white">
+      <div className="min-h-screen flex items-center justify-center gradient-bg-animated">
+        <div className="text-center text-[#FAFAFA]">
           <div className="animate-float mb-4">
-            <div className="w-16 h-16 mx-auto bg-white/20 rounded-3xl flex items-center justify-center backdrop-blur-lg">
-              <svg className="w-8 h-8 text-white animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 mx-auto bg-[#1A1828] rounded-3xl flex items-center justify-center backdrop-blur-lg">
+              <svg className="w-8 h-8 text-[#FAFAFA] animate-spin" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
               </svg>
             </div>
@@ -94,11 +94,11 @@ const PostLoginPage: React.FC = () => {
 
   if (error) {
     return (
-      <div className="min-h-screen flex items-center justify-center gradient-bg">
-        <div className="text-center text-white">
+      <div className="min-h-screen flex items-center justify-center gradient-bg-animated">
+        <div className="text-center text-[#FAFAFA]">
           <div className="mb-4">
-            <div className="w-16 h-16 mx-auto bg-red-500/20 rounded-3xl flex items-center justify-center backdrop-blur-lg">
-              <svg className="w-8 h-8 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 mx-auto bg-[#FF7262]/15 rounded-3xl flex items-center justify-center backdrop-blur-lg">
+              <svg className="w-8 h-8 text-[#FF7262]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
@@ -107,7 +107,7 @@ const PostLoginPage: React.FC = () => {
           <p className="text-lg opacity-90 mb-6">{error}</p>
           <button
             onClick={() => setLocation('/login')}
-            className="bg-white text-purple-600 px-6 py-3 rounded-2xl font-semibold hover:bg-gray-100 transition-colors"
+            className="bg-[#1A1828] text-[#6D5BF7] px-6 py-3 rounded-2xl font-semibold hover:bg-[#211F30] border border-[#252336] transition-colors"
           >
             Try Again
           </button>
