@@ -69,10 +69,10 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children, requireOnboarding = tru
   if (authError) {
     return (
       <div className="min-h-screen flex items-center justify-center gradient-bg-animated">
-        <div className="text-center text-[#FAFAFA]">
+        <div className="text-center text-[#F5F5F5]">
           <div className="mb-4">
-            <div className="w-16 h-16 mx-auto bg-[#FF7262]/15 rounded-3xl flex items-center justify-center backdrop-blur-lg">
-              <svg className="w-8 h-8 text-[#FF7262]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <div className="w-16 h-16 mx-auto bg-[#FB923C]/15 rounded-3xl flex items-center justify-center backdrop-blur-lg">
+              <svg className="w-8 h-8 text-[#FB923C]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M12 8v4m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"></path>
               </svg>
             </div>
@@ -89,11 +89,11 @@ const AuthGuard: React.FC<AuthGuardProps> = ({ children, requireOnboarding = tru
   if (loading || isValidating) {
     return (
       <div className="min-h-screen flex items-center justify-center gradient-bg-animated">
-        <div className="text-center text-[#FAFAFA]">
+        <div className="text-center text-[#F5F5F5]">
           <div className="animate-float mb-4">
-            <div className="w-16 h-16 mx-auto bg-[#1A1828] rounded-3xl flex items-center justify-center backdrop-blur-lg">
+            <div className="w-16 h-16 mx-auto bg-[#1C1C1C] rounded-3xl flex items-center justify-center backdrop-blur-lg">
               <svg
-                className="w-8 h-8 text-[#FAFAFA]"
+                className="w-8 h-8 text-[#F5F5F5]"
                 fill="none"
                 stroke="currentColor"
                 viewBox="0 0 24 24"

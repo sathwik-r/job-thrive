@@ -65,13 +65,13 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
             </div>
             <h2
               className="text-2xl sm:text-3xl mb-3 tracking-tight"
-              style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#FAFAFA' }}
+              style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#F5F5F5' }}
             >
               Transform Your Career Journey
             </h2>
             <p
               className="text-base mb-8 max-w-lg mx-auto leading-relaxed"
-              style={{ color: '#A1A0B3', fontFamily: 'Inter, sans-serif' }}
+              style={{ color: '#A3A3A3', fontFamily: 'Inter, sans-serif' }}
             >
               Connect, refer, and earn in the world's most advanced referral marketplace
             </p>
@@ -80,20 +80,20 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
           <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
             {[
               {
-                icon: <Search className="w-5 h-5" style={{ color: '#FAFAFA' }} />,
-                gradientBg: 'linear-gradient(135deg, #6D5BF7, #A259FF)',
+                icon: <Search className="w-5 h-5" style={{ color: '#F5F5F5' }} />,
+                gradientBg: 'linear-gradient(135deg, #A3E635, #818CF8)',
                 title: "Find Dream Jobs",
                 desc: "Discover exclusive opportunities at top companies -- faster than job boards",
               },
               {
-                icon: <Users className="w-5 h-5" style={{ color: '#FAFAFA' }} />,
-                gradientBg: 'linear-gradient(135deg, #1DB954, #A259FF)',
+                icon: <Users className="w-5 h-5" style={{ color: '#F5F5F5' }} />,
+                gradientBg: 'linear-gradient(135deg, #A3E635, #818CF8)',
                 title: "Get Consulted",
                 desc: "Accelerate your growth with 1-on-1 guidance from top industry professionals",
               },
               {
-                icon: <IndianRupee className="w-5 h-5" style={{ color: '#FAFAFA' }} />,
-                gradientBg: 'linear-gradient(135deg, #FF7262, #FFB347)',
+                icon: <IndianRupee className="w-5 h-5" style={{ color: '#F5F5F5' }} />,
+                gradientBg: 'linear-gradient(135deg, #FB923C, #FB923C)',
                 title: "Earn Money",
                 desc: "Share your experience, mentor top talent, and earn while helping others grow.",
               },
@@ -102,14 +102,14 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 <div
                   className="rounded-2xl p-6 text-center transition-all duration-300 group cursor-default"
                   style={{
-                    backgroundColor: '#1A1828',
-                    border: '1px solid #252336',
+                    backgroundColor: '#1C1C1C',
+                    border: '1px solid #1F1F1F',
                   }}
                   onMouseEnter={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = '#302D45';
+                    (e.currentTarget as HTMLElement).style.borderColor = '#2A2A2A';
                   }}
                   onMouseLeave={(e) => {
-                    (e.currentTarget as HTMLElement).style.borderColor = '#252336';
+                    (e.currentTarget as HTMLElement).style.borderColor = '#1F1F1F';
                   }}
                 >
                   <motion.div
@@ -122,11 +122,11 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                   </motion.div>
                   <h3
                     className="mb-1.5 text-sm"
-                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, color: '#FAFAFA' }}
+                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 700, color: '#F5F5F5' }}
                   >
                     {item.title}
                   </h3>
-                  <p className="text-xs leading-relaxed" style={{ color: '#A1A0B3' }}>
+                  <p className="text-xs leading-relaxed" style={{ color: '#A3A3A3' }}>
                     {item.desc}
                   </p>
                 </div>
@@ -159,13 +159,13 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 <div className="flex items-center mb-5">
                   <div
                     className="w-11 h-11 rounded-xl flex items-center justify-center mr-3"
-                    style={{ background: 'linear-gradient(135deg, #6D5BF7, #A259FF)' }}
+                    style={{ background: 'linear-gradient(135deg, #A3E635, #818CF8)' }}
                   >
-                    <Search className="w-5 h-5" style={{ color: '#FAFAFA' }} />
+                    <Search className="w-5 h-5" style={{ color: '#F5F5F5' }} />
                   </div>
                   <h3
                     className="text-lg tracking-tight"
-                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#FAFAFA' }}
+                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#F5F5F5' }}
                   >
                     As a Job Seeker
                   </h3>
@@ -178,12 +178,12 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                     { title: "Track Your Progress", desc: "Real-time updates on referral status" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start space-x-2.5">
-                      <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#6D5BF7' }} />
+                      <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#A3E635' }} />
                       <div>
-                        <p className="text-sm" style={{ fontWeight: 600, color: '#FAFAFA', fontFamily: 'Inter, sans-serif' }}>
+                        <p className="text-sm" style={{ fontWeight: 600, color: '#F5F5F5', fontFamily: 'Inter, sans-serif' }}>
                           {item.title}
                         </p>
-                        <p className="text-xs" style={{ color: '#A1A0B3' }}>{item.desc}</p>
+                        <p className="text-xs" style={{ color: '#A3A3A3' }}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -194,8 +194,8 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                   style={{ backgroundColor: 'rgba(109, 91, 247, 0.1)', border: '1px solid rgba(109, 91, 247, 0.15)' }}
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-xs" style={{ color: '#A1A0B3' }}>Average referral fee</span>
-                    <span className="text-xl" style={{ fontWeight: 900, color: '#6D5BF7', fontFamily: 'Inter, sans-serif' }}>
+                    <span className="text-xs" style={{ color: '#A3A3A3' }}>Average referral fee</span>
+                    <span className="text-xl" style={{ fontWeight: 900, color: '#A3E635', fontFamily: 'Inter, sans-serif' }}>
                       Rs. 499
                     </span>
                   </div>
@@ -215,13 +215,13 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 <div className="flex items-center mb-5">
                   <div
                     className="w-11 h-11 rounded-xl flex items-center justify-center mr-3"
-                    style={{ background: 'linear-gradient(135deg, #1DB954, #A259FF)' }}
+                    style={{ background: 'linear-gradient(135deg, #A3E635, #818CF8)' }}
                   >
-                    <Building2 className="w-5 h-5" style={{ color: '#FAFAFA' }} />
+                    <Building2 className="w-5 h-5" style={{ color: '#F5F5F5' }} />
                   </div>
                   <h3
                     className="text-lg tracking-tight"
-                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#FAFAFA' }}
+                    style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#F5F5F5' }}
                   >
                     As a Referrer
                   </h3>
@@ -234,12 +234,12 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                     { title: "Build Your Network", desc: "Connect with talent in your industry" },
                   ].map((item, i) => (
                     <div key={i} className="flex items-start space-x-2.5">
-                      <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#1DB954' }} />
+                      <CheckCircle className="w-4 h-4 mt-0.5 flex-shrink-0" style={{ color: '#A3E635' }} />
                       <div>
-                        <p className="text-sm" style={{ fontWeight: 600, color: '#FAFAFA', fontFamily: 'Inter, sans-serif' }}>
+                        <p className="text-sm" style={{ fontWeight: 600, color: '#F5F5F5', fontFamily: 'Inter, sans-serif' }}>
                           {item.title}
                         </p>
-                        <p className="text-xs" style={{ color: '#A1A0B3' }}>{item.desc}</p>
+                        <p className="text-xs" style={{ color: '#A3A3A3' }}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -250,8 +250,8 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                   style={{ backgroundColor: 'rgba(29, 185, 84, 0.1)', border: '1px solid rgba(29, 185, 84, 0.15)' }}
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-xs" style={{ color: '#A1A0B3' }}>Potential monthly earnings</span>
-                    <span className="text-xl" style={{ fontWeight: 900, color: '#1DB954', fontFamily: 'Inter, sans-serif' }}>
+                    <span className="text-xs" style={{ color: '#A3A3A3' }}>Potential monthly earnings</span>
+                    <span className="text-xl" style={{ fontWeight: 900, color: '#A3E635', fontFamily: 'Inter, sans-serif' }}>
                       Up to Rs. 20,000
                     </span>
                   </div>
@@ -263,20 +263,20 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
           <motion.div className="text-center" variants={fadeUp}>
             <div
               className="p-5 inline-block rounded-2xl transition-all duration-300"
-              style={{ backgroundColor: '#1A1828', border: '1px solid #252336' }}
+              style={{ backgroundColor: '#1C1C1C', border: '1px solid #1F1F1F' }}
             >
               <div className="flex items-center space-x-3">
                 <div
                   className="w-10 h-10 rounded-xl flex items-center justify-center flex-shrink-0"
-                  style={{ background: 'linear-gradient(135deg, #FFB347, #FF7262)' }}
+                  style={{ background: 'linear-gradient(135deg, #FB923C, #FB923C)' }}
                 >
-                  <Trophy className="w-5 h-5" style={{ color: '#FAFAFA' }} />
+                  <Trophy className="w-5 h-5" style={{ color: '#F5F5F5' }} />
                 </div>
                 <div className="text-left">
-                  <p className="text-sm" style={{ fontWeight: 700, color: '#FAFAFA', fontFamily: 'Inter, sans-serif' }}>
+                  <p className="text-sm" style={{ fontWeight: 700, color: '#F5F5F5', fontFamily: 'Inter, sans-serif' }}>
                     Smart Assignment Algorithm
                   </p>
-                  <p className="text-xs" style={{ color: '#A1A0B3' }}>
+                  <p className="text-xs" style={{ color: '#A3A3A3' }}>
                     AI-powered matching ensures fair distribution and higher success rates
                   </p>
                 </div>
@@ -307,21 +307,21 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
   return (
     <div
       className="min-h-screen flex flex-col items-center justify-center p-6 relative overflow-hidden gradient-bg-animated"
-      style={{ backgroundColor: '#0B0A10' }}
+      style={{ backgroundColor: '#0C0C0C' }}
     >
       {/* Ambient Glow Blobs */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute top-[-5%] right-[10%] w-[450px] h-[450px] rounded-full blur-[120px]"
-          style={{ background: '#6D5BF7', opacity: 0.04 }}
+          style={{ background: '#A3E635', opacity: 0.04 }}
         />
         <div
           className="absolute bottom-[-5%] left-[5%] w-[350px] h-[350px] rounded-full blur-[100px]"
-          style={{ background: '#1DB954', opacity: 0.03 }}
+          style={{ background: '#A3E635', opacity: 0.03 }}
         />
         <div
           className="absolute top-[50%] left-[50%] w-[250px] h-[250px] rounded-full blur-[80px] -translate-x-1/2 -translate-y-1/2"
-          style={{ background: '#A259FF', opacity: 0.02 }}
+          style={{ background: '#818CF8', opacity: 0.02 }}
         />
       </div>
 
@@ -351,10 +351,10 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 animate={{
                   width: index === currentStep ? 28 : 8,
                   background: index === currentStep
-                    ? 'linear-gradient(135deg, #6D5BF7, #1DB954)'
+                    ? '#A3E635'
                     : index < currentStep
-                      ? '#6D5BF7'
-                      : '#252336',
+                      ? '#A3E635'
+                      : '#1F1F1F',
                 }}
                 transition={{ type: 'spring', stiffness: 300, damping: 25 }}
               />
@@ -363,7 +363,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
           <div
             className="text-center text-xs font-medium tracking-wide"
             style={{
-              color: '#5C5A72',
+              color: '#525252',
               fontFamily: 'Inter, sans-serif',
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
@@ -388,13 +388,13 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
               <div className="text-center mb-8">
                 <h1
                   className="text-3xl sm:text-4xl mb-2 tracking-tight"
-                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#FAFAFA' }}
+                  style={{ fontFamily: 'Inter, sans-serif', fontWeight: 900, color: '#F5F5F5' }}
                 >
                   {steps[currentStep].title}
                 </h1>
                 <p
                   className="text-lg font-medium"
-                  style={{ color: '#A1A0B3', fontFamily: 'Inter, sans-serif' }}
+                  style={{ color: '#A3A3A3', fontFamily: 'Inter, sans-serif' }}
                 >
                   {steps[currentStep].subtitle}
                 </p>
@@ -421,9 +421,9 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 disabled={currentStep === 0}
                 className="rounded-xl px-5 py-2.5 text-sm font-medium flex items-center gap-1.5 transition-all duration-200 disabled:opacity-30 disabled:cursor-not-allowed"
                 style={{
-                  color: currentStep === 0 ? '#3F3D52' : '#A1A0B3',
+                  color: currentStep === 0 ? '#3F3F3F' : '#A3A3A3',
                   backgroundColor: 'transparent',
-                  border: '1px solid #252336',
+                  border: '1px solid #1F1F1F',
                   fontFamily: 'Inter, sans-serif',
                 }}
               >
@@ -442,8 +442,8 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 onClick={handleNext}
                 className="font-semibold px-7 py-3 rounded-2xl transition-all duration-200 flex items-center gap-2 shadow-lg text-sm border-0"
                 style={{
-                  background: 'linear-gradient(135deg, #6D5BF7, #1DB954)',
-                  color: '#FAFAFA',
+                  background: '#A3E635',
+                  color: '#F5F5F5',
                   fontFamily: 'Inter, sans-serif',
                 }}
               >
@@ -460,16 +460,16 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <p className="text-xs" style={{ color: '#3F3D52', fontFamily: 'Inter, sans-serif' }}>
-              <a href="/terms" className="hover:underline transition-colors duration-200" style={{ color: '#3F3D52' }}>
+            <p className="text-xs" style={{ color: '#3F3F3F', fontFamily: 'Inter, sans-serif' }}>
+              <a href="/terms" className="hover:underline transition-colors duration-200" style={{ color: '#3F3F3F' }}>
                 Terms
               </a>
               {' \u00B7 '}
-              <a href="/privacy" className="hover:underline transition-colors duration-200" style={{ color: '#3F3D52' }}>
+              <a href="/privacy" className="hover:underline transition-colors duration-200" style={{ color: '#3F3F3F' }}>
                 Privacy
               </a>
               {' \u00B7 '}
-              <a href="/refund" className="hover:underline transition-colors duration-200" style={{ color: '#3F3D52' }}>
+              <a href="/refund" className="hover:underline transition-colors duration-200" style={{ color: '#3F3F3F' }}>
                 Refund
               </a>
             </p>

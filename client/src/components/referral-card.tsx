@@ -15,12 +15,12 @@ interface ReferralCardProps {
 }
 
 const statusConfig: Record<string, { color: string; bg: string; accent: string; icon: React.ReactNode; label: string; progress: number }> = {
-  pending: { color: 'text-amber-400', bg: 'bg-amber-400/10 border-amber-400/20', accent: '#FFB347', icon: <Clock className="w-3 h-3" />, label: 'Pending', progress: 20 },
-  assigned: { color: 'text-[#A259FF]', bg: 'bg-[#A259FF]/10 border-[#A259FF]/20', accent: '#A259FF', icon: <CheckCircle2 className="w-3 h-3" />, label: 'Assigned', progress: 50 },
-  verification_pending: { color: 'text-[#6D5BF7]', bg: 'bg-[#6D5BF7]/10 border-[#6D5BF7]/20', accent: '#6D5BF7', icon: <AlertCircle className="w-3 h-3" />, label: 'Verifying', progress: 80 },
-  completed: { color: 'text-[#1DB954]', bg: 'bg-[#1DB954]/10 border-[#1DB954]/20', accent: '#1DB954', icon: <CheckCircle2 className="w-3 h-3" />, label: 'Completed', progress: 100 },
-  expired: { color: 'text-[#FF7262]', bg: 'bg-[#FF7262]/10 border-[#FF7262]/20', accent: '#FF7262', icon: <Ban className="w-3 h-3" />, label: 'Expired', progress: 0 },
-  cancelled: { color: 'text-[#5C5A72]', bg: 'bg-[#5C5A72]/10 border-[#5C5A72]/20', accent: '#5C5A72', icon: <X className="w-3 h-3" />, label: 'Cancelled', progress: 0 },
+  pending: { color: 'text-amber-400', bg: 'bg-amber-400/10 border-amber-400/20', accent: '#FB923C', icon: <Clock className="w-3 h-3" />, label: 'Pending', progress: 20 },
+  assigned: { color: 'text-[#818CF8]', bg: 'bg-[#818CF8]/10 border-[#818CF8]/20', accent: '#818CF8', icon: <CheckCircle2 className="w-3 h-3" />, label: 'Assigned', progress: 50 },
+  verification_pending: { color: 'text-[#A3E635]', bg: 'bg-[#A3E635]/10 border-[#A3E635]/20', accent: '#A3E635', icon: <AlertCircle className="w-3 h-3" />, label: 'Verifying', progress: 80 },
+  completed: { color: 'text-[#A3E635]', bg: 'bg-[#A3E635]/10 border-[#A3E635]/20', accent: '#A3E635', icon: <CheckCircle2 className="w-3 h-3" />, label: 'Completed', progress: 100 },
+  expired: { color: 'text-[#FB923C]', bg: 'bg-[#FB923C]/10 border-[#FB923C]/20', accent: '#FB923C', icon: <Ban className="w-3 h-3" />, label: 'Expired', progress: 0 },
+  cancelled: { color: 'text-[#525252]', bg: 'bg-[#525252]/10 border-[#525252]/20', accent: '#525252', icon: <X className="w-3 h-3" />, label: 'Cancelled', progress: 0 },
 };
 
 function getCompanyDomain(company: string): string {
@@ -51,7 +51,7 @@ export default function ReferralCard({ referral, isReferrer = false, onViewResum
   return (
     <Card
       className={`border-0 overflow-hidden transition-all duration-200 ${onClick ? 'cursor-pointer' : ''}`}
-      style={{ background: '#1A1828', borderColor: '#252336', borderWidth: 1 }}
+      style={{ background: '#1C1C1C', borderColor: '#1F1F1F', borderWidth: 1 }}
       onClick={onClick}
     >
       <CardContent className="p-0">
@@ -67,57 +67,57 @@ export default function ReferralCard({ referral, isReferrer = false, onViewResum
                     src={`https://logo.clearbit.com/${getCompanyDomain(job.company)}`}
                     alt=""
                     className="w-9 h-9 rounded-lg object-contain p-1 shrink-0 mt-0.5"
-                    style={{ background: '#13121D', border: '1px solid #252336' }}
+                    style={{ background: '#141414', border: '1px solid #1F1F1F' }}
                     onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }}
                   />
                 )}
                 <div className="min-w-0">
-                  <h4 className="font-bold text-sm text-[#FAFAFA] truncate">{job?.title || 'Unknown Position'}</h4>
-                  <p className="text-xs text-[#A1A0B3] mt-0.5">{job?.company || 'Unknown'} · {job?.location || 'Remote'}</p>
+                  <h4 className="font-bold text-sm text-[#F5F5F5] truncate">{job?.title || 'Unknown Position'}</h4>
+                  <p className="text-xs text-[#A3A3A3] mt-0.5">{job?.company || 'Unknown'} · {job?.location || 'Remote'}</p>
                   {isReferrer && seeker && (
-                    <p className="text-xs text-[#5C5A72] mt-1">Candidate: <span className="font-medium text-[#A1A0B3]">{seeker.name}</span></p>
+                    <p className="text-xs text-[#525252] mt-1">Candidate: <span className="font-medium text-[#A3A3A3]">{seeker.name}</span></p>
                   )}
                 </div>
               </div>
 
               <div className="flex flex-col items-end gap-1.5 shrink-0">
                 <div className={`pill-badge ${config.bg} ${config.color} border`}>{config.icon}{config.label}</div>
-                <p className={`text-sm font-bold ${isReferrer ? 'text-[#1DB954]' : 'text-[#FAFAFA]'}`}>
+                <p className={`text-sm font-bold ${isReferrer ? 'text-[#A3E635]' : 'text-[#F5F5F5]'}`}>
                   {isReferrer ? '+' : ''}Rs.499
                 </p>
               </div>
             </div>
 
             {!isReferrer && referralData && (
-              <div className="mt-3 pt-3" style={{ borderTop: '1px solid #252336' }}>
+              <div className="mt-3 pt-3" style={{ borderTop: '1px solid #1F1F1F' }}>
                 <div className="flex items-center justify-between text-xs mb-1.5">
-                  <span className="text-[#5C5A72]">Progress</span>
+                  <span className="text-[#525252]">Progress</span>
                   <span className={`font-semibold ${config.color}`}>{config.label}</span>
                 </div>
-                <div className="h-1.5 rounded-full" style={{ background: '#13121D' }}>
+                <div className="h-1.5 rounded-full" style={{ background: '#141414' }}>
                   <div className="h-full rounded-full transition-all duration-500" style={{ width: `${config.progress}%`, background: config.accent }} />
                 </div>
               </div>
             )}
 
             {isReferrer && assignment?.status === 'assigned' && (
-              <div className="flex items-center gap-2 mt-3 pt-3" style={{ borderTop: '1px solid #252336' }}>
+              <div className="flex items-center gap-2 mt-3 pt-3" style={{ borderTop: '1px solid #1F1F1F' }}>
                 {onUploadProof && (
                   <Button size="sm" onClick={(e) => { e.stopPropagation(); onUploadProof(); }}
-                    className="flex-1 h-8 text-xs font-bold rounded-lg text-white"
-                    style={{ background: 'linear-gradient(135deg, #6D5BF7, #1DB954)' }}>
+                    className="flex-1 h-8 text-xs font-bold rounded-lg text-[#0C0C0C]"
+                    style={{ background: '#A3E635' }}>
                     <Upload className="w-3.5 h-3.5 mr-1.5" />Upload Proof
                   </Button>
                 )}
                 {onDecline && (
                   <Button variant="ghost" size="sm" onClick={(e) => { e.stopPropagation(); onDecline(); }}
-                    className="h-8 text-xs text-[#FF7262] hover:text-[#FF7262] hover:bg-[#FF726215]">Decline</Button>
+                    className="h-8 text-xs text-[#FB923C] hover:text-[#FB923C] hover:bg-[#FB923C15]">Decline</Button>
                 )}
               </div>
             )}
 
             {referralData?.completedAt && (
-              <p className="mt-2 text-[10px] text-[#3F3D52]">Completed {formatDate(referralData.completedAt)}</p>
+              <p className="mt-2 text-[10px] text-[#3F3F3F]">Completed {formatDate(referralData.completedAt)}</p>
             )}
           </div>
         </div>

@@ -65,19 +65,19 @@ export default function ProofUploadModal({ isOpen, onClose, onSubmit }: ProofUpl
     <Dialog open={isOpen} onOpenChange={handleClose}>
       <DialogContent className="sm:max-w-md">
         <DialogHeader>
-          <DialogTitle className="text-xl font-bold text-[var(--dark-gray)]">Upload Proof</DialogTitle>
-          <p className="text-[#A1A0B3] text-sm">Upload a screenshot showing you submitted the referral</p>
+          <DialogTitle className="text-xl font-bold text-[#F5F5F5]">Upload Proof</DialogTitle>
+          <p className="text-[#A3A3A3] text-sm">Upload a screenshot showing you submitted the referral</p>
         </DialogHeader>
 
         <div className="space-y-6">
           {!selectedFile ? (
             <div
-              className="border-2 border-dashed border-[#302D45] rounded-2xl p-8 text-center cursor-pointer hover:border-[var(--purple-primary)] transition-colors"
+              className="border-2 border-dashed border-[#2A2A2A] rounded-2xl p-8 text-center cursor-pointer hover:border-[#818CF8] transition-colors"
               onClick={() => fileInputRef.current?.click()}
             >
-              <Camera className="w-12 h-12 text-[#5C5A72] mx-auto mb-4" />
-              <p className="text-[#A1A0B3] mb-2">Take Photo or Upload</p>
-              <p className="text-sm text-[#5C5A72]">PNG, JPG (Max 10MB)</p>
+              <Camera className="w-12 h-12 text-[#525252] mx-auto mb-4" />
+              <p className="text-[#A3A3A3] mb-2">Take Photo or Upload</p>
+              <p className="text-sm text-[#525252]">PNG, JPG (Max 10MB)</p>
               <input
                 ref={fileInputRef}
                 type="file"
@@ -106,12 +106,12 @@ export default function ProofUploadModal({ isOpen, onClose, onSubmit }: ProofUpl
                   </Button>
                 </div>
               )}
-              <div className="bg-[#13121D] rounded-xl p-4">
+              <div className="bg-[#141414] rounded-xl p-4">
                 <div className="flex items-center space-x-3">
-                  <Upload className="w-5 h-5 text-[var(--purple-primary)]" />
+                  <Upload className="w-5 h-5 text-[#818CF8]" />
                   <div>
-                    <p className="font-medium text-[var(--dark-gray)]">{selectedFile.name}</p>
-                    <p className="text-sm text-[#5C5A72]">
+                    <p className="font-medium text-[#F5F5F5]">{selectedFile.name}</p>
+                    <p className="text-sm text-[#525252]">
                       {(selectedFile.size / (1024 * 1024)).toFixed(2)} MB
                     </p>
                   </div>
@@ -131,7 +131,7 @@ export default function ProofUploadModal({ isOpen, onClose, onSubmit }: ProofUpl
             <Button
               onClick={handleSubmit}
               disabled={!selectedFile}
-              className="flex-1 bg-[var(--purple-primary)] hover:bg-[var(--purple-primary)]/90"
+              className="flex-1 bg-[#818CF8] hover:bg-[#818CF8]/90"
             >
               Submit
             </Button>

@@ -78,17 +78,17 @@ export default function FileUpload({
           <div
             className={`border-2 border-dashed rounded-2xl p-8 text-center cursor-pointer transition-colors ${
               isDragOver 
-                ? 'border-[var(--purple-primary)] bg-[var(--purple-primary)]/10' 
-                : 'border-[#302D45] hover:border-[var(--purple-primary)]'
+                ? 'border-[#818CF8] bg-[#818CF8]/10' 
+                : 'border-[#2A2A2A] hover:border-[#818CF8]'
             }`}
             onClick={() => fileInputRef.current?.click()}
             onDrop={handleDrop}
             onDragOver={handleDragOver}
             onDragLeave={handleDragLeave}
           >
-            <Upload className="w-12 h-12 text-[#5C5A72] mx-auto mb-4" />
-            <p className="text-[#A1A0B3] mb-2">{placeholder}</p>
-            <p className="text-sm text-[#5C5A72]">{maxSizeMessage}</p>
+            <Upload className="w-12 h-12 text-[#525252] mx-auto mb-4" />
+            <p className="text-[#A3A3A3] mb-2">{placeholder}</p>
+            <p className="text-sm text-[#525252]">{maxSizeMessage}</p>
             <input
               ref={fileInputRef}
               type="file"
@@ -98,12 +98,12 @@ export default function FileUpload({
             />
           </div>
         ) : (
-          <div className="bg-[#13121D] rounded-xl p-4 flex items-center justify-between">
+          <div className="bg-[#141414] rounded-xl p-4 flex items-center justify-between">
             <div className="flex items-center space-x-3">
               {getFileIcon(selectedFile.name)}
               <div>
-                <p className="font-medium text-[var(--dark-gray)]">{selectedFile.name}</p>
-                <p className="text-sm text-[#5C5A72]">{formatFileSize(selectedFile.size)}</p>
+                <p className="font-medium text-[#F5F5F5]">{selectedFile.name}</p>
+                <p className="text-sm text-[#525252]">{formatFileSize(selectedFile.size)}</p>
               </div>
             </div>
             <Button

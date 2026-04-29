@@ -5,168 +5,141 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap');
 
 :root {
-  /* ── Dark Purple-Tinted Palette ─────────────── */
-  --bg-base: #0B0A10;
-  --bg-surface: #13121D;
-  --bg-card: #1A1828;
-  --bg-elevated: #211F30;
-  --border-subtle: #252336;
-  --border-default: #302D45;
+  /* ── Palette C: Electric Focus ──────────────── */
+  --bg-base: #0C0C0C;
+  --bg-surface: #141414;
+  --bg-card: #1C1C1C;
+  --bg-elevated: #242424;
+  --border-subtle: #1F1F1F;
+  --border-default: #2A2A2A;
+  --border-hover: #333333;
 
-  /* ── Brand Colors ───────────────────────────── */
-  --purple: #6D5BF7;
-  --purple-light: #A259FF;
-  --green: #1DB954;
-  --green-dim: #1DB95420;
-  --coral: #FF7262;
-  --coral-dim: #FF726220;
-  --amber: #FFB347;
-  --violet-dim: #A259FF20;
+  --lime: #A3E635;
+  --lime-dim: #A3E63515;
+  --violet: #818CF8;
+  --violet-dim: #818CF815;
+  --orange: #FB923C;
+  --orange-dim: #FB923C15;
+  --red: #EF4444;
+  --red-dim: #EF444415;
+  --blue: #3B82F6;
 
-  /* ── Text ────────────────────────────────────── */
-  --text-primary: #FAFAFA;
-  --text-secondary: #A1A0B3;
-  --text-muted: #5C5A72;
-  --text-dim: #3F3D52;
+  --text-primary: #F5F5F5;
+  --text-secondary: #A3A3A3;
+  --text-muted: #525252;
+  --text-dim: #3F3F3F;
 
-  /* ── shadcn overrides ───────────────────────── */
-  --background: 260 20% 4%;
-  --foreground: 0 0% 98%;
-  --muted: 260 15% 12%;
-  --muted-foreground: 260 8% 55%;
-  --popover: 260 20% 6%;
-  --popover-foreground: 0 0% 98%;
-  --card: 260 18% 9%;
-  --card-foreground: 0 0% 98%;
-  --border: 260 15% 16%;
-  --input: 260 15% 16%;
-  --primary: 250 90% 66%;
-  --primary-foreground: 0 0% 100%;
-  --secondary: 260 15% 12%;
-  --secondary-foreground: 0 0% 98%;
-  --accent: 260 15% 14%;
-  --accent-foreground: 0 0% 98%;
+  /* ── shadcn tokens ──────────────────────────── */
+  --background: 0 0% 5%;
+  --foreground: 0 0% 96%;
+  --muted: 0 0% 10%;
+  --muted-foreground: 0 0% 50%;
+  --popover: 0 0% 8%;
+  --popover-foreground: 0 0% 96%;
+  --card: 0 0% 11%;
+  --card-foreground: 0 0% 96%;
+  --border: 0 0% 14%;
+  --input: 0 0% 14%;
+  --primary: 82 85% 55%;
+  --primary-foreground: 0 0% 5%;
+  --secondary: 234 89% 74%;
+  --secondary-foreground: 0 0% 96%;
+  --accent: 0 0% 14%;
+  --accent-foreground: 0 0% 96%;
   --destructive: 0 84% 60%;
   --destructive-foreground: 0 0% 100%;
-  --ring: 250 90% 66%;
+  --ring: 82 85% 55%;
   --radius: 0.625rem;
 
-  /* ── Legacy vars (component compat) ─────────── */
-  --purple-primary: #6D5BF7;
-  --purple-light: #A259FF;
-  --emerald-success: #1DB954;
-  --orange-accent: #FF7262;
-  --dark-gray: #FAFAFA;
+  /* ── Legacy compat ──────────────────────────── */
+  --purple-primary: #818CF8;
+  --purple-light: #A3E635;
+  --emerald-success: #A3E635;
+  --orange-accent: #FB923C;
+  --dark-gray: #F5F5F5;
 }
 
 @layer base {
-  * {
-    @apply border-border;
-  }
-  html {
-    scroll-behavior: smooth;
-    color-scheme: dark;
-  }
+  * { @apply border-border; }
+  html { scroll-behavior: smooth; color-scheme: dark; }
   body {
     font-family: 'Inter', system-ui, -apple-system, sans-serif;
     -webkit-font-smoothing: antialiased;
-    -moz-osx-font-smoothing: grayscale;
     background: var(--bg-base);
     color: var(--text-primary);
   }
   :focus-visible {
-    outline: 2px solid var(--purple);
+    outline: 2px solid var(--lime);
     outline-offset: 2px;
     border-radius: 4px;
   }
 }
 
 @layer components {
-  /* ── Gradients ──────────────────────────────── */
-  .gradient-hero {
-    background: linear-gradient(135deg, #6D5BF7 0%, #A259FF 50%, #1DB954 100%);
-  }
-  .gradient-cta {
-    background: linear-gradient(135deg, #6D5BF7 0%, #1DB954 100%);
-  }
-  .gradient-warm {
-    background: linear-gradient(135deg, #FF7262 0%, #FFB347 100%);
-  }
-  .gradient-bg {
-    background: linear-gradient(135deg, #0B0A10 0%, #13121D 50%, #1A1030 100%);
-  }
-  .gradient-bg-animated {
-    background: linear-gradient(135deg, #0B0A10 0%, #1A1030 25%, #13121D 50%, #0B1518 75%, #0B0A10 100%);
-    background-size: 400% 400%;
-    animation: gradientShift 20s ease infinite;
-  }
-
-  /* ── Glass ──────────────────────────────────── */
-  .glassmorphism {
-    background: rgba(19, 18, 29, 0.7);
-    backdrop-filter: blur(24px) saturate(150%);
-    -webkit-backdrop-filter: blur(24px) saturate(150%);
-    border: 1px solid var(--border-subtle);
-  }
-
   /* ── Cards ──────────────────────────────────── */
-  .modern-card {
+  .jt-card {
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
-    transition: all 0.2s ease;
+    border-radius: 12px;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
   }
-  .modern-card:hover {
+  .jt-card:hover {
     border-color: var(--border-default);
-    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.3);
   }
-  .card-hover {
-    transition: all 0.25s cubic-bezier(0.4, 0, 0.2, 1);
-  }
-  .card-hover:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 12px 32px rgba(109, 91, 247, 0.08);
-  }
-  .hover-elevate {
-    transition: all 0.2s ease;
-  }
-  .hover-elevate:hover {
+  .jt-card-hover:hover {
     transform: translateY(-1px);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.25);
+    box-shadow: 0 8px 24px rgba(0,0,0,0.4);
   }
 
-  /* ── Stat Card with top accent ─────────────── */
+  /* ── Stat card with top accent ─────────────── */
   .stat-card {
     position: relative;
     overflow: hidden;
     background: var(--bg-card);
     border: 1px solid var(--border-subtle);
+    border-radius: 12px;
   }
   .stat-card::before {
     content: '';
     position: absolute;
     top: 0; left: 0; right: 0;
-    height: 2.5px;
-    background: linear-gradient(90deg, var(--purple), var(--green));
+    height: 2px;
+    background: var(--lime);
     opacity: 0;
-    transition: opacity 0.2s ease;
+    transition: opacity 0.15s ease;
   }
-  .stat-card:hover::before {
-    opacity: 1;
+  .stat-card:hover::before { opacity: 1; }
+
+  /* ── Buttons ────────────────────────────────── */
+  .btn-lime {
+    background: var(--lime);
+    color: #0C0C0C;
+    font-weight: 700;
+    border: none;
+    border-radius: 10px;
+    transition: all 0.15s ease;
+  }
+  .btn-lime:hover {
+    filter: brightness(1.1);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 16px rgba(163, 230, 53, 0.2);
+  }
+  .btn-lime:active { transform: scale(0.98); }
+
+  .btn-ghost {
+    background: transparent;
+    color: var(--text-secondary);
+    border: 1px solid var(--border-subtle);
+    border-radius: 10px;
+    transition: all 0.15s ease;
+  }
+  .btn-ghost:hover {
+    background: var(--bg-elevated);
+    border-color: var(--border-default);
+    color: var(--text-primary);
   }
 
-  /* ── Text ───────────────────────────────────── */
-  .gradient-text {
-    background: linear-gradient(135deg, var(--purple), var(--green));
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
-  .gradient-text-white {
-    background: linear-gradient(135deg, #fff 0%, rgba(255,255,255,0.7) 100%);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-  }
+  /* ── Text helpers ───────────────────────────── */
   .text-label {
     font-size: 10px;
     font-weight: 700;
@@ -174,23 +147,32 @@
     text-transform: uppercase;
     color: var(--text-muted);
   }
+  .gradient-text {
+    background: linear-gradient(135deg, var(--lime), var(--violet));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+  }
 
-  /* ── Pill Badge ─────────────────────────────── */
-  .pill-badge {
+  /* ── Pill badge ─────────────────────────────── */
+  .pill {
     display: inline-flex;
     align-items: center;
+    gap: 4px;
     padding: 3px 10px;
     border-radius: 100px;
     font-size: 11px;
     font-weight: 600;
-    letter-spacing: 0.01em;
-    gap: 4px;
   }
+  .pill-lime { background: var(--lime-dim); color: var(--lime); border: 1px solid #A3E63525; }
+  .pill-violet { background: var(--violet-dim); color: var(--violet); border: 1px solid #818CF825; }
+  .pill-orange { background: var(--orange-dim); color: var(--orange); border: 1px solid #FB923C25; }
+  .pill-red { background: var(--red-dim); color: var(--red); border: 1px solid #EF444425; }
+  .pill-muted { background: var(--bg-elevated); color: var(--text-muted); border: 1px solid var(--border-subtle); }
 
-  /* ── Company Logo ───────────────────────────── */
+  /* ── Company logo ───────────────────────────── */
   .company-logo {
-    width: 36px;
-    height: 36px;
+    width: 36px; height: 36px;
     border-radius: 9px;
     object-fit: contain;
     background: var(--bg-surface);
@@ -198,49 +180,59 @@
     border: 1px solid var(--border-subtle);
   }
 
-  /* ── Bottom Nav ─────────────────────────────── */
+  /* ── Bottom nav ─────────────────────────────── */
   .bottom-nav {
-    background: rgba(11, 10, 16, 0.92);
-    backdrop-filter: blur(20px) saturate(150%);
-    -webkit-backdrop-filter: blur(20px) saturate(150%);
+    background: rgba(12, 12, 12, 0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
     border-top: 1px solid var(--border-subtle);
   }
 
-  /* ── Role Toggle ────────────────────────────── */
-  .role-toggle {
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  /* ── Sidebar (desktop) ──────────────────────── */
+  .sidebar {
+    background: var(--bg-surface);
+    border-right: 1px solid var(--border-subtle);
   }
 
-  /* ── Ambient Glow (for hero screens) ────────── */
-  .glow-purple {
-    position: absolute;
-    border-radius: 50%;
-    background: var(--purple);
-    opacity: 0.04;
-    filter: blur(80px);
-    pointer-events: none;
+  /* ── Live ticker ────────────────────────────── */
+  .ticker {
+    overflow: hidden;
+    white-space: nowrap;
   }
-  .glow-green {
-    position: absolute;
-    border-radius: 50%;
-    background: var(--green);
-    opacity: 0.03;
-    filter: blur(60px);
-    pointer-events: none;
+  .ticker-content {
+    display: inline-block;
+    animation: tickerScroll 30s linear infinite;
+  }
+
+  /* ── Glassmorphism ──────────────────────────── */
+  .glassmorphism {
+    background: rgba(20, 20, 20, 0.7);
+    backdrop-filter: blur(24px);
+    -webkit-backdrop-filter: blur(24px);
+    border: 1px solid var(--border-subtle);
   }
 
   /* ── Animations ─────────────────────────────── */
-  .animate-float {
-    animation: float 4s ease-in-out infinite;
+  .animate-float { animation: float 4s ease-in-out infinite; }
+  .animate-fade-in { animation: fadeIn 0.4s ease-out; }
+  .animate-slide-up { animation: slideUp 0.35s ease-out; }
+
+  /* ── Form inputs ────────────────────────────── */
+  .jt-input {
+    background: var(--bg-surface);
+    border: 1px solid var(--border-subtle);
+    color: var(--text-primary);
+    border-radius: 10px;
+    height: 44px;
+    padding: 0 14px;
+    font-size: 14px;
+    transition: border-color 0.15s ease;
   }
-  .animate-fade-in {
-    animation: fadeIn 0.5s ease-out;
-  }
-  .animate-slide-up {
-    animation: slideUp 0.4s ease-out;
-  }
-  .animate-scale-in {
-    animation: scaleIn 0.3s ease-out;
+  .jt-input::placeholder { color: var(--text-muted); }
+  .jt-input:focus {
+    border-color: var(--lime);
+    outline: none;
+    box-shadow: 0 0 0 3px rgba(163, 230, 53, 0.1);
   }
 
   /* ── Scrollbar ──────────────────────────────── */
@@ -252,23 +244,19 @@
 
 @layer utilities {
   @keyframes float {
-    0%, 100% { transform: translateY(0px); }
-    50% { transform: translateY(-8px); }
-  }
-  @keyframes gradientShift {
-    0%, 100% { background-position: 0% 50%; }
-    50% { background-position: 100% 50%; }
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-6px); }
   }
   @keyframes fadeIn {
     from { opacity: 0; }
     to { opacity: 1; }
   }
   @keyframes slideUp {
-    from { opacity: 0; transform: translateY(16px); }
+    from { opacity: 0; transform: translateY(12px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  @keyframes scaleIn {
-    from { opacity: 0; transform: scale(0.95); }
-    to { opacity: 1; transform: scale(1); }
+  @keyframes tickerScroll {
+    0% { transform: translateX(0); }
+    100% { transform: translateX(-50%); }
   }
 }

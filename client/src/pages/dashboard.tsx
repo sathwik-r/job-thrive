@@ -174,7 +174,7 @@ export default function DashboardPage() {
   const totalJobs = seekerMetrics?.jobsCount ?? 0;
 
   return (
-    <div className="min-h-screen" style={{ background: '#0B0A10' }}>
+    <div className="min-h-screen" style={{ background: '#0C0C0C' }}>
       {/* Header */}
       <motion.header
         initial={{ opacity: 0, y: -20 }}
@@ -185,7 +185,7 @@ export default function DashboardPage() {
           background: 'rgba(11, 10, 16, 0.85)',
           backdropFilter: 'blur(24px) saturate(150%)',
           WebkitBackdropFilter: 'blur(24px) saturate(150%)',
-          borderBottom: '1px solid #252336',
+          borderBottom: '1px solid #1F1F1F',
         }}
       >
         <div className="flex items-center justify-between max-w-2xl mx-auto">
@@ -202,7 +202,7 @@ export default function DashboardPage() {
           <div
             className="w-10 h-10 rounded-full cursor-pointer hover:scale-110 transition-transform duration-200 overflow-hidden"
             style={{
-              boxShadow: '0 0 0 2px #0B0A10, 0 0 0 4px #1DB954',
+              boxShadow: '0 0 0 2px #0C0C0C, 0 0 0 4px #A3E635',
             }}
             onClick={() => setLocation('/profile')}
           >
@@ -232,15 +232,15 @@ export default function DashboardPage() {
                 <div
                   className="rounded-2xl overflow-hidden"
                   style={{
-                    background: '#1A1828',
-                    border: '1px solid #252336',
+                    background: '#1C1C1C',
+                    border: '1px solid #1F1F1F',
                   }}
                 >
                   {/* Gradient top border */}
                   <div
                     style={{
                       height: '3px',
-                      background: 'linear-gradient(135deg, #6D5BF7 0%, #A259FF 50%, #1DB954 100%)',
+                      background: 'linear-gradient(135deg, #A3E635 0%, #818CF8 50%, #A3E635 100%)',
                     }}
                   />
                   <div className="p-6">
@@ -248,7 +248,7 @@ export default function DashboardPage() {
                       <div>
                         <span
                           className="text-label"
-                          style={{ color: '#5C5A72' }}
+                          style={{ color: '#525252' }}
                         >
                           WELCOME BACK
                         </span>
@@ -257,7 +257,7 @@ export default function DashboardPage() {
                           style={{
                             fontSize: '24px',
                             fontWeight: 900,
-                            color: '#FAFAFA',
+                            color: '#F5F5F5',
                             letterSpacing: '-0.02em',
                           }}
                         >
@@ -270,11 +270,11 @@ export default function DashboardPage() {
                       >
                         <div
                           className="w-2 h-2 rounded-full"
-                          style={{ background: '#1DB954' }}
+                          style={{ background: '#A3E635' }}
                         />
                         <span
                           style={{
-                            color: '#1DB954',
+                            color: '#A3E635',
                             fontSize: '13px',
                             fontWeight: 700,
                           }}
@@ -287,7 +287,7 @@ export default function DashboardPage() {
                       onClick={() => setLocation('/job-search')}
                       className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl font-semibold text-white text-[15px] transition-all duration-200 hover:opacity-90 hover:scale-[1.01] active:scale-[0.99]"
                       style={{
-                        background: 'linear-gradient(135deg, #6D5BF7, #1DB954)',
+                        background: '#A3E635',
                       }}
                     >
                       <Search className="w-4.5 h-4.5" />
@@ -300,14 +300,14 @@ export default function DashboardPage() {
               {/* 3 Stat Cards */}
               <motion.div variants={itemVariants} className="grid grid-cols-3 gap-3">
                 {/* JOBS - purple top accent */}
-                <div className="stat-card rounded-2xl overflow-hidden" style={{ ['--tw-stat-accent' as any]: '#6D5BF7' }}>
-                  <div style={{ height: '2px', background: '#6D5BF7' }} />
+                <div className="stat-card rounded-2xl overflow-hidden" style={{ ['--tw-stat-accent' as any]: '#A3E635' }}>
+                  <div style={{ height: '2px', background: '#A3E635' }} />
                   <div className="p-4 text-center">
                     <div
                       style={{
                         fontSize: '24px',
                         fontWeight: 900,
-                        color: '#6D5BF7',
+                        color: '#A3E635',
                       }}
                     >
                       {seekerMetrics?.jobsCount ?? 0}
@@ -318,13 +318,13 @@ export default function DashboardPage() {
 
                 {/* APPLIED - green top accent */}
                 <div className="stat-card rounded-2xl overflow-hidden">
-                  <div style={{ height: '2px', background: '#1DB954' }} />
+                  <div style={{ height: '2px', background: '#A3E635' }} />
                   <div className="p-4 text-center">
                     <div
                       style={{
                         fontSize: '24px',
                         fontWeight: 900,
-                        color: '#1DB954',
+                        color: '#A3E635',
                       }}
                     >
                       {seekerMetrics?.appliedReferrals ?? 0}
@@ -335,13 +335,13 @@ export default function DashboardPage() {
 
                 {/* SUCCESS - coral top accent */}
                 <div className="stat-card rounded-2xl overflow-hidden">
-                  <div style={{ height: '2px', background: '#FF7262' }} />
+                  <div style={{ height: '2px', background: '#FB923C' }} />
                   <div className="p-4 text-center">
                     <div
                       style={{
                         fontSize: '24px',
                         fontWeight: 900,
-                        color: '#FF7262',
+                        color: '#FB923C',
                       }}
                     >
                       {seekerMetrics?.successfulReferrals ?? 0}
@@ -356,8 +356,8 @@ export default function DashboardPage() {
                 <div
                   className="rounded-2xl p-5"
                   style={{
-                    background: '#1A1828',
-                    border: '1px solid #252336',
+                    background: '#1C1C1C',
+                    border: '1px solid #1F1F1F',
                   }}
                 >
                   <div className="flex items-center justify-between">
@@ -366,19 +366,19 @@ export default function DashboardPage() {
                         className="w-12 h-12 rounded-xl flex items-center justify-center"
                         style={{ background: 'rgba(162, 89, 255, 0.12)' }}
                       >
-                        <MessageSquare className="h-6 w-6" style={{ color: '#A259FF' }} />
+                        <MessageSquare className="h-6 w-6" style={{ color: '#818CF8' }} />
                       </div>
                       <div>
                         <h3
                           style={{
                             fontSize: '16px',
                             fontWeight: 700,
-                            color: '#FAFAFA',
+                            color: '#F5F5F5',
                           }}
                         >
                           1v1 Coaching
                         </h3>
-                        <p style={{ fontSize: '13px', color: '#A1A0B3', marginTop: '2px' }}>
+                        <p style={{ fontSize: '13px', color: '#A3A3A3', marginTop: '2px' }}>
                           500+ mentors available
                         </p>
                       </div>
@@ -388,8 +388,8 @@ export default function DashboardPage() {
                       onClick={() => setLocation('/coaching')}
                       className="px-5 py-2.5 rounded-xl font-semibold text-sm transition-all duration-200 hover:opacity-90"
                       style={{
-                        background: '#A259FF',
-                        color: '#FAFAFA',
+                        background: '#818CF8',
+                        color: '#F5F5F5',
                       }}
                     >
                       Start
@@ -400,11 +400,11 @@ export default function DashboardPage() {
 
               {/* ACTIVE REFERRALS section */}
               <motion.div variants={itemVariants}>
-                <div className="text-label mb-4" style={{ color: '#5C5A72' }}>
+                <div className="text-label mb-4" style={{ color: '#525252' }}>
                   ACTIVE REFERRALS
                 </div>
                 {seekerLoading ? (
-                  <div className="text-center py-12" style={{ color: '#5C5A72' }}>Loading...</div>
+                  <div className="text-center py-12" style={{ color: '#525252' }}>Loading...</div>
                 ) : activeRequests.length > 0 ? (
                   <div className="space-y-3">
                     {activeRequests.map((r: any, index: number) => (
@@ -425,11 +425,11 @@ export default function DashboardPage() {
                   <div
                     className="rounded-2xl p-10 text-center"
                     style={{
-                      background: '#1A1828',
-                      border: '1px solid #252336',
+                      background: '#1C1C1C',
+                      border: '1px solid #1F1F1F',
                     }}
                   >
-                    <p style={{ color: '#5C5A72', fontSize: '14px' }}>
+                    <p style={{ color: '#525252', fontSize: '14px' }}>
                       No active requests. Start by searching for jobs!
                     </p>
                   </div>
@@ -438,7 +438,7 @@ export default function DashboardPage() {
 
               {/* PAST REFERRALS section */}
               <motion.div variants={itemVariants}>
-                <div className="text-label mb-4" style={{ color: '#5C5A72' }}>
+                <div className="text-label mb-4" style={{ color: '#525252' }}>
                   PAST REFERRALS
                 </div>
                 {pastRequests.length > 0 ? (
@@ -461,11 +461,11 @@ export default function DashboardPage() {
                   <div
                     className="rounded-2xl p-10 text-center"
                     style={{
-                      background: '#1A1828',
-                      border: '1px solid #252336',
+                      background: '#1C1C1C',
+                      border: '1px solid #1F1F1F',
                     }}
                   >
-                    <p style={{ color: '#5C5A72', fontSize: '14px' }}>No past requests yet.</p>
+                    <p style={{ color: '#525252', fontSize: '14px' }}>No past requests yet.</p>
                   </div>
                 )}
               </motion.div>
@@ -485,19 +485,19 @@ export default function DashboardPage() {
                 <div
                   className="rounded-2xl overflow-hidden"
                   style={{
-                    background: '#1A1828',
-                    border: '1px solid #252336',
+                    background: '#1C1C1C',
+                    border: '1px solid #1F1F1F',
                   }}
                 >
                   {/* Gradient top border */}
                   <div
                     style={{
                       height: '3px',
-                      background: 'linear-gradient(135deg, #6D5BF7 0%, #A259FF 50%, #1DB954 100%)',
+                      background: 'linear-gradient(135deg, #A3E635 0%, #818CF8 50%, #A3E635 100%)',
                     }}
                   />
                   <div className="p-6">
-                    <span className="text-label" style={{ color: '#5C5A72' }}>
+                    <span className="text-label" style={{ color: '#525252' }}>
                       TOTAL EARNED
                     </span>
                     <div
@@ -505,7 +505,7 @@ export default function DashboardPage() {
                       style={{
                         fontSize: '32px',
                         fontWeight: 900,
-                        color: '#1DB954',
+                        color: '#A3E635',
                         letterSpacing: '-0.02em',
                       }}
                     >
@@ -515,13 +515,13 @@ export default function DashboardPage() {
                     <div className="grid grid-cols-2 gap-3">
                       <div
                         className="rounded-xl p-4 text-center"
-                        style={{ background: '#211F30' }}
+                        style={{ background: '#242424' }}
                       >
                         <div
                           style={{
                             fontSize: '20px',
                             fontWeight: 900,
-                            color: '#FAFAFA',
+                            color: '#F5F5F5',
                           }}
                         >
                           Rs.{monthlyEarnings.toFixed(0)}
@@ -530,13 +530,13 @@ export default function DashboardPage() {
                       </div>
                       <div
                         className="rounded-xl p-4 text-center"
-                        style={{ background: '#211F30' }}
+                        style={{ background: '#242424' }}
                       >
                         <div
                           style={{
                             fontSize: '20px',
                             fontWeight: 900,
-                            color: '#FAFAFA',
+                            color: '#F5F5F5',
                           }}
                         >
                           {referrerMetrics?.successfulReferrals ?? 0}
@@ -552,13 +552,13 @@ export default function DashboardPage() {
               <motion.div variants={itemVariants} className="grid grid-cols-3 gap-3">
                 {/* Pending - amber */}
                 <div className="stat-card rounded-2xl overflow-hidden">
-                  <div style={{ height: '2px', background: '#FFB347' }} />
+                  <div style={{ height: '2px', background: '#FB923C' }} />
                   <div className="p-4 text-center">
                     <div
                       style={{
                         fontSize: '24px',
                         fontWeight: 900,
-                        color: '#FFB347',
+                        color: '#FB923C',
                       }}
                     >
                       {assignedRequests.length}
@@ -569,13 +569,13 @@ export default function DashboardPage() {
 
                 {/* Completed - green */}
                 <div className="stat-card rounded-2xl overflow-hidden">
-                  <div style={{ height: '2px', background: '#1DB954' }} />
+                  <div style={{ height: '2px', background: '#A3E635' }} />
                   <div className="p-4 text-center">
                     <div
                       style={{
                         fontSize: '24px',
                         fontWeight: 900,
-                        color: '#1DB954',
+                        color: '#A3E635',
                       }}
                     >
                       {completedRequests.length}
@@ -586,13 +586,13 @@ export default function DashboardPage() {
 
                 {/* Success Rate - purple */}
                 <div className="stat-card rounded-2xl overflow-hidden">
-                  <div style={{ height: '2px', background: '#6D5BF7' }} />
+                  <div style={{ height: '2px', background: '#A3E635' }} />
                   <div className="p-4 text-center">
                     <div
                       style={{
                         fontSize: '24px',
                         fontWeight: 900,
-                        color: '#6D5BF7',
+                        color: '#A3E635',
                       }}
                     >
                       {Array.isArray(referreRequest) && referreRequest.length > 0
@@ -610,11 +610,11 @@ export default function DashboardPage() {
 
               {/* Assigned Referrals */}
               <motion.div variants={itemVariants}>
-                <div className="text-label mb-4" style={{ color: '#5C5A72' }}>
+                <div className="text-label mb-4" style={{ color: '#525252' }}>
                   ASSIGNED REFERRALS
                 </div>
                 {referrerLoading ? (
-                  <div className="text-center py-12" style={{ color: '#5C5A72' }}>Loading...</div>
+                  <div className="text-center py-12" style={{ color: '#525252' }}>Loading...</div>
                 ) : assignedRequests.length > 0 ? (
                   <div className="space-y-3">
                     {assignedRequests.map((r: any, index: number) => (
@@ -638,11 +638,11 @@ export default function DashboardPage() {
                   <div
                     className="rounded-2xl p-10 text-center"
                     style={{
-                      background: '#1A1828',
-                      border: '1px solid #252336',
+                      background: '#1C1C1C',
+                      border: '1px solid #1F1F1F',
                     }}
                   >
-                    <p style={{ color: '#5C5A72', fontSize: '14px' }}>
+                    <p style={{ color: '#525252', fontSize: '14px' }}>
                       No assigned referrals at the moment.
                     </p>
                   </div>
@@ -651,7 +651,7 @@ export default function DashboardPage() {
 
               {/* Completed Referrals */}
               <motion.div variants={itemVariants}>
-                <div className="text-label mb-4" style={{ color: '#5C5A72' }}>
+                <div className="text-label mb-4" style={{ color: '#525252' }}>
                   COMPLETED REFERRALS
                 </div>
                 {completedRequests.length > 0 ? (
@@ -677,11 +677,11 @@ export default function DashboardPage() {
                   <div
                     className="rounded-2xl p-10 text-center"
                     style={{
-                      background: '#1A1828',
-                      border: '1px solid #252336',
+                      background: '#1C1C1C',
+                      border: '1px solid #1F1F1F',
                     }}
                   >
-                    <p style={{ color: '#5C5A72', fontSize: '14px' }}>No completed referrals yet.</p>
+                    <p style={{ color: '#525252', fontSize: '14px' }}>No completed referrals yet.</p>
                   </div>
                 )}
               </motion.div>
@@ -693,32 +693,32 @@ export default function DashboardPage() {
       {/* Bottom Navigation */}
       <nav className="bottom-nav fixed bottom-0 left-0 right-0 z-20">
         {/* Policy Links */}
-        <div className="px-6 py-2" style={{ borderBottom: '1px solid #252336' }}>
+        <div className="px-6 py-2" style={{ borderBottom: '1px solid #1F1F1F' }}>
           <div className="flex justify-center space-x-6 text-xs">
             <a
               href="/terms"
               className="transition-colors"
-              style={{ color: '#3F3D52' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#A1A0B3')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#3F3D52')}
+              style={{ color: '#3F3F3F' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#A3A3A3')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#3F3F3F')}
             >
               Terms
             </a>
             <a
               href="/privacy"
               className="transition-colors"
-              style={{ color: '#3F3D52' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#A1A0B3')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#3F3D52')}
+              style={{ color: '#3F3F3F' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#A3A3A3')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#3F3F3F')}
             >
               Privacy
             </a>
             <a
               href="/refund"
               className="transition-colors"
-              style={{ color: '#3F3D52' }}
-              onMouseEnter={(e) => (e.currentTarget.style.color = '#A1A0B3')}
-              onMouseLeave={(e) => (e.currentTarget.style.color = '#3F3D52')}
+              style={{ color: '#3F3F3F' }}
+              onMouseEnter={(e) => (e.currentTarget.style.color = '#A3A3A3')}
+              onMouseLeave={(e) => (e.currentTarget.style.color = '#3F3F3F')}
             >
               Refund
             </a>
@@ -740,7 +740,7 @@ export default function DashboardPage() {
                   onClick={() => handleNavClick(key)}
                   className="flex flex-col items-center gap-1 min-w-[64px] min-h-[52px] justify-center rounded-xl transition-all duration-200 relative"
                   style={{
-                    color: isActive ? '#6D5BF7' : '#5C5A72',
+                    color: isActive ? '#A3E635' : '#525252',
                     background: 'transparent',
                   }}
                 >
@@ -749,7 +749,7 @@ export default function DashboardPage() {
                     <div
                       className="absolute -top-1 left-1/2 -translate-x-1/2 w-1.5 h-1.5 rounded-full"
                       style={{
-                        background: '#6D5BF7',
+                        background: '#A3E635',
                         boxShadow: '0 0 8px 2px rgba(109, 91, 247, 0.5)',
                       }}
                     />
@@ -782,8 +782,8 @@ export default function DashboardPage() {
         <DialogContent
           className="sm:max-w-lg rounded-2xl border-0"
           style={{
-            background: '#1A1828',
-            border: '1px solid #252336',
+            background: '#1C1C1C',
+            border: '1px solid #1F1F1F',
           }}
         >
           <DialogHeader>
@@ -791,7 +791,7 @@ export default function DashboardPage() {
               style={{
                 fontSize: '20px',
                 fontWeight: 900,
-                color: '#FAFAFA',
+                color: '#F5F5F5',
               }}
             >
               Referral Details
@@ -805,7 +805,7 @@ export default function DashboardPage() {
                     src={`https://logo.clearbit.com/${(detailsModal.request.job?.company || 'example').toLowerCase().replace(/\s+/g, '')}.com`}
                     alt={detailsModal.request.job?.company || ''}
                     className="company-logo w-12 h-12 rounded-xl object-contain p-1.5"
-                    style={{ background: '#13121D', border: '1px solid #252336' }}
+                    style={{ background: '#141414', border: '1px solid #1F1F1F' }}
                     onError={(e: any) => { e.target.style.display = 'none'; }}
                   />
                   <div>
@@ -813,15 +813,15 @@ export default function DashboardPage() {
                       style={{
                         fontWeight: 700,
                         fontSize: '16px',
-                        color: '#FAFAFA',
+                        color: '#F5F5F5',
                       }}
                     >
                       {detailsModal.request.job?.title || 'Unknown Position'}
                     </p>
-                    <p style={{ fontSize: '13px', color: '#A1A0B3', marginTop: '2px' }}>
+                    <p style={{ fontSize: '13px', color: '#A3A3A3', marginTop: '2px' }}>
                       {detailsModal.request.job?.company || 'Unknown Company'}
                     </p>
-                    <p style={{ fontSize: '12px', color: '#5C5A72', marginTop: '2px' }}>
+                    <p style={{ fontSize: '12px', color: '#525252', marginTop: '2px' }}>
                       {detailsModal.request.job?.location ||
                         'Location not specified'}
                     </p>
@@ -838,7 +838,7 @@ export default function DashboardPage() {
                     style={{
                       fontSize: '14px',
                       fontWeight: 700,
-                      color: '#1DB954',
+                      color: '#A3E635',
                     }}
                   >
                     Rs.499
@@ -849,28 +849,28 @@ export default function DashboardPage() {
               {detailsModal.request.seeker && (
                 <div
                   className="rounded-xl p-5"
-                  style={{ background: '#211F30' }}
+                  style={{ background: '#242424' }}
                 >
-                  <p className="text-label mb-2" style={{ color: '#5C5A72' }}>
+                  <p className="text-label mb-2" style={{ color: '#525252' }}>
                     SEEKER
                   </p>
-                  <p style={{ fontWeight: 600, color: '#FAFAFA' }}>
+                  <p style={{ fontWeight: 600, color: '#F5F5F5' }}>
                     {detailsModal.request.seeker.name}
                   </p>
                   {detailsModal.request.seeker.email && (
-                    <p style={{ fontSize: '13px', color: '#A1A0B3', marginTop: '4px' }}>
+                    <p style={{ fontSize: '13px', color: '#A3A3A3', marginTop: '4px' }}>
                       {detailsModal.request.seeker.email}
                     </p>
                   )}
                   {detailsModal.request.seeker.experience && (
-                    <p style={{ fontSize: '13px', color: '#A1A0B3' }}>
+                    <p style={{ fontSize: '13px', color: '#A3A3A3' }}>
                       Experience: {detailsModal.request.seeker.experience}
                     </p>
                   )}
                   {detailsModal.request.seeker.skills &&
                     Array.isArray(detailsModal.request.seeker.skills) &&
                     detailsModal.request.seeker.skills.length > 0 && (
-                      <p style={{ fontSize: '13px', color: '#A1A0B3' }}>
+                      <p style={{ fontSize: '13px', color: '#A3A3A3' }}>
                         Skills: {detailsModal.request.seeker.skills.join(', ')}
                       </p>
                     )}
@@ -880,9 +880,9 @@ export default function DashboardPage() {
                         <button
                           className="px-4 py-2 rounded-xl text-sm font-semibold transition-all duration-200 hover:opacity-90"
                           style={{
-                            background: '#302D45',
-                            color: '#FAFAFA',
-                            border: '1px solid #252336',
+                            background: '#2A2A2A',
+                            color: '#F5F5F5',
+                            border: '1px solid #1F1F1F',
                           }}
                           onClick={() =>
                             window.open(
@@ -908,7 +908,7 @@ export default function DashboardPage() {
                       <button
                         className="flex-1 rounded-xl h-12 text-[15px] font-semibold text-white transition-all duration-200 hover:opacity-90"
                         style={{
-                          background: '#6D5BF7',
+                          background: '#A3E635',
                         }}
                         onClick={() => {
                           setDetailsModal({ isOpen: false, request: null });
@@ -921,7 +921,7 @@ export default function DashboardPage() {
                         className="flex-1 rounded-xl h-12 text-[15px] font-semibold transition-all duration-200 hover:opacity-90"
                         style={{
                           background: 'transparent',
-                          color: '#FF7262',
+                          color: '#FB923C',
                           border: '1px solid rgba(255, 114, 98, 0.3)',
                         }}
                         onClick={() =>

@@ -41,9 +41,9 @@ export default function AnalyticsPage() {
   const avgReferralValue = totalReferralsGiven > 0 ? parseFloat(user.totalEarnings) / completedReferrals : 0;
 
   return (
-    <div className="min-h-screen bg-[#0B0A10]">
+    <div className="min-h-screen bg-[#0C0C0C]">
       {/* Header */}
-      <div className="bg-[#13121D] border-b border-[#252336] sticky top-0 z-10">
+      <div className="bg-[#141414] border-b border-[#1F1F1F] sticky top-0 z-10">
         <div className="flex items-center justify-between p-4 max-w-md mx-auto">
           <Button
             variant="ghost"
@@ -55,7 +55,7 @@ export default function AnalyticsPage() {
             <span>Back</span>
           </Button>
           
-          <h1 className="text-lg font-semibold text-[#FAFAFA]">Analytics</h1>
+          <h1 className="text-lg font-semibold text-[#F5F5F5]">Analytics</h1>
           
           <div className="w-12"></div> {/* Spacer */}
         </div>

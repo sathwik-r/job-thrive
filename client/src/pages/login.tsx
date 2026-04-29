@@ -29,20 +29,20 @@ export default function LoginPage() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#0B0A10' }}>
+    <div className="min-h-screen relative overflow-hidden" style={{ backgroundColor: '#0C0C0C' }}>
       {/* Ambient Glow Blobs */}
       <div className="absolute inset-0 pointer-events-none">
         <div
           className="absolute top-[-10%] left-[-5%] w-[500px] h-[500px] rounded-full blur-[120px]"
-          style={{ background: '#6D5BF7', opacity: 0.04 }}
+          style={{ background: '#A3E635', opacity: 0.04 }}
         />
         <div
           className="absolute bottom-[-10%] right-[-5%] w-[400px] h-[400px] rounded-full blur-[100px]"
-          style={{ background: '#1DB954', opacity: 0.03 }}
+          style={{ background: '#A3E635', opacity: 0.03 }}
         />
         <div
           className="absolute top-[40%] right-[10%] w-[300px] h-[300px] rounded-full blur-[80px]"
-          style={{ background: '#A259FF', opacity: 0.03 }}
+          style={{ background: '#818CF8', opacity: 0.03 }}
         />
       </div>
 
@@ -70,7 +70,7 @@ export default function LoginPage() {
                 fontFamily: 'Inter, sans-serif',
                 fontWeight: 900,
                 fontSize: '28px',
-                color: '#FAFAFA',
+                color: '#F5F5F5',
                 letterSpacing: '-0.02em',
               }}
             >
@@ -79,7 +79,7 @@ export default function LoginPage() {
 
             <p
               className="text-sm"
-              style={{ color: '#5C5A72', fontFamily: 'Inter, sans-serif' }}
+              style={{ color: '#525252', fontFamily: 'Inter, sans-serif' }}
             >
               land your dream role, faster
             </p>
@@ -95,7 +95,7 @@ export default function LoginPage() {
                 className="px-3 py-1.5 rounded-full text-xs font-semibold"
                 style={{
                   backgroundColor: 'rgba(109, 91, 247, 0.12)',
-                  color: '#6D5BF7',
+                  color: '#A3E635',
                   border: '1px solid rgba(109, 91, 247, 0.2)',
                   fontFamily: 'Inter, sans-serif',
                 }}
@@ -106,7 +106,7 @@ export default function LoginPage() {
                 className="px-3 py-1.5 rounded-full text-xs font-semibold"
                 style={{
                   backgroundColor: 'rgba(29, 185, 84, 0.12)',
-                  color: '#1DB954',
+                  color: '#A3E635',
                   border: '1px solid rgba(29, 185, 84, 0.2)',
                   fontFamily: 'Inter, sans-serif',
                 }}
@@ -117,7 +117,7 @@ export default function LoginPage() {
                 className="px-3 py-1.5 rounded-full text-xs font-semibold"
                 style={{
                   backgroundColor: 'rgba(255, 114, 98, 0.12)',
-                  color: '#FF7262',
+                  color: '#FB923C',
                   border: '1px solid rgba(255, 114, 98, 0.2)',
                   fontFamily: 'Inter, sans-serif',
                 }}
@@ -131,8 +131,8 @@ export default function LoginPage() {
           <motion.div
             className="rounded-2xl p-8"
             style={{
-              backgroundColor: '#1A1828',
-              border: '1px solid #252336',
+              backgroundColor: '#1C1C1C',
+              border: '1px solid #1F1F1F',
             }}
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
@@ -155,8 +155,8 @@ export default function LoginPage() {
                       border: '1px solid rgba(255, 114, 98, 0.2)',
                     }}
                   >
-                    <AlertCircle className="w-4 h-4 flex-shrink-0" style={{ color: '#FF7262' }} />
-                    <span className="text-sm font-medium flex-1" style={{ color: '#FF7262' }}>
+                    <AlertCircle className="w-4 h-4 flex-shrink-0" style={{ color: '#FB923C' }} />
+                    <span className="text-sm font-medium flex-1" style={{ color: '#FB923C' }}>
                       {error}
                     </span>
                   </div>
@@ -175,8 +175,8 @@ export default function LoginPage() {
                 disabled={loading}
                 className="w-full font-semibold py-6 px-6 rounded-xl text-base flex items-center justify-center space-x-3 transition-all duration-200 shadow-lg border-0 disabled:opacity-60 disabled:cursor-not-allowed"
                 style={{
-                  backgroundColor: '#FAFAFA',
-                  color: '#0B0A10',
+                  backgroundColor: '#F5F5F5',
+                  color: '#0C0C0C',
                   fontFamily: 'Inter, sans-serif',
                 }}
               >
@@ -198,7 +198,7 @@ export default function LoginPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.35 }}
           >
-            <p className="text-xs mb-3" style={{ color: '#5C5A72', fontFamily: 'Inter, sans-serif' }}>
+            <p className="text-xs mb-3" style={{ color: '#525252', fontFamily: 'Inter, sans-serif' }}>
               Trusted by 500+ professionals
             </p>
             <div className="flex items-center justify-center gap-2 flex-wrap">
@@ -207,9 +207,9 @@ export default function LoginPage() {
                   key={company}
                   className="px-3 py-1 rounded-full text-[11px] font-medium"
                   style={{
-                    backgroundColor: '#13121D',
-                    color: '#A1A0B3',
-                    border: '1px solid #252336',
+                    backgroundColor: '#141414',
+                    color: '#A3A3A3',
+                    border: '1px solid #1F1F1F',
                     fontFamily: 'Inter, sans-serif',
                   }}
                 >
@@ -226,16 +226,16 @@ export default function LoginPage() {
             animate={{ opacity: 1 }}
             transition={{ duration: 0.5, delay: 0.4 }}
           >
-            <p className="text-xs" style={{ color: '#3F3D52', fontFamily: 'Inter, sans-serif' }}>
-              <a href="/terms" className="hover:underline transition-colors duration-200" style={{ color: '#3F3D52' }}>
+            <p className="text-xs" style={{ color: '#3F3F3F', fontFamily: 'Inter, sans-serif' }}>
+              <a href="/terms" className="hover:underline transition-colors duration-200" style={{ color: '#3F3F3F' }}>
                 Terms
               </a>
               {' \u00B7 '}
-              <a href="/privacy" className="hover:underline transition-colors duration-200" style={{ color: '#3F3D52' }}>
+              <a href="/privacy" className="hover:underline transition-colors duration-200" style={{ color: '#3F3F3F' }}>
                 Privacy
               </a>
               {' \u00B7 '}
-              <a href="/refund" className="hover:underline transition-colors duration-200" style={{ color: '#3F3D52' }}>
+              <a href="/refund" className="hover:underline transition-colors duration-200" style={{ color: '#3F3F3F' }}>
                 Refund
               </a>
             </p>

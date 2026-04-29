@@ -83,31 +83,31 @@ export default function ProfileSettingsPage() {
   };
 
   if (!user) {
-    return <div className="min-h-screen bg-[#0B0A10] flex items-center justify-center text-[#FAFAFA]">Loading...</div>;
+    return <div className="min-h-screen bg-[#0C0C0C] flex items-center justify-center text-[#F5F5F5]">Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0A10]">
+    <div className="min-h-screen bg-[#0C0C0C]">
       {/* Header */}
-      <div className="bg-[#13121D]/80 backdrop-blur-md border-b border-[#252336] sticky top-0 z-10">
+      <div className="bg-[#141414]/80 backdrop-blur-md border-b border-[#1F1F1F] sticky top-0 z-10">
         <div className="flex items-center justify-between p-4 max-w-md mx-auto">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setLocation('/profile')}
-            className="flex items-center space-x-2 text-[#A1A0B3] hover:text-[#6D5BF7] hover:bg-transparent transition-colors"
+            className="flex items-center space-x-2 text-[#A3A3A3] hover:text-[#A3E635] hover:bg-transparent transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
           </Button>
 
-          <h1 className="text-base font-semibold text-[#FAFAFA] tracking-tight">Settings</h1>
+          <h1 className="text-base font-semibold text-[#F5F5F5] tracking-tight">Settings</h1>
 
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setIsEditing(!isEditing)}
-            className={`transition-colors hover:bg-transparent ${isEditing ? 'text-[#1DB954]' : 'text-[#5C5A72] hover:text-[#6D5BF7]'}`}
+            className={`transition-colors hover:bg-transparent ${isEditing ? 'text-[#A3E635]' : 'text-[#525252] hover:text-[#A3E635]'}`}
           >
             {isEditing ? <Check className="w-4 h-4" /> : <Edit3 className="w-4 h-4" />}
           </Button>
@@ -122,9 +122,9 @@ export default function ProfileSettingsPage() {
           animate="visible"
           variants={fadeIn}
         >
-          <Card className="bg-[#1A1828] border border-[#252336] rounded-2xl shadow-none">
+          <Card className="bg-[#1C1C1C] border border-[#1F1F1F] rounded-2xl shadow-none">
             <CardHeader className="pb-3">
-              <CardTitle className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Your Role</CardTitle>
+              <CardTitle className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Your Role</CardTitle>
             </CardHeader>
             <CardContent>
               {isEditing ? (
@@ -134,10 +134,10 @@ export default function ProfileSettingsPage() {
                     setFormData(prev => ({ ...prev, role: value }))
                   }
                 >
-                  <SelectTrigger className="w-full h-11 rounded-xl bg-[#13121D] border-[#252336] text-[#FAFAFA] focus:border-[#6D5BF7] focus:ring-[#6D5BF7]/20 text-base">
+                  <SelectTrigger className="w-full h-11 rounded-xl bg-[#141414] border-[#1F1F1F] text-[#F5F5F5] focus:border-[#A3E635] focus:ring-[#A3E635]/20 text-base">
                     <SelectValue />
                   </SelectTrigger>
-                  <SelectContent className="bg-[#1A1828] border-[#252336] text-[#FAFAFA]">
+                  <SelectContent className="bg-[#1C1C1C] border-[#1F1F1F] text-[#F5F5F5]">
                     <SelectItem value="seeker">Job Seeker</SelectItem>
                     <SelectItem value="referrer">Referrer</SelectItem>
                     <SelectItem value="both">Both</SelectItem>
@@ -146,7 +146,7 @@ export default function ProfileSettingsPage() {
               ) : (
                 <Badge
                   variant="outline"
-                  className="bg-[#6D5BF7]/10 border-[#6D5BF7]/30 text-[#6D5BF7] capitalize px-4 py-1.5 text-xs font-semibold rounded-full"
+                  className="bg-[#A3E635]/10 border-[#A3E635]/30 text-[#A3E635] capitalize px-4 py-1.5 text-xs font-semibold rounded-full"
                 >
                   {user.role === 'both' ? 'Seeker & Referrer' : user.role}
                 </Badge>
@@ -163,54 +163,54 @@ export default function ProfileSettingsPage() {
             animate="visible"
             variants={fadeIn}
           >
-            <Card className="bg-[#1A1828] border border-[#252336] rounded-2xl shadow-none">
+            <Card className="bg-[#1C1C1C] border border-[#1F1F1F] rounded-2xl shadow-none">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center space-x-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-[#211F30] flex items-center justify-center">
-                    <Briefcase className="w-4 h-4 text-[#6D5BF7]" />
+                  <div className="w-8 h-8 rounded-lg bg-[#242424] flex items-center justify-center">
+                    <Briefcase className="w-4 h-4 text-[#A3E635]" />
                   </div>
-                  <span className="text-sm font-semibold text-[#FAFAFA]">Work Information</span>
+                  <span className="text-sm font-semibold text-[#F5F5F5]">Work Information</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-5">
                 <div className="space-y-2">
-                  <Label htmlFor="company" className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Company</Label>
+                  <Label htmlFor="company" className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Company</Label>
                   {isEditing ? (
                     <Input
                       id="company"
                       value={formData.company}
                       onChange={(e) => setFormData(prev => ({ ...prev, company: e.target.value }))}
                       placeholder="e.g., Google, Microsoft"
-                      className="h-11 rounded-xl bg-[#13121D] border-[#252336] text-[#FAFAFA] focus:border-[#6D5BF7] focus:ring-[#6D5BF7]/20 text-base placeholder:text-[#5C5A72]"
+                      className="h-11 rounded-xl bg-[#141414] border-[#1F1F1F] text-[#F5F5F5] focus:border-[#A3E635] focus:ring-[#A3E635]/20 text-base placeholder:text-[#525252]"
                     />
                   ) : (
-                    <p className="text-sm font-medium text-[#FAFAFA] py-1">{user.company || 'Not specified'}</p>
+                    <p className="text-sm font-medium text-[#F5F5F5] py-1">{user.company || 'Not specified'}</p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="position" className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Position</Label>
+                  <Label htmlFor="position" className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Position</Label>
                   {isEditing ? (
                     <Input
                       id="position"
                       value={formData.position}
                       onChange={(e) => setFormData(prev => ({ ...prev, position: e.target.value }))}
                       placeholder="e.g., Senior Software Engineer"
-                      className="h-11 rounded-xl bg-[#13121D] border-[#252336] text-[#FAFAFA] focus:border-[#6D5BF7] focus:ring-[#6D5BF7]/20 text-base placeholder:text-[#5C5A72]"
+                      className="h-11 rounded-xl bg-[#141414] border-[#1F1F1F] text-[#F5F5F5] focus:border-[#A3E635] focus:ring-[#A3E635]/20 text-base placeholder:text-[#525252]"
                     />
                   ) : (
-                    <p className="text-sm font-medium text-[#FAFAFA] py-1">{user.position || 'Not specified'}</p>
+                    <p className="text-sm font-medium text-[#F5F5F5] py-1">{user.position || 'Not specified'}</p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="department" className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Department</Label>
+                  <Label htmlFor="department" className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Department</Label>
                   {isEditing ? (
                     <Select value={formData.department} onValueChange={(value) => setFormData(prev => ({ ...prev, department: value }))}>
-                      <SelectTrigger className="h-11 rounded-xl bg-[#13121D] border-[#252336] text-[#FAFAFA] focus:border-[#6D5BF7] focus:ring-[#6D5BF7]/20 text-base">
+                      <SelectTrigger className="h-11 rounded-xl bg-[#141414] border-[#1F1F1F] text-[#F5F5F5] focus:border-[#A3E635] focus:ring-[#A3E635]/20 text-base">
                         <SelectValue placeholder="Select department" />
                       </SelectTrigger>
-                      <SelectContent className="bg-[#1A1828] border-[#252336] text-[#FAFAFA]">
+                      <SelectContent className="bg-[#1C1C1C] border-[#1F1F1F] text-[#F5F5F5]">
                         <SelectItem value="engineering">Engineering</SelectItem>
                         <SelectItem value="product">Product</SelectItem>
                         <SelectItem value="design">Design</SelectItem>
@@ -224,18 +224,18 @@ export default function ProfileSettingsPage() {
                       </SelectContent>
                     </Select>
                   ) : (
-                    <p className="text-sm font-medium text-[#FAFAFA] py-1 capitalize">{user.department || 'Not specified'}</p>
+                    <p className="text-sm font-medium text-[#F5F5F5] py-1 capitalize">{user.department || 'Not specified'}</p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="workExperience" className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Work Experience</Label>
+                  <Label htmlFor="workExperience" className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Work Experience</Label>
                   {isEditing ? (
                     <Select value={formData.workExperience} onValueChange={(value) => setFormData(prev => ({ ...prev, workExperience: value }))}>
-                      <SelectTrigger className="h-11 rounded-xl bg-[#13121D] border-[#252336] text-[#FAFAFA] focus:border-[#6D5BF7] focus:ring-[#6D5BF7]/20 text-base">
+                      <SelectTrigger className="h-11 rounded-xl bg-[#141414] border-[#1F1F1F] text-[#F5F5F5] focus:border-[#A3E635] focus:ring-[#A3E635]/20 text-base">
                         <SelectValue placeholder="Select experience" />
                       </SelectTrigger>
-                      <SelectContent className="bg-[#1A1828] border-[#252336] text-[#FAFAFA]">
+                      <SelectContent className="bg-[#1C1C1C] border-[#1F1F1F] text-[#F5F5F5]">
                         <SelectItem value="0-1">0-1 years (New Grad)</SelectItem>
                         <SelectItem value="1-3">1-3 years (Junior)</SelectItem>
                         <SelectItem value="3-5">3-5 years (Mid-level)</SelectItem>
@@ -245,7 +245,7 @@ export default function ProfileSettingsPage() {
                       </SelectContent>
                     </Select>
                   ) : (
-                    <p className="text-sm font-medium text-[#FAFAFA] py-1">{user.workExperience || 'Not specified'}</p>
+                    <p className="text-sm font-medium text-[#F5F5F5] py-1">{user.workExperience || 'Not specified'}</p>
                   )}
                 </div>
               </CardContent>
@@ -261,24 +261,24 @@ export default function ProfileSettingsPage() {
             animate="visible"
             variants={fadeIn}
           >
-            <Card className="bg-[#1A1828] border border-[#252336] rounded-2xl shadow-none">
+            <Card className="bg-[#1C1C1C] border border-[#1F1F1F] rounded-2xl shadow-none">
               <CardHeader className="pb-3">
                 <CardTitle className="flex items-center space-x-2.5">
-                  <div className="w-8 h-8 rounded-lg bg-[#211F30] flex items-center justify-center">
-                    <GraduationCap className="w-4 h-4 text-[#1DB954]" />
+                  <div className="w-8 h-8 rounded-lg bg-[#242424] flex items-center justify-center">
+                    <GraduationCap className="w-4 h-4 text-[#A3E635]" />
                   </div>
-                  <span className="text-sm font-semibold text-[#FAFAFA]">Job Search Profile</span>
+                  <span className="text-sm font-semibold text-[#F5F5F5]">Job Search Profile</span>
                 </CardTitle>
               </CardHeader>
               <CardContent className="space-y-5">
                 <div className="space-y-2">
-                  <Label htmlFor="education" className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Education</Label>
+                  <Label htmlFor="education" className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Education</Label>
                   {isEditing ? (
                     <Select value={formData.education} onValueChange={(value) => setFormData(prev => ({ ...prev, education: value }))}>
-                      <SelectTrigger className="h-11 rounded-xl bg-[#13121D] border-[#252336] text-[#FAFAFA] focus:border-[#6D5BF7] focus:ring-[#6D5BF7]/20 text-base">
+                      <SelectTrigger className="h-11 rounded-xl bg-[#141414] border-[#1F1F1F] text-[#F5F5F5] focus:border-[#A3E635] focus:ring-[#A3E635]/20 text-base">
                         <SelectValue placeholder="Select education" />
                       </SelectTrigger>
-                      <SelectContent className="bg-[#1A1828] border-[#252336] text-[#FAFAFA]">
+                      <SelectContent className="bg-[#1C1C1C] border-[#1F1F1F] text-[#F5F5F5]">
                         <SelectItem value="high-school">High School</SelectItem>
                         <SelectItem value="bachelors-cs">Bachelor's - Computer Science</SelectItem>
                         <SelectItem value="bachelors-engineering">Bachelor's - Engineering</SelectItem>
@@ -294,18 +294,18 @@ export default function ProfileSettingsPage() {
                       </SelectContent>
                     </Select>
                   ) : (
-                    <p className="text-sm font-medium text-[#FAFAFA] py-1">{user.education || 'Not specified'}</p>
+                    <p className="text-sm font-medium text-[#F5F5F5] py-1">{user.education || 'Not specified'}</p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="targetDomain" className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Target Domain</Label>
+                  <Label htmlFor="targetDomain" className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Target Domain</Label>
                   {isEditing ? (
                     <Select value={formData.targetDomain} onValueChange={(value) => setFormData(prev => ({ ...prev, targetDomain: value }))}>
-                      <SelectTrigger className="h-11 rounded-xl bg-[#13121D] border-[#252336] text-[#FAFAFA] focus:border-[#6D5BF7] focus:ring-[#6D5BF7]/20 text-base">
+                      <SelectTrigger className="h-11 rounded-xl bg-[#141414] border-[#1F1F1F] text-[#F5F5F5] focus:border-[#A3E635] focus:ring-[#A3E635]/20 text-base">
                         <SelectValue placeholder="Select target domain" />
                       </SelectTrigger>
-                      <SelectContent className="bg-[#1A1828] border-[#252336] text-[#FAFAFA]">
+                      <SelectContent className="bg-[#1C1C1C] border-[#1F1F1F] text-[#F5F5F5]">
                         <SelectItem value="software-engineering">Software Engineering</SelectItem>
                         <SelectItem value="data-science">Data Science & ML</SelectItem>
                         <SelectItem value="product-management">Product Management</SelectItem>
@@ -322,18 +322,18 @@ export default function ProfileSettingsPage() {
                       </SelectContent>
                     </Select>
                   ) : (
-                    <p className="text-sm font-medium text-[#FAFAFA] py-1">{user.targetDomain || 'Not specified'}</p>
+                    <p className="text-sm font-medium text-[#F5F5F5] py-1">{user.targetDomain || 'Not specified'}</p>
                   )}
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="experience" className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Experience Level</Label>
+                  <Label htmlFor="experience" className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Experience Level</Label>
                   {isEditing ? (
                     <Select value={formData.experience} onValueChange={(value) => setFormData(prev => ({ ...prev, experience: value }))}>
-                      <SelectTrigger className="h-11 rounded-xl bg-[#13121D] border-[#252336] text-[#FAFAFA] focus:border-[#6D5BF7] focus:ring-[#6D5BF7]/20 text-base">
+                      <SelectTrigger className="h-11 rounded-xl bg-[#141414] border-[#1F1F1F] text-[#F5F5F5] focus:border-[#A3E635] focus:ring-[#A3E635]/20 text-base">
                         <SelectValue placeholder="Select experience level" />
                       </SelectTrigger>
-                      <SelectContent className="bg-[#1A1828] border-[#252336] text-[#FAFAFA]">
+                      <SelectContent className="bg-[#1C1C1C] border-[#1F1F1F] text-[#F5F5F5]">
                         <SelectItem value="entry-level">Entry Level (0-2 years)</SelectItem>
                         <SelectItem value="mid-level">Mid Level (2-5 years)</SelectItem>
                         <SelectItem value="senior-level">Senior Level (5-8 years)</SelectItem>
@@ -342,12 +342,12 @@ export default function ProfileSettingsPage() {
                       </SelectContent>
                     </Select>
                   ) : (
-                    <p className="text-sm font-medium text-[#FAFAFA] py-1">{user.experience || 'Not specified'}</p>
+                    <p className="text-sm font-medium text-[#F5F5F5] py-1">{user.experience || 'Not specified'}</p>
                   )}
                 </div>
 
                 <div className="space-y-3">
-                  <Label className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Skills</Label>
+                  <Label className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Skills</Label>
                   <div>
                     {isEditing ? (
                       <div className="space-y-3">
@@ -355,7 +355,7 @@ export default function ProfileSettingsPage() {
                           {formData.skills.map((skill, index) => (
                             <span
                               key={index}
-                              className="inline-flex items-center bg-[#6D5BF7]/10 text-[#6D5BF7] px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer hover:bg-[#FF7262]/15 hover:text-[#FF7262] transition-colors"
+                              className="inline-flex items-center bg-[#A3E635]/10 text-[#A3E635] px-3.5 py-1.5 rounded-full text-xs font-semibold cursor-pointer hover:bg-[#FB923C]/15 hover:text-[#FB923C] transition-colors"
                               onClick={() => removeSkill(skill)}
                             >
                               {skill}
@@ -366,7 +366,7 @@ export default function ProfileSettingsPage() {
                         <div className="flex space-x-2">
                           <Input
                             placeholder="Add a skill..."
-                            className="flex-1 h-11 rounded-xl bg-[#13121D] border-[#252336] text-[#FAFAFA] focus:border-[#6D5BF7] focus:ring-[#6D5BF7]/20 text-base placeholder:text-[#5C5A72]"
+                            className="flex-1 h-11 rounded-xl bg-[#141414] border-[#1F1F1F] text-[#F5F5F5] focus:border-[#A3E635] focus:ring-[#A3E635]/20 text-base placeholder:text-[#525252]"
                             onKeyPress={(e) => {
                               if (e.key === 'Enter') {
                                 addSkill((e.target as HTMLInputElement).value);
@@ -382,7 +382,7 @@ export default function ProfileSettingsPage() {
                               addSkill(input.value);
                               input.value = '';
                             }}
-                            className="h-11 px-5 rounded-xl bg-transparent border-[#6D5BF7]/30 text-[#6D5BF7] hover:bg-[#6D5BF7] hover:text-white transition-colors"
+                            className="h-11 px-5 rounded-xl bg-transparent border-[#A3E635]/30 text-[#A3E635] hover:bg-[#A3E635] hover:text-white transition-colors"
                           >
                             Add
                           </Button>
@@ -394,13 +394,13 @@ export default function ProfileSettingsPage() {
                           user.skills.map((skill, index) => (
                             <span
                               key={index}
-                              className="inline-flex items-center bg-[#6D5BF7]/10 text-[#6D5BF7] px-3.5 py-1.5 rounded-full text-xs font-semibold"
+                              className="inline-flex items-center bg-[#A3E635]/10 text-[#A3E635] px-3.5 py-1.5 rounded-full text-xs font-semibold"
                             >
                               {skill}
                             </span>
                           ))
                         ) : (
-                          <p className="text-sm text-[#5C5A72] italic">No skills added yet</p>
+                          <p className="text-sm text-[#525252] italic">No skills added yet</p>
                         )}
                       </div>
                     )}
@@ -421,7 +421,7 @@ export default function ProfileSettingsPage() {
             <Button
               onClick={handleSave}
               disabled={updateProfileMutation.isPending}
-              className="w-full h-12 bg-gradient-to-r from-[#6D5BF7] to-[#1DB954] text-white rounded-xl font-semibold text-base shadow-lg shadow-[#6D5BF7]/20 hover:shadow-xl hover:shadow-[#6D5BF7]/30 transition-all duration-300 hover:-translate-y-0.5 border-0"
+              className="w-full h-12 bg-gradient-to-r bg-[#A3E635] text-[#0C0C0C] rounded-xl font-semibold text-base shadow-lg shadow-[#A3E635]/20 hover:shadow-xl hover:shadow-[#A3E635]/30 transition-all duration-300 hover:-translate-y-0.5 border-0"
             >
               <Save className="w-4.5 h-4.5 mr-2.5" />
               {updateProfileMutation.isPending ? 'Saving...' : 'Save Changes'}

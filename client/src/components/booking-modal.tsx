@@ -215,8 +215,8 @@ export default function BookingModal({ mentor, isOpen, onClose, onBookSession }:
             )}
 
             {/* Policy Links */}
-            <div className="pt-4 border-t border-[#252336]">
-              <p className="text-xs text-[#5C5A72] text-center">
+            <div className="pt-4 border-t border-[#1F1F1F]">
+              <p className="text-xs text-[#525252] text-center">
                 By booking this session, you agree to our{' '}
                 <a href="/terms" className="text-blue-600 hover:text-blue-800 underline">
                   Terms & Conditions

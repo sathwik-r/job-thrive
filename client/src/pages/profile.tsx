@@ -26,25 +26,25 @@ export default function ProfilePage() {
   const [isEditing, setIsEditing] = useState(false);
 
   if (!user) {
-    return <div className="min-h-screen bg-[#0B0A10] flex items-center justify-center text-[#FAFAFA]">Loading...</div>;
+    return <div className="min-h-screen bg-[#0C0C0C] flex items-center justify-center text-[#F5F5F5]">Loading...</div>;
   }
 
   return (
-    <div className="min-h-screen bg-[#0B0A10]">
+    <div className="min-h-screen bg-[#0C0C0C]">
       {/* Header */}
-      <div className="bg-[#13121D]/80 backdrop-blur-md border-b border-[#252336] sticky top-0 z-10">
+      <div className="bg-[#141414]/80 backdrop-blur-md border-b border-[#1F1F1F] sticky top-0 z-10">
         <div className="relative flex items-center justify-center p-4 max-w-md mx-auto">
           <Button
             variant="ghost"
             size="sm"
             onClick={() => setLocation('/dashboard')}
-            className="absolute left-4 flex items-center space-x-2 text-[#A1A0B3] hover:text-[#6D5BF7] hover:bg-transparent transition-colors"
+            className="absolute left-4 flex items-center space-x-2 text-[#A3A3A3] hover:text-[#A3E635] hover:bg-transparent transition-colors"
           >
             <ArrowLeft className="w-4 h-4" />
             <span>Back</span>
           </Button>
 
-          <span className="text-[#FAFAFA] text-base font-semibold tracking-tight">Profile</span>
+          <span className="text-[#F5F5F5] text-base font-semibold tracking-tight">Profile</span>
 
           <div className="absolute right-4">
             <Logo size={28} showText={false} />
@@ -60,12 +60,12 @@ export default function ProfilePage() {
           animate="visible"
           variants={fadeIn}
         >
-          <Card className="bg-[#1A1828] border border-[#252336] rounded-2xl overflow-hidden shadow-none">
+          <Card className="bg-[#1C1C1C] border border-[#1F1F1F] rounded-2xl overflow-hidden shadow-none">
             <CardContent className="p-8 text-center">
               {/* Avatar with gradient border */}
               <div className="relative w-24 h-24 mx-auto mb-6">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#6D5BF7] via-[#A259FF] to-[#1DB954] p-[3px]">
-                  <div className="w-full h-full rounded-full bg-[#1A1828] flex items-center justify-center overflow-hidden">
+                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#A3E635] via-[#818CF8] to-[#A3E635] p-[3px]">
+                  <div className="w-full h-full rounded-full bg-[#1C1C1C] flex items-center justify-center overflow-hidden">
                     {user.photoUrl ? (
                       <img
                         src={user.photoUrl}
@@ -73,7 +73,7 @@ export default function ProfilePage() {
                         className="w-full h-full rounded-full object-cover"
                       />
                     ) : (
-                      <div className="w-full h-full rounded-full bg-gradient-to-br from-[#6D5BF7] to-[#1DB954] flex items-center justify-center text-white text-3xl font-bold">
+                      <div className="w-full h-full rounded-full bg-gradient-to-br bg-[#A3E635] flex items-center justify-center text-white text-3xl font-bold">
                         {user.name.charAt(0)}
                       </div>
                     )}
@@ -81,12 +81,12 @@ export default function ProfilePage() {
                 </div>
               </div>
 
-              <h2 className="text-2xl font-[900] text-[#FAFAFA] mb-1 tracking-tight">{user.name}</h2>
-              <p className="text-[#A1A0B3] text-sm mb-5">{user.email}</p>
+              <h2 className="text-2xl font-[900] text-[#F5F5F5] mb-1 tracking-tight">{user.name}</h2>
+              <p className="text-[#A3A3A3] text-sm mb-5">{user.email}</p>
 
               <Badge
                 variant="outline"
-                className="bg-[#6D5BF7]/10 border-[#6D5BF7]/30 text-[#6D5BF7] px-4 py-1.5 text-xs font-semibold uppercase tracking-wider rounded-full"
+                className="bg-[#A3E635]/10 border-[#A3E635]/30 text-[#A3E635] px-4 py-1.5 text-xs font-semibold uppercase tracking-wider rounded-full"
               >
                 {user.role === 'both' ? 'Seeker & Referrer' : user.role}
               </Badge>
@@ -101,40 +101,40 @@ export default function ProfilePage() {
           animate="visible"
           variants={fadeIn}
         >
-          <Card className="bg-[#1A1828] border border-[#252336] rounded-2xl shadow-none">
+          <Card className="bg-[#1C1C1C] border border-[#1F1F1F] rounded-2xl shadow-none">
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Information</CardTitle>
+              <CardTitle className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Information</CardTitle>
             </CardHeader>
             <CardContent className="space-y-1 pt-2">
-              <div className="flex items-center space-x-4 p-3 rounded-xl hover:bg-[#211F30]/60 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-[#211F30] flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-4.5 h-4.5 text-[#6D5BF7]" />
+              <div className="flex items-center space-x-4 p-3 rounded-xl hover:bg-[#242424]/60 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-[#242424] flex items-center justify-center flex-shrink-0">
+                  <Mail className="w-4.5 h-4.5 text-[#A3E635]" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Email</div>
-                  <div className="text-sm font-medium text-[#FAFAFA] truncate">{user.email}</div>
+                  <div className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Email</div>
+                  <div className="text-sm font-medium text-[#F5F5F5] truncate">{user.email}</div>
                 </div>
               </div>
 
               {user.company && (
-                <div className="flex items-center space-x-4 p-3 rounded-xl hover:bg-[#211F30]/60 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-[#211F30] flex items-center justify-center flex-shrink-0">
-                    <Building2 className="w-4.5 h-4.5 text-[#1DB954]" />
+                <div className="flex items-center space-x-4 p-3 rounded-xl hover:bg-[#242424]/60 transition-colors">
+                  <div className="w-10 h-10 rounded-xl bg-[#242424] flex items-center justify-center flex-shrink-0">
+                    <Building2 className="w-4.5 h-4.5 text-[#A3E635]" />
                   </div>
                   <div className="min-w-0">
-                    <div className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Company</div>
-                    <div className="text-sm font-medium text-[#FAFAFA]">{user.company}</div>
+                    <div className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Company</div>
+                    <div className="text-sm font-medium text-[#F5F5F5]">{user.company}</div>
                   </div>
                 </div>
               )}
 
-              <div className="flex items-center space-x-4 p-3 rounded-xl hover:bg-[#211F30]/60 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-[#211F30] flex items-center justify-center flex-shrink-0">
-                  <Calendar className="w-4.5 h-4.5 text-[#FF7262]" />
+              <div className="flex items-center space-x-4 p-3 rounded-xl hover:bg-[#242424]/60 transition-colors">
+                <div className="w-10 h-10 rounded-xl bg-[#242424] flex items-center justify-center flex-shrink-0">
+                  <Calendar className="w-4.5 h-4.5 text-[#FB923C]" />
                 </div>
                 <div className="min-w-0">
-                  <div className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Member Since</div>
-                  <div className="text-sm font-medium text-[#FAFAFA]">
+                  <div className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Member Since</div>
+                  <div className="text-sm font-medium text-[#F5F5F5]">
                     {new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
                   </div>
                 </div>
@@ -150,9 +150,9 @@ export default function ProfilePage() {
           animate="visible"
           variants={fadeIn}
         >
-          <Card className="bg-[#1A1828] border border-[#252336] rounded-2xl shadow-none">
+          <Card className="bg-[#1C1C1C] border border-[#1F1F1F] rounded-2xl shadow-none">
             <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-[#5C5A72] uppercase tracking-wider">Account</CardTitle>
+              <CardTitle className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Account</CardTitle>
             </CardHeader>
             <CardContent className="space-y-2 pt-2">
               {/* <Button
@@ -165,22 +165,22 @@ export default function ProfilePage() {
 
               <Button
                 variant="ghost"
-                className="w-full justify-start h-12 rounded-xl text-[#FAFAFA] hover:bg-[#211F30] font-medium group transition-all"
+                className="w-full justify-start h-12 rounded-xl text-[#F5F5F5] hover:bg-[#242424] font-medium group transition-all"
                 onClick={() => setLocation('/profile-settings')}
               >
-                <div className="w-9 h-9 rounded-lg bg-[#211F30] flex items-center justify-center mr-3 group-hover:bg-[#6D5BF7]/15 transition-colors">
-                  <Settings className="w-4 h-4 text-[#6D5BF7]" />
+                <div className="w-9 h-9 rounded-lg bg-[#242424] flex items-center justify-center mr-3 group-hover:bg-[#A3E635]/15 transition-colors">
+                  <Settings className="w-4 h-4 text-[#A3E635]" />
                 </div>
                 Profile Settings
               </Button>
 
               <Button
                 variant="ghost"
-                className="w-full justify-start h-12 rounded-xl text-[#A1A0B3] hover:bg-[#FF7262]/10 hover:text-[#FF7262] font-medium group transition-all"
+                className="w-full justify-start h-12 rounded-xl text-[#A3A3A3] hover:bg-[#FB923C]/10 hover:text-[#FB923C] font-medium group transition-all"
                 onClick={signOut}
               >
-                <div className="w-9 h-9 rounded-lg bg-[#211F30] flex items-center justify-center mr-3 group-hover:bg-[#FF7262]/15 transition-colors">
-                  <LogOut className="w-4 h-4 text-[#5C5A72] group-hover:text-[#FF7262] transition-colors" />
+                <div className="w-9 h-9 rounded-lg bg-[#242424] flex items-center justify-center mr-3 group-hover:bg-[#FB923C]/15 transition-colors">
+                  <LogOut className="w-4 h-4 text-[#525252] group-hover:text-[#FB923C] transition-colors" />
                 </div>
                 Sign Out
               </Button>

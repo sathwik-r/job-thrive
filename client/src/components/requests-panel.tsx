@@ -63,7 +63,7 @@ export default function RequestsPanel({
       case 'confirmed': return 'bg-green-500';
       case 'declined': return 'bg-red-500';
       case 'completed': return 'bg-blue-500';
-      default: return 'bg-[#13121D]0';
+      default: return 'bg-[#141414]0';
     }
   };
 

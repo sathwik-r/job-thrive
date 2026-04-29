@@ -138,11 +138,11 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
         return (
           <Card className="modern-card border-0">
             <CardHeader className="text-center pb-8">
-              <div className="w-16 h-16 mx-auto bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] rounded-2xl flex items-center justify-center mb-4">
+              <div className="w-16 h-16 mx-auto bg-gradient-to-r from-[#818CF8] to-[#A3E635] rounded-2xl flex items-center justify-center mb-4">
                 <User className="w-8 h-8 text-white" />
               </div>
               <CardTitle className="text-2xl font-bold gradient-text">What brings you to Job Thrive?</CardTitle>
-              <p className="text-[#A1A0B3]">Choose your primary goal on our platform</p>
+              <p className="text-[#A3A3A3]">Choose your primary goal on our platform</p>
             </CardHeader>
             <CardContent className="space-y-4">
               <Button
@@ -150,8 +150,8 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                 variant={data.role === 'seeker' ? 'default' : 'outline'}
                 className={`w-full p-6 h-auto text-left ${
                   data.role === 'seeker' 
-                    ? 'bg-gradient-to-r from-[var(--purple-primary)] to-[var(--purple-light)] text-white border-0' 
-                    : 'border-2 hover:border-[#6D5BF7]'
+                    ? 'bg-gradient-to-r from-[#818CF8] to-[#A3E635] text-white border-0' 
+                    : 'border-2 hover:border-[#A3E635]'
                 }`}
               >
                 <div className="flex items-start space-x-4">
@@ -169,8 +169,8 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                 variant={data.role === 'referrer' ? 'default' : 'outline'}
                 className={`w-full p-6 h-auto text-left ${
                   data.role === 'referrer' 
-                    ? 'bg-gradient-to-r from-[var(--emerald-success)] to-[var(--orange-accent)] text-white border-0' 
-                    : 'border-2 hover:border-[#1DB954]'
+                    ? 'bg-gradient-to-r from-[#A3E635] to-[#FB923C] text-white border-0' 
+                    : 'border-2 hover:border-[#A3E635]'
                 }`}
               >
                 <div className="flex items-start space-x-4">
@@ -188,8 +188,8 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                 variant={data.role === 'both' ? 'default' : 'outline'}
                 className={`w-full p-6 h-auto text-left ${
                   data.role === 'both' 
-                    ? 'bg-gradient-to-r from-[var(--orange-accent)] to-[var(--purple-primary)] text-white border-0' 
-                    : 'border-2 hover:border-[#FF7262]'
+                    ? 'bg-gradient-to-r from-[#FB923C] to-[#818CF8] text-white border-0' 
+                    : 'border-2 hover:border-[#FB923C]'
                 }`}
               >
                 <div className="flex items-start space-x-4">
@@ -213,15 +213,15 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
           return (
             <Card className="modern-card border-0">
               <CardHeader className="text-center pb-6">
-                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-[var(--emerald-success)] to-[var(--orange-accent)] rounded-2xl flex items-center justify-center mb-4">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-[#A3E635] to-[#FB923C] rounded-2xl flex items-center justify-center mb-4">
                   <Briefcase className="w-8 h-8 text-white" />
                 </div>
                 <CardTitle className="text-2xl font-bold gradient-text">Tell us about your work</CardTitle>
-                <p className="text-[#A1A0B3]">This helps us match you with relevant referral requests</p>
+                <p className="text-[#A3A3A3]">This helps us match you with relevant referral requests</p>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <Label htmlFor="company" className="text-sm font-medium text-[#FAFAFA] mb-2 block">
+                  <Label htmlFor="company" className="text-sm font-medium text-[#F5F5F5] mb-2 block">
                     Current Company *
                   </Label>
                   <Popover open={companyOpen} onOpenChange={setCompanyOpen}>
@@ -230,7 +230,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                         variant="outline"
                         role="combobox"
                         aria-expanded={companyOpen}
-                        className="w-full justify-between bg-[#0B0A10] border-2 rounded-xl py-6"
+                        className="w-full justify-between bg-[#0C0C0C] border-2 rounded-xl py-6"
                       >
                         {data.company ? data.company : 'Search company'}
                         <ChevronsUpDown className="ml-2 h-4 w-4 shrink-0 opacity-50" />
@@ -279,7 +279,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                   </Popover>
                   {isOtherCompany && (
                     <div className="mt-3">
-                      <Label htmlFor="companyOther" className="text-sm font-medium text-[#FAFAFA] mb-2 block">
+                      <Label htmlFor="companyOther" className="text-sm font-medium text-[#F5F5F5] mb-2 block">
                         Enter your company
                       </Label>
                       <Input
@@ -287,14 +287,14 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                         placeholder="Type your company name"
                         value={data.company || ''}
                         onChange={(e) => setData(prev => ({ ...prev, company: e.target.value }))}
-                        className="bg-[#0B0A10] border-2 rounded-xl py-3 focus:border-[var(--purple-primary)] focus:bg-[#1A1828]"
+                        className="bg-[#0C0C0C] border-2 rounded-xl py-3 focus:border-[#818CF8] focus:bg-[#1C1C1C]"
                       />
                     </div>
                   )}
                 </div>
 
                 <div>
-                  <Label htmlFor="position" className="text-sm font-medium text-[#FAFAFA] mb-2 block">
+                  <Label htmlFor="position" className="text-sm font-medium text-[#F5F5F5] mb-2 block">
                     Current Position *
                   </Label>
                   <Input
@@ -302,16 +302,16 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                     placeholder="e.g., Senior Software Engineer, Product Manager"
                     value={data.position || ''}
                     onChange={(e) => setData(prev => ({ ...prev, position: e.target.value }))}
-                    className="bg-[#0B0A10] border-2 rounded-xl py-3 focus:border-[var(--purple-primary)] focus:bg-[#1A1828]"
+                    className="bg-[#0C0C0C] border-2 rounded-xl py-3 focus:border-[#818CF8] focus:bg-[#1C1C1C]"
                   />
                 </div>
 
                 <div>
-                  <Label htmlFor="department" className="text-sm font-medium text-[#FAFAFA] mb-2 block">
+                  <Label htmlFor="department" className="text-sm font-medium text-[#F5F5F5] mb-2 block">
                     Department
                   </Label>
                   <Select value={data.department || ''} onValueChange={(value) => setData(prev => ({ ...prev, department: value }))}>
-                    <SelectTrigger className="bg-[#0B0A10] border-2 rounded-xl py-3 focus:border-[var(--purple-primary)]">
+                    <SelectTrigger className="bg-[#0C0C0C] border-2 rounded-xl py-3 focus:border-[#818CF8]">
                       <SelectValue placeholder="Select department" />
                     </SelectTrigger>
                     <SelectContent>
@@ -330,11 +330,11 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                 </div>
 
                 <div>
-                  <Label htmlFor="workExperience" className="text-sm font-medium text-[#FAFAFA] mb-2 block">
+                  <Label htmlFor="workExperience" className="text-sm font-medium text-[#F5F5F5] mb-2 block">
                     Total Work Experience *
                   </Label>
                   <Select value={data.workExperience || ''} onValueChange={(value) => setData(prev => ({ ...prev, workExperience: value }))}>
-                    <SelectTrigger className="bg-[#0B0A10] border-2 rounded-xl py-3">
+                    <SelectTrigger className="bg-[#0C0C0C] border-2 rounded-xl py-3">
                       <SelectValue placeholder="Select experience range" />
                     </SelectTrigger>
                     <SelectContent>
@@ -357,19 +357,19 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
           return (
             <Card className="modern-card border-0">
               <CardHeader className="text-center pb-6">
-                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-[var(--purple-primary)] to-[var(--purple-light)] rounded-2xl flex items-center justify-center mb-4">
+                <div className="w-16 h-16 mx-auto bg-gradient-to-r from-[#818CF8] to-[#A3E635] rounded-2xl flex items-center justify-center mb-4">
                   <GraduationCap className="w-8 h-8 text-white" />
                 </div>
                 <CardTitle className="text-2xl font-bold gradient-text">Your job search profile</CardTitle>
-                <p className="text-[#A1A0B3]">Help us find the perfect referral opportunities for you</p>
+                <p className="text-[#A3A3A3]">Help us find the perfect referral opportunities for you</p>
               </CardHeader>
               <CardContent className="space-y-6">
                 <div>
-                  <Label htmlFor="education" className="text-sm font-medium text-[#FAFAFA] mb-2 block">
+                  <Label htmlFor="education" className="text-sm font-medium text-[#F5F5F5] mb-2 block">
                     Education Background *
                   </Label>
                   <Select value={data.education || ''} onValueChange={(value) => setData(prev => ({ ...prev, education: value }))}>
-                    <SelectTrigger className="bg-[#0B0A10] border-2 rounded-xl py-3">
+                    <SelectTrigger className="bg-[#0C0C0C] border-2 rounded-xl py-3">
                       <SelectValue placeholder="Select your education" />
                     </SelectTrigger>
                     <SelectContent>
@@ -391,24 +391,24 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                 </div>
                   {data.education === 'other' && (
                     <div>
-                      <Label htmlFor="education" className="text-sm font-medium text-[#FAFAFA] mb-2 block">
+                      <Label htmlFor="education" className="text-sm font-medium text-[#F5F5F5] mb-2 block">
                         Please specify your education
                       </Label>
                       <Input
                         id="education"
                         placeholder="Enter your education background"
-                        className="bg-[#0B0A10] border-2 rounded-xl py-3"
+                        className="bg-[#0C0C0C] border-2 rounded-xl py-3"
                         value={otherEducation}
                         onChange={(e) => setOtherEducation(e.target.value)}
                       />
                     </div>
                   )}
                 <div>
-                  <Label htmlFor="targetDomain" className="text-sm font-medium text-[#FAFAFA] mb-2 block">
+                  <Label htmlFor="targetDomain" className="text-sm font-medium text-[#F5F5F5] mb-2 block">
                     Target Domain *
                   </Label>
                   <Select value={data.targetDomain || ''} onValueChange={(value) => setData(prev => ({ ...prev, targetDomain: value }))}>
-                    <SelectTrigger className="bg-[#0B0A10] border-2 rounded-xl py-3">
+                    <SelectTrigger className="bg-[#0C0C0C] border-2 rounded-xl py-3">
                       <SelectValue placeholder="What field are you targeting?" />
                     </SelectTrigger>
                     <SelectContent>
@@ -431,13 +431,13 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
 
                 {data.targetDomain === 'other' && (
                   <div>
-                    <Label htmlFor="targetDomain" className="text-sm font-medium text-[#FAFAFA] mb-2 block">
+                    <Label htmlFor="targetDomain" className="text-sm font-medium text-[#F5F5F5] mb-2 block">
                       Please specify your target domain
                     </Label>
                     <Input
                       id="targetDomain" 
                       placeholder="Enter your target domain"
-                      className="bg-[#0B0A10] border-2 rounded-xl py-3"
+                      className="bg-[#0C0C0C] border-2 rounded-xl py-3"
                       value={otherTargetDomain}
                       onChange={(e) => setOtherTargetDomain(e.target.value)}
                     />
@@ -446,11 +446,11 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
 
 
                 <div>
-                  <Label htmlFor="targetRole" className="text-sm font-medium text-[#FAFAFA] mb-2 block">
+                  <Label htmlFor="targetRole" className="text-sm font-medium text-[#F5F5F5] mb-2 block">
                     Target Role Level *
                   </Label>
                   <Select value={data.experience || ''} onValueChange={(value) => setData(prev => ({ ...prev, experience: value }))}>
-                    <SelectTrigger className="bg-[#0B0A10] border-2 rounded-xl py-3">
+                    <SelectTrigger className="bg-[#0C0C0C] border-2 rounded-xl py-3">
                       <SelectValue placeholder="What level are you targeting?" />
                     </SelectTrigger>
                     <SelectContent>
@@ -464,7 +464,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                 </div>
 
                 <div>
-                  <Label className="text-sm font-medium text-[#FAFAFA] mb-2 block">
+                  <Label className="text-sm font-medium text-[#F5F5F5] mb-2 block">
                     Key Skills (Optional)
                   </Label>
                   <div className="flex flex-wrap gap-2 mb-3">
@@ -472,7 +472,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                       <Badge 
                         key={index} 
                         variant="secondary" 
-                        className="bg-[var(--purple-primary)]/10 text-[var(--purple-primary)] px-3 py-1 cursor-pointer hover:bg-red-100 hover:text-red-600"
+                        className="bg-[#818CF8]/10 text-[#818CF8] px-3 py-1 cursor-pointer hover:bg-red-100 hover:text-red-600"
                         onClick={() => removeSkill(skill)}
                       >
                         {skill} ×
@@ -482,7 +482,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                   <div className="flex space-x-2">
                     <Input
                       placeholder="Add a skill (e.g., React, Python, AWS)"
-                      className="bg-[#0B0A10] border-2 rounded-xl py-3"
+                      className="bg-[#0C0C0C] border-2 rounded-xl py-3"
                       onKeyPress={(e) => {
                         if (e.key === 'Enter') {
                           addSkill((e.target as HTMLInputElement).value);
@@ -514,36 +514,36 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
         return (
           <Card className="modern-card border-0">
             <CardHeader className="text-center pb-6">
-              <div className="w-16 h-16 mx-auto bg-gradient-to-r from-[var(--orange-accent)] to-[var(--emerald-success)] rounded-2xl flex items-center justify-center mb-4">
+              <div className="w-16 h-16 mx-auto bg-gradient-to-r from-[#FB923C] to-[#A3E635] rounded-2xl flex items-center justify-center mb-4">
                 <svg className="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="M5 13l4 4L19 7"></path>
                 </svg>
               </div>
               <CardTitle className="text-2xl font-bold gradient-text">You're all set!</CardTitle>
-              <p className="text-[#A1A0B3]">Review your profile before we get started</p>
+              <p className="text-[#A3A3A3]">Review your profile before we get started</p>
             </CardHeader>
             <CardContent className="space-y-4">
-              <div className="bg-gradient-to-r from-[var(--purple-primary)]/10 to-[var(--emerald-success)]/10 rounded-2xl p-6">
-                <h3 className="font-semibold text-[#FAFAFA] mb-4">Profile Summary:</h3>
+              <div className="bg-gradient-to-r from-[#818CF8]/10 to-[#A3E635]/10 rounded-2xl p-6">
+                <h3 className="font-semibold text-[#F5F5F5] mb-4">Profile Summary:</h3>
                 
                 <div className="space-y-3 text-sm">
                   <div className="flex justify-between">
-                    <span className="text-[#A1A0B3]">Role:</span>
+                    <span className="text-[#A3A3A3]">Role:</span>
                     <Badge variant="outline" className="capitalize">{data.role}</Badge>
                   </div>
                   
                   {(data.role === 'referrer' || data.role === 'both') && (
                     <>
                       <div className="flex justify-between">
-                        <span className="text-[#A1A0B3]">Company:</span>
+                        <span className="text-[#A3A3A3]">Company:</span>
                         <span className="font-medium">{data.company}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#A1A0B3]">Position:</span>
+                        <span className="text-[#A3A3A3]">Position:</span>
                         <span className="font-medium">{data.position}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#A1A0B3]">Experience:</span>
+                        <span className="text-[#A3A3A3]">Experience:</span>
                         <span className="font-medium">{data.workExperience} years</span>
                       </div>
                     </>
@@ -552,20 +552,20 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                   {(data.role === 'seeker' || data.role === 'both') && (
                     <>
                       <div className="flex justify-between">
-                        <span className="text-[#A1A0B3]">Education:</span>
+                        <span className="text-[#A3A3A3]">Education:</span>
                         <span className="font-medium">{data.education === 'other' ? otherEducation : data.education}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#A1A0B3]">Target Domain:</span>
+                        <span className="text-[#A3A3A3]">Target Domain:</span>
                         <span className="font-medium">{data.targetDomain === 'other' ? otherTargetDomain : data.targetDomain}</span>
                       </div>
                       <div className="flex justify-between">
-                        <span className="text-[#A1A0B3]">Experience Level:</span>
+                        <span className="text-[#A3A3A3]">Experience Level:</span>
                         <span className="font-medium">{data.experience}</span>
                       </div>
                       {data.skills && data.skills.length > 0 && (
                         <div>
-                          <span className="text-[#A1A0B3]">Skills:</span>
+                          <span className="text-[#A3A3A3]">Skills:</span>
                           <div className="flex flex-wrap gap-1 mt-1">
                             {data.skills.map((skill, index) => (
                               <Badge key={index} variant="secondary" className="text-xs">
@@ -607,17 +607,17 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
   };
 
   return (
-    <div className="min-h-screen bg-[#0B0A10] py-8 px-4">
+    <div className="min-h-screen bg-[#0C0C0C] py-8 px-4">
       <div className="max-w-md mx-auto">
         {/* Progress Bar */}
         <div className="mb-8">
-          <div className="flex justify-between text-sm text-[#5C5A72] mb-2">
+          <div className="flex justify-between text-sm text-[#525252] mb-2">
             <span>Step {step} of {getTotalSteps()}</span>
             <span>{Math.round((step / getTotalSteps()) * 100)}% Complete</span>
           </div>
-          <div className="w-full bg-[#1A1828] rounded-full h-2">
+          <div className="w-full bg-[#1C1C1C] rounded-full h-2">
             <div 
-              className="bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] h-2 rounded-full transition-all duration-500"
+              className="bg-gradient-to-r from-[#818CF8] to-[#A3E635] h-2 rounded-full transition-all duration-500"
               style={{ width: `${(step / getTotalSteps()) * 100}%` }}
             />
           </div>
@@ -642,7 +642,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
             <Button
               onClick={handleComplete}
               disabled={!canProceed() || updateProfileMutation.isPending}
-              className="bg-gradient-to-r from-[var(--purple-primary)] to-[var(--emerald-success)] text-white px-8 py-3 rounded-xl font-semibold"
+              className="bg-gradient-to-r from-[#818CF8] to-[#A3E635] text-white px-8 py-3 rounded-xl font-semibold"
             >
               {updateProfileMutation.isPending ? 'Setting up...' : 'Complete Setup'}
             </Button>
@@ -650,7 +650,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
             <Button
               onClick={handleNext}
               disabled={!canProceed()}
-              className="bg-[var(--purple-primary)] text-white flex items-center space-x-2 px-6"
+              className="bg-[#818CF8] text-white flex items-center space-x-2 px-6"
             >
               <span>Next</span>
               <ChevronRight className="w-4 h-4" />
