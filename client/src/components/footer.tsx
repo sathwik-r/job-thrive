@@ -12,14 +12,14 @@ export default function Footer({ className = "" }: FooterProps) {
         <div className="flex flex-col md:flex-row justify-between items-center gap-4">
           <div className="flex items-center gap-4">
             <Logo size={20} showText={false} />
-            <span className="text-xs" style={{ color: '#3F3F3F' }}>
+            <span className="text-xs" style={{ color: '#525252' }}>
               &copy; {new Date().getFullYear()} Job Thrive
             </span>
           </div>
           <div className="flex items-center gap-6 text-xs">
-            <a href="/terms" className="transition-colors" style={{ color: '#525252' }}>Terms</a>
-            <a href="/privacy" className="transition-colors" style={{ color: '#525252' }}>Privacy</a>
-            <a href="/refund" className="transition-colors" style={{ color: '#525252' }}>Refund</a>
+            <a href="/terms" className="transition-colors" style={{ color: '#737373' }}>Terms</a>
+            <a href="/privacy" className="transition-colors" style={{ color: '#737373' }}>Privacy</a>
+            <a href="/refund" className="transition-colors" style={{ color: '#737373' }}>Refund</a>
           </div>
         </div>
       </div>

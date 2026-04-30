@@ -39,7 +39,7 @@ export default function ProfilePage() {
                 ) : user.name?.charAt(0) || 'U'}
               </div>
               <h1 className="text-xl font-black" style={{ color: '#F5F5F5' }}>{user.name}</h1>
-              <p className="text-sm mt-0.5" style={{ color: '#525252' }}>{user.email}</p>
+              <p className="text-sm mt-0.5" style={{ color: '#737373' }}>{user.email}</p>
               <span className="inline-block mt-2 text-[10px] font-bold uppercase tracking-[2px] px-3 py-1 rounded-full"
                 style={{ background: '#A3E63510', color: '#A3E635', border: '1px solid #A3E63520' }}>
                 {user.role === 'both' ? 'Seeker & Referrer' : user.role}
@@ -62,11 +62,11 @@ export default function ProfilePage() {
               </div>
               <div className="flex-1 text-left">
                 <p className="text-sm font-bold" style={{ color: '#F5F5F5' }}>Profile strength</p>
-                <p className="text-xs mt-0.5" style={{ color: '#525252' }}>
+                <p className="text-xs mt-0.5" style={{ color: '#737373' }}>
                   {strength >= 100 ? 'Your profile is complete!' : strength >= 70 ? 'Almost there! Add a few more details.' : 'Complete your profile to get matched 3x faster'}
                 </p>
               </div>
-              <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#525252' }} />
+              <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#737373' }} />
             </button>
           </motion.div>
 
@@ -82,14 +82,14 @@ export default function ProfilePage() {
                   <s.icon className="w-3.5 h-3.5" style={{ color: s.c }} />
                 </div>
                 <p className="text-sm font-black" style={{ color: '#F5F5F5' }}>{s.n}</p>
-                <p className="text-[9px] font-bold uppercase tracking-[2px] mt-0.5" style={{ color: '#3F3F3F' }}>{s.l}</p>
+                <p className="text-[9px] font-bold uppercase tracking-[2px] mt-0.5" style={{ color: '#525252' }}>{s.l}</p>
               </div>
             ))}
           </motion.div>
 
           {/* ── Info ─────────────────────────── */}
           <motion.div variants={fadeUp} className="rounded-xl overflow-hidden" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
-            <p className="text-[10px] font-bold uppercase tracking-[2px] px-4 pt-4 pb-2" style={{ color: '#3F3F3F' }}>Details</p>
+            <p className="text-[10px] font-bold uppercase tracking-[2px] px-4 pt-4 pb-2" style={{ color: '#525252' }}>Details</p>
             {[
               { icon: Mail, label: 'Email', value: user.email },
               { icon: Building2, label: 'Company', value: user.company || 'Not set' },
@@ -100,10 +100,10 @@ export default function ProfilePage() {
               <div key={item.label} className="flex items-center gap-3 px-4 py-3"
                 style={{ borderBottom: i < arr.length - 1 ? '1px solid #1F1F1F' : 'none' }}>
                 <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: '#1C1C1C' }}>
-                  <item.icon className="w-4 h-4" style={{ color: '#525252' }} />
+                  <item.icon className="w-4 h-4" style={{ color: '#737373' }} />
                 </div>
                 <div className="flex-1 min-w-0">
-                  <p className="text-[9px] font-bold uppercase tracking-[2px]" style={{ color: '#3F3F3F' }}>{item.label}</p>
+                  <p className="text-[9px] font-bold uppercase tracking-[2px]" style={{ color: '#525252' }}>{item.label}</p>
                   <p className="text-sm font-medium truncate" style={{ color: item.value === 'Not set' ? '#3F3F3F' : '#F5F5F5' }}>{item.value}</p>
                 </div>
               </div>
@@ -113,7 +113,7 @@ export default function ProfilePage() {
           {/* ── Skills ───────────────────────── */}
           {user.skills && user.skills.length > 0 && (
             <motion.div variants={fadeUp} className="rounded-xl p-4" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
-              <p className="text-[10px] font-bold uppercase tracking-[2px] mb-3" style={{ color: '#3F3F3F' }}>Skills</p>
+              <p className="text-[10px] font-bold uppercase tracking-[2px] mb-3" style={{ color: '#525252' }}>Skills</p>
               <div className="flex flex-wrap gap-2">
                 {user.skills.map((s) => (
                   <span key={s} className="text-xs font-semibold px-3 py-1.5 rounded-full" style={{ background: '#818CF810', color: '#818CF8', border: '1px solid #818CF820' }}>{s}</span>
@@ -131,7 +131,7 @@ export default function ProfilePage() {
                 <Settings className="w-4 h-4" style={{ color: '#A3E635' }} />
               </div>
               <span className="text-sm font-medium flex-1 text-left" style={{ color: '#F5F5F5' }}>Edit Profile</span>
-              <ChevronRight className="w-4 h-4" style={{ color: '#3F3F3F' }} />
+              <ChevronRight className="w-4 h-4" style={{ color: '#525252' }} />
             </button>
 
             <button onClick={signOut}

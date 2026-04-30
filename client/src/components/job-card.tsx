@@ -45,7 +45,7 @@ export default function JobCard({ job }: { job: Job }) {
           onError={() => setLogoErr(true)} />
       ) : (
         <div className="w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 mt-0.5"
-          style={{ background: '#1C1C1C', border: '1px solid #1F1F1F', color: '#525252' }}>
+          style={{ background: '#1C1C1C', border: '1px solid #1F1F1F', color: '#737373' }}>
           {job.company.charAt(0)}
         </div>
       )}
@@ -66,7 +66,7 @@ export default function JobCard({ job }: { job: Job }) {
 
         {/* Meta row */}
         <div className="flex items-center gap-3 mt-2 flex-wrap">
-          <span className="flex items-center gap-1 text-[11px]" style={{ color: '#525252' }}>
+          <span className="flex items-center gap-1 text-[11px]" style={{ color: '#737373' }}>
             <MapPin className="w-3 h-3" /> {job.location}
           </span>
           {job.remote && (
@@ -74,15 +74,15 @@ export default function JobCard({ job }: { job: Job }) {
               <Wifi className="w-3 h-3" /> Remote
             </span>
           )}
-          <span className="flex items-center gap-1 text-[11px]" style={{ color: '#3F3F3F' }}>
+          <span className="flex items-center gap-1 text-[11px]" style={{ color: '#525252' }}>
             <Clock className="w-3 h-3" /> {timeAgo(job.createdAt)}
           </span>
-          {job.salary && <span className="text-[11px] font-medium" style={{ color: '#A3A3A3' }}>{job.salary}</span>}
+          {job.salary && <span className="text-[11px] font-medium" style={{ color: '#D4D4D4' }}>{job.salary}</span>}
           <span className="text-[11px] font-bold ml-auto" style={{ color: '#FB923C' }}>Rs.{job.referralFee}</span>
         </div>
 
         {/* Description preview */}
-        <p className="text-xs mt-2 line-clamp-1" style={{ color: '#3F3F3F' }}>{job.description}</p>
+        <p className="text-xs mt-2 line-clamp-1" style={{ color: '#525252' }}>{job.description}</p>
       </div>
     </button>
   );

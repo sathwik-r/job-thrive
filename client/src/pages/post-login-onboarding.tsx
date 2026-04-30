@@ -91,7 +91,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
           <h1 className="text-2xl font-black" style={{ color: '#F5F5F5' }}>
             Welcome, {user?.name?.split(' ')[0] || 'there'}
           </h1>
-          <p className="text-sm mt-1" style={{ color: '#525252' }}>Set up in 30 seconds. You can always change this later.</p>
+          <p className="text-sm mt-1" style={{ color: '#737373' }}>Set up in 30 seconds. You can always change this later.</p>
         </div>
 
         {/* ── Role Selection ──────────────────── */}
@@ -112,7 +112,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
             >
               <opt.icon className="w-5 h-5 mb-2" style={{ color: data.role === opt.value ? opt.color : '#525252' }} />
               <p className="text-sm font-bold" style={{ color: data.role === opt.value ? '#F5F5F5' : '#A3A3A3' }}>{opt.label}</p>
-              <p className="text-[10px] mt-0.5" style={{ color: '#525252' }}>{opt.sub}</p>
+              <p className="text-[10px] mt-0.5" style={{ color: '#737373' }}>{opt.sub}</p>
             </button>
           ))}
         </div>
@@ -123,7 +123,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
           {/* Referrer fields */}
           {(data.role === 'referrer' || data.role === 'both') && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4">
-              <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#525252' }}>Your work</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#737373' }}>Your work</p>
 
               {/* Company with typeahead */}
               <Popover open={companyOpen} onOpenChange={setCompanyOpen}>
@@ -131,7 +131,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                   <button className="w-full h-11 rounded-xl px-4 flex items-center justify-between text-sm"
                     style={{ background: '#0C0C0C', border: '1px solid #1F1F1F', color: data.company ? '#F5F5F5' : '#525252' }}>
                     {data.company || 'Company *'}
-                    <ChevronsUpDown className="w-4 h-4" style={{ color: '#525252' }} />
+                    <ChevronsUpDown className="w-4 h-4" style={{ color: '#737373' }} />
                   </button>
                 </PopoverTrigger>
                 <PopoverContent className="w-full p-0" style={{ background: '#1C1C1C', border: '1px solid #2A2A2A' }}>
@@ -185,7 +185,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
           {(data.role === 'seeker' || data.role === 'both') && (
             <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="space-y-4">
               {(data.role === 'both') && <div className="h-px my-2" style={{ background: '#1F1F1F' }} />}
-              <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#525252' }}>Your goals</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#737373' }}>Your goals</p>
 
               <Select value={data.education || ''} onValueChange={(v) => setData(prev => ({ ...prev, education: v }))}>
                 <SelectTrigger className="h-11 rounded-xl text-sm" style={{ background: '#0C0C0C', border: '1px solid #1F1F1F', color: '#F5F5F5' }}>
@@ -235,7 +235,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
                     onKeyDown={(e) => { if (e.key === 'Enter') { e.preventDefault(); addSkill(); } }}
                     className="jt-input flex-1" />
                   <button onClick={addSkill} className="px-4 h-11 rounded-xl text-sm font-medium"
-                    style={{ background: '#1C1C1C', border: '1px solid #1F1F1F', color: '#A3A3A3' }}>Add</button>
+                    style={{ background: '#1C1C1C', border: '1px solid #1F1F1F', color: '#D4D4D4' }}>Add</button>
                 </div>
               </div>
             </motion.div>

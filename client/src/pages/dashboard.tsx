@@ -84,13 +84,13 @@ export default function DashboardPage() {
 
                 <div className="flex items-start justify-between mb-5 relative z-10">
                   <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[2px] mb-1" style={{ color: '#525252' }}>Welcome back</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[2px] mb-1" style={{ color: '#737373' }}>Welcome back</p>
                     <h1 className="text-2xl font-black tracking-tight" style={{ color: '#F5F5F5' }}>{user.name}</h1>
-                    <p className="text-sm mt-1" style={{ color: '#525252' }}>Ready to find your next opportunity?</p>
+                    <p className="text-sm mt-1" style={{ color: '#737373' }}>Ready to find your next opportunity?</p>
                   </div>
                   <div className="text-right">
                     <p className="text-3xl font-black" style={{ color: '#A3E635' }}>Rs.{seekerMetrics?.totalSpent ?? 0}</p>
-                    <p className="text-[9px] font-bold uppercase tracking-[2px]" style={{ color: '#525252' }}>Invested</p>
+                    <p className="text-[9px] font-bold uppercase tracking-[2px]" style={{ color: '#737373' }}>Invested</p>
                   </div>
                 </div>
 
@@ -117,7 +117,7 @@ export default function DashboardPage() {
                       </div>
                     </div>
                     <p className="text-2xl font-black" style={{ color: s.c }}>{s.n}</p>
-                    <p className="text-[9px] font-bold uppercase tracking-[2px] mt-0.5" style={{ color: '#3F3F3F' }}>{s.l}</p>
+                    <p className="text-[9px] font-bold uppercase tracking-[2px] mt-0.5" style={{ color: '#525252' }}>{s.l}</p>
                   </div>
                 ))}
               </motion.div>
@@ -138,9 +138,9 @@ export default function DashboardPage() {
                     </div>
                     <div className="flex-1 text-left">
                       <p className="text-sm font-bold" style={{ color: '#F5F5F5' }}>Complete your profile</p>
-                      <p className="text-xs" style={{ color: '#525252' }}>Get matched 3x faster with a complete profile</p>
+                      <p className="text-xs" style={{ color: '#737373' }}>Get matched 3x faster with a complete profile</p>
                     </div>
-                    <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#525252' }} />
+                    <ChevronRight className="w-4 h-4 opacity-0 group-hover:opacity-100 transition-opacity" style={{ color: '#737373' }} />
                   </button>
                 </motion.div>
               )}
@@ -154,7 +154,7 @@ export default function DashboardPage() {
                     <MessageSquare className="w-4.5 h-4.5" style={{ color: '#818CF8' }} />
                   </div>
                   <p className="text-sm font-bold" style={{ color: '#F5F5F5' }}>1v1 Coaching</p>
-                  <p className="text-[11px] mt-0.5" style={{ color: '#3F3F3F' }}>500+ mentors · Rs.499</p>
+                  <p className="text-[11px] mt-0.5" style={{ color: '#525252' }}>500+ mentors · Rs.499</p>
                 </button>
 
                 <button onClick={() => setLocation('/job-search')}
@@ -164,14 +164,14 @@ export default function DashboardPage() {
                     <Sparkles className="w-4.5 h-4.5" style={{ color: '#A3E635' }} />
                   </div>
                   <p className="text-sm font-bold" style={{ color: '#F5F5F5' }}>New Jobs Today</p>
-                  <p className="text-[11px] mt-0.5" style={{ color: '#3F3F3F' }}>{seekerMetrics?.jobsCount ?? 0} positions open</p>
+                  <p className="text-[11px] mt-0.5" style={{ color: '#525252' }}>{seekerMetrics?.jobsCount ?? 0} positions open</p>
                 </button>
               </motion.div>
 
               {/* ── Active Referrals ──────────────── */}
               <motion.div variants={fadeUp}>
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-[10px] font-bold uppercase tracking-[2px]" style={{ color: '#525252' }}>Active Referrals</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[2px]" style={{ color: '#737373' }}>Active Referrals</p>
                   {active.length > 0 && <span className="text-[10px] font-bold px-2 py-0.5 rounded-md" style={{ background: '#A3E63510', color: '#A3E635' }}>{active.length}</span>}
                 </div>
                 {seekerLoading ? (
@@ -181,10 +181,10 @@ export default function DashboardPage() {
                 ) : (
                   <div className="rounded-xl p-8 text-center" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
                     <div className="w-12 h-12 rounded-xl flex items-center justify-center mx-auto mb-3" style={{ background: '#1C1C1C' }}>
-                      <Zap className="w-5 h-5" style={{ color: '#525252' }} />
+                      <Zap className="w-5 h-5" style={{ color: '#737373' }} />
                     </div>
                     <p className="text-sm font-bold mb-1" style={{ color: '#F5F5F5' }}>No active referrals yet</p>
-                    <p className="text-xs mb-4" style={{ color: '#3F3F3F' }}>Browse jobs and get your first referral</p>
+                    <p className="text-xs mb-4" style={{ color: '#525252' }}>Browse jobs and get your first referral</p>
                     <button onClick={() => setLocation('/job-search')} className="text-xs font-bold px-4 py-2 rounded-lg"
                       style={{ background: '#A3E63510', color: '#A3E635', border: '1px solid #A3E63520' }}>
                       Browse Jobs
@@ -196,7 +196,7 @@ export default function DashboardPage() {
               {/* ── Past Referrals ────────────────── */}
               {past.length > 0 && (
                 <motion.div variants={fadeUp}>
-                  <p className="text-[10px] font-bold uppercase tracking-[2px] mb-3" style={{ color: '#3F3F3F' }}>Past Referrals</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[2px] mb-3" style={{ color: '#525252' }}>Past Referrals</p>
                   <div className="space-y-3">{past.map((r: any) => <ReferralCard key={r.referral?.id || r.id} referral={r} onClick={() => openDetails(r)} />)}</div>
                 </motion.div>
               )}
@@ -213,12 +213,12 @@ export default function DashboardPage() {
 
                 <div className="flex items-start justify-between mb-5 relative z-10">
                   <div>
-                    <p className="text-[10px] font-bold uppercase tracking-[2px] mb-1" style={{ color: '#525252' }}>Your Earnings</p>
+                    <p className="text-[10px] font-bold uppercase tracking-[2px] mb-1" style={{ color: '#737373' }}>Your Earnings</p>
                     <h1 className="text-2xl font-black tracking-tight" style={{ color: '#F5F5F5' }}>{user.name}</h1>
                   </div>
                   <div className="text-right">
                     <p className="text-3xl font-black" style={{ color: '#A3E635' }}>Rs.{totalEarnings}</p>
-                    <p className="text-[9px] font-bold uppercase tracking-[2px]" style={{ color: '#525252' }}>Total Earned</p>
+                    <p className="text-[9px] font-bold uppercase tracking-[2px]" style={{ color: '#737373' }}>Total Earned</p>
                   </div>
                 </div>
 
@@ -229,7 +229,7 @@ export default function DashboardPage() {
                   ].map((s) => (
                     <div key={s.l} className="rounded-lg p-3 text-center" style={{ background: '#0C0C0C' }}>
                       <p className="text-lg font-black" style={{ color: '#F5F5F5' }}>{s.n}</p>
-                      <p className="text-[9px] uppercase tracking-[2px]" style={{ color: '#3F3F3F' }}>{s.l}</p>
+                      <p className="text-[9px] uppercase tracking-[2px]" style={{ color: '#525252' }}>{s.l}</p>
                     </div>
                   ))}
                 </div>
@@ -249,7 +249,7 @@ export default function DashboardPage() {
                       <s.icon className="w-4 h-4" style={{ color: s.c }} />
                     </div>
                     <p className="text-2xl font-black" style={{ color: s.c }}>{s.n}</p>
-                    <p className="text-[9px] font-bold uppercase tracking-[2px] mt-0.5" style={{ color: '#3F3F3F' }}>{s.l}</p>
+                    <p className="text-[9px] font-bold uppercase tracking-[2px] mt-0.5" style={{ color: '#525252' }}>{s.l}</p>
                   </div>
                 ))}
               </motion.div>
@@ -257,7 +257,7 @@ export default function DashboardPage() {
               {/* Assigned */}
               <motion.div variants={fadeUp}>
                 <div className="flex items-center justify-between mb-3">
-                  <p className="text-[10px] font-bold uppercase tracking-[2px]" style={{ color: '#525252' }}>Assigned Referrals</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[2px]" style={{ color: '#737373' }}>Assigned Referrals</p>
                   {assigned.length > 0 && <span className="text-[10px] font-bold px-2 py-0.5 rounded-md" style={{ background: '#FB923C10', color: '#FB923C' }}>{assigned.length}</span>}
                 </div>
                 {referrerLoading ? (
@@ -269,14 +269,14 @@ export default function DashboardPage() {
                   ))}</div>
                 ) : (
                   <div className="rounded-xl p-8 text-center" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
-                    <p className="text-sm" style={{ color: '#525252' }}>No assigned referrals right now.</p>
+                    <p className="text-sm" style={{ color: '#737373' }}>No assigned referrals right now.</p>
                   </div>
                 )}
               </motion.div>
 
               {completed.length > 0 && (
                 <motion.div variants={fadeUp}>
-                  <p className="text-[10px] font-bold uppercase tracking-[2px] mb-3" style={{ color: '#3F3F3F' }}>Completed</p>
+                  <p className="text-[10px] font-bold uppercase tracking-[2px] mb-3" style={{ color: '#525252' }}>Completed</p>
                   <div className="space-y-3">{completed.map((r: any) => (
                     <ReferralCard key={r.referral.id} referral={r} isReferrer onClick={() => openDetails(r)}
                       onUploadProof={() => handleUploadProof(r.assignment?.id)} onDecline={() => handleDecline(r.assignment?.id)} />
@@ -298,14 +298,14 @@ export default function DashboardPage() {
               <div className="flex items-start justify-between">
                 <div>
                   <p className="font-bold" style={{ color: '#F5F5F5' }}>{detailsModal.request.job?.title || 'Unknown'}</p>
-                  <p className="text-sm" style={{ color: '#A3A3A3' }}>{detailsModal.request.job?.company}</p>
-                  <p className="text-xs" style={{ color: '#525252' }}>{detailsModal.request.job?.location}</p>
+                  <p className="text-sm" style={{ color: '#D4D4D4' }}>{detailsModal.request.job?.company}</p>
+                  <p className="text-xs" style={{ color: '#737373' }}>{detailsModal.request.job?.location}</p>
                 </div>
                 <span className="text-sm font-bold" style={{ color: '#A3E635' }}>Rs.499</span>
               </div>
               {detailsModal.request.seeker && (
                 <div className="rounded-lg p-3" style={{ background: '#141414' }}>
-                  <p className="text-[10px] uppercase tracking-widest mb-1" style={{ color: '#3F3F3F' }}>Candidate</p>
+                  <p className="text-[10px] uppercase tracking-widest mb-1" style={{ color: '#525252' }}>Candidate</p>
                   <p className="text-sm font-bold" style={{ color: '#F5F5F5' }}>{detailsModal.request.seeker.name}</p>
                   {detailsModal.request.referral?.resumeUrl && (
                     <Button variant="outline" size="sm" className="mt-2" onClick={() => window.open(detailsModal.request.referral.resumeUrl, '_blank')}>View Resume</Button>

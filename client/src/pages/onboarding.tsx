@@ -71,7 +71,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
             </h2>
             <p
               className="text-base mb-8 max-w-lg mx-auto leading-relaxed"
-              style={{ color: '#A3A3A3', fontFamily: 'Inter, sans-serif' }}
+              style={{ color: '#D4D4D4', fontFamily: 'Inter, sans-serif' }}
             >
               Connect, refer, and earn in the world's most advanced referral marketplace
             </p>
@@ -126,7 +126,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                   >
                     {item.title}
                   </h3>
-                  <p className="text-xs leading-relaxed" style={{ color: '#A3A3A3' }}>
+                  <p className="text-xs leading-relaxed" style={{ color: '#D4D4D4' }}>
                     {item.desc}
                   </p>
                 </div>
@@ -183,7 +183,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                         <p className="text-sm" style={{ fontWeight: 600, color: '#F5F5F5', fontFamily: 'Inter, sans-serif' }}>
                           {item.title}
                         </p>
-                        <p className="text-xs" style={{ color: '#A3A3A3' }}>{item.desc}</p>
+                        <p className="text-xs" style={{ color: '#D4D4D4' }}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -194,7 +194,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                   style={{ backgroundColor: 'rgba(109, 91, 247, 0.1)', border: '1px solid rgba(109, 91, 247, 0.15)' }}
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-xs" style={{ color: '#A3A3A3' }}>Average referral fee</span>
+                    <span className="text-xs" style={{ color: '#D4D4D4' }}>Average referral fee</span>
                     <span className="text-xl" style={{ fontWeight: 900, color: '#A3E635', fontFamily: 'Inter, sans-serif' }}>
                       Rs. 499
                     </span>
@@ -239,7 +239,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                         <p className="text-sm" style={{ fontWeight: 600, color: '#F5F5F5', fontFamily: 'Inter, sans-serif' }}>
                           {item.title}
                         </p>
-                        <p className="text-xs" style={{ color: '#A3A3A3' }}>{item.desc}</p>
+                        <p className="text-xs" style={{ color: '#D4D4D4' }}>{item.desc}</p>
                       </div>
                     </div>
                   ))}
@@ -250,7 +250,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                   style={{ backgroundColor: 'rgba(29, 185, 84, 0.1)', border: '1px solid rgba(29, 185, 84, 0.15)' }}
                 >
                   <div className="flex justify-between items-center">
-                    <span className="text-xs" style={{ color: '#A3A3A3' }}>Potential monthly earnings</span>
+                    <span className="text-xs" style={{ color: '#D4D4D4' }}>Potential monthly earnings</span>
                     <span className="text-xl" style={{ fontWeight: 900, color: '#A3E635', fontFamily: 'Inter, sans-serif' }}>
                       Up to Rs. 20,000
                     </span>
@@ -276,7 +276,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                   <p className="text-sm" style={{ fontWeight: 700, color: '#F5F5F5', fontFamily: 'Inter, sans-serif' }}>
                     Smart Assignment Algorithm
                   </p>
-                  <p className="text-xs" style={{ color: '#A3A3A3' }}>
+                  <p className="text-xs" style={{ color: '#D4D4D4' }}>
                     AI-powered matching ensures fair distribution and higher success rates
                   </p>
                 </div>
@@ -363,7 +363,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
           <div
             className="text-center text-xs font-medium tracking-wide"
             style={{
-              color: '#525252',
+              color: '#737373',
               fontFamily: 'Inter, sans-serif',
               textTransform: 'uppercase',
               letterSpacing: '0.1em',
@@ -394,7 +394,7 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
                 </h1>
                 <p
                   className="text-lg font-medium"
-                  style={{ color: '#A3A3A3', fontFamily: 'Inter, sans-serif' }}
+                  style={{ color: '#D4D4D4', fontFamily: 'Inter, sans-serif' }}
                 >
                   {steps[currentStep].subtitle}
                 </p>
@@ -460,16 +460,16 @@ export default function OnboardingPage({ onComplete }: OnboardingPageProps) {
             animate={{ opacity: 1 }}
             transition={{ delay: 0.5 }}
           >
-            <p className="text-xs" style={{ color: '#3F3F3F', fontFamily: 'Inter, sans-serif' }}>
-              <a href="/terms" className="hover:underline transition-colors duration-200" style={{ color: '#3F3F3F' }}>
+            <p className="text-xs" style={{ color: '#525252', fontFamily: 'Inter, sans-serif' }}>
+              <a href="/terms" className="hover:underline transition-colors duration-200" style={{ color: '#525252' }}>
                 Terms
               </a>
               {' \u00B7 '}
-              <a href="/privacy" className="hover:underline transition-colors duration-200" style={{ color: '#3F3F3F' }}>
+              <a href="/privacy" className="hover:underline transition-colors duration-200" style={{ color: '#525252' }}>
                 Privacy
               </a>
               {' \u00B7 '}
-              <a href="/refund" className="hover:underline transition-colors duration-200" style={{ color: '#3F3F3F' }}>
+              <a href="/refund" className="hover:underline transition-colors duration-200" style={{ color: '#525252' }}>
                 Refund
               </a>
             </p>

@@ -60,7 +60,7 @@ function Router() {
       <div className="min-h-screen flex items-center justify-center" style={{ background: '#0C0C0C' }}>
         <div className="text-center">
           <Logo size={40} showText={false} className="justify-center mb-4 animate-float" />
-          <p className="text-sm font-medium" style={{ color: '#525252' }}>Loading...</p>
+          <p className="text-sm font-medium" style={{ color: '#737373' }}>Loading...</p>
         </div>
       </div>
     );
@@ -110,7 +110,7 @@ function Router() {
         <div className="min-h-screen flex items-center justify-center" style={{ background: '#0C0C0C' }}>
           <div className="text-center">
             <p className="text-6xl font-black mb-2" style={{ color: '#F5F5F5' }}>404</p>
-            <p className="text-sm" style={{ color: '#525252' }}>Page not found</p>
+            <p className="text-sm" style={{ color: '#737373' }}>Page not found</p>
           </div>
         </div>
       )} />

@@ -94,7 +94,7 @@ export default function LoginPage() {
               <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#A3E635' }} />
               <AnimatePresence mode="wait">
                 <motion.span key={ti} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}
-                  className="text-xs font-medium" style={{ color: '#A3A3A3' }}>
+                  className="text-xs font-medium" style={{ color: '#D4D4D4' }}>
                   <span style={{ color: '#F5F5F5' }}>{t.name}</span> got referred for {t.role} at <span style={{ color: '#A3E635' }}>{t.company}</span>
                 </motion.span>
               </AnimatePresence>
@@ -102,14 +102,17 @@ export default function LoginPage() {
 
             <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.6 }}
               className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.06] mb-5" style={{ color: '#F5F5F5' }}>
-              Stop applying blindly.<br />
-              <span style={{ color: '#A3E635' }}>Get referred directly.</span>
+              The referral platform<br />
+              <span style={{ color: '#A3E635' }}>that pays everyone.</span>
             </motion.h1>
 
             <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}
-              className="text-base lg:text-lg max-w-lg mb-8 leading-relaxed" style={{ color: '#A3A3A3' }}>
-              Real employees at <span className="font-semibold" style={{ color: '#F5F5F5' }}>Google, Microsoft, Amazon</span> and 90+ top companies
-              refer you directly for just <span className="font-bold" style={{ color: '#A3E635' }}>Rs.499</span>. No cold emails. No luck. Just results.
+              className="text-base lg:text-lg max-w-lg mb-3 leading-relaxed" style={{ color: '#D4D4D4' }}>
+              <span className="font-semibold" style={{ color: '#F5F5F5' }}>Job seekers:</span> Get referred by real employees at Google, Microsoft, Amazon & 90+ companies for just <span className="font-bold" style={{ color: '#A3E635' }}>Rs.499</span>.
+            </motion.p>
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25, duration: 0.6 }}
+              className="text-base lg:text-lg max-w-lg mb-8 leading-relaxed" style={{ color: '#D4D4D4' }}>
+              <span className="font-semibold" style={{ color: '#F5F5F5' }}>Referrers:</span> Earn <span className="font-bold" style={{ color: '#818CF8' }}>Rs.249+ per referral</span> by helping people land their dream job. We handle everything.
             </motion.p>
 
             {/* CTA row */}
@@ -121,8 +124,8 @@ export default function LoginPage() {
                 {loading ? 'Signing in...' : 'Get Started — Free'}
               </button>
               <div className="flex flex-col gap-1">
-                <span className="text-sm font-medium" style={{ color: '#A3A3A3' }}>No credit card required</span>
-                <span className="text-xs" style={{ color: '#3F3F3F' }}>Browse jobs free · Pay only when you apply</span>
+                <span className="text-sm font-medium" style={{ color: '#D4D4D4' }}>No credit card required</span>
+                <span className="text-xs" style={{ color: '#525252' }}>Browse jobs free · Pay only when you apply</span>
               </div>
             </motion.div>
 
@@ -147,7 +150,7 @@ export default function LoginPage() {
               ].map((s) => (
                 <div key={s.l}>
                   <p className="text-xl lg:text-2xl font-black" style={{ color: '#F5F5F5' }}>{s.n}</p>
-                  <p className="text-[9px] font-bold uppercase tracking-widest mt-0.5" style={{ color: '#525252' }}>{s.l}</p>
+                  <p className="text-[9px] font-bold uppercase tracking-widest mt-0.5" style={{ color: '#737373' }}>{s.l}</p>
                 </div>
               ))}
             </motion.div>
@@ -164,14 +167,14 @@ export default function LoginPage() {
                 <img src="https://logo.clearbit.com/google.com" alt="" className="w-10 h-10 rounded-lg p-1" style={{ background: '#1C1C1C', border: '1px solid #1F1F1F' }} />
                 <div className="flex-1">
                   <p className="text-sm font-bold" style={{ color: '#F5F5F5' }}>Senior Software Engineer</p>
-                  <p className="text-xs" style={{ color: '#525252' }}>Google · Bangalore · Remote</p>
+                  <p className="text-xs" style={{ color: '#737373' }}>Google · Bangalore · Remote</p>
                 </div>
                 <span className="text-xs font-bold px-2.5 py-1 rounded-md" style={{ background: '#A3E63512', color: '#A3E635' }}>Rs.499</span>
               </div>
               <div className="flex gap-2 mt-3">
-                <span className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ background: '#1C1C1C', color: '#525252' }}>React</span>
-                <span className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ background: '#1C1C1C', color: '#525252' }}>Go</span>
-                <span className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ background: '#1C1C1C', color: '#525252' }}>Distributed Systems</span>
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ background: '#1C1C1C', color: '#737373' }}>React</span>
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ background: '#1C1C1C', color: '#737373' }}>Go</span>
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ background: '#1C1C1C', color: '#737373' }}>Distributed Systems</span>
               </div>
             </motion.div>
 
@@ -182,7 +185,7 @@ export default function LoginPage() {
                 <img src="https://logo.clearbit.com/microsoft.com" alt="" className="w-10 h-10 rounded-lg p-1" style={{ background: '#1C1C1C', border: '1px solid #1F1F1F' }} />
                 <div className="flex-1">
                   <p className="text-sm font-bold" style={{ color: '#F5F5F5' }}>Product Manager</p>
-                  <p className="text-xs" style={{ color: '#525252' }}>Microsoft · Hyderabad</p>
+                  <p className="text-xs" style={{ color: '#737373' }}>Microsoft · Hyderabad</p>
                 </div>
                 <span className="text-xs font-bold px-2.5 py-1 rounded-md" style={{ background: '#A3E63512', color: '#A3E635' }}>Rs.499</span>
               </div>
@@ -197,7 +200,7 @@ export default function LoginPage() {
                 </div>
                 <div>
                   <p className="text-sm font-bold" style={{ color: '#A3E635' }}>Referral Submitted!</p>
-                  <p className="text-[10px]" style={{ color: '#525252' }}>Priya S. → Google · 2 hours ago</p>
+                  <p className="text-[10px]" style={{ color: '#737373' }}>Priya S. → Google · 2 hours ago</p>
                 </div>
               </div>
             </motion.div>
@@ -205,19 +208,19 @@ export default function LoginPage() {
             {/* Stats mini card */}
             <motion.div animate={{ y: [0, -5, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
               className="absolute top-72 left-12 right-4 rounded-xl p-4 z-20" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
-              <p className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: '#3F3F3F' }}>This week on Job Thrive</p>
+              <p className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: '#525252' }}>This week on Job Thrive</p>
               <div className="flex justify-between">
                 <div className="text-center">
                   <p className="text-lg font-black" style={{ color: '#A3E635' }}>47</p>
-                  <p className="text-[9px]" style={{ color: '#525252' }}>Referrals</p>
+                  <p className="text-[9px]" style={{ color: '#737373' }}>Referrals</p>
                 </div>
                 <div className="text-center">
                   <p className="text-lg font-black" style={{ color: '#818CF8' }}>23</p>
-                  <p className="text-[9px]" style={{ color: '#525252' }}>Interviews</p>
+                  <p className="text-[9px]" style={{ color: '#737373' }}>Interviews</p>
                 </div>
                 <div className="text-center">
                   <p className="text-lg font-black" style={{ color: '#FB923C' }}>12</p>
-                  <p className="text-[9px]" style={{ color: '#525252' }}>Offers</p>
+                  <p className="text-[9px]" style={{ color: '#737373' }}>Offers</p>
                 </div>
               </div>
             </motion.div>
@@ -235,7 +238,7 @@ export default function LoginPage() {
         {/* Scroll indicator — visible */}
         <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
           className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
-          <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#525252' }}>Scroll down</span>
+          <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#737373' }}>Scroll down</span>
           <div className="w-6 h-10 rounded-full flex items-start justify-center pt-2" style={{ border: '2px solid #2A2A2A' }}>
             <motion.div animate={{ y: [0, 12, 0] }} transition={{ duration: 1.5, repeat: Infinity }}
               className="w-1.5 h-1.5 rounded-full" style={{ background: '#A3E635' }} />
@@ -246,14 +249,14 @@ export default function LoginPage() {
       {/* ══════════ COMPANY LOGOS ══════════ */}
       <Section className="py-16 px-6 lg:px-16">
         <div className="max-w-4xl mx-auto text-center">
-          <p className="text-[10px] font-bold uppercase tracking-[3px] mb-8" style={{ color: '#3F3F3F' }}>
+          <p className="text-[10px] font-bold uppercase tracking-[3px] mb-8" style={{ color: '#525252' }}>
             Professionals from these companies refer on Job Thrive
           </p>
           <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-10">
             {logos.map((c) => (
               <div key={c.n} className="flex items-center gap-2.5 opacity-50 hover:opacity-100 transition-opacity">
                 <img src={c.u} alt={c.n} className="w-6 h-6 rounded" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
-                <span className="text-sm font-medium" style={{ color: '#525252' }}>{c.n}</span>
+                <span className="text-sm font-medium" style={{ color: '#737373' }}>{c.n}</span>
               </div>
             ))}
           </div>
@@ -263,18 +266,53 @@ export default function LoginPage() {
       {/* ══════════ HOW IT WORKS ══════════ */}
       <Section className="py-20 px-6 lg:px-16">
         <div className="max-w-4xl mx-auto">
+
+          {/* Two-sided value */}
+          <div className="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-14">
+            {/* Seeker side */}
+            <div className="rounded-2xl p-6 relative overflow-hidden" style={{ background: '#141414', border: '1px solid #A3E63520' }}>
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: '#A3E635' }} />
+              <p className="text-[10px] font-bold uppercase tracking-[3px] mb-4" style={{ color: '#A3E635' }}>For Job Seekers</p>
+              <h3 className="text-xl font-black mb-3" style={{ color: '#F5F5F5' }}>Skip the black hole of cold applications</h3>
+              <p className="text-sm leading-relaxed mb-4" style={{ color: '#D4D4D4' }}>Employee referrals get 10x more interview calls than cold applications. For just Rs.499, get a verified employee to submit your resume internally.</p>
+              <div className="space-y-2">
+                {["Matched with a real employee in 24h", "Resume submitted internally", "Track referral status in real-time", "Full refund if not matched in 10 days"].map((t) => (
+                  <div key={t} className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" style={{ color: '#A3E635' }} />
+                    <span className="text-sm" style={{ color: '#D4D4D4' }}>{t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+            {/* Referrer side */}
+            <div className="rounded-2xl p-6 relative overflow-hidden" style={{ background: '#141414', border: '1px solid #818CF820' }}>
+              <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: '#818CF8' }} />
+              <p className="text-[10px] font-bold uppercase tracking-[3px] mb-4" style={{ color: '#818CF8' }}>For Referrers</p>
+              <h3 className="text-xl font-black mb-3" style={{ color: '#F5F5F5' }}>Earn money by helping others grow</h3>
+              <p className="text-sm leading-relaxed mb-4" style={{ color: '#D4D4D4' }}>Work at a top company? Earn Rs.249+ for every referral you submit. Candidates are pre-screened and matched to your company. Zero hassle.</p>
+              <div className="space-y-2">
+                {["Earn Rs.249+ per successful referral", "We match candidates to your company", "Just submit the internal referral", "Build your professional karma"].map((t) => (
+                  <div key={t} className="flex items-center gap-2">
+                    <CheckCircle2 className="w-3.5 h-3.5 shrink-0" style={{ color: '#818CF8' }} />
+                    <span className="text-sm" style={{ color: '#D4D4D4' }}>{t}</span>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+
           <div className="text-center mb-14">
-            <p className="text-[10px] font-bold uppercase tracking-[3px] mb-3" style={{ color: '#A3E635' }}>How it works</p>
+            <p className="text-[10px] font-bold uppercase tracking-[3px] mb-3" style={{ color: '#FB923C' }}>Step by step</p>
             <h2 className="text-3xl lg:text-4xl font-black tracking-tight" style={{ color: '#F5F5F5' }}>
-              Three steps to your next job
+              How it works
             </h2>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
             {[
               { step: "01", icon: Briefcase, title: "Browse real jobs", desc: "100+ verified positions at top companies updated daily. Filter by role, company, location, and salary.", color: '#A3E635' },
-              { step: "02", icon: Zap, title: "Upload & pay Rs.499", desc: "Upload your resume and pay a flat Rs.499 fee. Secure payment via Cashfree. Full refund if not referred within 10 days.", color: '#818CF8' },
-              { step: "03", icon: CheckCircle2, title: "Get referred", desc: "We match you with a verified employee at the company who submits your referral internally. Average match time: 24 hours.", color: '#FB923C' },
+              { step: "02", icon: Zap, title: "Upload & pay Rs.499", desc: "Upload your resume and make a one-time payment. Secure checkout via Cashfree. Full refund if not matched in 10 days.", color: '#818CF8' },
+              { step: "03", icon: CheckCircle2, title: "Get referred instantly", desc: "We match you with a verified employee who submits your referral internally. Average match time: just 24 hours.", color: '#FB923C' },
             ].map((s) => (
               <div key={s.step} className="group relative rounded-2xl p-6 transition-all hover:-translate-y-1"
                 style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
@@ -284,7 +322,7 @@ export default function LoginPage() {
                   <s.icon className="w-5 h-5" style={{ color: s.color }} />
                 </div>
                 <h3 className="text-lg font-bold mb-2" style={{ color: '#F5F5F5' }}>{s.title}</h3>
-                <p className="text-sm leading-relaxed" style={{ color: '#A3A3A3' }}>{s.desc}</p>
+                <p className="text-sm leading-relaxed" style={{ color: '#D4D4D4' }}>{s.desc}</p>
               </div>
             ))}
           </div>
@@ -315,7 +353,7 @@ export default function LoginPage() {
                   <f.icon className="w-4.5 h-4.5" style={{ color: f.color }} />
                 </div>
                 <h3 className="text-sm font-bold mb-1" style={{ color: '#F5F5F5' }}>{f.title}</h3>
-                <p className="text-xs leading-relaxed" style={{ color: '#525252' }}>{f.desc}</p>
+                <p className="text-xs leading-relaxed" style={{ color: '#737373' }}>{f.desc}</p>
               </div>
             ))}
           </div>
@@ -340,10 +378,10 @@ export default function LoginPage() {
                     <Star key={j} className="w-4 h-4 fill-amber-400 text-amber-400" />
                   ))}
                 </div>
-                <p className="text-sm leading-relaxed mb-5" style={{ color: '#A3A3A3' }}>"{t.text}"</p>
+                <p className="text-sm leading-relaxed mb-5" style={{ color: '#D4D4D4' }}>"{t.text}"</p>
                 <div>
                   <p className="text-sm font-bold" style={{ color: '#F5F5F5' }}>{t.name}</p>
-                  <p className="text-xs" style={{ color: '#525252' }}>{t.role}</p>
+                  <p className="text-xs" style={{ color: '#737373' }}>{t.role}</p>
                 </div>
               </div>
             ))}
@@ -358,12 +396,12 @@ export default function LoginPage() {
           <h2 className="text-3xl lg:text-4xl font-black tracking-tight mb-4" style={{ color: '#F5F5F5' }}>
             One price. No hidden fees.
           </h2>
-          <p className="text-sm mb-8" style={{ color: '#525252' }}>Pay per referral. No subscriptions. No commitments.</p>
+          <p className="text-sm mb-8" style={{ color: '#737373' }}>Pay per referral. No subscriptions. No commitments.</p>
 
           <div className="rounded-2xl p-8 relative overflow-hidden" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
             <div className="absolute top-0 left-0 right-0 h-[2px]" style={{ background: '#A3E635' }} />
             <p className="text-6xl font-black mb-1" style={{ color: '#F5F5F5' }}>Rs.499</p>
-            <p className="text-sm mb-6" style={{ color: '#525252' }}>per referral application</p>
+            <p className="text-sm mb-6" style={{ color: '#737373' }}>per referral application</p>
 
             <div className="space-y-3 text-left mb-8">
               {[
@@ -375,7 +413,7 @@ export default function LoginPage() {
               ].map((item) => (
                 <div key={item} className="flex items-center gap-3">
                   <CheckCircle2 className="w-4 h-4 shrink-0" style={{ color: '#A3E635' }} />
-                  <span className="text-sm" style={{ color: '#A3A3A3' }}>{item}</span>
+                  <span className="text-sm" style={{ color: '#D4D4D4' }}>{item}</span>
                 </div>
               ))}
             </div>
@@ -396,7 +434,7 @@ export default function LoginPage() {
           <h2 className="text-4xl lg:text-5xl font-black tracking-tight leading-tight mb-5" style={{ color: '#F5F5F5' }}>
             Your dream job is one<br />referral away
           </h2>
-          <p className="text-lg mb-8" style={{ color: '#A3A3A3' }}>
+          <p className="text-lg mb-8" style={{ color: '#D4D4D4' }}>
             Join 500+ professionals who skipped the queue and got referred directly.
           </p>
           <button onClick={signIn} disabled={loading}
@@ -412,9 +450,9 @@ export default function LoginPage() {
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Logo size={20} showText={false} />
-            <span className="text-xs" style={{ color: '#3F3F3F' }}>&copy; {new Date().getFullYear()} Job Thrive. All rights reserved.</span>
+            <span className="text-xs" style={{ color: '#525252' }}>&copy; {new Date().getFullYear()} Job Thrive. All rights reserved.</span>
           </div>
-          <div className="flex gap-6 text-xs" style={{ color: '#3F3F3F' }}>
+          <div className="flex gap-6 text-xs" style={{ color: '#525252' }}>
             <a href="/terms" className="hover:text-[#525252] transition-colors">Terms</a>
             <a href="/privacy" className="hover:text-[#525252] transition-colors">Privacy</a>
             <a href="/refund" className="hover:text-[#525252] transition-colors">Refund</a>
