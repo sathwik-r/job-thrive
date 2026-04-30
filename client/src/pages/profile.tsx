@@ -1,193 +1,97 @@
 import React from 'react';
 import { useAuth } from '@/hooks/use-auth';
 import { Button } from '@/components/ui/button';
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { Input } from '@/components/ui/input';
-import { Label } from '@/components/ui/label';
-import { Badge } from '@/components/ui/badge';
-import { ArrowLeft, Edit3, Mail, MapPin, Building2, Calendar, Award, IndianRupee, Settings, LogOut } from 'lucide-react';
+import { Mail, Building2, Calendar, Settings, LogOut, ChevronRight } from 'lucide-react';
 import { useLocation } from 'wouter';
-import { useState } from 'react';
+import AppLayout from '@/components/app-layout';
 import { motion } from 'framer-motion';
-import Logo from '@/components/logo';
-
-const fadeIn = {
-  hidden: { opacity: 0, y: 20 },
-  visible: (i: number) => ({
-    opacity: 1,
-    y: 0,
-    transition: { delay: i * 0.1, duration: 0.5, ease: [0.25, 0.46, 0.45, 0.94] },
-  }),
-};
 
 export default function ProfilePage() {
   const { user, signOut } = useAuth();
   const [, setLocation] = useLocation();
-  const [isEditing, setIsEditing] = useState(false);
 
-  if (!user) {
-    return <div className="min-h-screen bg-[#0C0C0C] flex items-center justify-center text-[#F5F5F5]">Loading...</div>;
-  }
+  if (!user) return null;
+
+  // Profile strength
+  const fields = [user.company, user.position, user.education, user.targetDomain, user.experience, user.skills?.length];
+  const filled = fields.filter(Boolean).length;
+  const strength = Math.round((filled / fields.length) * 100);
 
   return (
-    <div className="min-h-screen bg-[#0C0C0C]">
-      {/* Header */}
-      <div className="bg-[#141414]/80 backdrop-blur-md border-b border-[#1F1F1F] sticky top-0 z-10">
-        <div className="relative flex items-center justify-center p-4 max-w-md mx-auto">
-          <Button
-            variant="ghost"
-            size="sm"
-            onClick={() => setLocation('/dashboard')}
-            className="absolute left-4 flex items-center space-x-2 text-[#A3A3A3] hover:text-[#A3E635] hover:bg-transparent transition-colors"
-          >
-            <ArrowLeft className="w-4 h-4" />
-            <span>Back</span>
-          </Button>
+    <AppLayout>
+      <div className="max-w-md mx-auto p-4 md:p-6">
+        <motion.div initial={{ opacity: 0, y: 12 }} animate={{ opacity: 1, y: 0 }} className="space-y-6">
 
-          <span className="text-[#F5F5F5] text-base font-semibold tracking-tight">Profile</span>
-
-          <div className="absolute right-4">
-            <Logo size={28} showText={false} />
-          </div>
-        </div>
-      </div>
-
-      <div className="p-6 space-y-8 max-w-md mx-auto pb-12">
-        {/* Profile Header */}
-        <motion.div
-          custom={0}
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-        >
-          <Card className="bg-[#1C1C1C] border border-[#1F1F1F] rounded-2xl overflow-hidden shadow-none">
-            <CardContent className="p-8 text-center">
-              {/* Avatar with gradient border */}
-              <div className="relative w-24 h-24 mx-auto mb-6">
-                <div className="absolute inset-0 rounded-full bg-gradient-to-br from-[#A3E635] via-[#818CF8] to-[#A3E635] p-[3px]">
-                  <div className="w-full h-full rounded-full bg-[#1C1C1C] flex items-center justify-center overflow-hidden">
-                    {user.photoUrl ? (
-                      <img
-                        src={user.photoUrl}
-                        alt={user.name}
-                        className="w-full h-full rounded-full object-cover"
-                      />
-                    ) : (
-                      <div className="w-full h-full rounded-full bg-gradient-to-br bg-[#A3E635] flex items-center justify-center text-white text-3xl font-bold">
-                        {user.name.charAt(0)}
-                      </div>
-                    )}
-                  </div>
-                </div>
-              </div>
-
-              <h2 className="text-2xl font-[900] text-[#F5F5F5] mb-1 tracking-tight">{user.name}</h2>
-              <p className="text-[#A3A3A3] text-sm mb-5">{user.email}</p>
-
-              <Badge
-                variant="outline"
-                className="bg-[#A3E635]/10 border-[#A3E635]/30 text-[#A3E635] px-4 py-1.5 text-xs font-semibold uppercase tracking-wider rounded-full"
-              >
-                {user.role === 'both' ? 'Seeker & Referrer' : user.role}
-              </Badge>
-            </CardContent>
-          </Card>
-        </motion.div>
-
-        {/* Profile Information */}
-        <motion.div
-          custom={1}
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-        >
-          <Card className="bg-[#1C1C1C] border border-[#1F1F1F] rounded-2xl shadow-none">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Information</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-1 pt-2">
-              <div className="flex items-center space-x-4 p-3 rounded-xl hover:bg-[#242424]/60 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-[#242424] flex items-center justify-center flex-shrink-0">
-                  <Mail className="w-4.5 h-4.5 text-[#A3E635]" />
-                </div>
-                <div className="min-w-0">
-                  <div className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Email</div>
-                  <div className="text-sm font-medium text-[#F5F5F5] truncate">{user.email}</div>
-                </div>
-              </div>
-
-              {user.company && (
-                <div className="flex items-center space-x-4 p-3 rounded-xl hover:bg-[#242424]/60 transition-colors">
-                  <div className="w-10 h-10 rounded-xl bg-[#242424] flex items-center justify-center flex-shrink-0">
-                    <Building2 className="w-4.5 h-4.5 text-[#A3E635]" />
-                  </div>
-                  <div className="min-w-0">
-                    <div className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Company</div>
-                    <div className="text-sm font-medium text-[#F5F5F5]">{user.company}</div>
-                  </div>
-                </div>
+          {/* Profile header */}
+          <div className="text-center pt-4">
+            <div className="w-20 h-20 rounded-full mx-auto flex items-center justify-center text-2xl font-black mb-4"
+              style={{ background: '#A3E635', color: '#0C0C0C' }}>
+              {user.photoUrl ? (
+                <img src={user.photoUrl} alt="" className="w-full h-full rounded-full object-cover" />
+              ) : (
+                user.name?.charAt(0) || 'U'
               )}
+            </div>
+            <h1 className="text-xl font-black" style={{ color: '#F5F5F5' }}>{user.name}</h1>
+            <p className="text-sm mt-0.5" style={{ color: '#525252' }}>{user.email}</p>
+            <div className="inline-flex mt-2">
+              <span className="pill pill-lime capitalize">{user.role === 'both' ? 'Seeker & Referrer' : user.role}</span>
+            </div>
+          </div>
 
-              <div className="flex items-center space-x-4 p-3 rounded-xl hover:bg-[#242424]/60 transition-colors">
-                <div className="w-10 h-10 rounded-xl bg-[#242424] flex items-center justify-center flex-shrink-0">
-                  <Calendar className="w-4.5 h-4.5 text-[#FB923C]" />
+          {/* Profile strength */}
+          <div className="rounded-xl p-4" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
+            <div className="flex items-center justify-between mb-2">
+              <span className="text-xs font-bold" style={{ color: '#A3A3A3' }}>Profile strength</span>
+              <span className="text-xs font-black" style={{ color: strength >= 80 ? '#A3E635' : strength >= 50 ? '#FB923C' : '#EF4444' }}>{strength}%</span>
+            </div>
+            <div className="h-1.5 rounded-full" style={{ background: '#1F1F1F' }}>
+              <div className="h-full rounded-full transition-all duration-500" style={{ width: `${strength}%`, background: strength >= 80 ? '#A3E635' : strength >= 50 ? '#FB923C' : '#EF4444' }} />
+            </div>
+            {strength < 100 && (
+              <p className="text-[10px] mt-2" style={{ color: '#3F3F3F' }}>Complete your profile to get matched faster</p>
+            )}
+          </div>
+
+          {/* Info */}
+          <div className="rounded-xl overflow-hidden" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
+            <p className="text-[10px] font-bold uppercase tracking-widest px-4 pt-4 pb-2" style={{ color: '#3F3F3F' }}>Information</p>
+            {[
+              { icon: Mail, label: 'Email', value: user.email },
+              { icon: Building2, label: 'Company', value: user.company || '—' },
+              { icon: Calendar, label: 'Joined', value: user.createdAt ? new Date(user.createdAt).toLocaleDateString() : '—' },
+            ].map((item) => (
+              <div key={item.label} className="flex items-center gap-3 px-4 py-3" style={{ borderBottom: '1px solid #1F1F1F' }}>
+                <div className="w-8 h-8 rounded-lg flex items-center justify-center shrink-0" style={{ background: '#1C1C1C' }}>
+                  <item.icon className="w-4 h-4" style={{ color: '#525252' }} />
                 </div>
-                <div className="min-w-0">
-                  <div className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Member Since</div>
-                  <div className="text-sm font-medium text-[#F5F5F5]">
-                    {new Date(user.createdAt).toLocaleDateString('en-US', { month: 'long', year: 'numeric' })}
-                  </div>
+                <div className="flex-1 min-w-0">
+                  <p className="text-[10px] font-bold uppercase tracking-widest" style={{ color: '#3F3F3F' }}>{item.label}</p>
+                  <p className="text-sm font-medium truncate" style={{ color: '#F5F5F5' }}>{item.value}</p>
                 </div>
               </div>
-            </CardContent>
-          </Card>
-        </motion.div>
+            ))}
+          </div>
 
-        {/* Account Actions */}
-        <motion.div
-          custom={2}
-          initial="hidden"
-          animate="visible"
-          variants={fadeIn}
-        >
-          <Card className="bg-[#1C1C1C] border border-[#1F1F1F] rounded-2xl shadow-none">
-            <CardHeader className="pb-2">
-              <CardTitle className="text-xs font-semibold text-[#525252] uppercase tracking-wider">Account</CardTitle>
-            </CardHeader>
-            <CardContent className="space-y-2 pt-2">
-              {/* <Button
-                variant="outline"
-                className="w-full justify-start"
-                onClick={() => setLocation('/analytics')}
-              >
-                View Analytics
-              </Button> */}
+          {/* Actions */}
+          <div className="space-y-2">
+            <button onClick={() => setLocation('/profile-settings')}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors"
+              style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
+              <Settings className="w-4 h-4" style={{ color: '#525252' }} />
+              <span className="text-sm font-medium flex-1 text-left" style={{ color: '#F5F5F5' }}>Profile Settings</span>
+              <ChevronRight className="w-4 h-4" style={{ color: '#3F3F3F' }} />
+            </button>
 
-              <Button
-                variant="ghost"
-                className="w-full justify-start h-12 rounded-xl text-[#F5F5F5] hover:bg-[#242424] font-medium group transition-all"
-                onClick={() => setLocation('/profile-settings')}
-              >
-                <div className="w-9 h-9 rounded-lg bg-[#242424] flex items-center justify-center mr-3 group-hover:bg-[#A3E635]/15 transition-colors">
-                  <Settings className="w-4 h-4 text-[#A3E635]" />
-                </div>
-                Profile Settings
-              </Button>
-
-              <Button
-                variant="ghost"
-                className="w-full justify-start h-12 rounded-xl text-[#A3A3A3] hover:bg-[#FB923C]/10 hover:text-[#FB923C] font-medium group transition-all"
-                onClick={signOut}
-              >
-                <div className="w-9 h-9 rounded-lg bg-[#242424] flex items-center justify-center mr-3 group-hover:bg-[#FB923C]/15 transition-colors">
-                  <LogOut className="w-4 h-4 text-[#525252] group-hover:text-[#FB923C] transition-colors" />
-                </div>
-                Sign Out
-              </Button>
-            </CardContent>
-          </Card>
+            <button onClick={signOut}
+              className="w-full flex items-center gap-3 px-4 py-3 rounded-xl transition-colors hover:bg-[#EF444408]"
+              style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
+              <LogOut className="w-4 h-4" style={{ color: '#EF4444' }} />
+              <span className="text-sm font-medium" style={{ color: '#EF4444' }}>Sign Out</span>
+            </button>
+          </div>
         </motion.div>
       </div>
-    </div>
+    </AppLayout>
   );
 }

@@ -1,58 +1,18 @@
-import { useMemo, useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
 import { useQuery } from '@tanstack/react-query';
 import { apiRequest } from '@/lib/queryClient';
 import { useLocation } from 'wouter';
-import { ArrowLeft, Search, Filter, Briefcase, ChevronLeft, ChevronRight } from 'lucide-react';
-import { Button } from '@/components/ui/button';
-import { Input } from '@/components/ui/input';
+import { ArrowLeft, Search, X } from 'lucide-react';
 import JobCard from '@/components/job-card';
+import AppLayout from '@/components/app-layout';
 import { type Job } from '@shared/schema';
+import { motion } from 'framer-motion';
 import React from 'react';
-import { motion, AnimatePresence } from 'framer-motion';
-
-const container = {
-  hidden: { opacity: 0 },
-  show: {
-    opacity: 1,
-    transition: {
-      staggerChildren: 0.08,
-    },
-  },
-};
-
-const item = {
-  hidden: { opacity: 0, y: 20 },
-  show: { opacity: 1, y: 0, transition: { duration: 0.35, ease: 'easeOut' } },
-};
-
-function SkeletonCard() {
-  return (
-    <div className="bg-[#1C1C1C] border border-[#1F1F1F] rounded-xl p-6 space-y-4 animate-pulse">
-      <div className="flex items-start gap-4">
-        <div className="w-12 h-12 rounded-xl bg-[#242424]" />
-        <div className="flex-1 space-y-2">
-          <div className="h-5 bg-[#242424] rounded-lg w-3/5" />
-          <div className="h-4 bg-[#242424] rounded-lg w-2/5" />
-          <div className="h-3 bg-[#242424] rounded-lg w-1/4" />
-        </div>
-        <div className="h-6 w-16 bg-[#242424] rounded-full" />
-      </div>
-      <div className="space-y-2">
-        <div className="h-3 bg-[#242424] rounded-lg w-full" />
-        <div className="h-3 bg-[#242424] rounded-lg w-4/5" />
-      </div>
-      <div className="flex items-center justify-between pt-2">
-        <div className="h-3 bg-[#242424] rounded-lg w-24" />
-        <div className="h-10 bg-[#242424] rounded-xl w-36" />
-      </div>
-    </div>
-  );
-}
 
 export default function JobSearchPage() {
   const [, setLocation] = useLocation();
   const [searchQuery, setSearchQuery] = useState('');
-  const [activeFilter, setActiveFilter] = useState('All Jobs');
+  const [activeFilter, setActiveFilter] = useState('All');
   const [page, setPage] = useState(1);
 
   const { data, isLoading } = useQuery({
@@ -61,225 +21,84 @@ export default function JobSearchPage() {
       const params = new URLSearchParams();
       if (searchQuery) params.append('search', searchQuery);
       params.append('page', page.toString());
-
-      const response = await apiRequest('GET', `/api/jobs?${params.toString()}`);
-      return response.json();
+      return (await apiRequest('GET', `/api/jobs?${params.toString()}`)).json();
     },
   });
 
-  const filters = ['All Jobs', 'Tech', 'Finance', 'Remote'];
-
-  const items_data = (data && Array.isArray((data as any).items)) ? (data as any).items as Job[] : [];
-  const total = (data as any)?.total ?? items_data.length;
-  const pageSize = (data as any)?.pageSize ?? items_data.length;
+  const filters = ['All', 'Tech', 'Finance', 'Remote'];
+  const items = (data && Array.isArray((data as any).items)) ? (data as any).items as Job[] : [];
+  const total = (data as any)?.total ?? 0;
   const totalPages = (data as any)?.totalPages ?? 1;
 
-  const filteredJobs = Array.isArray(items_data) ? items_data.filter((job: Job) => {
-    if (activeFilter === 'All Jobs') return true;
-    if (activeFilter === 'Tech') return ['engineer', 'developer', 'tech', 'software'].some(keyword =>
-      job.title.toLowerCase().includes(keyword) || job.description.toLowerCase().includes(keyword)
-    );
-    if (activeFilter === 'Finance') return ['finance', 'financial', 'analyst', 'accounting'].some(keyword =>
-      job.title.toLowerCase().includes(keyword) || job.description.toLowerCase().includes(keyword)
-    );
+  const filteredJobs = items.filter((job: Job) => {
+    if (activeFilter === 'All') return true;
+    if (activeFilter === 'Tech') return ['engineer', 'developer', 'tech', 'software', 'data'].some(k => job.title.toLowerCase().includes(k) || job.description.toLowerCase().includes(k));
+    if (activeFilter === 'Finance') return ['finance', 'financial', 'analyst'].some(k => job.title.toLowerCase().includes(k) || job.description.toLowerCase().includes(k));
     if (activeFilter === 'Remote') return job.remote;
     return true;
-  }) : [];
+  });
 
-  // Reset page when search query changes
-  useEffect(() => {
-    setPage(1);
-  }, [searchQuery]);
-
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setSearchQuery(e.target.value);
-  };
-
-  const getCompanyLogoUrl = (company: string) => {
-    const domain = company.toLowerCase().replace(/\s+/g, '');
-    return `https://logo.clearbit.com/${domain}.com`;
-  };
+  useEffect(() => { setPage(1); }, [searchQuery]);
 
   return (
-    <div className="min-h-screen bg-[#0C0C0C]">
-      {/* Header */}
-      <div className="bg-[#141414]/80 backdrop-blur-lg border-b border-[#1F1F1F] px-6 py-5 sticky top-0 z-10">
-        <div className="max-w-3xl mx-auto space-y-5">
-          <div className="flex items-center justify-between">
-            <Button
-              variant="ghost"
-              onClick={() => setLocation('/dashboard')}
-              className="flex items-center space-x-2 text-[#525252] hover:text-[#A3A3A3] -ml-3 transition-colors"
-            >
-              <ArrowLeft className="w-4 h-4" />
-              <span className="text-sm font-medium">Back</span>
-            </Button>
-          </div>
-
-          <div>
-            <h2 className="text-3xl font-[900] text-[#F5F5F5] tracking-tight">
-              Find Jobs
-            </h2>
-            <p className="text-[#525252] mt-1 text-sm uppercase tracking-wide">Discover opportunities with referral bonuses</p>
-          </div>
-
-          {/* Search Bar */}
-          <div className="relative">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-5 h-5 text-[#525252] pointer-events-none" />
-            <Input
-              type="text"
-              placeholder="Search by title, company, or keyword..."
-              value={searchQuery}
-              onChange={handleSearch}
-              className="w-full bg-[#1C1C1C] border border-[#1F1F1F] rounded-xl h-12 pl-12 pr-6 text-[#F5F5F5] text-base placeholder:text-[#525252] focus:outline-none focus:ring-2 focus:ring-[#A3E635]/30 focus:border-[#A3E635]/40 transition-all duration-200"
-            />
-          </div>
-
-          {/* Filters */}
-          <div className="flex items-center gap-2 overflow-x-auto pb-1 -mb-1">
-            {filters.map((filter) => (
-              <button
-                key={filter}
-                onClick={() => setActiveFilter(filter)}
-                className={`px-5 py-2 rounded-full text-sm font-medium whitespace-nowrap transition-all duration-200 ${
-                  activeFilter === filter
-                    ? 'text-white shadow-md'
-                    : 'bg-[#1C1C1C] text-[#525252] hover:text-[#A3A3A3] border border-[#1F1F1F]'
-                }`}
-                style={activeFilter === filter ? { background: '#A3E635' } : undefined}
-              >
-                {filter}
-              </button>
-            ))}
-          </div>
+    <AppLayout>
+      <div className="max-w-3xl mx-auto p-4 md:p-6">
+        <div className="mb-6">
+          <button onClick={() => setLocation('/dashboard')} className="flex items-center gap-1.5 text-xs font-medium mb-4" style={{ color: '#525252' }}>
+            <ArrowLeft className="w-3.5 h-3.5" /> Back
+          </button>
+          <h1 className="text-2xl font-black" style={{ color: '#F5F5F5' }}>Find Jobs</h1>
+          <p className="text-sm mt-1" style={{ color: '#525252' }}>{total} opportunities available</p>
         </div>
-      </div>
 
-      {/* Job Listings */}
-      <div className="max-w-3xl mx-auto p-6 pb-20">
+        <div className="relative mb-4">
+          <Search className="absolute left-4 top-1/2 -translate-y-1/2 w-4 h-4" style={{ color: '#525252' }} />
+          <input type="text" placeholder="Search by title, company, or skill..." value={searchQuery} onChange={(e) => setSearchQuery(e.target.value)}
+            className="w-full h-12 pl-11 pr-10 rounded-xl text-sm font-medium outline-none transition-colors"
+            style={{ background: '#141414', border: '1px solid #1F1F1F', color: '#F5F5F5' }}
+            onFocus={(e) => (e.target.style.borderColor = '#A3E635')} onBlur={(e) => (e.target.style.borderColor = '#1F1F1F')} />
+          {searchQuery && <button onClick={() => setSearchQuery('')} className="absolute right-4 top-1/2 -translate-y-1/2" style={{ color: '#525252' }}><X className="w-4 h-4" /></button>}
+        </div>
+
+        <div className="flex gap-2 mb-6 overflow-x-auto pb-1">
+          {filters.map((f) => (
+            <button key={f} onClick={() => setActiveFilter(f)} className="px-4 py-1.5 rounded-lg text-xs font-bold whitespace-nowrap transition-all"
+              style={{ background: activeFilter === f ? '#A3E635' : '#1C1C1C', color: activeFilter === f ? '#0C0C0C' : '#525252', border: `1px solid ${activeFilter === f ? '#A3E635' : '#1F1F1F'}` }}>
+              {f}
+            </button>
+          ))}
+        </div>
+
         {isLoading ? (
-          <div className="space-y-4">
-            {[...Array(4)].map((_, i) => (
-              <SkeletonCard key={i} />
-            ))}
-          </div>
-        ) : filteredJobs.length > 0 ? (
-          <>
-            {/* Results header & pagination */}
-            <div className="flex items-center justify-between mb-6">
-              <p className="text-sm text-[#525252]">
-                <span className="font-semibold text-[#A3A3A3]">{total}</span> {total === 1 ? 'job' : 'jobs'} found
-              </p>
-              <div className="flex items-center gap-1">
-                <button
-                  disabled={page <= 1}
-                  onClick={() => setPage(p => Math.max(1, p - 1))}
-                  className="p-2 rounded-lg text-[#525252] hover:text-[#A3A3A3] hover:bg-[#1C1C1C] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                >
-                  <ChevronLeft className="w-5 h-5" />
-                </button>
-                <span className="text-sm text-[#525252] min-w-[80px] text-center">
-                  {page} / {totalPages}
-                </span>
-                <button
-                  disabled={page >= totalPages}
-                  onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-                  className="p-2 rounded-lg text-[#525252] hover:text-[#A3A3A3] hover:bg-[#1C1C1C] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                >
-                  <ChevronRight className="w-5 h-5" />
-                </button>
-              </div>
+          <div className="space-y-3">{[1,2,3,4].map(i => (
+            <div key={i} className="rounded-xl p-4 animate-pulse" style={{ background: '#1C1C1C', border: '1px solid #1F1F1F' }}>
+              <div className="flex gap-3"><div className="w-10 h-10 rounded-lg" style={{ background: '#242424' }} /><div className="flex-1 space-y-2"><div className="h-4 rounded w-3/4" style={{ background: '#242424' }} /><div className="h-3 rounded w-1/2" style={{ background: '#1F1F1F' }} /></div></div>
             </div>
-
-            <motion.div
-              className="space-y-4"
-              variants={container}
-              initial="hidden"
-              animate="show"
-              key={`${searchQuery}-${page}-${activeFilter}`}
-            >
-              {filteredJobs.map((job: Job) => (
-                <motion.div key={job.id} variants={item}>
-                  <JobCard job={job} />
-                </motion.div>
-              ))}
-            </motion.div>
-
-            {/* Bottom pagination */}
+          ))}</div>
+        ) : filteredJobs.length > 0 ? (
+          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="space-y-3">
+            {filteredJobs.map((job: Job, i: number) => (
+              <motion.div key={job.id} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: i * 0.04 }}>
+                <JobCard job={job} />
+              </motion.div>
+            ))}
             {totalPages > 1 && (
-              <div className="flex items-center justify-center gap-1 mt-8">
-                <button
-                  disabled={page <= 1}
-                  onClick={() => setPage(p => Math.max(1, p - 1))}
-                  className="px-4 py-2 rounded-xl text-sm font-medium text-[#525252] hover:text-[#A3A3A3] hover:bg-[#1C1C1C] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                >
-                  Previous
-                </button>
-                {Array.from({ length: Math.min(totalPages, 5) }, (_, i) => {
-                  let pageNum: number;
-                  if (totalPages <= 5) {
-                    pageNum = i + 1;
-                  } else if (page <= 3) {
-                    pageNum = i + 1;
-                  } else if (page >= totalPages - 2) {
-                    pageNum = totalPages - 4 + i;
-                  } else {
-                    pageNum = page - 2 + i;
-                  }
-                  return (
-                    <button
-                      key={pageNum}
-                      onClick={() => setPage(pageNum)}
-                      className={`w-10 h-10 rounded-xl text-sm font-medium transition-all duration-200 ${
-                        page === pageNum
-                          ? 'text-white shadow-md'
-                          : 'text-[#525252] hover:bg-[#1C1C1C] hover:text-[#A3A3A3]'
-                      }`}
-                      style={page === pageNum ? { background: '#A3E635' } : undefined}
-                    >
-                      {pageNum}
-                    </button>
-                  );
-                })}
-                <button
-                  disabled={page >= totalPages}
-                  onClick={() => setPage(p => Math.min(totalPages, p + 1))}
-                  className="px-4 py-2 rounded-xl text-sm font-medium text-[#525252] hover:text-[#A3A3A3] hover:bg-[#1C1C1C] disabled:opacity-30 disabled:cursor-not-allowed transition-colors"
-                >
-                  Next
-                </button>
+              <div className="flex items-center justify-center gap-3 pt-4">
+                <button onClick={() => setPage(p => Math.max(1, p-1))} disabled={page <= 1} className="px-3 py-1.5 rounded-lg text-xs font-medium disabled:opacity-30" style={{ background: '#1C1C1C', border: '1px solid #1F1F1F', color: '#A3A3A3' }}>Prev</button>
+                <span className="text-xs font-medium" style={{ color: '#525252' }}>{page} / {totalPages}</span>
+                <button onClick={() => setPage(p => Math.min(totalPages, p+1))} disabled={page >= totalPages} className="px-3 py-1.5 rounded-lg text-xs font-medium disabled:opacity-30" style={{ background: '#1C1C1C', border: '1px solid #1F1F1F', color: '#A3A3A3' }}>Next</button>
               </div>
             )}
-          </>
-        ) : (
-          <motion.div
-            initial={{ opacity: 0, scale: 0.95 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.3 }}
-            className="text-center py-20"
-          >
-            <div className="w-20 h-20 mx-auto bg-[#1C1C1C] border border-[#1F1F1F] rounded-2xl flex items-center justify-center mb-6">
-              <Briefcase className="w-9 h-9 text-[#525252]" />
-            </div>
-            <h3 className="text-xl font-semibold text-[#F5F5F5] mb-2">No jobs found</h3>
-            <p className="text-[#525252] mb-6 max-w-sm mx-auto leading-relaxed">
-              {searchQuery ?
-                `We couldn't find any jobs matching "${searchQuery}" with your current filters.` :
-                'No jobs available with the current filters. Try broadening your search.'
-              }
-            </p>
-            <button
-              onClick={() => {
-                setSearchQuery('');
-                setActiveFilter('All Jobs');
-              }}
-              className="px-6 py-2.5 rounded-xl text-sm font-medium text-[#A3E635] bg-[#A3E635]/10 hover:bg-[#A3E635]/20 border border-[#A3E635]/20 transition-colors duration-200"
-            >
-              Clear filters
-            </button>
           </motion.div>
+        ) : (
+          <div className="rounded-xl p-12 text-center" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
+            <div className="w-14 h-14 rounded-xl flex items-center justify-center mx-auto mb-4" style={{ background: '#1C1C1C' }}><Search className="w-6 h-6" style={{ color: '#525252' }} /></div>
+            <p className="text-sm font-bold mb-1" style={{ color: '#F5F5F5' }}>No jobs found</p>
+            <p className="text-xs mb-4" style={{ color: '#525252' }}>Try different search terms</p>
+            <button onClick={() => { setSearchQuery(''); setActiveFilter('All'); }} className="px-4 py-2 rounded-lg text-xs font-medium" style={{ background: '#1C1C1C', border: '1px solid #1F1F1F', color: '#A3E635' }}>Clear filters</button>
+          </div>
         )}
       </div>
-    </div>
+    </AppLayout>
   );
 }

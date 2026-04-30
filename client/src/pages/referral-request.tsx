@@ -7,6 +7,7 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Dialog, DialogContent } from '@/components/ui/dialog';
 import { useAuth } from '@/hooks/use-auth';
+import AppLayout from '@/components/app-layout';
 import { useToast } from '@/hooks/use-toast';
 import { apiRequest } from '@/lib/queryClient';
 import { initializeCashfree, openCashfreeCheckout, createCashfreeOrder, verifyCashfreePayment } from '@/lib/cashfree';
@@ -322,8 +323,8 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
   };
 
   return (
-    <div className="min-h-screen bg-[#0C0C0C]">
-      <div className="p-6 space-y-8 pb-24 max-w-lg mx-auto">
+    <AppLayout>
+      <div className="p-4 md:p-6 max-w-4xl mx-auto">
         {/* Back + Title */}
         <motion.div
           custom={0}
@@ -683,6 +684,6 @@ export default function ReferralRequestPage({ jobId }: ReferralRequestPageProps)
           </div>
         </DialogContent>
       </Dialog>
-    </div>
+    </AppLayout>
   );
 }

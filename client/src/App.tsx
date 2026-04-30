@@ -22,23 +22,21 @@ import CoachingDashboard from "./pages/coaching-dashboard";
 import TermsPage from "./pages/terms";
 import PrivacyPage from "./pages/privacy";
 import RefundPage from "./pages/refund";
+import Logo from "./components/logo";
 
 function Router() {
   const { user, loading, validateToken } = useAuth();
   const [location, setLocation] = useLocation();
 
-  // Global authentication check on app start
   useEffect(() => {
     const checkInitialAuth = async () => {
       if (!loading && user) {
-        // Validate stored token on app start
         const isTokenValid = await validateToken();
         if (!isTokenValid) {
           setLocation('/login');
         }
       }
     };
-
     checkInitialAuth();
   }, [loading, user, validateToken, setLocation]);
 
@@ -48,7 +46,6 @@ function Router() {
       if (!user && !publicRoutes.includes(location)) {
         setLocation("/login");
       } else if (user && location === "/login") {
-        // Check if onboarding is completed
         if (!user.onboardingCompleted) {
           setLocation("/onboarding");
         } else {
@@ -60,26 +57,10 @@ function Router() {
 
   if (loading) {
     return (
-      <div className="min-h-screen flex items-center justify-center gradient-bg">
-        <div className="text-center text-white">
-          <div className="animate-float mb-4">
-            <div className="w-16 h-16 mx-auto bg-white/20 rounded-3xl flex items-center justify-center backdrop-blur-lg">
-              <svg
-                className="w-8 h-8 text-white"
-                fill="none"
-                stroke="currentColor"
-                viewBox="0 0 24 24"
-              >
-                <path
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  strokeWidth="2"
-                  d="M8 7l12-4-4 12m0 0L8 15m8 0V7M8 15l0-8"
-                ></path>
-              </svg>
-            </div>
-          </div>
-          <p className="text-lg opacity-90">Loading...</p>
+      <div className="min-h-screen flex items-center justify-center" style={{ background: '#0C0C0C' }}>
+        <div className="text-center">
+          <Logo size={40} showText={false} className="justify-center mb-4 animate-float" />
+          <p className="text-sm font-medium" style={{ color: '#525252' }}>Loading...</p>
         </div>
       </div>
     );
@@ -101,63 +82,38 @@ function Router() {
         }
       </Route>
       <Route path="/dashboard">
-        {() => (
-          <AuthGuard>
-            <DashboardPage />
-          </AuthGuard>
-        )}
+        {() => (<AuthGuard><DashboardPage /></AuthGuard>)}
       </Route>
       <Route path="/job-search">
-        {() => (
-          <AuthGuard>
-            <JobSearchPage />
-          </AuthGuard>
-        )}
+        {() => (<AuthGuard><JobSearchPage /></AuthGuard>)}
       </Route>
       <Route path="/profile">
-        {() => (
-          <AuthGuard>
-            <ProfilePage />
-          </AuthGuard>
-        )}
+        {() => (<AuthGuard><ProfilePage /></AuthGuard>)}
       </Route>
       <Route path="/profile-settings">
-        {() => (
-          <AuthGuard>
-            <ProfileSettingsPage />
-          </AuthGuard>
-        )}
+        {() => (<AuthGuard><ProfileSettingsPage /></AuthGuard>)}
       </Route>
       <Route path="/analytics">
-        {() => (
-          <AuthGuard>
-            <AnalyticsPage />
-          </AuthGuard>
-        )}
+        {() => (<AuthGuard><AnalyticsPage /></AuthGuard>)}
       </Route>
       <Route path="/referral-request/:jobId">
-        {(params) => (
-          <AuthGuard>
-            <ReferralRequestPage jobId={params.jobId} />
-          </AuthGuard>
-        )}
+        {(params) => (<AuthGuard><ReferralRequestPage jobId={params.jobId} /></AuthGuard>)}
       </Route>
       <Route path="/">
-        {() => (
-          <AuthGuard>
-            <DashboardPage />
-          </AuthGuard>
-        )}
+        {() => (<AuthGuard><DashboardPage /></AuthGuard>)}
       </Route>
-      <Route path="/coaching" >
-        {() => (
-          <AuthGuard>
-            <CoachingDashboard />
-          </AuthGuard>
-        )}
+      <Route path="/coaching">
+        {() => (<AuthGuard><CoachingDashboard /></AuthGuard>)}
       </Route>
       <Route path="/post-login" component={PostLoginPage} />
-      <Route component={() => <div>404 Not Found</div>} />
+      <Route component={() => (
+        <div className="min-h-screen flex items-center justify-center" style={{ background: '#0C0C0C' }}>
+          <div className="text-center">
+            <p className="text-6xl font-black mb-2" style={{ color: '#F5F5F5' }}>404</p>
+            <p className="text-sm" style={{ color: '#525252' }}>Page not found</p>
+          </div>
+        </div>
+      )} />
     </Switch>
   );
 }

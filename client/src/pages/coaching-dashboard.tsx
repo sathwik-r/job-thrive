@@ -22,6 +22,7 @@ import React, { useCallback } from 'react';
 import { apiRequest } from '@/lib/queryClient';
 import { toast } from '@/hooks/use-toast';
 import { useAuth } from '@/hooks/use-auth';
+import AppLayout from '@/components/app-layout';
 
 export default function CoachingDashboard() {
   const { user } = useAuth();
@@ -374,20 +375,13 @@ export default function CoachingDashboard() {
   ];
 
   return (
-    <div className="min-h-screen" style={{ background: '#0C0C0C' }} data-testid="dashboard-coaching">
-      {/* Header */}
-      <header className="backdrop-blur-lg px-6 py-4 sticky top-0 z-30" style={{ background: 'rgba(11,10,16,0.92)', borderBottom: '1px solid #1F1F1F' }}>
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 max-w-7xl mx-auto">
+    <AppLayout>
+      <div className="max-w-5xl mx-auto p-4 md:p-6" data-testid="dashboard-coaching">
+        {/* Header */}
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 mb-6">
           <div>
-            <h1
-              className="text-xl font-black text-[#F5F5F5] tracking-tight"
-              data-testid="text-dashboard-title"
-            >
-              1v1 Coaching
-            </h1>
-            <p className="text-sm text-[#525252]">
-              Personalized career guidance from top professionals
-            </p>
+            <h1 className="text-xl font-black text-[#F5F5F5] tracking-tight" data-testid="text-dashboard-title">1v1 Coaching</h1>
+            <p className="text-sm text-[#525252]">Personalized career guidance from top professionals</p>
           </div>
           <div className="flex gap-1.5 bg-[#1C1C1C]/80 rounded-xl p-0.5">
             <Button
@@ -420,10 +414,9 @@ export default function CoachingDashboard() {
             </Button>
           </div>
         </div>
-      </header>
 
-      {/* Main Content */}
-      <div className="p-6 space-y-6 max-w-7xl mx-auto">
+        {/* Main Content */}
+        <div className="space-y-6">
         {/* Stats Cards */}
         <div className="grid grid-cols-2 lg:grid-cols-4 gap-3">
           {statsCards.map(stat => (
@@ -578,6 +571,7 @@ export default function CoachingDashboard() {
         }}
         onBookSession={handleBookingConfirm}
       />
-    </div>
+      </div>
+    </AppLayout>
   );
 }
