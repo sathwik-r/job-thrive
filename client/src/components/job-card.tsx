@@ -1,126 +1,89 @@
-import { Card, CardContent } from '@/components/ui/card';
-import { Button } from '@/components/ui/button';
-import { Badge } from '@/components/ui/badge';
 import { type Job } from '@shared/schema';
 import { useLocation } from 'wouter';
+import { MapPin, Clock, ArrowRight, Wifi } from 'lucide-react';
 import React, { useState } from 'react';
-import { MapPin, Clock, ArrowRight } from 'lucide-react';
 
-interface JobCardProps {
-  job: Job;
+function getCompanyDomain(company: string): string {
+  const c = company.toLowerCase().replace(/\s+/g, '').replace(/[^a-z0-9]/g, '');
+  const map: Record<string, string> = {
+    google:'google.com', microsoft:'microsoft.com', amazon:'amazon.com', flipkart:'flipkart.com',
+    swiggy:'swiggy.com', meta:'meta.com', apple:'apple.com', netflix:'netflix.com',
+    uber:'uber.com', zomato:'zomato.com', paytm:'paytm.com', razorpay:'razorpay.com',
+    stripe:'stripe.com', atlassian:'atlassian.com', adobe:'adobe.com', salesforce:'salesforce.com',
+    oracle:'oracle.com', ibm:'ibm.com', tcs:'tcs.com', infosys:'infosys.com', wipro:'wipro.com',
+  };
+  return map[c] || `${c}.com`;
 }
 
-export default function JobCard({ job }: JobCardProps) {
+export default function JobCard({ job }: { job: Job }) {
   const [, setLocation] = useLocation();
-  const [logoError, setLogoError] = useState(false);
+  const [logoErr, setLogoErr] = useState(false);
 
-  const handleApplyForReferral = () => {
-    setLocation(`/referral-request/${job.id}`);
+  const timeAgo = (date: Date | string) => {
+    const d = date instanceof Date ? date : new Date(date);
+    if (isNaN(d.getTime())) return 'Recently';
+    const days = Math.floor((Date.now() - d.getTime()) / 86400000);
+    if (days === 0) return 'Today';
+    if (days === 1) return '1d ago';
+    if (days < 0) return 'Recently';
+    return `${days}d ago`;
   };
-
-  const formatTimeAgo = (date: Date | string) => {
-    const createdDate = date instanceof Date ? date : new Date(date);
-    const now = new Date();
-
-    // Check if date is valid
-    if (isNaN(createdDate.getTime())) {
-      return 'Recently';
-    }
-
-    const diffInDays = Math.floor((now.getTime() - createdDate.getTime()) / (1000 * 60 * 60 * 24));
-
-    if (diffInDays === 0) return 'Today';
-    if (diffInDays === 1) return '1 day ago';
-    if (diffInDays < 0) return 'Recently';
-    return `${diffInDays} days ago`;
-  };
-
-  const companyDomain = job.company.toLowerCase().replace(/\s+/g, '');
-  const logoUrl = `https://logo.clearbit.com/${companyDomain}.com`;
-  const companyInitial = job.company.charAt(0).toUpperCase();
 
   return (
-    <Card className="group relative overflow-hidden rounded-xl border border-[#1F1F1F] bg-[#1C1C1C] transition-all duration-300 hover:border-[#2A2A2A]">
-      {/* Subtle left accent bar - gradient, visible on hover */}
-      <div
-        className="absolute left-0 top-0 bottom-0 w-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-        style={{ background: 'linear-gradient(180deg, #A3E635, #A3E635)' }}
-      />
+    <button
+      onClick={() => setLocation(`/referral-request/${job.id}`)}
+      className="w-full text-left rounded-xl p-4 flex gap-3.5 group transition-all hover:-translate-y-0.5 relative overflow-hidden"
+      style={{ background: '#141414', border: '1px solid #1F1F1F' }}
+    >
+      {/* Left accent on hover */}
+      <div className="absolute left-0 top-0 bottom-0 w-[2px] opacity-0 group-hover:opacity-100 transition-opacity" style={{ background: '#A3E635' }} />
 
-      <CardContent className="p-6">
-        {/* Top row: logo + info + badge */}
-        <div className="flex items-start gap-4 mb-4">
-          {/* Company logo */}
-          <div className="flex-shrink-0">
-            {!logoError ? (
-              <img
-                src={logoUrl}
-                alt={`${job.company} logo`}
-                className="w-12 h-12 rounded-xl object-contain bg-[#141414] border border-[#1F1F1F] p-1.5"
-                onError={() => setLogoError(true)}
-              />
-            ) : (
-              <div className="w-12 h-12 rounded-xl bg-[#242424] border border-[#1F1F1F] flex items-center justify-center">
-                <span className="text-lg font-bold text-[#525252]">{companyInitial}</span>
-              </div>
-            )}
+      {/* Company logo */}
+      {!logoErr ? (
+        <img src={`https://logo.clearbit.com/${getCompanyDomain(job.company)}`} alt=""
+          className="w-10 h-10 rounded-lg p-1 shrink-0 mt-0.5" style={{ background: '#1C1C1C', border: '1px solid #1F1F1F' }}
+          onError={() => setLogoErr(true)} />
+      ) : (
+        <div className="w-10 h-10 rounded-lg flex items-center justify-center text-sm font-bold shrink-0 mt-0.5"
+          style={{ background: '#1C1C1C', border: '1px solid #1F1F1F', color: '#525252' }}>
+          {job.company.charAt(0)}
+        </div>
+      )}
+
+      {/* Content */}
+      <div className="flex-1 min-w-0">
+        <div className="flex items-start justify-between gap-2">
+          <div className="min-w-0">
+            <h3 className="text-sm font-bold truncate" style={{ color: '#F5F5F5' }}>{job.title}</h3>
+            <p className="text-xs font-medium mt-0.5" style={{ color: '#818CF8' }}>{job.company}</p>
           </div>
-
-          {/* Title & company */}
-          <div className="flex-1 min-w-0">
-            <h3 className="text-lg font-bold text-[#F5F5F5] leading-snug mb-0.5 truncate">
-              {job.title}
-            </h3>
-            <p className="text-[#A3E635] font-medium text-sm">{job.company}</p>
-            <div className="flex items-center gap-3 mt-1.5">
-              <span className="flex items-center gap-1 text-xs text-[#525252]">
-                <MapPin className="w-3 h-3" />
-                {job.location}
-              </span>
-              <span className="flex items-center gap-1 text-xs text-[#3F3F3F]">
-                <Clock className="w-3 h-3" />
-                {formatTimeAgo(job.createdAt)}
-              </span>
-            </div>
-          </div>
-
-          {/* Badges */}
-          <div className="flex flex-col items-end gap-2 flex-shrink-0">
-            <span className={`px-3 py-1 rounded-full text-xs font-medium ${
-              job.remote
-                ? 'bg-[#A3E63520] text-[#A3E635]'
-                : 'bg-[#1F1F1F] text-[#525252]'
-            }`}>
-              {job.remote ? 'Remote' : 'On-site'}
-            </span>
-            {job.salary && (
-              <span className="text-sm font-bold text-[#A3A3A3]">{job.salary}</span>
-            )}
+          {/* Apply button */}
+          <div className="shrink-0 flex items-center gap-1.5 h-8 px-3 rounded-lg text-xs font-bold opacity-80 group-hover:opacity-100 transition-all group-hover:scale-105"
+            style={{ background: '#A3E635', color: '#0C0C0C' }}>
+            Get Referred <ArrowRight className="w-3 h-3" />
           </div>
         </div>
 
-        {/* Description */}
-        <p className="text-[#A3A3A3] text-sm leading-relaxed mb-5 line-clamp-2">
-          {job.description}
-        </p>
-
-        {/* Bottom row */}
-        <div className="flex items-center justify-between pt-4 border-t border-[#1F1F1F]">
-          <div className="flex items-center">
-            <span className="inline-flex items-center px-3 py-1 rounded-full text-xs font-semibold text-[#FB923C]">
-              Rs.{job.referralFee}
+        {/* Meta row */}
+        <div className="flex items-center gap-3 mt-2 flex-wrap">
+          <span className="flex items-center gap-1 text-[11px]" style={{ color: '#525252' }}>
+            <MapPin className="w-3 h-3" /> {job.location}
+          </span>
+          {job.remote && (
+            <span className="flex items-center gap-1 text-[11px] px-1.5 py-0.5 rounded" style={{ background: '#A3E63510', color: '#A3E635' }}>
+              <Wifi className="w-3 h-3" /> Remote
             </span>
-          </div>
-          <Button
-            onClick={handleApplyForReferral}
-            className="text-white px-6 py-2.5 rounded-lg font-semibold transition-all duration-200 transform hover:scale-[1.02] active:scale-[0.98] shadow-sm hover:shadow-md flex items-center gap-2 border-0"
-            style={{ background: '#A3E635' }}
-          >
-            Apply
-            <ArrowRight className="w-4 h-4 opacity-0 -ml-2 group-hover:opacity-100 group-hover:ml-0 transition-all duration-200" />
-          </Button>
+          )}
+          <span className="flex items-center gap-1 text-[11px]" style={{ color: '#3F3F3F' }}>
+            <Clock className="w-3 h-3" /> {timeAgo(job.createdAt)}
+          </span>
+          {job.salary && <span className="text-[11px] font-medium" style={{ color: '#A3A3A3' }}>{job.salary}</span>}
+          <span className="text-[11px] font-bold ml-auto" style={{ color: '#FB923C' }}>Rs.{job.referralFee}</span>
         </div>
-      </CardContent>
-    </Card>
+
+        {/* Description preview */}
+        <p className="text-xs mt-2 line-clamp-1" style={{ color: '#3F3F3F' }}>{job.description}</p>
+      </div>
+    </button>
   );
 }

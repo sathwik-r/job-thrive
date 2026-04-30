@@ -33,8 +33,8 @@ const PostLoginPage: React.FC = () => {
         }
 
         if (!code) {
-          setError('No authorization code received from Cognito.');
-          setLoading(false);
+          // No code means user navigated here directly — redirect to login
+          setLocation('/login');
           return;
         }
 
