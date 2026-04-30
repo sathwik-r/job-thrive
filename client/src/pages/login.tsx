@@ -30,7 +30,7 @@ const logos = [
 
 const testimonials = [
   { name: "Riya Sharma", role: "Got referred to Google", text: "Applied on a Friday, got my referral by Monday. The referrer even shared tips for my interview. Best Rs.499 I ever spent.", stars: 5 },
-  { name: "Arjun Mehta", role: "Got referred to Microsoft", text: "I was mass-applying for months with zero callbacks. One referral through jobthrive and I had an interview within a week.", stars: 5 },
+  { name: "Arjun Mehta", role: "Got referred to Microsoft", text: "I was mass-applying for months with zero callbacks. One referral through Job Thrive and I had an interview within a week.", stars: 5 },
   { name: "Sneha Patel", role: "Referrer at Amazon", text: "I've earned over Rs.15,000 by referring qualified candidates. The platform handles everything — I just submit the referral.", stars: 5 },
 ];
 
@@ -83,83 +83,171 @@ export default function LoginPage() {
       </nav>
 
       {/* ══════════ HERO ══════════ */}
-      <section className="relative z-10 px-6 lg:px-16 pt-16 lg:pt-24 pb-20">
-        <div className="max-w-5xl mx-auto text-center">
-          {/* Live badge */}
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8"
-            style={{ background: '#A3E63510', border: '1px solid #A3E63520' }}>
-            <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#A3E635' }} />
-            <AnimatePresence mode="wait">
-              <motion.span key={ti} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}
-                className="text-xs font-medium" style={{ color: '#A3A3A3' }}>
-                <span style={{ color: '#F5F5F5' }}>{t.name}</span> just got referred for {t.role} at <span style={{ color: '#A3E635' }}>{t.company}</span>
-              </motion.span>
-            </AnimatePresence>
-          </motion.div>
+      <section className="relative z-10 px-6 lg:px-16 pt-10 lg:pt-20 pb-16 min-h-[90vh] flex items-center">
+        <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.6 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] mb-6" style={{ color: '#F5F5F5' }}>
-            Stop applying.<br />
-            <span style={{ color: '#A3E635' }}>Start getting referred.</span>
-          </motion.h1>
+          {/* ── Left: Content ──────────────── */}
+          <div className="flex-1 max-w-2xl">
+            {/* Live badge */}
+            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }} className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+              style={{ background: '#A3E63510', border: '1px solid #A3E63520' }}>
+              <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#A3E635' }} />
+              <AnimatePresence mode="wait">
+                <motion.span key={ti} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }} transition={{ duration: 0.2 }}
+                  className="text-xs font-medium" style={{ color: '#A3A3A3' }}>
+                  <span style={{ color: '#F5F5F5' }}>{t.name}</span> got referred for {t.role} at <span style={{ color: '#A3E635' }}>{t.company}</span>
+                </motion.span>
+              </AnimatePresence>
+            </motion.div>
 
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}
-            className="text-lg lg:text-xl max-w-2xl mx-auto mb-10 leading-relaxed" style={{ color: '#A3A3A3' }}>
-            Real employees at Google, Microsoft, Amazon and 90+ top companies refer you directly.
-            No cold applications. No networking. Just <span className="font-bold" style={{ color: '#F5F5F5' }}>Rs.499</span> and a real referral.
-          </motion.p>
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1, duration: 0.6 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.06] mb-5" style={{ color: '#F5F5F5' }}>
+              Stop applying blindly.<br />
+              <span style={{ color: '#A3E635' }}>Get referred directly.</span>
+            </motion.h1>
 
-          {/* CTA */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-6">
-            <button onClick={signIn} disabled={loading}
-              className="flex items-center gap-3 h-14 px-8 rounded-xl text-base font-black transition-all hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
-              style={{ background: '#A3E635', color: '#0C0C0C', boxShadow: '0 0 40px rgba(163,230,53,0.2)' }}>
-              <svg className="w-5 h-5" viewBox="0 0 24 24"><path fill="#0C0C0C" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#0C0C0C" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#0C0C0C" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#0C0C0C" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-              {loading ? 'Signing in...' : 'Get Started with Google'}
-            </button>
-            <span className="text-sm" style={{ color: '#3F3F3F' }}>Free to join · Pay only when you apply</span>
-          </motion.div>
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2, duration: 0.6 }}
+              className="text-base lg:text-lg max-w-lg mb-8 leading-relaxed" style={{ color: '#A3A3A3' }}>
+              Real employees at <span className="font-semibold" style={{ color: '#F5F5F5' }}>Google, Microsoft, Amazon</span> and 90+ top companies
+              refer you directly for just <span className="font-bold" style={{ color: '#A3E635' }}>Rs.499</span>. No cold emails. No luck. Just results.
+            </motion.p>
 
-          <AnimatePresence>
-            {error && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg mb-4" style={{ background: '#EF444412', border: '1px solid #EF444420' }}>
-                <AlertCircle className="w-4 h-4" style={{ color: '#EF4444' }} />
-                <span className="text-sm" style={{ color: '#EF4444' }}>{error}</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Stats */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-            className="flex items-center justify-center gap-8 lg:gap-12 mt-4">
-            {[
-              { n: "500+", l: "Referrals given" },
-              { n: "95+", l: "Companies" },
-              { n: "24h", l: "Avg match time" },
-              { n: "94%", l: "Success rate" },
-            ].map((s) => (
-              <div key={s.l} className="text-center">
-                <p className="text-2xl lg:text-3xl font-black" style={{ color: '#F5F5F5' }}>{s.n}</p>
-                <p className="text-[10px] font-bold uppercase tracking-widest mt-1" style={{ color: '#525252' }}>{s.l}</p>
+            {/* CTA row */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }} className="flex flex-col sm:flex-row items-start gap-4 mb-8">
+              <button onClick={signIn} disabled={loading}
+                className="flex items-center gap-3 h-14 px-8 rounded-xl text-base font-black transition-all hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                style={{ background: '#A3E635', color: '#0C0C0C', boxShadow: '0 0 40px rgba(163,230,53,0.15)' }}>
+                <svg className="w-5 h-5" viewBox="0 0 24 24"><path fill="#0C0C0C" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#0C0C0C" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#0C0C0C" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#0C0C0C" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                {loading ? 'Signing in...' : 'Get Started — Free'}
+              </button>
+              <div className="flex flex-col gap-1">
+                <span className="text-sm font-medium" style={{ color: '#A3A3A3' }}>No credit card required</span>
+                <span className="text-xs" style={{ color: '#3F3F3F' }}>Browse jobs free · Pay only when you apply</span>
               </div>
-            ))}
-          </motion.div>
+            </motion.div>
 
-          {/* Scroll hint */}
-          <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1 }}
-            className="mt-16 flex flex-col items-center gap-1">
-            <span className="text-[10px] uppercase tracking-widest" style={{ color: '#3F3F3F' }}>Scroll to learn more</span>
-            <ChevronDown className="w-4 h-4 animate-bounce" style={{ color: '#3F3F3F' }} />
+            <AnimatePresence>
+              {error && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg mb-4" style={{ background: '#EF444412', border: '1px solid #EF444420' }}>
+                  <AlertCircle className="w-4 h-4" style={{ color: '#EF4444' }} />
+                  <span className="text-sm" style={{ color: '#EF4444' }}>{error}</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            {/* Stats inline */}
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+              className="flex items-center gap-6 lg:gap-8">
+              {[
+                { n: "500+", l: "Referrals" },
+                { n: "95+", l: "Companies" },
+                { n: "24h", l: "Avg match" },
+                { n: "94%", l: "Success" },
+              ].map((s) => (
+                <div key={s.l}>
+                  <p className="text-xl lg:text-2xl font-black" style={{ color: '#F5F5F5' }}>{s.n}</p>
+                  <p className="text-[9px] font-bold uppercase tracking-widest mt-0.5" style={{ color: '#525252' }}>{s.l}</p>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* ── Right: Floating UI Cards ───── */}
+          <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4, duration: 0.7 }}
+            className="hidden lg:block flex-1 max-w-md relative" style={{ minHeight: '480px' }}>
+
+            {/* Mock job card 1 */}
+            <motion.div animate={{ y: [0, -8, 0] }} transition={{ duration: 4, repeat: Infinity, ease: 'easeInOut' }}
+              className="absolute top-0 left-0 right-8 rounded-xl p-4 z-10" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
+              <div className="flex items-start gap-3">
+                <img src="https://logo.clearbit.com/google.com" alt="" className="w-10 h-10 rounded-lg p-1" style={{ background: '#1C1C1C', border: '1px solid #1F1F1F' }} />
+                <div className="flex-1">
+                  <p className="text-sm font-bold" style={{ color: '#F5F5F5' }}>Senior Software Engineer</p>
+                  <p className="text-xs" style={{ color: '#525252' }}>Google · Bangalore · Remote</p>
+                </div>
+                <span className="text-xs font-bold px-2.5 py-1 rounded-md" style={{ background: '#A3E63512', color: '#A3E635' }}>Rs.499</span>
+              </div>
+              <div className="flex gap-2 mt-3">
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ background: '#1C1C1C', color: '#525252' }}>React</span>
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ background: '#1C1C1C', color: '#525252' }}>Go</span>
+                <span className="text-[10px] font-medium px-2 py-0.5 rounded" style={{ background: '#1C1C1C', color: '#525252' }}>Distributed Systems</span>
+              </div>
+            </motion.div>
+
+            {/* Mock job card 2 */}
+            <motion.div animate={{ y: [0, -6, 0] }} transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut', delay: 0.5 }}
+              className="absolute top-24 left-6 right-0 rounded-xl p-4 z-20" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
+              <div className="flex items-start gap-3">
+                <img src="https://logo.clearbit.com/microsoft.com" alt="" className="w-10 h-10 rounded-lg p-1" style={{ background: '#1C1C1C', border: '1px solid #1F1F1F' }} />
+                <div className="flex-1">
+                  <p className="text-sm font-bold" style={{ color: '#F5F5F5' }}>Product Manager</p>
+                  <p className="text-xs" style={{ color: '#525252' }}>Microsoft · Hyderabad</p>
+                </div>
+                <span className="text-xs font-bold px-2.5 py-1 rounded-md" style={{ background: '#A3E63512', color: '#A3E635' }}>Rs.499</span>
+              </div>
+            </motion.div>
+
+            {/* Referral success card */}
+            <motion.div animate={{ y: [0, -10, 0] }} transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+              className="absolute top-48 left-0 w-72 rounded-xl p-4 z-30" style={{ background: '#141414', border: '1px solid #A3E63530' }}>
+              <div className="flex items-center gap-3">
+                <div className="w-9 h-9 rounded-full flex items-center justify-center" style={{ background: '#A3E63515' }}>
+                  <CheckCircle2 className="w-5 h-5" style={{ color: '#A3E635' }} />
+                </div>
+                <div>
+                  <p className="text-sm font-bold" style={{ color: '#A3E635' }}>Referral Submitted!</p>
+                  <p className="text-[10px]" style={{ color: '#525252' }}>Priya S. → Google · 2 hours ago</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Stats mini card */}
+            <motion.div animate={{ y: [0, -5, 0] }} transition={{ duration: 4.5, repeat: Infinity, ease: 'easeInOut', delay: 1.5 }}
+              className="absolute top-72 left-12 right-4 rounded-xl p-4 z-20" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
+              <p className="text-[10px] font-bold uppercase tracking-widest mb-3" style={{ color: '#3F3F3F' }}>This week on Job Thrive</p>
+              <div className="flex justify-between">
+                <div className="text-center">
+                  <p className="text-lg font-black" style={{ color: '#A3E635' }}>47</p>
+                  <p className="text-[9px]" style={{ color: '#525252' }}>Referrals</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-lg font-black" style={{ color: '#818CF8' }}>23</p>
+                  <p className="text-[9px]" style={{ color: '#525252' }}>Interviews</p>
+                </div>
+                <div className="text-center">
+                  <p className="text-lg font-black" style={{ color: '#FB923C' }}>12</p>
+                  <p className="text-[9px]" style={{ color: '#525252' }}>Offers</p>
+                </div>
+              </div>
+            </motion.div>
+
+            {/* Company logos floating */}
+            <motion.div animate={{ y: [0, -4, 0] }} transition={{ duration: 3, repeat: Infinity, ease: 'easeInOut', delay: 0.3 }}
+              className="absolute bottom-0 left-0 right-0 flex justify-center gap-3">
+              {logos.slice(0, 5).map((c) => (
+                <img key={c.n} src={c.u} alt={c.n} className="w-8 h-8 rounded-lg p-1 opacity-40 hover:opacity-80 transition-opacity" style={{ background: '#141414', border: '1px solid #1F1F1F' }} />
+              ))}
+            </motion.div>
           </motion.div>
         </div>
+
+        {/* Scroll indicator — visible */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+          <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#525252' }}>Scroll down</span>
+          <div className="w-6 h-10 rounded-full flex items-start justify-center pt-2" style={{ border: '2px solid #2A2A2A' }}>
+            <motion.div animate={{ y: [0, 12, 0] }} transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-1.5 h-1.5 rounded-full" style={{ background: '#A3E635' }} />
+          </div>
+        </motion.div>
       </section>
 
       {/* ══════════ COMPANY LOGOS ══════════ */}
       <Section className="py-16 px-6 lg:px-16">
         <div className="max-w-4xl mx-auto text-center">
           <p className="text-[10px] font-bold uppercase tracking-[3px] mb-8" style={{ color: '#3F3F3F' }}>
-            Professionals from these companies refer on jobthrive
+            Professionals from these companies refer on Job Thrive
           </p>
           <div className="flex flex-wrap items-center justify-center gap-6 lg:gap-10">
             {logos.map((c) => (
@@ -207,7 +295,7 @@ export default function LoginPage() {
       <Section className="py-20 px-6 lg:px-16">
         <div className="max-w-5xl mx-auto">
           <div className="text-center mb-14">
-            <p className="text-[10px] font-bold uppercase tracking-[3px] mb-3" style={{ color: '#818CF8' }}>Why jobthrive</p>
+            <p className="text-[10px] font-bold uppercase tracking-[3px] mb-3" style={{ color: '#818CF8' }}>Why Job Thrive</p>
             <h2 className="text-3xl lg:text-4xl font-black tracking-tight" style={{ color: '#F5F5F5' }}>
               Not just another job board
             </h2>
@@ -240,7 +328,7 @@ export default function LoginPage() {
           <div className="text-center mb-14">
             <p className="text-[10px] font-bold uppercase tracking-[3px] mb-3" style={{ color: '#FB923C' }}>Testimonials</p>
             <h2 className="text-3xl lg:text-4xl font-black tracking-tight" style={{ color: '#F5F5F5' }}>
-              People love jobthrive
+              People love Job Thrive
             </h2>
           </div>
 
@@ -324,13 +412,13 @@ export default function LoginPage() {
         <div className="max-w-5xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex items-center gap-3">
             <Logo size={20} showText={false} />
-            <span className="text-xs" style={{ color: '#3F3F3F' }}>&copy; {new Date().getFullYear()} jobthrive. All rights reserved.</span>
+            <span className="text-xs" style={{ color: '#3F3F3F' }}>&copy; {new Date().getFullYear()} Job Thrive. All rights reserved.</span>
           </div>
           <div className="flex gap-6 text-xs" style={{ color: '#3F3F3F' }}>
             <a href="/terms" className="hover:text-[#525252] transition-colors">Terms</a>
             <a href="/privacy" className="hover:text-[#525252] transition-colors">Privacy</a>
             <a href="/refund" className="hover:text-[#525252] transition-colors">Refund</a>
-            <a href="mailto:admin@jobthrive.in" className="hover:text-[#525252] transition-colors">Contact</a>
+            <a href="mailto:admin@Job Thrive.in" className="hover:text-[#525252] transition-colors">Contact</a>
           </div>
         </div>
       </footer>

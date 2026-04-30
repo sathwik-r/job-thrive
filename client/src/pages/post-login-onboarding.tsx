@@ -49,7 +49,7 @@ export default function PostLoginOnboarding({ onComplete }: PostLoginOnboardingP
       });
     },
     onSuccess: () => {
-      toast({ title: "You're all set!", description: "Welcome to jobthrive." });
+      toast({ title: "You're all set!", description: "Welcome to Job Thrive." });
       if (user) {
         updateUser({ ...user, ...data, onboardingCompleted: true });
       }

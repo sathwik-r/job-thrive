@@ -13,7 +13,7 @@ export default function Footer({ className = "" }: FooterProps) {
           <div className="flex items-center gap-4">
             <Logo size={20} showText={false} />
             <span className="text-xs" style={{ color: '#3F3F3F' }}>
-              &copy; {new Date().getFullYear()} jobthrive
+              &copy; {new Date().getFullYear()} Job Thrive
             </span>
           </div>
           <div className="flex items-center gap-6 text-xs">
