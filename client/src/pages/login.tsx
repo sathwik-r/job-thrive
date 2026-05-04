@@ -180,91 +180,100 @@ export default function LoginPage() {
         </div>
       </nav>
 
-      {/* ══════════ SECTION 1: HERO — Clean, focused, no distractions ══════════ */}
-      <section className="relative z-10 px-6 lg:px-16 pt-16 lg:pt-28 pb-20">
-        <div className="max-w-4xl mx-auto text-center">
-          {/* Live badge */}
-          <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
-            className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-8"
-            style={{ background: '#A3E63508', border: '1px solid #A3E63515' }}>
-            <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#A3E635' }} />
-            <AnimatePresence mode="wait">
-              <motion.span key={ti} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
-                className="text-xs font-medium" style={{ color: '#D4D4D4' }}>
-                <span style={{ color: '#F5F5F5' }}>{t.name}</span> got referred for {t.role} at <span style={{ color: '#A3E635' }}>{t.company}</span>
-              </motion.span>
-            </AnimatePresence>
-          </motion.div>
+      {/* ══════════ HERO — Split layout: text left, animation right ══════════ */}
+      <section className="relative z-10 px-6 lg:px-16 pt-10 lg:pt-20 pb-16 min-h-[90vh] flex items-center">
+        <div className="max-w-7xl mx-auto w-full flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
 
-          <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
-            className="text-5xl sm:text-6xl lg:text-7xl font-black tracking-tight leading-[1.05] mb-6" style={{ color: '#F5F5F5' }}>
-            The referral platform<br />
-            <span style={{ color: '#A3E635' }}>that pays everyone.</span>
-          </motion.h1>
+          {/* Left: Content */}
+          <div className="flex-1 max-w-2xl">
+            <motion.div initial={{ opacity: 0, y: -10 }} animate={{ opacity: 1, y: 0 }}
+              className="inline-flex items-center gap-2 px-4 py-2 rounded-full mb-6"
+              style={{ background: '#A3E63508', border: '1px solid #A3E63515' }}>
+              <div className="w-2 h-2 rounded-full animate-pulse" style={{ background: '#A3E635' }} />
+              <AnimatePresence mode="wait">
+                <motion.span key={ti} initial={{ opacity: 0, y: 8 }} animate={{ opacity: 1, y: 0 }} exit={{ opacity: 0, y: -8 }}
+                  className="text-xs font-medium" style={{ color: '#D4D4D4' }}>
+                  <span style={{ color: '#F5F5F5' }}>{t.name}</span> got referred for {t.role} at <span style={{ color: '#A3E635' }}>{t.company}</span>
+                </motion.span>
+              </AnimatePresence>
+            </motion.div>
 
-          <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
-            className="text-lg lg:text-xl max-w-2xl mx-auto mb-10 leading-relaxed" style={{ color: '#D4D4D4' }}>
-            <span style={{ color: '#F5F5F5' }}>Seekers</span> get referred to top companies for Rs.499.{' '}
-            <span style={{ color: '#F5F5F5' }}>Referrers</span> earn Rs.249+ per referral. Everyone wins.
-          </motion.p>
+            <motion.h1 initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.1 }}
+              className="text-4xl sm:text-5xl lg:text-6xl font-black tracking-tight leading-[1.06] mb-5" style={{ color: '#F5F5F5' }}>
+              The referral platform<br />
+              <span style={{ color: '#A3E635' }}>that pays everyone.</span>
+            </motion.h1>
 
-          {/* CTA */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
-            className="flex flex-col sm:flex-row items-center justify-center gap-4 mb-8">
-            <button onClick={signIn} disabled={loading}
-              className="flex items-center gap-3 h-14 px-8 rounded-xl text-base font-black transition-all hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
-              style={{ background: '#A3E635', color: '#0C0C0C', boxShadow: '0 0 40px rgba(163,230,53,0.15)' }}>
-              <svg className="w-5 h-5" viewBox="0 0 24 24"><path fill="#0C0C0C" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#0C0C0C" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#0C0C0C" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#0C0C0C" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
-              {loading ? 'Signing in...' : 'Get Started — Free'}
-            </button>
-            <span className="text-sm" style={{ color: '#737373' }}>No credit card · Browse jobs free</span>
-          </motion.div>
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.2 }}
+              className="text-base lg:text-lg max-w-lg mb-3 leading-relaxed" style={{ color: '#D4D4D4' }}>
+              <span style={{ color: '#F5F5F5' }}>Seekers:</span> Get referred to Google, Microsoft, Amazon & 90+ top companies for just <span className="font-bold" style={{ color: '#A3E635' }}>Rs.499</span>.
+            </motion.p>
+            <motion.p initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.25 }}
+              className="text-base lg:text-lg max-w-lg mb-8 leading-relaxed" style={{ color: '#D4D4D4' }}>
+              <span style={{ color: '#F5F5F5' }}>Referrers:</span> Earn <span className="font-bold" style={{ color: '#818CF8' }}>Rs.249+ per referral</span>. We handle everything.
+            </motion.p>
 
-          <AnimatePresence>
-            {error && (
-              <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
-                className="inline-flex items-center gap-2 px-4 py-2 rounded-lg mb-4" style={{ background: '#EF444412', border: '1px solid #EF444420' }}>
-                <AlertCircle className="w-4 h-4" style={{ color: '#EF4444' }} />
-                <span className="text-sm" style={{ color: '#EF4444' }}>{error}</span>
-              </motion.div>
-            )}
-          </AnimatePresence>
-
-          {/* Stats */}
-          <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-            className="flex items-center justify-center gap-10 lg:gap-14">
-            {[
-              { n: "500+", l: "Referrals" },
-              { n: "95+", l: "Companies" },
-              { n: "24h", l: "Avg match" },
-              { n: "94%", l: "Success" },
-            ].map((s) => (
-              <div key={s.l} className="text-center">
-                <p className="text-2xl lg:text-3xl font-black" style={{ color: '#F5F5F5' }}>{s.n}</p>
-                <p className="text-[10px] font-bold uppercase tracking-widest mt-1" style={{ color: '#737373' }}>{s.l}</p>
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.3 }}
+              className="flex flex-col sm:flex-row items-start gap-4 mb-8">
+              <button onClick={signIn} disabled={loading}
+                className="flex items-center gap-3 h-14 px-8 rounded-xl text-base font-black transition-all hover:brightness-110 hover:scale-[1.02] active:scale-[0.98] disabled:opacity-50"
+                style={{ background: '#A3E635', color: '#0C0C0C', boxShadow: '0 0 40px rgba(163,230,53,0.15)' }}>
+                <svg className="w-5 h-5" viewBox="0 0 24 24"><path fill="#0C0C0C" d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z"/><path fill="#0C0C0C" d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z"/><path fill="#0C0C0C" d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z"/><path fill="#0C0C0C" d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z"/></svg>
+                {loading ? 'Signing in...' : 'Get Started — Free'}
+              </button>
+              <div className="flex flex-col gap-1">
+                <span className="text-sm font-medium" style={{ color: '#D4D4D4' }}>No credit card required</span>
+                <span className="text-xs" style={{ color: '#525252' }}>Browse jobs free · Pay only when you apply</span>
               </div>
-            ))}
+            </motion.div>
+
+            <AnimatePresence>
+              {error && (
+                <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }}
+                  className="inline-flex items-center gap-2 px-4 py-2 rounded-lg mb-4" style={{ background: '#EF444412', border: '1px solid #EF444420' }}>
+                  <AlertCircle className="w-4 h-4" style={{ color: '#EF4444' }} />
+                  <span className="text-sm" style={{ color: '#EF4444' }}>{error}</span>
+                </motion.div>
+              )}
+            </AnimatePresence>
+
+            <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
+              className="flex items-center gap-6 lg:gap-8">
+              {[{ n: "500+", l: "Referrals" }, { n: "95+", l: "Companies" }, { n: "24h", l: "Avg match" }, { n: "94%", l: "Success" }].map((s) => (
+                <div key={s.l}>
+                  <p className="text-xl lg:text-2xl font-black" style={{ color: '#F5F5F5' }}>{s.n}</p>
+                  <p className="text-[9px] font-bold uppercase tracking-widest mt-0.5" style={{ color: '#737373' }}>{s.l}</p>
+                </div>
+              ))}
+            </motion.div>
+          </div>
+
+          {/* Right: Live referral animation — visible before scroll */}
+          <motion.div initial={{ opacity: 0, x: 40 }} animate={{ opacity: 1, x: 0 }} transition={{ delay: 0.4, duration: 0.7 }}
+            className="hidden lg:block flex-1 max-w-md">
+            <div className="rounded-2xl overflow-hidden" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
+              <div className="px-4 py-3 flex items-center justify-between" style={{ borderBottom: '1px solid #1F1F1F' }}>
+                <p className="text-[10px] font-bold uppercase tracking-[2px]" style={{ color: '#737373' }}>Live referral flow</p>
+                <div className="flex items-center gap-1.5">
+                  <div className="w-1.5 h-1.5 rounded-full animate-pulse" style={{ background: '#A3E635' }} />
+                  <span className="text-[9px] font-bold" style={{ color: '#A3E635' }}>LIVE</span>
+                </div>
+              </div>
+              <ReferralFlowAnimation />
+            </div>
           </motion.div>
         </div>
+
+        {/* Scroll indicator */}
+        <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 1.5 }}
+          className="absolute bottom-6 left-1/2 -translate-x-1/2 flex flex-col items-center gap-2">
+          <span className="text-[11px] font-semibold uppercase tracking-widest" style={{ color: '#525252' }}>Scroll down</span>
+          <div className="w-6 h-10 rounded-full flex items-start justify-center pt-2" style={{ border: '2px solid #2A2A2A' }}>
+            <motion.div animate={{ y: [0, 12, 0] }} transition={{ duration: 1.5, repeat: Infinity }}
+              className="w-1.5 h-1.5 rounded-full" style={{ background: '#A3E635' }} />
+          </div>
+        </motion.div>
       </section>
-
-      {/* ══════════ SECTION 2: HOW IT WORKS — The animation IS the content ══════════ */}
-      <Section className="py-20 px-6 lg:px-16" id="how-it-works">
-        <div className="max-w-3xl mx-auto">
-          <div className="text-center mb-6">
-            <p className="text-[10px] font-bold uppercase tracking-[3px] mb-3" style={{ color: '#A3E635' }}>See it in action</p>
-            <h2 className="text-3xl lg:text-4xl font-black tracking-tight" style={{ color: '#F5F5F5' }}>
-              How a referral happens
-            </h2>
-            <p className="text-sm mt-2" style={{ color: '#737373' }}>Watch the entire flow — from payment to referral to earnings</p>
-          </div>
-
-          {/* The animation component — full attention, no competing content */}
-          <div className="rounded-3xl overflow-hidden" style={{ background: '#0C0C0C', border: '1px solid #1F1F1F' }}>
-            <ReferralFlowAnimation />
-          </div>
-        </div>
-      </Section>
 
       {/* ══════════ SECTION 3: COMPANY LOGOS ══════════ */}
       <Section className="py-16 px-6 lg:px-16">
