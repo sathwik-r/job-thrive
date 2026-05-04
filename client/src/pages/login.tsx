@@ -3,6 +3,19 @@ import { useAuth } from '@/hooks/use-auth';
 import { AlertCircle, ArrowRight, Zap, Shield, Clock, Star, CheckCircle2, Users, Briefcase, TrendingUp, ChevronDown } from 'lucide-react';
 import Logo from '@/components/logo';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
+import BgConnectionLines from '@/components/hero-backgrounds/bg-connection-lines';
+import BgFloatingLogos from '@/components/hero-backgrounds/bg-floating-logos';
+import BgMoneyFlow from '@/components/hero-backgrounds/bg-money-flow';
+import BgLiveDashboard from '@/components/hero-backgrounds/bg-live-dashboard';
+import BgGradientMesh from '@/components/hero-backgrounds/bg-gradient-mesh';
+
+const BG_OPTIONS = [
+  { id: 1, label: 'Network', component: BgConnectionLines },
+  { id: 2, label: 'Logos', component: BgFloatingLogos },
+  { id: 3, label: 'Flow', component: BgMoneyFlow },
+  { id: 4, label: 'Dashboard', component: BgLiveDashboard },
+  { id: 5, label: 'Mesh', component: BgGradientMesh },
+] as const;
 
 const ticker = [
   { name: "Priya S.", company: "Google", role: "SDE-2", time: "2h ago" },
@@ -47,6 +60,7 @@ function Section({ children, className = "" }: { children: React.ReactNode; clas
 export default function LoginPage() {
   const { signInWithGoogle, loading, error } = useAuth();
   const [ti, setTi] = useState(0);
+  const [activeBg, setActiveBg] = useState(5);
 
   useEffect(() => {
     const i = setInterval(() => setTi((p) => (p + 1) % ticker.length), 2800);
@@ -60,16 +74,30 @@ export default function LoginPage() {
     <div className="min-h-screen overflow-x-hidden" style={{ background: '#0C0C0C' }}>
 
       {/* ══════════ ANIMATED BACKGROUND ══════════ */}
-      <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {/* Grid */}
-        <div className="absolute inset-0" style={{
-          backgroundImage: 'linear-gradient(rgba(163,230,53,0.015) 1px, transparent 1px), linear-gradient(90deg, rgba(163,230,53,0.015) 1px, transparent 1px)',
+      <div className="fixed inset-0 overflow-hidden">
+        {/* Subtle grid always present */}
+        <div className="absolute inset-0 pointer-events-none" style={{
+          backgroundImage: 'linear-gradient(rgba(163,230,53,0.012) 1px, transparent 1px), linear-gradient(90deg, rgba(163,230,53,0.012) 1px, transparent 1px)',
           backgroundSize: '80px 80px',
         }} />
-        {/* Glow orbs */}
-        <div className="absolute -top-40 left-1/4 w-[800px] h-[800px] rounded-full animate-pulse" style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.07) 0%, transparent 60%)', animationDuration: '4s' }} />
-        <div className="absolute top-1/2 -right-40 w-[600px] h-[600px] rounded-full animate-pulse" style={{ background: 'radial-gradient(circle, rgba(129,140,248,0.05) 0%, transparent 60%)', animationDuration: '6s' }} />
-        <div className="absolute bottom-0 left-0 w-[500px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(251,146,60,0.03) 0%, transparent 60%)' }} />
+        {/* Active background */}
+        {(() => {
+          const opt = BG_OPTIONS.find(b => b.id === activeBg);
+          if (!opt) return null;
+          const Comp = opt.component;
+          return <Comp activeCompany={t.company} />;
+        })()}
+      </div>
+
+      {/* ══════════ BG SWITCHER (for testing — remove before production) ══════════ */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-1.5 px-3 py-2 rounded-xl" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
+        {BG_OPTIONS.map((bg) => (
+          <button key={bg.id} onClick={() => setActiveBg(bg.id)}
+            className="px-3 py-1.5 rounded-lg text-[10px] font-bold transition-all"
+            style={{ background: activeBg === bg.id ? '#A3E635' : 'transparent', color: activeBg === bg.id ? '#0C0C0C' : '#525252' }}>
+            {bg.label}
+          </button>
+        ))}
       </div>
 
       {/* ══════════ NAV ══════════ */}
