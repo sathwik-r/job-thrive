@@ -160,10 +160,17 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: '#0C0C0C' }}>
 
-      {/* ══════════ CLEAN SUBTLE BACKGROUND — no competing elements ══════════ */}
-      <div className="fixed inset-0 pointer-events-none">
-        <div className="absolute -top-40 left-1/4 w-[600px] h-[600px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.04) 0%, transparent 60%)' }} />
-        <div className="absolute top-1/2 -right-40 w-[500px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(129,140,248,0.03) 0%, transparent 60%)' }} />
+      {/* ══════════ BACKGROUND — dots grid + gradient glows ══════════ */}
+      <div className="fixed inset-0 pointer-events-none overflow-hidden">
+        {/* Dot grid pattern */}
+        <div className="absolute inset-0" style={{
+          backgroundImage: 'radial-gradient(rgba(163,230,53,0.08) 1px, transparent 1px)',
+          backgroundSize: '32px 32px',
+        }} />
+        {/* Gradient glows */}
+        <div className="absolute -top-40 left-1/4 w-[700px] h-[700px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.05) 0%, transparent 55%)' }} />
+        <div className="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(129,140,248,0.04) 0%, transparent 55%)' }} />
+        <div className="absolute -bottom-20 left-1/3 w-[500px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(251,146,60,0.025) 0%, transparent 55%)' }} />
       </div>
 
       {/* ══════════ NAV ══════════ */}
@@ -237,14 +244,28 @@ export default function LoginPage() {
               )}
             </AnimatePresence>
 
+            {/* Stats */}
             <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ delay: 0.4 }}
-              className="flex items-center gap-6 lg:gap-8">
-              {[{ n: "500+", l: "Referrals" }, { n: "95+", l: "Companies" }, { n: "24h", l: "Avg match" }, { n: "94%", l: "Success" }].map((s) => (
-                <div key={s.l}>
-                  <p className="text-xl lg:text-2xl font-black" style={{ color: '#F5F5F5' }}>{s.n}</p>
-                  <p className="text-[9px] font-bold uppercase tracking-widest mt-0.5" style={{ color: '#737373' }}>{s.l}</p>
+              className="flex items-center gap-4 mb-8">
+              {[{ n: "500+", l: "Referrals", c: '#A3E635' }, { n: "95+", l: "Companies", c: '#818CF8' }, { n: "24h", l: "Match time", c: '#FB923C' }, { n: "94%", l: "Success", c: '#A3E635' }].map((s) => (
+                <div key={s.l} className="rounded-xl px-4 py-3 text-center flex-1" style={{ background: '#14141480', border: '1px solid #1F1F1F' }}>
+                  <p className="text-lg lg:text-xl font-black" style={{ color: s.c }}>{s.n}</p>
+                  <p className="text-[8px] font-bold uppercase tracking-widest mt-0.5" style={{ color: '#525252' }}>{s.l}</p>
                 </div>
               ))}
+            </motion.div>
+
+            {/* Company logos inline */}
+            <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ delay: 0.5 }}>
+              <p className="text-[9px] font-bold uppercase tracking-[2px] mb-3" style={{ color: '#525252' }}>Trusted by professionals at</p>
+              <div className="flex flex-wrap gap-2">
+                {logos.slice(0, 6).map((c) => (
+                  <div key={c.n} className="flex items-center gap-1.5 px-2.5 py-1.5 rounded-lg" style={{ background: '#14141480', border: '1px solid #1F1F1F' }}>
+                    <img src={c.u} alt="" className="w-4 h-4 rounded" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+                    <span className="text-[10px] font-medium" style={{ color: '#525252' }}>{c.n}</span>
+                  </div>
+                ))}
+              </div>
             </motion.div>
           </div>
 
