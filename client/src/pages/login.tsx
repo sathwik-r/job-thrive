@@ -8,8 +8,10 @@ import BgFloatingLogos from '@/components/hero-backgrounds/bg-floating-logos';
 import BgMoneyFlow from '@/components/hero-backgrounds/bg-money-flow';
 import BgLiveDashboard from '@/components/hero-backgrounds/bg-live-dashboard';
 import BgGradientMesh from '@/components/hero-backgrounds/bg-gradient-mesh';
+import BgReferralStory from '@/components/hero-backgrounds/bg-referral-story';
 
 const BG_OPTIONS = [
+  { id: 6, label: 'Story', component: BgReferralStory },
   { id: 1, label: 'Network', component: BgConnectionLines },
   { id: 2, label: 'Logos', component: BgFloatingLogos },
   { id: 3, label: 'Flow', component: BgMoneyFlow },
@@ -60,7 +62,7 @@ function Section({ children, className = "" }: { children: React.ReactNode; clas
 export default function LoginPage() {
   const { signInWithGoogle, loading, error } = useAuth();
   const [ti, setTi] = useState(0);
-  const [activeBg, setActiveBg] = useState(5);
+  const [activeBg, setActiveBg] = useState(6); // Story mode default
 
   useEffect(() => {
     const i = setInterval(() => setTi((p) => (p + 1) % ticker.length), 2800);
