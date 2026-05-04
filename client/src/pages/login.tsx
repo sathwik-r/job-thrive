@@ -3,6 +3,19 @@ import { useAuth } from '@/hooks/use-auth';
 import { AlertCircle, ArrowRight, Zap, Shield, Clock, Star, CheckCircle2, Users, Briefcase, TrendingUp, ChevronDown, FileText, IndianRupee, User, Building2 } from 'lucide-react';
 import Logo from '@/components/logo';
 import { motion, AnimatePresence, useInView } from 'framer-motion';
+import BgShootingStars from '@/components/hero-backgrounds/bg-shooting-stars';
+import BgPulseConnect from '@/components/hero-backgrounds/bg-pulse-connect';
+import BgSparkTrails from '@/components/hero-backgrounds/bg-spark-trails';
+import BgOrbitLaunch from '@/components/hero-backgrounds/bg-orbit-launch';
+import BgLightBeamRelay from '@/components/hero-backgrounds/bg-light-beam-relay';
+
+const BG_ANIMS = [
+  { id: 1, label: 'Stars', Comp: BgShootingStars },
+  { id: 2, label: 'Pulse', Comp: BgPulseConnect },
+  { id: 3, label: 'Sparks', Comp: BgSparkTrails },
+  { id: 4, label: 'Orbit', Comp: BgOrbitLaunch },
+  { id: 5, label: 'Relay', Comp: BgLightBeamRelay },
+];
 
 const ticker = [
   { name: "Priya S.", company: "Google", role: "SDE-2", time: "2h ago" },
@@ -148,6 +161,7 @@ function ReferralFlowAnimation() {
 export default function LoginPage() {
   const { signInWithGoogle, loading, error } = useAuth();
   const [ti, setTi] = useState(0);
+  const [bgAnim, setBgAnim] = useState(5);
 
   useEffect(() => {
     const i = setInterval(() => setTi(p => (p + 1) % ticker.length), 2800);
@@ -160,44 +174,32 @@ export default function LoginPage() {
   return (
     <div className="min-h-screen overflow-x-hidden" style={{ background: '#0C0C0C' }}>
 
-      {/* ══════════ BACKGROUND — animated floating dots + glows ══════════ */}
+      {/* ══════════ BACKGROUND — dot grid + canvas animation + glows ══════════ */}
       <div className="fixed inset-0 pointer-events-none overflow-hidden">
-        {/* Static dot grid — visible */}
+        {/* Dot grid */}
         <div className="absolute inset-0" style={{
-          backgroundImage: 'radial-gradient(circle, rgba(163,230,53,0.15) 1px, transparent 1px)',
+          backgroundImage: 'radial-gradient(circle, rgba(163,230,53,0.12) 1px, transparent 1px)',
           backgroundSize: '40px 40px',
         }} />
 
-        {/* Animated floating particles */}
-        {Array.from({ length: 30 }).map((_, i) => (
-          <motion.div
-            key={i}
-            className="absolute rounded-full"
-            style={{
-              width: 2 + (i % 3) * 2,
-              height: 2 + (i % 3) * 2,
-              left: `${5 + (i * 31) % 90}%`,
-              top: `${5 + (i * 37) % 90}%`,
-              background: i % 3 === 0 ? '#A3E635' : i % 3 === 1 ? '#818CF8' : '#FB923C',
-            }}
-            animate={{
-              y: [0, -30 - (i % 4) * 15, 0],
-              x: [0, (i % 2 === 0 ? 15 : -15), 0],
-              opacity: [0.1, 0.3, 0.1],
-            }}
-            transition={{
-              duration: 6 + (i % 5) * 2,
-              repeat: Infinity,
-              ease: 'easeInOut',
-              delay: (i % 8) * 0.8,
-            }}
-          />
-        ))}
+        {/* Canvas animation */}
+        {(() => { const bg = BG_ANIMS.find(b => b.id === bgAnim); return bg ? <bg.Comp /> : null; })()}
 
         {/* Gradient glows */}
-        <div className="absolute -top-40 left-1/4 w-[700px] h-[700px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.06) 0%, transparent 55%)' }} />
-        <div className="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(129,140,248,0.05) 0%, transparent 55%)' }} />
-        <div className="absolute -bottom-20 left-1/3 w-[500px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(251,146,60,0.03) 0%, transparent 55%)' }} />
+        <div className="absolute -top-40 left-1/4 w-[700px] h-[700px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(163,230,53,0.05) 0%, transparent 55%)' }} />
+        <div className="absolute top-1/3 -right-40 w-[600px] h-[600px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(129,140,248,0.04) 0%, transparent 55%)' }} />
+        <div className="absolute -bottom-20 left-1/3 w-[500px] h-[500px] rounded-full" style={{ background: 'radial-gradient(circle, rgba(251,146,60,0.025) 0%, transparent 55%)' }} />
+      </div>
+
+      {/* Switcher — remove before production */}
+      <div className="fixed bottom-4 left-1/2 -translate-x-1/2 z-50 flex gap-1 px-2 py-1.5 rounded-lg" style={{ background: '#141414', border: '1px solid #1F1F1F' }}>
+        {BG_ANIMS.map(b => (
+          <button key={b.id} onClick={() => setBgAnim(b.id)}
+            className="px-2.5 py-1 rounded text-[9px] font-bold transition-all"
+            style={{ background: bgAnim === b.id ? '#A3E635' : 'transparent', color: bgAnim === b.id ? '#0C0C0C' : '#525252' }}>
+            {b.label}
+          </button>
+        ))}
       </div>
 
       {/* ══════════ NAV ══════════ */}
